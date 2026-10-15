@@ -1,12 +1,15 @@
 # pi-furry-partner · 完整使用指南
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.1.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.1.1) · [架构说明](architecture.md)
+[**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-本指南针对 **pi-furry-partner 2.1.1**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.2.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.2.0) · [架构说明](architecture.md)
+
+本指南针对 **pi-furry-partner 2.2.0**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
 角色英文名为 **Umi**。`wumi`、`wumi-pixel` 风格 ID、`wumi-persona.md` 文件名和既有素材路径是兼容标识，继续保留。
 
 - [安装与启动](#安装与启动)
+- [中英文切换](#中英文切换)
 - [界面与状态反应](#界面与状态反应)
 - [鼠标控件与界面模式](#鼠标控件与界面模式)
 - [快捷菜单与详细信息](#快捷菜单与详细信息)
@@ -65,12 +68,32 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.2.0
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。
 
 每次选择一个安装来源。已有脚本安装的用户优先继续脚本路线；改用包管理器前先卸载旧脚本安装，避免双份扩展。原生包管理器安装的包也应通过 Pi 的包管理流程移除，不使用本项目的脚本卸载。
+
+## 中英文切换
+
+```text
+/mascot language zh-CN
+/mascot language en
+/mascot language status
+```
+
+语言偏好保存到扩展 `config.json` 的 `language` 字段；已有配置缺少该字段时使用 `zh-CN`。也可以用 `zh` 作为简体中文的命令别名。语言切换会立即更新状态短句、气泡、输入框控件、快捷操作和信息面板，不重启当前 agent 状态、不清除输入草稿，也不重新播放启动动画。默认名字和副标题随语言显示为“呜咪 / 你的工作搭档”或“Umi / Your coding companion”；自定义名字和副标题保持原文。
+
+`language` 与三个文本开关分别保存：
+
+| 设置 | 简体中文模式 | English 模式 |
+| --- | --- | --- |
+| `/mascot locale` | 开启时应用兼容范围内的 Pi 原生中文补丁 | 暂停中文补丁，保留开关偏好 |
+| `/mascot prompt` | 开启时精简已知 Pi 默认固定说明为中文 | 使用原生英文默认系统提示词 |
+| `/mascot persona` | 开启时追加中文 Umi 口吻模板 | 开启时追加英文 Umi 口吻模板 |
+
+提示词与口吻的变化从下一轮请求生效。切换语言不会翻译会话正文、代码、工具输出、模型名、路径、自定义 `SYSTEM.md` 或项目 `AGENTS.md`。切回中文时，`locale` 按原有偏好恢复，不会因为选择过英文而丢失设置。
 
 ## 界面与状态反应
 
@@ -78,7 +101,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
 
 角色上方的气泡使用完整的三行圆角边框，上下边框闭合，文字在中间行居中，两侧各有一个 `🐾`。思考时的 `·` 点点也居中显示；空闲时输入框顶边使用 `🐾` 图标。
 
-状态来自 Pi 的实际事件：等待模型、文本输出、工具开始与结束、用户交互、上下文整理以及本轮成功、失败或取消。工具运行中显示当前工具；并行工具会显示数量。标签、气泡和短句使用呜咪的第一人称口语，例如“我托着下巴，把这几步接起来”“我盯着工具的输出，等它回个话”“我把前面聊的拢一拢，把重点挑出来”。原有 13 个状态各有 6 条短句，再加 6 条专门等用户回应的短句，共 84 条；常规轮换文案在同一有效状态内至少保持 6.5 秒，状态变化时切换对应短句。启动、打盹与惊醒提示按各自动作阶段变化。文案保存在本地 `assets/status-copy.json` 与 `assets/status-phrases.json`，不额外调用模型。
+状态来自 Pi 的实际事件：等待模型、文本输出、工具开始与结束、用户交互、上下文整理以及本轮成功、失败或取消。工具运行中显示当前工具；并行工具会显示数量。标签、气泡和短句使用呜咪的第一人称口语，例如“我托着下巴，把这几步接起来”“我盯着工具的输出，等它回个话”“我把前面聊的拢一拢，把重点挑出来”。原有 13 个状态各有 6 条短句，再加 6 条专门等用户回应的短句，共 84 条；常规轮换文案在同一有效状态内至少保持 6.5 秒，状态变化时切换对应短句。启动、打盹与惊醒提示按各自动作阶段变化。中英文文案都保存在本地，切换语言不额外调用模型。
 
 等待文案按实际事件区分：提问工具或用户交互正在等你答复时，使用 `waiting_user` 文案，例如“我等你拿主意呀，慢慢想就好”；等系统或工具回音时使用 `waiting` 文案，例如“我这里还没收到回应，再等等看”。这只是同一等待状态中的两组表达，不增加新的演示状态。本轮结束只表示这一轮收尾；错误文案会承认这一步没走通，保留对原因与下一步的判断。
 
@@ -159,6 +182,9 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 | 命令 | 作用 |
 | --- | --- |
+| `/mascot language zh-CN` | 切换为简体中文，保存偏好；`zh` 为兼容别名 |
+| `/mascot language en` | 切换为英文，保存偏好 |
+| `/mascot language status` | 查看当前显示语言 |
 | `/mascot menu` | 在输入框布局打开快捷操作菜单；也可按 Ctrl+Alt+W |
 | `/mascot layout editor` | 使用固定在输入框左侧的角色布局 |
 | `/mascot layout header` | 恢复 1.x 的启动标题头像布局 |
@@ -180,10 +206,10 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 | `/mascot render blocks` | 使用真彩色半块字符渲染 |
 | `/mascot info compact` | 输入框布局使用紧凑 footer |
 | `/mascot info native` | 使用 Pi 原生 footer |
-| `/mascot locale on` | 开启兼容范围内的 Pi 原生界面中文，下次绘制或打开菜单时生效 |
+| `/mascot locale on` | 开启原生界面中文偏好；中文模式下次绘制或打开菜单时生效 |
 | `/mascot locale off` | 关闭原生界面中文，后续绘制使用原文 |
 | `/mascot locale status` | 查看原生界面中文开关 |
-| `/mascot prompt on` | 开启 Pi 原生默认固定指令的精简中文处理，下一轮请求生效 |
+| `/mascot prompt on` | 开启 Pi 默认固定指令的精简中文处理；中文模式下一轮请求生效 |
 | `/mascot prompt off` | 后续请求保留 Pi 原生系统提示词，不做这项处理 |
 | `/mascot prompt status` | 查看精简中文系统提示词开关 |
 | `/mascot persona on` | 开启呜咪的可爱活泼角色口吻，下一轮生效 |
@@ -220,7 +246,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 ## 原生界面中文与精简中文提示词
 
-这两项功能分别默认开启，与角色显示和 `persona` 语气开关独立。`locale` 只处理界面文字；`prompt` 只处理下一轮请求中可识别的 Pi 原生默认固定指令。可以单独开启其中任何一项，无需启用呜咪语气，也不改变模型、工具权限或现有任务要求。
+这两项功能分别默认开启，与角色显示、`language` 和 `persona` 语气开关独立。中文模式下，`locale` 只处理界面文字，`prompt` 只处理下一轮请求中可识别的 Pi 原生默认固定指令。英文模式暂停中文补丁并沿用原生英文默认提示词，保留开关偏好。可以单独开启其中任何一项，无需启用呜咪语气，也不改变模型、工具权限或现有任务要求。
 
 原生界面中文使用 **Pi 1.2.0 兼容层**，覆盖已识别的原生组件中的固定标题、设置标签、说明和操作提示，包括设置、思考等级、模型、会话、对话树、主题、登录，以及部分选择框、输入框和编辑框提示；另外翻译 24 个内置斜杠命令的补全说明。命令名、参数提示、补全值和实际执行逻辑保持原样。补全翻译同时核对内置命令名、原始英文说明和命令输入位置，因此同名文件、技能及说明不同的第三方命令不会被套用翻译。
 
@@ -250,7 +276,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 ~/.pi/agent/extensions/pi-furry-partner/prompts/wumi-persona.md
 ```
 
-项目根目录中的 `prompts/wumi-persona.md` 是模板源码。保存后在下一轮使用；需要刷新扩展时执行 `/reload`。重装前的模板修改随整个旧插件目录保存到安装备份；重装会部署发行包中的模板，可从备份取回自定义版本。
+项目根目录中的 `prompts/wumi-persona.md` 是中文模板源码；英文模式使用 `prompts/umi-persona.en.md`。二者共用 `persona` 开关，按当前 `language` 选用。保存后在下一轮使用；需要刷新扩展时执行 `/reload`。重装前的模板修改随整个旧插件目录保存到安装备份；重装会部署发行包中的模板，可从备份取回自定义版本。
 
 ## 渲染与配置
 
@@ -272,6 +298,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
   "dockSize": "auto",
   "info": "compact",
   "persona": false,
+  "language": "zh-CN",
   "chineseUI": true,
   "compactPrompt": true,
   "size": "auto",
@@ -281,6 +308,8 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 ```
 
 从 1.x 升级时，无 `layout` 字段的旧配置会迁移为 `editor` / `wumi` / “呜咪” / `compact`，语气 `persona` 保持默认关闭；旧 `style` 保存为 `headerStyle`，`animation`、`renderer`、`size`、`enabled`、自定义字段等原设置保留。已有 `layout` 字段的 2.x 配置按原始文件完整保留，重新安装不会重置用户的 `persona` 或其他选择；2.x 配置缺少 `persona` 时按关闭处理。缺少 `chineseUI` 或 `compactPrompt` 时，运行时分别按 `true` 处理，加载配置不会为了补字段而改写原文件；后续用命令保存设置时会一并写入这些字段。它们属于扩展的 `config.json`，不增加安装脚本管理的 Pi UI 字段。损坏的 JSON 会使迁移在替换旧扩展前停止。
+
+语言字段缺失时默认为 `zh-CN`，不会仅为补充默认值而改写已有配置。使用 `/mascot language` 保存新偏好后，后续启动会沿用该语言。
 
 ## 备份、卸载与恢复
 

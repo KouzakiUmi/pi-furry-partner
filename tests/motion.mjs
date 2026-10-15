@@ -71,6 +71,48 @@ const alphaComponent = (pixels, width, height, transparent, seed) => {
 };
 
 {
+  for (const style of ["wumi", "wumi-pixel"]) {
+    const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+    const before = JSON.stringify(sheet), shapes = ["talk-closed", "talk-small", "talk-medium", "talk-wide"];
+    const mouthChanges = [];
+    for (let i = 0; i < sheet.width * sheet.height; i++) {
+      if (shapes.some((face) => sheet.frames[sheet.ids[face]].pixels[i] !== sheet.frames[sheet.ids[shapes[0]]].pixels[i])) mouthChanges.push(i);
+    }
+    assert.ok(mouthChanges.length);
+    for (const face of shapes) {
+      const { player } = make();
+      const open = player.frame(sheet, sheet.ids[face], { phase: "speaking", blink: false });
+      const closedEyes = player.frame(sheet, sheet.ids[face], { phase: "speaking", blink: true });
+      assert.equal(closedEyes.transitioning, false, "Blinking must not trigger a pose dissolve");
+      assert.equal(closedEyes.sheet.palette, sheet.palette);
+      for (const i of mouthChanges) assert.equal(closedEyes.frame.pixels[i], open.frame.pixels[i], `${style}/${face} changed its mouth while blinking`);
+      assert.ok(differenceCount(open, closedEyes) > 0, "The eyelids must actually close");
+      player.dispose();
+    }
+    assert.equal(JSON.stringify(sheet), before, "Runtime blink composition must not mutate release assets");
+  }
+  checks.push("Every Umi speech shape retains its exact articulation pixels while blinking in illustrated and pixel styles; no asset/palette mutation or blink transition");
+}
+
+{
+  const sheet = JSON.parse(await readFile(join(root, "assets/reactions/wumi/reaction-sheet.json"), "utf8"));
+  const { player, set } = make(), samples = [];
+  player.frame(sheet, sheet.ids.rest, { phase: "dozing" });
+  for (let ms = 0; ms <= 600; ms += 50) {
+    set(1000 + ms);
+    const result = player.frame(sheet, sheet.ids.concern, { phase: "startled" });
+    samples.push(result.motion.x);
+    assert.ok(!result.transitioning);
+    if (ms < 600) assert.equal(result.nextInMs, 50);
+  }
+  assert.deepEqual(samples.slice(0, 4), [0, -4, 4, -3], "Startle begins with two brisk left/right shakes at native width 240");
+  assert.ok(Math.max(...samples.slice(4).map(Math.abs)) < 4, "Later shakes decay toward the center");
+  assert.equal(samples.at(-1), 0);
+  player.dispose();
+  checks.push("Startle shakes only the character horizontally at 50ms steps, peaks at ±4px for a 240px sprite and decays to center within 600ms");
+}
+
+{
   const sheet = synthetic(), { player, set } = make();
   const initial = player.frame(sheet, 0, { phase: "idle" });
   assert.equal(initial.sheet.width, sheet.width); assert.equal(initial.sheet.height, sheet.height);

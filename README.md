@@ -1,5 +1,7 @@
 <div align="center">
 
+**简体中文** | [**English**](README.en.md)
+
 # pi-furry-partner
 
 **把终端里的等待，交给一只会认真陪你工作的毛茸茸。**
@@ -8,14 +10,14 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.1.1](https://img.shields.io/badge/release-v2.1.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.1.1)
+[![Release v2.2.0](https://img.shields.io/badge/release-v2.2.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.2.0)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载最新版**](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [English](README.en.md)
+[**下载最新版**](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
-[动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [独立开关](#三个独立开关) · [仓库主页](https://github.com/KouzakiUmi/pi-furry-partner#readme)
+[动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
 ![呜咪陪伴 Pi 输入框的离线效果预览](editor-preview.png)
 
@@ -27,7 +29,7 @@
 
 呜咪会待在 [Pi Coding Agent](https://github.com/earendil-works/pi) 输入框左边：想事情时托着下巴，写代码时敲敲键盘，找资料时一头钻进纸堆，只留尾巴在外面晃。你需要拿主意时，他会歪头等你；等得久了就悄悄打个盹，回来又被你叫醒。
 
-外观之外，插件也整理了输入框、底部信息和常用操作；还提供彼此独立的**界面中文、原生提示词中文精简、可选角色口吻**。不用为了一个可爱的搭档改变已有的模型与工作方式。
+外观之外，插件也整理了输入框、底部信息和常用操作。角色短句、控件和信息面板可以切换**简体中文或 English**；**原生界面中文、原生提示词中文精简、可选角色口吻**则各有开关。你可以继续使用熟悉的模型和工作方式。
 
 ## 先看看呜咪
 
@@ -73,7 +75,7 @@
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) 下载 `pi-furry-partner-v2.1.1.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) 下载 `pi-furry-partner-v2.2.0.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -87,7 +89,7 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.2.0
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
@@ -100,6 +102,8 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
 /mascot style wumi          插画风呜咪
 /mascot style wumi-pixel    同一造型的像素风
 /mascot menu                打开常用操作
+/mascot language en         切换为英文
+/mascot language zh-CN      切回简体中文
 /mascot demo thinking       看看托下巴，不调用模型
 /mascot demo off            回到真实会话
 ```
@@ -112,19 +116,31 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
 
 紧凑 footer 显示模型与 provider、思考等级、上下文和实际提供的 token / 缓存 / 费用数据。窄窗口优先保留编辑空间，空间不足时收起大头像。输入、补全和发送继续沿用 Pi 原生编辑器。
 
+## 用你习惯的语言
+
+```text
+/mascot language zh-CN      简体中文
+/mascot language en         English
+/mascot language status     查看当前语言
+```
+
+语言偏好会保存到 `config.json`；已有配置未设置语言时，默认使用简体中文。切换后，角色状态短句、气泡、输入框控件、快捷菜单和信息面板立即更新，当前任务、输入草稿与动作节奏继续保留。角色的默认显示名会随语言显示为“呜咪”或 **Umi**，你自定义的名字和副标题保持原样。
+
+英文模式沿用 Pi 原生英文界面和默认系统提示词；`locale` 的中文补丁偏好会保留，切回中文时再按原设置应用。`prompt` 和 `persona` 依然单独控制，角色口吻模板随当前语言选择，提示词与口吻的变化从下一轮请求生效。代码、工具输出、模型名、路径和项目指令不会因为切换语言被翻译。
+
 ## 三个独立开关
 
 | 功能 | 默认 | 开启 / 关闭 |
 | --- | --- | --- |
-| 原生界面中文 | 开启 | `/mascot locale on` / `off` |
-| 原生提示词中文精简 | 开启 | `/mascot prompt on` / `off` |
+| 原生界面中文偏好 | 开启；中文模式应用 | `/mascot locale on` / `off` |
+| 原生提示词中文精简 | 开启；中文模式应用 | `/mascot prompt on` / `off` |
 | 呜咪角色口吻 | 关闭 | `/mascot persona on` / `off` |
 
 三者都支持 `status`。`/mascot off` 关闭界面角色；这些开关各自保留，需要分别关闭。
 
-- **界面中文**：兼容 Pi **1.2.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。模型名、会话正文、代码、路径、工具输出和内部保存值保持原样。其他版本或未知内容保留原文。
-- **中文精简提示词**：下一轮请求中，将精确识别的 Pi 默认固定说明改成简洁中文。自定义 `SYSTEM.md`、项目 `AGENTS.md`、技能、工具规则和动态上下文保留。表达更短不代表所有模型的 token 都按相同比例减少。
-- **角色口吻**：温柔、可爱、活泼，带一点俏皮；关键事情认真稳重。独立模板只调整表达，技术准确性、代码和结构化输出优先。
+- **界面中文**：中文模式下，兼容 Pi **1.2.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
+- **中文精简提示词**：中文模式的下一轮请求中，将精确识别的 Pi 默认固定说明改成简洁中文；英文模式使用 Pi 原生默认提示词。自定义 `SYSTEM.md`、项目 `AGENTS.md`、技能、工具规则和动态上下文保留。表达更短不代表所有模型的 token 都按相同比例减少。
+- **角色口吻**：温柔、可爱、活泼，带一点俏皮；关键事情认真稳重。中英文各有独立模板，随当前语言选用；只调整表达，技术准确性、代码和结构化输出优先。
 
 界面与动画、中文处理、只读信息面板和演示都在本地完成，不额外调用模型 API。正常 Pi 对话及你主动选择的会话摘要继续使用已有模型配置。JSON、RPC 等非交互模式不会显示角色或应用这些交互界面功能。
 
@@ -132,7 +148,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.1.1
 
 | 想做什么 | 从这里开始 |
 | --- | --- |
-| 安装、配置、切换风格、卸载与恢复 | [完整中文指南](docs/guide.zh-CN.md) |
+| 安装、配置、语言、切换风格、卸载与恢复 | [完整中文指南](docs/guide.zh-CN.md) · [English guide](docs/guide.en.md) |
 | 了解状态、渲染与中文兼容层 | [架构说明](docs/architecture.md) |
 | 修改文案、增加功能、运行测试 | [贡献指南](CONTRIBUTING.md) |
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |

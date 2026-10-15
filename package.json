@@ -1,7 +1,7 @@
 {
   "name": "pi-furry-partner",
-  "version": "2.1.1",
-  "description": "Umi, a lively furry partner for Pi: animated expressions, a responsive editor, Chinese UI, and independent persona controls.",
+  "version": "2.2.0",
+  "description": "Umi / 呜咪 — an animated Pi companion with English/中文 UI, quick actions, and an optional character voice.",
   "author": "KouzakiUmi",
   "license": "Apache-2.0",
   "homepage": "https://github.com/KouzakiUmi/pi-furry-partner#readme",
@@ -35,6 +35,8 @@
     "furry",
     "mascot",
     "tui",
-    "wumi"
+    "umi",
+    "bilingual",
+    "chinese-ui"
   ]
 }

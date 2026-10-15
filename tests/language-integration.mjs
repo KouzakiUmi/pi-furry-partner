@@ -96,7 +96,7 @@ const saved = () => readFile(join(scratch, "config.json"), "utf8").then(JSON.par
 try {
   for (const name of ["index.ts", "lib", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
   await mkdir(join(scratch, "assets"));
-  for (const name of ["status-phrases.json", "status-copy.json", "ui-zh-CN.json"]) await cp(join(root, "assets", name), join(scratch, "assets", name));
+  for (const name of ["status-phrases.json", "status-copy.json", "status-phrases.en.json", "status-copy.en.json", "ui-zh-CN.json"]) await cp(join(root, "assets", name), join(scratch, "assets", name));
   await writeFile(join(scratch, "config.json"), JSON.stringify({ enabled: false, animation: false, chineseUI: true, compactPrompt: true, persona: false }));
   let instance = await instantiate({ fresh: true });
   const persona = (await readFile(join(scratch, "prompts/wumi-persona.md"), "utf8")).trim();
@@ -151,6 +151,47 @@ try {
     const config = await saved(); assert.equal(config.chineseUI, enabled); assert.equal(config.compactPrompt, true); assert.equal(config.persona, false);
   }
   checks.push("Actual native thinking UI and host-wrapped command descriptions switch Chinese/English on the next render/result while the prompt/persona settings and hidden mascot remain independent");
+
+  const englishPersona = (await readFile(join(scratch, "prompts/umi-persona.en.md"), "utf8")).trim();
+  await instance.command("language en");
+  assert.equal((await saved()).language, "en");
+  assert.equal((await saved()).chineseUI, true, "Choosing English must preserve the native Chinese patch preference");
+  assert.equal((await saved()).compactPrompt, true);
+  assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
+  assert.equal(text(thinking()).includes("思考档位"), false);
+  assert.equal(await instance.prompt(), original, "English retains the exact native Pi system prompt even when compactPrompt is on");
+  for (const enabled of [false, true]) {
+    await instance.command(`locale ${enabled ? "on" : "off"}`);
+    await instance.command(`prompt ${enabled ? "on" : "off"}`);
+    assert.equal(await instance.prompt(), original);
+    assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
+    assert.equal(text(thinking()).includes("思考档位"), false);
+  }
+  await instance.command("persona on");
+  assert.equal(await instance.prompt(), `${original}\n\n${englishPersona}`);
+  const englishCustom = { ...options, customPrompt: "KEEP user SYSTEM.md exactly\n用户自己写的中文项目约束" };
+  assert.equal(await instance.prompt(englishCustom), `${buildSystemPrompt(englishCustom)}\n\n${englishPersona}`);
+  await instance.command("persona off");
+  const beforeLanguageStatus = await readFile(join(scratch, "config.json"), "utf8");
+  for (const command of ["language status", "language", "language invalid", "locale status", "prompt status"]) await instance.command(command);
+  assert.equal(await readFile(join(scratch, "config.json"), "utf8"), beforeLanguageStatus);
+  assert.ok(notices.slice(-5).every((notice) => !/[\u3400-\u9fff]/u.test(notice.message)), "English status/validation notices must not contain Chinese plugin copy");
+  await shutdown(instance, "reload");
+  InteractiveMode.prototype.resetExtensionUI.call(hostState.host);
+  instance = await instantiate({ fresh: true });
+  await instance.emit("session_start", { reason: "reload" });
+  assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
+  assert.equal(await instance.prompt(), original, "A fresh extension load keeps the saved English language");
+  assert.equal(instance.extension.shortcuts.get("ctrl+alt+w").description, "Open Umi's quick actions");
+  await instance.command("language zh");
+  assert.equal((await saved()).language, "zh-CN");
+  assert.equal((await saved()).chineseUI, true);
+  assert.equal((await saved()).compactPrompt, true);
+  assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, chineseDescription);
+  assert.equal(text(thinking()).includes("思考档位"), true);
+  assert.equal(await instance.prompt(), localized);
+  assert.equal(instance.extension.shortcuts.get("ctrl+alt+w").description, "打开呜咪的快捷操作菜单");
+  checks.push("English language persists across an actual loader reload, restores exact native menus/default prompts while keeping locale/prompt preferences, uses its independent English persona, preserves custom multilingual SYSTEM.md, leaves status/invalid requests read-only and restores saved Chinese preferences via the zh alias");
 
   const beforeStatus = await readFile(join(scratch, "config.json"), "utf8");
   for (const command of ["locale status", "prompt status", "persona status", "locale bad", "prompt bad", "persona bad"]) await instance.command(command);

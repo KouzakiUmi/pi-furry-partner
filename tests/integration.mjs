@@ -21,7 +21,7 @@ const { KeybindingsManager } = await load(join(agentPackage, "dist/core/keybindi
 const { CustomEditor } = await load(join(agentPackage, "dist/modes/interactive/components/custom-editor.js"));
 const api = await load(join(modules, "@earendil-works/pi-tui/dist/index.js"));
 const { stripTerminalSequences } = await load(join(modules, "@earendil-works/pi-tui/dist/utils.js"));
-const { CURSOR_MARKER, visibleWidth, truncateToWidth, Container, TuiMainScreen, TuiAltScreen, ScrollView, VStack, CombinedAutocompleteProvider, setKeybindings, matchesKey } = api;
+const { CURSOR_MARKER, visibleWidth, truncateToWidth, sliceByColumn, Container, TuiMainScreen, TuiAltScreen, ScrollView, VStack, CombinedAutocompleteProvider, setKeybindings, matchesKey } = api;
 const originalClock = Date.now, originalTimeout = globalThis.setTimeout, originalClear = globalThis.clearTimeout;
 const originalWT = process.env.WT_SESSION, originalTMUX = process.env.TMUX, originalRender = process.env.PI_WINK_RENDER;
 let time = 100000, nextJob = 0, succeeded = false;
@@ -94,6 +94,26 @@ const marker = (lines) => {
   return { row: rows[0].row, col: visibleWidth(rows[0].line.slice(0, rows[0].index)) };
 };
 const mouse = (x, y, width, height, extra = {}) => ({ type:"click", button:"left", x, y, screenX:x, screenY:y, width, height, shift:false, alt:false, ctrl:false, ...extra });
+const assertClosedFrame = (rows, width) => {
+  const geometry = currentEditor.geometry, outerWidth = width - geometry.leftWidth;
+  for (const row of rows) assert.ok(visibleWidth(row) <= width, `Framed editor overflow at ${width}`);
+  if (outerWidth < 3) return;
+  const at = (row) => sliceByColumn(stripTerminalSequences(rows[geometry.offsetY + row]), geometry.leftWidth, outerWidth);
+  assert.equal(geometry.contentX, geometry.leftWidth + 1);
+  assert.equal(geometry.editorWidth, outerWidth - 2);
+  const top = at(0), bottom = at(currentEditor.renderedVisibleLineCount + 1);
+  assert.ok(top.startsWith("╭") && top.endsWith("╮"), `Top corners must connect at ${width}`);
+  assert.ok(bottom.startsWith("╰") && bottom.endsWith("╯"), `Bottom corners must connect at ${width}`);
+  for (let row = 1; row <= currentEditor.renderedVisibleLineCount; row++) {
+    const line = at(row);
+    assert.ok(line.startsWith("│") && line.endsWith("│"), `Actual input row ${row} needs both side walls at ${width}`);
+    assert.equal(visibleWidth(line), outerWidth);
+  }
+  for (let row = currentEditor.renderedVisibleLineCount + 2; row < geometry.nativeHeight; row++) {
+    const line = at(row);
+    assert.ok(line.startsWith(" ") && line.endsWith(" "), "Native completion rows align below the closed frame without dangling walls");
+  }
+};
 const holder = (which) => ({ render: (width) => which()?.render(width) || [], invalidate() { which()?.invalidate?.(); } });
 let historyLength = 0;
 const history = { render: () => Array.from({ length: historyLength }, (_, i) => `history ${i}`), invalidate() {} };
@@ -188,14 +208,44 @@ try {
   }finally{await rename(templatePath+".saved",templatePath);await command("persona off");}
   checks.push("Persona hook defaults off; TUI on appends its template after an intact system prompt, off retracts it, RPC never injects and missing templates fail open with a notice");
 
+  const framePreviews = [];
+  for (const language of ["en", "zh-CN"]) {
+    await command(`language ${language}`);
+    for (const padding of [0, 1, 3]) {
+      currentEditor.setPaddingX(padding);
+      for (const text of ["", "你好🙂abc", "first line\n第二行 👩‍💻e\u0301", "中文🙂".repeat(35)]) {
+        currentEditor.setText(text); currentEditor.focused = true;
+        for (const width of [1, 2, 3, 4, 5, 8, 20, 39, 55, 60, 80, 100, 160]) {
+          const rows = currentEditor.render(width), geometry = currentEditor.geometry;
+          assertClosedFrame(rows, width);
+          const actual = marker(rows);
+          assert.ok(actual.col >= geometry.contentX && actual.col < geometry.contentX + geometry.editorWidth, "The IME marker stays inside the text area, including impossible one-cell wide-grapheme fallbacks");
+          if (geometry.editorWidth >= 4 && geometry.editorWidth === geometry.nativeRenderWidth) {
+            const baseline = nativeEditor(); baseline.setPaddingX(padding); baseline.setText(text);
+            const expected = marker(baseline.render(geometry.editorWidth));
+            assert.equal(actual.col, expected.col + geometry.contentX);
+            assert.equal(actual.row, expected.row + geometry.offsetY);
+          }
+        }
+      }
+    }
+    currentEditor.setPaddingX(0); currentEditor.setText(language === "en" ? "Let's try a little idea." : "可以试试这个小点子呀。");
+    const rows = currentEditor.render(100), geometry = currentEditor.geometry;
+    framePreviews.push({ language, lines: plain(rows.slice(geometry.offsetY, geometry.offsetY + geometry.nativeHeight)).map((line) => sliceByColumn(line, geometry.leftWidth, 100 - geometry.leftWidth)) });
+  }
+  await writeFile(join(work, "editor-frame-previews.json"), JSON.stringify(framePreviews, null, 2) + "\n");
+  currentEditor.setPaddingX(0); currentEditor.setText("");
+  checks.push("Actual English/Chinese input frames reserve both side columns before native layout: connected corners and every visible text wall stay closed, padding/wide graphemes/emoji/multiline wrapping fit widths 1–160 and IME markers match the native inner editor or remain safely clamped in impossible one-cell layouts");
+
   for (const text of ["hello", "你好🙂abc", "第一行🙂\n第二行中文🙂", "中文🙂".repeat(90)]) {
     currentEditor.setText(text); currentEditor.focused = true;
     for (const width of [40,59,60,80,100,160]) {
       terminal.columns = width;
       const lines = currentEditor.render(width), geometry = currentEditor.geometry;
+      assertClosedFrame(lines, width);
       const baseline = nativeEditor(); baseline.setText(text); const nativeLines = baseline.render(geometry.editorWidth);
       const actual = marker(lines), expected = marker(nativeLines);
-      assert.equal(actual.col, expected.col + geometry.leftWidth);
+      assert.equal(actual.col, expected.col + geometry.contentX);
       assert.equal(actual.row, expected.row + geometry.offsetY);
       for (const line of lines) assert.ok(visibleWidth(line) <= width, `editor overflow ${width}`);
       if (width < 60) assert.equal(geometry.leftWidth, 0);
@@ -205,13 +255,13 @@ try {
   let lines = currentEditor.render(100), geometry = currentEditor.geometry;
   let baseline = nativeEditor(); baseline.setText(currentEditor.getText()); baseline.render(geometry.editorWidth);
   for (const x of [0,2,4,6,10]) {
-    const productResult = currentEditor.handleMouse(mouse(x+geometry.leftWidth, geometry.offsetY+1, 100, lines.length));
+    const productResult = currentEditor.handleMouse(mouse(x+geometry.contentX, geometry.offsetY+1, 100, lines.length));
     const nativeResult = baseline.handleMouse(mouse(x,1,geometry.editorWidth,geometry.nativeHeight));
     assert.deepEqual(currentEditor.getCursor(), baseline.getCursor()); assert.deepEqual(productResult,nativeResult);
   }
   const cursorBefore = currentEditor.getCursor();
   currentEditor.handleMouse(mouse(1,1,100,lines.length)); assert.deepEqual(currentEditor.getCursor(),cursorBefore);
-  assert.equal(currentEditor.handleMouse(mouse(geometry.leftWidth+2,geometry.offsetY+1,100,lines.length,{type:"drag"})),undefined);
+  assert.equal(currentEditor.handleMouse(mouse(geometry.contentX+2,geometry.offsetY+1,100,lines.length,{type:"drag"})),undefined);
   checks.push("CJK/emoji/multiline/wrapped input keeps native marker coordinates plus dock offsets; clicks translate correctly and drag selection stays native");
 
   for (const input of ["\x01","Z","\x05","\x0b","\x19"]) { currentEditor.handleInput(input); baseline.handleInput(input); assert.equal(currentEditor.getText(),baseline.getText()); assert.deepEqual(currentEditor.getCursor(),baseline.getCursor()); }
@@ -224,10 +274,10 @@ try {
   const provider = new CombinedAutocompleteProvider(Array.from({length:12},(_,i)=>({name:`cmd-${i}`,description:`中文说明 ${i} `.repeat(15)})),scratch,null);
   currentEditor.setAutocompleteProvider(provider); currentEditor.setText("/"); currentEditor.handleInput("\t"); await flush();
   assert.equal(currentEditor.isShowingAutocomplete(),true);
-  for(const width of [40,60,80,120]) { lines=currentEditor.render(width); for(const line of lines)assert.ok(visibleWidth(line)<=width,`autocomplete overflow ${width}`); }
+  for(const width of [40,60,80,120]) { lines=currentEditor.render(width); assertClosedFrame(lines,width); for(const line of lines)assert.ok(visibleWidth(line)<=width,`autocomplete overflow ${width}`); }
   lines=currentEditor.render(100);geometry=currentEditor.geometry;
   const autocompleteRow=currentEditor.renderedVisibleLineCount+2;
-  currentEditor.handleMouse(mouse(geometry.leftWidth+3,geometry.offsetY+autocompleteRow+1,100,lines.length));
+  currentEditor.handleMouse(mouse(geometry.contentX+3,geometry.offsetY+autocompleteRow+1,100,lines.length));
   assert.ok(currentEditor.getText().startsWith("/cmd-1"));
   assert.equal(currentEditor.isShowingAutocomplete(),false);
   currentEditor.setAutocompleteProvider(new CombinedAutocompleteProvider([],scratch,null)); currentEditor.setText("");
@@ -255,7 +305,7 @@ try {
   const activePhrase=phraseData.phrases.thinking.find((phrase)=>busyLines.some((line)=>line.includes(phrase)));
   assert.ok(activePhrase,"The dynamic Wumi phrase must replace the native busy caption");
   assert.equal(busyLines.filter((line)=>line.includes(activePhrase)).length,1,"The phrase must occur once, in the native top border");
-  assert.ok(busyLines.find((line)=>line.includes(activePhrase)).trimStart().startsWith("──"));
+  assert.ok(busyLines.find((line)=>line.includes(activePhrase)).trimStart().startsWith("╭──"));
   assert.ok(!busyLines.join("\n").includes("Working"));
   for(const width of [1,2,4,8,12,20,39,55,60,80,100,160]){
     const rows=currentEditor.render(width);
@@ -314,6 +364,37 @@ try {
   const rawMarkers=(renderer.captureRenderState().previousLines.join("").match(/\x1b\]777;pi-furry-partner-/g)||[]).length;
   assert.ok(rawMarkers>0);assert.ok(dcsCount()<=rawMarkers,"A differential update can reuse unchanged stripe rows and must never duplicate the full set of retained image anchors");
   checks.push("Long real main-screen history keeps title stable and animates only the visible editor, with no ESC[3J or duplicate Sixel translation");
+
+  // The public language command changes the real mounted editor without
+  // restarting the activity session or submitting/replacing the user's draft.
+  await command("demo off");
+  currentEditor.setText("language switch draft🙂");
+  const languageDraft = currentEditor.getText(), languageSubmits = submits.length;
+  await emit("agent_start");
+  await emit("tool_execution_start", { toolCallId: "language-keep", toolName: "bash", args: { command: "NEVER_ECHO_SECRET" } });
+  time += 1200;
+  await command("language en");
+  assert.equal(currentEditor.getText(), languageDraft);
+  assert.equal(submits.length, languageSubmits);
+  assert.ok(plain(currentHeader.render(160)).join("\n").includes("Umi · Your coding companion"));
+  const englishRows = plain(currentEditor.render(160)).join("\n");
+  assert.ok(englishRows.includes("bash"), "The active tool must remain attached across the language switch");
+  assert.ok(!/[\u3400-\u9fff]/u.test(englishRows), "English editor should contain no untranslated companion labels, phrases, bubbles or keyboard hints");
+  const englishFooter = plain(currentFooter.render(160)).join("\n");
+  assert.ok(englishFooter.includes("test/中文"), "Language must not rewrite the user's branch name");
+  assert.ok(!/[\u3400-\u9fff]/u.test(englishFooter.replace("test/中文", "")));
+  assert.equal(jobs.size, 1);
+  const savedEnglish = JSON.parse(await readFile(join(scratch, "config.json"), "utf8"));
+  assert.equal(savedEnglish.language, "en"); assert.equal(savedEnglish.chineseUI, true); assert.equal(savedEnglish.compactPrompt, true);
+  await command("language zh-CN");
+  assert.equal(currentEditor.getText(), languageDraft);
+  assert.equal(submits.length, languageSubmits);
+  assert.ok(plain(currentEditor.render(160)).join("\n").includes("bash"));
+  assert.ok(plain(currentHeader.render(160)).join("\n").includes("呜咪 · 你的工作搭档"));
+  await emit("tool_execution_end", { toolCallId: "language-keep", isError: false });
+  await emit("agent_before_settle", { outcome: "completed" }); await emit("agent_settled", { aborted: false });
+  currentEditor.setText("");
+  checks.push("Actual mounted editor/header/footer switch English and back while a real tool event is active: draft, submission count, active tool and single animation timer survive, native Chinese/prompt preferences persist and no Chinese companion text leaks into English");
 
   const main=renderer;
   renderer=new TuiAltScreen(terminal,false,undefined,{mouse:false});renderer.requestRender=()=>{redraws++};

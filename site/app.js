@@ -41,7 +41,7 @@ function render() {
   if (!running) return;
   const snapshot = activity.snapshot(), sheet = sheets[style];
   let face = snapshot.face;
-  const phaseBlink = { thinking: "think-blink", running: "work-blink", speaking: "talk-blink", success: "happy-blink", waiting: "wait-blink" };
+  const phaseBlink = { thinking: "think-blink", running: "work-blink", success: "happy-blink", waiting: "wait-blink" };
   if (snapshot.blink && phaseBlink[snapshot.phase]) face = phaseBlink[snapshot.phase];
   if (snapshot.blink && face === "idle-open") face = "idle-blink";
   if (!(face in sheet.ids)) face = "idle-open";

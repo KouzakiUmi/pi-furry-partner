@@ -68,7 +68,6 @@ function draw(){
   if(snapshot.blink&&snapshot.phase==="thinking"&&sheet.ids["think-blink"]!==undefined)id="think-blink";
   if(snapshot.blink&&id==="think"&&sheet.ids["think-blink"]!==undefined)id="think-blink";
   if(id==="idle-blink"&&["reading","editing","running"].includes(snapshot.phase)&&sheet.ids["work-blink"]!==undefined)id="work-blink";
-  if(snapshot.phase==="speaking"&&snapshot.blink&&sheet.ids["talk-blink"]!==undefined)id="talk-blink";
   if(snapshot.blink&&id==="happy"&&sheet.ids["happy-blink"]!==undefined)id="happy-blink";
   if(snapshot.blink&&id==="concern"&&sheet.ids["concern-blink"]!==undefined)id="concern-blink";
   if(snapshot.blink&&id==="idle-open")id="idle-blink";

@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
@@ -25,7 +26,7 @@ IDS = ["idle-open", "idle-blink", "talk-closed", "talk-small", "talk-medium", "t
        "think", "work", "happy", "concern", "rest", "idle-wink", "think-blink", "work-blink", "talk-blink", "concern-blink", "happy-blink", "error", "search"]
 SOURCE = {"idle-open": "neutral", "idle-blink": "neutral", "idle-wink": "neutral", "concern": "neutral",
           "talk-closed": "speak", "talk-small": "speak", "talk-medium": "speak", "talk-wide": "speak",
-          "think": "think", "think-blink": "think", "work": "work", "work-blink": "work", "talk-blink": "speak", "happy": "happy", "rest": "rest", "concern-blink": "neutral", "happy-blink": "happy", "error": "neutral", "search": "search"}
+          "think": "think", "think-blink": "think", "work": "work", "work-blink": "work", "talk-blink": "speak", "happy": "happy", "rest": "rest", "concern-blink": "neutral", "happy-blink": "happy", "error": "error", "search": "search"}
 LABELS = {"idle-open": "就绪", "idle-blink": "眨眼", "idle-wink": "醒来 Wink", "talk-closed": "说话：闭嘴",
           "talk-small": "说话：小口", "talk-medium": "说话：中口", "talk-wide": "说话：大口",
           "think": "托腮思考", "think-blink": "托腮眨眼", "work": "双爪工作", "work-blink": "工作眨眼",
@@ -83,44 +84,58 @@ EYE_CLEAN_POLYGONS = {
 HAPPY_LID_BOXES = {"right": (344,249,402,323)}
 
 
+@lru_cache(maxsize=4)
+def clean_pose(name):
+    """Authored, image-model-repaired texture masters, kept at canonical 640px."""
+    image = Image.open(POSES / name).convert("RGBA")
+    if image.size != (640, 640):
+        raise ValueError(f"Clean rig master must be canonical 640px: {name}")
+    return image
+
+
+def texture_patch(base, donor, mask):
+    """Composite an authored local fur texture; never flatten it to white."""
+    result = base.copy()
+    result.paste(donor, (0, 0), mask)
+    return keep_alpha(base, result)
+
+
 def blink(base, eyes, right_only=False, cross=False, lid_boxes=None):
     result = base.copy()
-    array = np.array(result)
+    clean = clean_pose("neutral-eyes-clean.png")
+    # Sample actual blank fur well inside the authored eye sockets. Extending
+    # an affine iris box beyond its corners would drag central hair or cheek
+    # blush into a wider wink, so these windows contain clean fur only.
+    canonical = {"left": (214,252,245,294), "right": (337,253,375,298)}
     for name, box in eyes.items():
         if right_only and name != "right":
             continue
-        if not cross:
-            polygon = EYE_CLEAN_POLYGONS.get(tuple(box))
-            if polygon is None:
-                raise ValueError(f"Missing full eyelash polygon for {box}")
-            region = Image.new("L", base.size)
-            ImageDraw.Draw(region).polygon(polygon, fill=255)
-            rgb = array[:, :, :3].astype(np.int16)
-            blue = (rgb[:,:,1]-rgb[:,:,0] > 10) & (rgb[:,:,2]-rgb[:,:,0] > 30)
-            dark = rgb.max(axis=2) < 135
-            iris_region = np.zeros(base.size[::-1], dtype=bool)
-            x0,y0,x1,y1 = box
-            iris_region[y0:y1,x0:x1] = True
-            coral = (rgb[:,:,0]-rgb[:,:,1] > 16) & (rgb[:,:,0]-rgb[:,:,2] > 16) & iris_region
-            feature = (blue | dark | coral) & (np.asarray(region) > 0)
-            nearby = Image.fromarray(feature.astype(np.uint8)*255).filter(ImageFilter.MaxFilter(17))
-            feature |= (np.asarray(nearby)>0) & (rgb.min(axis=2)<235) & (np.asarray(region)>0)
-            mask = Image.fromarray(feature.astype(np.uint8)*255).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.7))
-            # Limit the softened patch to the face-only polygon; hair, brows,
-            # muzzle, blush and alpha outside it remain bitwise unchanged.
-            weight = np.minimum(np.asarray(mask), np.asarray(region))[:,:,None].astype(float)/255
-            array[:,:,:3] = np.round(rgb*(1-weight)+np.array([251,251,252])*weight).astype(np.uint8)
-            continue
-        x0, y0, x1, y1 = box
-        rgb = array[y0:y1, x0:x1, :3].astype(np.int16)
-        blue = (rgb[:, :, 1]-rgb[:, :, 0] > 3) & (rgb[:, :, 2]-rgb[:, :, 0] > 9)
-        dark = rgb.max(axis=2) < 185
-        coral = (rgb[:, :, 0]-rgb[:, :, 1] > 16) & (rgb[:, :, 0]-rgb[:, :, 2] > 16)
-        mask = Image.fromarray((blue | dark | coral).astype(np.uint8)*255)
-        mask = mask.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.6))
-        weight = np.asarray(mask)[:, :, None].astype(float)/255
-        array[y0:y1, x0:x1, :3] = np.round(rgb*(1-weight)+np.array([251, 251, 252])*weight).astype(np.uint8)
-    result = Image.fromarray(array)
+        polygon = EYE_CLEAN_POLYGONS.get(tuple(box))
+        if polygon is None:
+            raise ValueError(f"Missing full eyelash polygon for {box}")
+        region = Image.new("L", base.size)
+        ImageDraw.Draw(region).polygon(polygon, fill=255)
+        # Include the original lash's antialias fringe just beyond the fitted
+        # polygon; stop exactly before the real brow and mouth regions.
+        expanded = np.array(region.filter(ImageFilter.MaxFilter(7)))
+        expanded[:215] = 0; expanded[327:] = 0
+        region = Image.fromarray(expanded)
+        # Register the blank fur under each eye independently. The original
+        # polygons exclude the real gray brows and follow the central hair.
+        # Rest/wink boxes intentionally have a shorter vertical eye geometry.
+        x0 = min(x for x, _ in polygon); y0 = min(y for _, y in polygon)
+        x1 = max(x for x, _ in polygon); y1 = max(y for _, y in polygon)
+        sx0, sy0, sx1, sy1 = canonical[name]
+        scale_x, scale_y = (sx1-sx0)/(x1-x0), (sy1-sy0)/(y1-y0)
+        donor = clean.transform(base.size, Image.Transform.AFFINE,
+                                (scale_x, 0, sx0-x0*scale_x, 0, scale_y, sy0-y0*scale_y),
+                                Image.Resampling.BICUBIC)
+        # Replace the complete old socket, including pale eyelash shadows.
+        # Masking only dark/blue ink leaves gray crescents that read as a
+        # second eyebrow. The authored fur window retains subtle texture.
+        soft = region.filter(ImageFilter.GaussianBlur(1.8))
+        mask = Image.fromarray(np.minimum(np.asarray(region), np.asarray(soft)))
+        result = texture_patch(result, donor, mask)
     draw = ImageDraw.Draw(result)
     for name, (x0, y0, x1, y1) in eyes.items():
         if right_only and name != "right":
@@ -144,23 +159,20 @@ def blink(base, eyes, right_only=False, cross=False, lid_boxes=None):
 
 
 def clean_mouth(base, box):
-    array = np.array(base)
-    original = np.array(base)
+    clean = clean_pose("speak-clean.png")
+    canonical = (264, 332, 329, 371)
     x0, y0, x1, y1 = box
-    x0 -= 2; y0 -= 2; x1 += 2; y1 += 2
-    rgb = original[y0:y1, x0:x1, :3].astype(np.int16)
-    feature = (rgb.min(axis=2) < 224) | (rgb[:, :, 0]-rgb[:, :, 1] > 7) | (rgb[:, :, 0]-rgb[:, :, 2] > 7)
-    mask = Image.fromarray(feature.astype(np.uint8)*255).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.5))
-    weight = np.asarray(mask)[:, :, None].astype(float)/255
-    top, bottom = y0-3, y1+3
-    for row, y in enumerate(range(y0, y1)):
-        amount = (y-top)/(bottom-top)
-        background = original[top, x0:x1, :3]*(1-amount)+original[bottom, x0:x1, :3]*amount
-        # All mouth patches lie on the white muzzle; do not pull a nose/scarf
-        # shadow into the lip patch when estimating its local paper texture.
-        background = np.maximum(background, [241, 240, 241])
-        array[y, x0:x1, :3] = np.round(rgb[row]*(1-weight[row])+background*weight[row]).astype(np.uint8)
-    return Image.fromarray(array)
+    offset_x = (canonical[0]+canonical[2]-x0-x1)/2
+    offset_y = (canonical[1]+canonical[3]-y0-y1)/2
+    donor = clean.transform(base.size, Image.Transform.AFFINE, (1, 0, offset_x, 0, 1, offset_y), Image.Resampling.BICUBIC)
+    # One common texture patch removes the former opening and gray left-corner
+    # shadow for all speech shapes. Feather only its outer clean-fur boundary;
+    # the actual former lip region is fully replaced with the authored master.
+    region = Image.new("L", base.size)
+    ImageDraw.Draw(region).rounded_rectangle((x0-9, max(328, y0-5), x1+9, min(376, y1+6)), radius=5, fill=255)
+    soft = region.filter(ImageFilter.GaussianBlur(2.0))
+    mask = Image.fromarray(np.minimum(np.asarray(region), np.asarray(soft)))
+    return texture_patch(base, donor, mask)
 
 
 def mouth(base, box, shape):
@@ -169,15 +181,20 @@ def mouth(base, box, shape):
     x0, y0, x1, y1 = box
     cx = (x0+x1)/2
     cy = (y0+y1)/2
+    # The muzzle and upper lip stay in place as the lower jaw opens. Centering
+    # every ellipse in the metadata box made the small dash drop and the wide
+    # mouth rise; that reads as four unrelated stickers in a speaking cycle.
+    upper_lip = y0 + 7
     pink = (207, 115, 119, 255)
     dark = (129, 63, 76, 255)
     if shape == "closed":
-        draw_beast_mouth(result, cx=cx, baseline=y0+7, half_width=24,
+        draw_beast_mouth(result, cx=cx, baseline=upper_lip, half_width=22,
                          stroke=3, fang=False,
                          outer=(145, 91, 98, 255), inner=(119, 62, 78, 255))
     elif shape in ("small", "medium", "wide"):
-        width, height = {"small": (28, 0), "medium": (30, 26), "wide": (44, 34)}[shape]
-        draw_round_mouth(result, cx=cx, cy=cy, width=width, height=height,
+        width, height = {"small": (26, 0), "medium": (28, 19), "wide": (40, 31)}[shape]
+        speech_cy = upper_lip + (2 + height/2 if height else 3)
+        draw_round_mouth(result, cx=cx, cy=speech_cy, width=width, height=height,
                          stroke=3, fang=shape in ("medium", "wide"),
                          outer=(145, 91, 98, 255), inner=(119, 62, 78, 255))
     elif shape == "concern":
@@ -336,10 +353,14 @@ def validate(frames, data, metadata):
     for frame in data["frames"]:
         assert len(frame["pixels"]) == 240*240
         assert all(0 <= i < len(data["palette"]) for i in frame["pixels"])
-    for a, b in [("idle-open", "idle-blink"), ("idle-open", "idle-wink"), ("think", "think-blink"), ("work", "work-blink"), ("talk-closed", "talk-blink"), ("concern", "concern-blink"), ("happy", "happy-blink"), ("idle-open", "error")]:
+    for a, b in [("idle-open", "idle-blink"), ("idle-open", "idle-wink"), ("think", "think-blink"), ("work", "work-blink"), ("talk-closed", "talk-blink"), ("concern", "concern-blink"), ("happy", "happy-blink")]:
         assert np.array_equal(np.asarray(frames[a])[:, :, 3], np.asarray(frames[b])[:, :, 3])
         assert np.array_equal(np.asarray(decode(data, a))[:, :, 3], np.asarray(decode(data, b))[:, :, 3])
         assert np.array_equal(np.asarray(frames[a])[385:], np.asarray(frames[b])[385:]), "Blink changed a paw/scarf."
+        assert np.array_equal(np.asarray(frames[a])[:215], np.asarray(frames[b])[:215]), "Blink changed the real gray eyebrows or forehead."
+    assert frames["error"].tobytes() == Image.open(POSES / "error.png").convert("RGBA").tobytes(), "The dedicated clean XX artwork must be used directly."
+    report["errorSource"] = "Dedicated locally repaired error.png; independent pose alpha/body allowed"
+    report["cleanTextureSources"] = ["neutral-eyes-clean.png", "speak-clean.png"]
     speech = [frames[key] for key in ["talk-closed", "talk-small", "talk-medium", "talk-wide"]]
     assert len({frame.tobytes() for frame in speech}) == 4
     base = np.asarray(speech[-1])
@@ -362,7 +383,7 @@ def main():
     parser.add_argument("--assets-only", action="store_true", help="Preserve separately rendered editor preview PNG/GIF")
     args = parser.parse_args()
     metadata = json.loads((POSES / "metadata.json").read_text(encoding="utf-8"))
-    poses = {name: Image.open(POSES / f"{name}.png").convert("RGBA") for name in ["neutral", "think", "work", "speak", "happy", "rest", "search"]}
+    poses = {name: Image.open(POSES / f"{name}.png").convert("RGBA") for name in ["neutral", "think", "work", "speak", "happy", "rest", "search", "error"]}
     frames = {"idle-open": poses["neutral"].copy(), "idle-blink": blink(poses["neutral"], metadata["poses"]["neutral"]["eyes"]),
               "idle-wink": blink(poses["neutral"], metadata["poses"]["neutral"]["eyes"], right_only=True),
               "think": poses["think"].copy(), "think-blink": blink(poses["think"], metadata["poses"]["think"]["eyes"]),
@@ -374,7 +395,7 @@ def main():
     frames["talk-blink"] = blink(frames["talk-medium"], metadata["poses"]["speak"]["eyes"])
     frames["concern-blink"] = blink(frames["concern"], metadata["poses"]["neutral"]["eyes"])
     frames["happy-blink"] = blink(poses["happy"], metadata["poses"]["happy"]["eyes"], lid_boxes=HAPPY_LID_BOXES)
-    frames["error"] = mouth(blink(poses["neutral"], metadata["poses"]["neutral"]["eyes"], cross=True), metadata["poses"]["neutral"]["mouth"], "closed")
+    frames["error"] = poses["error"].copy()
     frames["search"] = poses["search"].copy()
     data = indexed_sheet(frames)
     report = validate(frames, data, metadata)
@@ -394,9 +415,9 @@ def main():
     assert pixel_data["width"] == 80 and len(pixel_data["palette"]) == 48
     assert len({bytes(pixel_data["frames"][pixel_data["ids"][key]]["pixels"]) for key in ["talk-closed", "talk-small", "talk-medium", "talk-wide"]}) == 4
     report["pixelDerivative"] = {"style":"wumi-pixel","width":80,"height":80,"paletteSize":48,"frameCount":len(IDS),"fourDistinctSpeechMouths":True,"dithering":False,"sampling":"nearest","sharedPalette":True}
-    report["mouthDesign"] = "w / short dash / small o / large O; one subtle side fang on medium/wide; talk-blink uses medium o"
+    report["mouthDesign"] = "Stable upper-lip w / short dash / small o / large O over authored clean muzzle; one side fang; runtime blinking preserves the current mouth"
     report["ids"] = data["ids"]
-    report["errorDesign"] = "Two cute dark X eyes and a small closed W muzzle on the neutral paw pose"
+    report["errorDesign"] = "Dedicated repaired manga XX expression with original eye outlines completely removed"
     report["searchDesign"] = "Head buried in papers; independent normalized tail polygon and pivot"
     report["motionMetadata"] = {"wave":True,"tail":True,"normalized":True}
     if not args.assets_only:

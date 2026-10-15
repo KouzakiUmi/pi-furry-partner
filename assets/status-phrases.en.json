@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "rotationMs": 6500,
+  "phrases": {
+    "idle": [
+      "I'm right here. Got a little idea for us?",
+      "Ears up! I'm listening.",
+      "I'm ready. Where shall we start?",
+      "Take your time. I'll keep you company.",
+      "Tiny ideas count too. Let's work one out together.",
+      "Still here whenever you'd like to pick this up."
+    ],
+    "waking": [
+      "Mmm, I heard you. Let me wake up a little.",
+      "Oh, you're here! I was just resting my eyes.",
+      "One little eye rub, then I'm all ears.",
+      "A quick stretch, and I'm ready to help.",
+      "I'm awake. Turning my ears your way!",
+      "Here I am. What shall we make today?"
+    ],
+    "thinking": [
+      "Paw on my chin. Let me connect these steps.",
+      "Let me think it through before I explain.",
+      "I'll try looking at it from another angle.",
+      "I'm sorting out how these pieces fit.",
+      "Let me put these clues together for a moment.",
+      "I'll think a little deeper so I don't miss the key bit."
+    ],
+    "speaking": [
+      "Here's what I've been thinking. Let me tell you.",
+      "I'm writing it out. You can follow along.",
+      "I'll keep going and make this part clear.",
+      "Main point first, then the useful details.",
+      "I'll explain as I go. You can jump in too.",
+      "I'm just finishing this part for you."
+    ],
+    "reading": [
+      "Let me see what's in here first.",
+      "I'll read the surrounding bits carefully too.",
+      "I'm going through this file now.",
+      "Let me look at these related sections together.",
+      "I'll check the little details here as well.",
+      "A little more context should keep me on the right track."
+    ],
+    "editing": [
+      "I'll put that plan into this section now.",
+      "Let me work these changes in, one bit at a time.",
+      "Paws at work. I'm being careful with this bit.",
+      "These pieces need to fit, so I'm checking the joins.",
+      "I'm editing now, with an eye on the details.",
+      "I'll adjust this part to match what you had in mind."
+    ],
+    "running": [
+      "I'm watching the tool output for a reply.",
+      "This step is still running. I've got an eye on it.",
+      "I'll stay with this step and see what comes back.",
+      "I'll wait for the tool before I carry on.",
+      "Let me check how the output is coming along.",
+      "I'm still watching. No final result just yet."
+    ],
+    "searching": [
+      "I'm digging through the notes for a clue.",
+      "Let me follow this keyword a little further.",
+      "I'll pull up the relevant bits for a closer look.",
+      "I'm looking for the details that matter here.",
+      "I'll check another corner in case I missed something.",
+      "Head down in the papers. One more place to look."
+    ],
+    "waiting": [
+      "I'm waiting for this step to reply before I continue.",
+      "I'll wait for an answer from the other side.",
+      "Nothing back yet. I'll give it a little more time.",
+      "This step hasn't replied, so I'll stay here for now.",
+      "No reply yet. I won't guess what happened.",
+      "I'm still waiting. No new update just yet."
+    ],
+    "waiting_user": [
+      "Your call. Take your time thinking it over.",
+      "I've left the question here. Tell me when you're ready.",
+      "I'm listening. Which way would you like to go?",
+      "I'll keep you company until you're ready to reply.",
+      "I'd like to hear your thoughts before I continue.",
+      "Paws tucked in. I'll wait for your say on this one."
+    ],
+    "success": [
+      "That's this turn from me. Take a look when you're ready.",
+      "I've left everything here for you to read.",
+      "Paws down for a moment. What's next?",
+      "Let's have a look at how this turn went.",
+      "I'm done writing for now, and still here to chat.",
+      "I'll wrap this part up and leave the next step to you."
+    ],
+    "error": [
+      "That step didn't work. The error is still here to check.",
+      "I've hit a snag. I still need to confirm why.",
+      "This run failed. Let me see what the error says.",
+      "I need to pause here. This result isn't a success.",
+      "I'm stuck on this bit. I need to check what went wrong.",
+      "This step hasn't worked yet. I need to rethink the approach."
+    ],
+    "cancelled": [
+      "I'll stop here and wait for your next step.",
+      "Got it. Paws back for now.",
+      "I've stopped. Call me when you'd like to continue.",
+      "I won't carry on yet. I'm listening.",
+      "I'll set this step aside while you think.",
+      "A little pause for now. We'll pick it up your way."
+    ],
+    "compacting": [
+      "I'll gather what we've discussed and keep the key bits.",
+      "Let me sort the earlier context for what comes next.",
+      "I'm putting the story so far in order.",
+      "I'll collect these clues and keep the important ones close.",
+      "I'm jotting down the key points so we can keep going.",
+      "Let me gather your requests and where we've got to."
+    ]
+  }
+}

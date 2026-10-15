@@ -193,7 +193,7 @@ try {
   const busyRows=draw();const phrase=phraseData.phrases.thinking.find((value)=>busyRows.some((line)=>line.includes(value)));
   assert.ok(phrase);assert.equal(busyRows.filter((line)=>line.includes(phrase)).length,1);
   assert.ok(!busyRows.join("\n").includes("Working"));
-  assert.ok(sliceByColumn(busyRows.find((line)=>line.includes(phrase)),currentEditor.geometry.leftWidth,terminal.columns).trimStart().startsWith("──"));
+  assert.ok(sliceByColumn(busyRows.find((line)=>line.includes(phrase)),currentEditor.geometry.leftWidth,terminal.columns).trimStart().startsWith("╭──"));
   checks.push("Actual fullscreen product input shows one dynamic Wumi phrase in its top border and suppresses the native Working caption without adding a status row");
 
   currentEditor.setText("native action draft🙂"); draw();
@@ -241,10 +241,19 @@ try {
   const beforeCaret = currentEditor.getCursor();
   const baselineEditor = nativeEditor(); baselineEditor.setText(currentEditor.getText()); baselineEditor.render(geometry.editorWidth);
   baselineEditor.handleMouse({ type: "click", button: "left", x: 4, y: 1, screenX: 0, screenY: 0, width: geometry.editorWidth, height: geometry.nativeHeight, shift: false, alt: false, ctrl: false });
-  click(geometry.leftWidth + 4, textPoint.y);
+  click(geometry.contentX + 4, textPoint.y);
   assert.deepEqual(currentEditor.getCursor(), baselineEditor.getCursor()); assert.notDeepEqual(currentEditor.getCursor(), beforeCaret);
   assert.equal(screen.getFocusedComponent(), currentEditor);
   checks.push("Real SGR press/release reaches nested editor containers, offsets CJK/emoji caret coordinates correctly and preserves keyboard focus");
+
+  const wallCursor = currentEditor.getCursor(), wallSubmits = submits.length, wallActions = nativeActions.length;
+  click(geometry.leftWidth, textPoint.y); click(terminal.columns - 1, textPoint.y);
+  assert.deepEqual(currentEditor.getCursor(), wallCursor, "Side-wall clicks must not be forwarded as text cells");
+  assert.equal(submits.length, wallSubmits); assert.equal(nativeActions.length, wallActions);
+  const wallRows = draw(), wallInput = wallRows[textPoint.y];
+  assert.equal(sliceByColumn(wallInput, geometry.leftWidth, 1), "│");
+  assert.equal(sliceByColumn(wallInput, terminal.columns - 1, 1), "│");
+  checks.push("Real fullscreen input visibly retains both side walls, and SGR clicks on either wall cannot move the caret, submit a draft or activate a toolbar action");
 
   currentEditor.setText("drag this native input text"); const dragPoint = find("drag this native input text");
   const cursorBeforeDrag = currentEditor.getCursor();
@@ -292,10 +301,10 @@ try {
   checks.push("Native autocomplete receives routed wheel/click events, while wheel over output scrolls only the official transcript viewport");
 
   terminal.columns = 55; draw(); assert.equal(currentEditor.geometry.leftWidth, 0);
-  currentEditor.setText("narrow input"); const narrow = find("narrow input"); click(3, narrow.y);
+  currentEditor.setText("narrow input"); const narrow = find("narrow input"); click(currentEditor.geometry.contentX + 3, narrow.y);
   assert.equal(screen.getFocusedComponent(), currentEditor); assert.equal(currentEditor.getCursor().col, 3);
   terminal.columns = 110; draw();
-  checks.push("A 55-column window collapses the avatar dock and still routes clicks to the native caret at the unshifted input column");
+  checks.push("A 55-column window collapses the avatar dock and still routes clicks through the one-cell frame inset to the native caret");
 
   await extension.commands.get("mascot").handler("render sixel",ctx);currentEditor.setText("");draw();
   assert.notEqual(screen.showOverlay,nativeShowOverlay,"Actual product editor must observe native public overlay handles");
@@ -313,6 +322,18 @@ try {
   crossing.hide();writes.length=0;
   await extension.commands.get("mascot").handler("demo success",ctx);draw();assert.ok(countDcs()>0);
   checks.push("Actual native modal bounds allow Sixel animation above the dock, suppress intersecting retained stripe anchors and restore images after hide");
+
+  await extension.commands.get("mascot").handler("language en",ctx);
+  currentEditor.setText("English framed draft"); draw();
+  const englishCopy = nativeActions.length;
+  nextMenuChoice = (option) => /^Copy /.test(option);
+  const englishMore = find("[More]"); click(englishMore.x, englishMore.y); await flush();
+  assert.equal(nativeActions.length, englishCopy + 1); assert.equal(nativeActions.at(-1), "app.message.copy");
+  assert.equal(currentEditor.getText(), "English framed draft");
+  const englishSubmits = submits.length, englishSend = find("[Send]"); click(englishSend.x, englishSend.y); await flush();
+  assert.equal(submits.length, englishSubmits + 1); assert.equal(submits.at(-1), "English framed draft");
+  await extension.commands.get("mascot").handler("language zh-CN",ctx); draw();
+  checks.push("English framed More/Send controls receive real terminal SGR gestures at their rendered cells, preserve native copy semantics and submit once; switching back restores the Chinese controls");
 
   await emit("session_shutdown",{reason:"reload"});assert.equal(screen.showOverlay,nativeShowOverlay,"Reload teardown must restore the exact original public method");
   // The native host resets its mounted extension factories between reloads.

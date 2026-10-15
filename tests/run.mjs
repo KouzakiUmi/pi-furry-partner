@@ -14,3 +14,4 @@ await import("./native-prompt.mjs");
 await import("./command-chinese.mjs");
 await import("./ui-chinese.mjs");
 await import("./language-integration.mjs");
+await import("./language.mjs");

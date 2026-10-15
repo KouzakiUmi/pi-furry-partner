@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "pose": "search",
   "file": "search.png",
-  "sourceFile": "search-generated-perspective.png",
+  "sourceFile": "search.png",
   "promptFile": "search-perspective-prompt.txt",
   "identityReference": "User-provided Umi character design sheet (copyright reserved)",
   "styleReference": "neutral.png",
@@ -11,29 +11,14 @@
   "width": 640,
   "height": 640,
   "sourceSize": [
-    1254,
-    1254
-  ],
-  "sourceAlphaBounds": [
-    96,
-    84,
-    1180,
-    1219
-  ],
-  "scale": 0.44280442804428044,
-  "contentSize": [
-    480,
-    503
-  ],
-  "pasteOffset": [
-    80,
-    107
+    640,
+    640
   ],
   "alphaBounds": [
-    80,
+    81,
     107,
-    560,
-    610
+    561,
+    611
   ],
   "alphaExtrema": [
     0,
@@ -42,7 +27,7 @@
   "borderTransparent": true,
   "localRootWhiteningApplied": false,
   "rootTreatment": "image-generated anatomical perspective repair: substantial white root blends into the rear rump; one curved volumetric tail tapers toward its deep-gray tip; no painted polygon patch",
-  "perspectiveRepair": "Only the tail and its rump attachment were edited; head remains buried, papers/hood/scarf/paw composition and colors retained. The normalized sprite is slightly shorter due to the foreshortened tail.",
+  "perspectiveRepair": "Reviewed local imagegen repair removed the right-side cape fragment behind the scarf and restored continuous white rump/leg fur. Tail, buried head and paper layout retain the established 640-canvas motion geometry.",
   "recolorPromptFile": "search-recolor-prompt.txt",
   "tailColorOrderTipToRoot": [
     "deep gray",
@@ -56,8 +41,8 @@
         180
       ],
       "rgb": [
-        100,
-        100,
+        101,
+        102,
         107
       ]
     },
@@ -67,9 +52,9 @@
         248
       ],
       "rgb": [
-        183,
-        181,
-        183
+        187,
+        185,
+        185
       ]
     },
     "root": {
@@ -78,9 +63,9 @@
         327
       ],
       "rgb": [
-        250,
-        251,
-        250
+        248,
+        248,
+        248
       ]
     }
   },
@@ -802,5 +787,64 @@
     "alphaBoundsUnchanged": false,
     "tailRoiUnchanged": false,
     "tailPivotUnchanged": false
+  },
+  "legacyNormalization": {
+    "sourceFile": "search-generated-perspective.png",
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "sourceAlphaBounds": [
+      96,
+      84,
+      1180,
+      1219
+    ],
+    "scale": 0.44280442804428044,
+    "contentSize": [
+      480,
+      503
+    ],
+    "pasteOffset": [
+      80,
+      107
+    ]
+  },
+  "canonicalMaster": {
+    "file": "search.png",
+    "sha256": "e3defcfbc82e556bd527fdeeb8b5dbf46384096728a9fe0f00e346db81f98817",
+    "sourcePolicy": "Canonical input is this reviewed 640px master. Do not normalize search-generated-perspective.png over it.",
+    "reviewedCapeRepair": true,
+    "legacyRebuild": false,
+    "legacyRebuildRequires": [
+      "--legacy-rebuild",
+      "--force"
+    ],
+    "normalization": "Full 1254px imagegen edit resampled to the existing 640px canvas; no recrop or new anchor",
+    "generatedSourceSize": [
+      1254,
+      1254
+    ]
+  },
+  "motionGeometryReview": {
+    "method": "Mask/spine overlay, alpha-overlap and region comparison against the pre-cape-repair normalized master",
+    "allGeometryRetained": true,
+    "previousAlphaBounds": [
+      80,
+      107,
+      560,
+      610
+    ],
+    "currentAlphaBounds": [
+      81,
+      107,
+      561,
+      611
+    ],
+    "alphaIoU": 0.9774342511845087,
+    "tailSpineMinimumAlpha": 245,
+    "tailMaskPaddingNativePx": 10,
+    "headAndPaperAnchorsPreserved": true,
+    "reason": "Cape-only repair lies outside articulated tail and head source layers; small resampling shifts fit existing source padding. Repositioning established masks would introduce unnecessary motion seams."
   }
 }

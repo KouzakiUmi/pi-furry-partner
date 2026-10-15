@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Normalize the generated hidden-head searching pose; no API calls.
+"""Validate the canonical search master, or explicitly rebuild its legacy source.
 
-Requires Pillow and numpy. Tail coordinates are in the final 640-pixel canvas.
+The repaired search.png is canonical. The default command never replaces it.
+Rebuilding old generated artwork requires BOTH --legacy-rebuild and --force.
+Requires Pillow and numpy. Tail coordinates use the final 640-pixel canvas.
 """
+import argparse
+import hashlib
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -19,7 +24,43 @@ def clean(image):
     return Image.fromarray(rgba)
 
 
-def main():
+def canonical_report():
+    path = OUT / "search.png"
+    if not path.exists():
+        raise ValueError("Canonical search.png is missing; restore the reviewed master instead of rebuilding old art automatically")
+    image = Image.open(path).convert("RGBA")
+    alpha = np.asarray(image)[:, :, 3]
+    if image.size != (640, 640) or not alpha.max() or alpha[0].any() or alpha[-1].any() or alpha[:, 0].any() or alpha[:, -1].any():
+        raise ValueError("Canonical search master must be a transparent 640-square image with clear borders")
+    value = hashlib.sha256(path.read_bytes()).hexdigest()
+    metadata_path = OUT / "search-metadata.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.exists() else {}
+    expected = metadata.get("canonicalMaster", {}).get("sha256")
+    if expected and expected != value:
+        raise ValueError("Canonical search master differs from its reviewed hash; review the new image and metadata together")
+    return {"file": "search.png", "preservedCanonical": True, "size": list(image.size),
+            "alphaBounds": list(image.getbbox()), "sha256": value,
+            "legacyRebuildRequires": "--legacy-rebuild --force"}
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--legacy-rebuild", action="store_true", help="Opt in to the old generated perspective source and old landmarks")
+    parser.add_argument("--force", action="store_true", help="Confirm replacing the reviewed canonical master with that legacy source")
+    args = parser.parse_args(argv)
+    if args.legacy_rebuild != args.force:
+        parser.error("Legacy rebuilding requires BOTH --legacy-rebuild and --force. Omit both to preserve and validate the canonical master.")
+    if not args.legacy_rebuild:
+        print(json.dumps(canonical_report(), ensure_ascii=False, indent=2))
+        return
+    # Keep a reversible private backup before the explicitly requested rollback.
+    if (OUT / "search.png").exists():
+        digest = hashlib.sha256((OUT / "search.png").read_bytes()).hexdigest()[:12]
+        backup = ROOT / "work/search-master-backups" / digest
+        backup.mkdir(parents=True, exist_ok=True)
+        for name in ["search.png", "search-metadata.json"]:
+            if (OUT / name).exists():
+                shutil.copy2(OUT / name, backup / name)
     # Perspective/anatomy is edited by built-in image_gen. This script only
     # normalizes the approved RGBA asset and records its animation landmarks.
     source = clean(Image.open(OUT / "search-generated-perspective.png"))
@@ -98,6 +139,12 @@ def main():
         ],
         "burrowMotion":{"periodMs":2400,"headSwayNativePx":1.4,"nodNativePx":.8,"hoodAngleDeg":1,"scarfFollowSteps":2,"description":"Local hood and upper neck burrow behind foreground papers. Feathered attachment, fixed body and gray paw; no full-canvas sway."},
         "noseAlignment": "not applicable: head buried behind papers",
+    }
+    metadata["canonicalMaster"] = {
+        "file": "search.png", "sha256": hashlib.sha256((OUT / "search.png").read_bytes()).hexdigest(),
+        "sourcePolicy": "Canonical input is search.png; old generated source is never rebuilt automatically",
+        "legacyRebuild": True, "reviewedCapeRepair": False,
+        "legacyRebuildRequires": ["--legacy-rebuild", "--force"],
     }
     metadata["tail"]["spineNormalized"] = [[x / 640, y / 640] for x, y in metadata["tail"]["spine"]]
     if not clear:

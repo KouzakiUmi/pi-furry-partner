@@ -1,6 +1,7 @@
 {
   "name": "呜咪",
   "subtitle": "你的工作搭档",
+  "language": "zh-CN",
   "animation": true,
   "persona": false,
   "chineseUI": true,

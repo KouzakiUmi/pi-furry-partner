@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "labels": {
+    "idle": "I'm here",
+    "waking": "I'm awake",
+    "thinking": "Let me think",
+    "speaking": "I'll explain",
+    "reading": "I'm reading",
+    "editing": "I'm editing",
+    "running": "I'm watching the output",
+    "searching": "I'm looking for clues",
+    "waiting": "I'm waiting for a reply",
+    "waiting_user": "I'm listening",
+    "success": "That's this turn wrapped up",
+    "error": "I've hit a snag",
+    "cancelled": "I've paused",
+    "compacting": "I'm gathering the context"
+  },
+  "bubbles": {
+    "idle": "I'm here",
+    "waking": "I'm up!",
+    "thinking": "Hmm…",
+    "speaking": "My turn",
+    "reading": "Reading",
+    "editing": "Editing",
+    "running": "Watching",
+    "searching": "Digging",
+    "waiting": "Waiting",
+    "waiting_user": "You pick",
+    "success": "Wrapped!",
+    "error": "A snag",
+    "cancelled": "Paused",
+    "compacting": "Sorting"
+  }
+}

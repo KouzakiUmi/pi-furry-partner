@@ -94,10 +94,10 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("message_update", update("text_start"));
   assert.equal(activity.snapshot().phase, "speaking");
   const mouths = new Set();
-  for (let i = 0; i < 6; i++) { mouths.add(activity.snapshot().face); advance(135); }
+  for (let i = 0; i < 20; i++) { mouths.add(activity.snapshot().face); advance(40); }
   assert.ok(mouths.size >= 3);
   assert.ok(mouths.has("talk-small") && mouths.has("talk-medium") && mouths.has("talk-wide"));
-  assert.equal(advance(91).face, "talk-closed", "Mouth closes when no new text arrives for 900ms");
+  assert.equal(advance(100).face, "talk-closed", "Mouth closes when no new text arrives for 900ms");
   activity.handle("message_update", update("text_delta", { delta: "hello" }));
   assert.equal(activity.snapshot().phase, "speaking");
   activity.handle("message_update", update("text_end"));
@@ -105,6 +105,28 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   assert.ok(!activity.snapshot().face.startsWith("talk-"));
   assert.equal(test.randomCalls, 2);
   checks.push("Thinking bubbles cycle through middle dots; real speech has at least three mouth shapes, 900ms silence closes mouth and text_end stops speech immediately");
+}
+
+{
+  const { activity, advance } = make();
+  activity.start({ wake: false }); activity.setDemo("speaking");
+  const rank = { "talk-closed": 0, "talk-small": 1, "talk-medium": 2, "talk-wide": 3 };
+  let previous = activity.snapshot().face, held = 0;
+  const rests = [], openDurations = [];
+  for (let i = 0; i < 1200; i++) {
+    const face = activity.snapshot().face;
+    assert.ok(Math.abs(rank[face] - rank[previous]) <= 1, `${previous} jumped to ${face}`);
+    if (face === previous) held += 10;
+    else {
+      (previous === "talk-closed" ? rests : openDurations).push(held);
+      held = 10; previous = face;
+    }
+    advance(10);
+  }
+  assert.ok(new Set(rests).size >= 3, "Phrase rests must vary rather than tick at a fixed cadence");
+  assert.ok(Math.max(...openDurations) <= 160, "No open-mouth frame may get stuck");
+  assert.ok(rests.some((duration) => duration >= 300), "Include a readable pause between phrases");
+  checks.push("Twelve seconds of speech follow adjacent w/dash/o/O shapes with varied phrase rests, avoiding abrupt wide-to-closed jumps and a fixed jaw metronome");
 }
 
 {

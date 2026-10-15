@@ -105,8 +105,8 @@ async function scenario(initialMode, historyLines, switchMode = false) {
       return { row, column: row < 0 ? -1 : visibleWidth(lines[row].slice(0, lines[row].indexOf(CURSOR_MARKER))) };
     };
     const actual = marker(rows), expected = marker(nativeRows);
-    check(actual.column === expected.column + currentEditor.geometry.leftWidth && actual.row === expected.row + currentEditor.geometry.offsetY,
-      "Mode-dependent border presentation preserves CJK/emoji IME hardware-cursor coordinates plus the dock offset");
+    check(actual.column === expected.column + currentEditor.geometry.contentX && actual.row === expected.row + currentEditor.geometry.offsetY,
+      "Mode-dependent border presentation preserves CJK/emoji IME hardware-cursor coordinates plus dock and side-frame insets");
     check(currentEditor === instance && currentEditor.getText() === text && JSON.stringify(currentEditor.getCursor()) === JSON.stringify(beforeCursor), "Mode presentation never replaces the editor or changes the draft/cursor");
     for (const width of [1, 4, 12, 18, 24, 39, 55, 60, 80, 100, 160]) {
       // Pi's native word wrapper cannot fit a two-cell grapheme in one cell.
@@ -150,7 +150,7 @@ async function scenario(initialMode, historyLines, switchMode = false) {
           const configBefore = await readFile(join(scratch, "config.json"), "utf8"), draftBefore = currentEditor.getText();
           const event = (x, y) => ({ type: "click", button: "left", x, y, screenX: x, screenY: y, width: terminal.columns, height: terminal.rows, shift: false, alt: false, ctrl: false });
           currentEditor.handleMouse(event(staleAvatar.x + 1, staleAvatar.y));
-          if (staleToolbar) currentEditor.handleMouse(event(staleGeometry.leftWidth + 3 + staleToolbar.start, staleToolbarRow));
+          if (staleToolbar) currentEditor.handleMouse(event(staleGeometry.contentX + 3 + staleToolbar.start, staleToolbarRow));
           check(await readFile(join(scratch, "config.json"), "utf8") === configBefore && currentEditor.getText() === draftBefore,
             "A regular-mode proxy switch blocks old avatar/toolbar actions before the first render");
         }

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "character": "Umi",
+  "copyright": "Character and animation assets: All Rights Reserved",
+  "coordinateSystem": "Original 640 x 640 transparent pose canvas; existing metadata.json remains authoritative for eye/mouth landmarks",
+  "source": "Built-in imagegen localized repair, normalized to existing canvas; no runtime model calls",
+  "alphaCleanup": {
+    "below16": "transparent black",
+    "atLeast250": "fully opaque",
+    "reason": "Remove imagegen fringe specks while preserving the character and existing landmarks"
+  },
+  "compatibility": {
+    "existingIdsPreserved": true,
+    "frameMasterSize": [
+      640,
+      640
+    ],
+    "productionIllustratedSize": [
+      240,
+      240
+    ],
+    "productionPixelSize": [
+      80,
+      80
+    ],
+    "warning": "Legacy pose/search builders are not authoritative for these repaired inputs. Use current facial builder reading these canonical masters; old polygon repaint scripts use obsolete art."
+  },
+  "masters": {
+    "error.png": {
+      "sha256": "8996d071d2beffe5283c71e7f4f3ecb98c4476b89894517bb1e951336dc9adb2",
+      "size": [
+        640,
+        640
+      ],
+      "alphaBounds": [
+        56,
+        26,
+        612,
+        604
+      ],
+      "transparentBorder": true,
+      "role": "Standalone reviewed xx-eye reaction master; read directly instead of rebuilding synthetic cross eyes on neutral"
+    },
+    "speak-clean.png": {
+      "sha256": "8a77d731d5084733dea3c05056f0fd529cc28615803bff5eb163bdb2ba23475a",
+      "size": [
+        640,
+        640
+      ],
+      "alphaBounds": [
+        33,
+        32,
+        613,
+        602
+      ],
+      "transparentBorder": true,
+      "role": "Clean white muzzle source for local mouth compositing on the existing speak pose; retain established 640px mouth box and alpha"
+    },
+    "neutral-eyes-clean.png": {
+      "sha256": "2f5b513743031f8803ff363e0909337c4262958cfa0a11f3126f658b52b336e1",
+      "size": [
+        640,
+        640
+      ],
+      "alphaBounds": [
+        58,
+        27,
+        612,
+        604
+      ],
+      "transparentBorder": true,
+      "role": "Clean eye-area source mapped from neutral eye boxes into existing pose eye polygons; preserve gray eyebrows, pose silhouette, paws and body"
+    },
+    "search.png": {
+      "sha256": "e3defcfbc82e556bd527fdeeb8b5dbf46384096728a9fe0f00e346db81f98817",
+      "size": [
+        640,
+        640
+      ],
+      "alphaBounds": [
+        81,
+        107,
+        561,
+        611
+      ],
+      "transparentBorder": true,
+      "role": "Canonical cape-repaired search master; retain established tail/head/paper geometry and protected rebuild policy"
+    }
+  }
+}

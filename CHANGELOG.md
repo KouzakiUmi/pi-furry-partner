@@ -11,7 +11,7 @@
 - 命令、默认配置、预览与中英文文档统一使用 `umi` / `umi-pixel`。旧 `wumi` / `wumi-pixel` 继续作为兼容别名；安装升级只迁移根配置中的旧风格值，其余用户字段保持原样。
 - 新增默认语言 `auto`：根据语言环境、Windows UI 文化或运行时区域设置选择中文或英文；`/mascot language auto|en|zh-CN|status` 可以重新检测或保存手动选择。已有显式语言偏好继续保留。
 - `prompt` 按当前语言精简已验证的 Pi 文档章节，关闭时恢复原生章节。原生身份句、工具、规则和动态上下文继续由 Pi 构造；角色口吻通过独立 `umi_persona` 章节注入，修复整串强制替换会屏蔽后续扩展更新的问题。`persona`、`prompt`、`locale` 继续独立开关，自定义系统提示词和项目规则保持原文。
-- 新增 `/mascot poke` 与全屏模式点击头像：短暂 `>w<` 闭眼、晃动和随机第一人称回应。空闲时更活泼，工作时反应更轻，结束后回到当前动作，工具与任务计时持续运行。
+- 新增 `/mascot poke` 与全屏模式点击头像：按原眼角比例绘制日系弧形挤眼，眼线中心略厚、外端收细；配合缩脸、带弧线的阻尼回弹、滞后耳抖和随机第一人称回应。像素版保护眼线连通，空闲时更活泼、工作时更轻，工具与任务计时持续运行。
 - 将播放/暂停按钮改为显示当前状态的“表情：开 / 关”。关闭循环微动时，真实状态仍会切换静态表情，修复短工具动作结束后卡在旧姿态的问题；主动戳一戳仍有短暂反馈。
 - 运行时举放大镜左右查看输出，与修改代码时的打字动作区分；插画版和像素版同步补齐。空闲输入时会侧身把爪子放到耳边倾听、轻轻点头，停顿或发送后回到相应状态。
 - 增加请求准备、等待首个模型输出、已收到思考内容但仍等正文的指示与秒数。关闭动画时也保留每秒一次的文字计时；收到真实内容、执行工具或结束时切换，不推测服务端排队原因。
@@ -25,7 +25,7 @@
 - Standardized commands, default preferences, previews and bilingual documentation on `umi` / `umi-pixel`. Earlier `wumi` / `wumi-pixel` values remain compatibility aliases; upgrades migrate only the root style value and retain other user fields.
 - Added default `auto` language detection from locale settings, Windows UI culture or the runtime locale. Use `/mascot language auto|en|zh-CN|status` to detect again or save a manual choice; existing explicit preferences remain intact.
 - `prompt` condenses the verified Pi documentation section in the resolved language; off restores the native section. Pi still builds its identity sentence, tools, rules and dynamic context. An independent `umi_persona` section replaces whole-prompt forcing, preserving downstream extension updates. `persona`, `prompt` and `locale` stay independent; custom prompts and project rules remain exact.
-- Added `/mascot poke` and fullscreen portrait clicks: a brief `>w<` face, a wiggle and a random first-person reply. Idle responses are playful; busy responses are gentler. Umi returns to the current activity without interrupting work or resetting tool clocks.
+- Added `/mascot poke` and fullscreen portrait clicks: curved, tapered squeeze-eyes follow the original eye proportions, with protected pixel lines, a cheek scrunch, an arcing damped rebound, delayed ear twitches and random first-person replies. Idle reactions are playful; busy ones are gentler, without interrupting work or resetting tool clocks.
 - Replaced Play/Pause with the current state, `Motion: On / Off`. Disabling idle motion still updates static expressions for real activity, fixing a paused short-tool pose that could latch. Explicit pokes retain their short reaction.
 - Running now raises a magnifier and scans the output, distinct from editing's typing paws, in illustrated and pixel styles. Local idle typing prompts an ear-cupping, gently nodding listening pose; a pause or submission returns to the appropriate activity.
 - Added request preparation, first-output waiting and thinking-before-answer indicators with elapsed seconds. A once-per-second text heartbeat remains when animation is off. Real output, tools and completion control the indicator without guessing server queue or network causes.

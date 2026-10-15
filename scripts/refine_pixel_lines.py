@@ -132,10 +132,8 @@ def refine(previews=False):
         patch=read(patch_path);base_before=before['frames'][before['ids']['idle-open']]['pixels']
         poked=base_before.copy()
         for index,color in patch['pixels']:poked[index]=color
-        from build_wumi_reactions import blink,mouth
-        metadata=read(ROOT/'assets/poses/metadata.json')['poses']['neutral']
-        base=Image.open(ROOT/'assets/poses/neutral.png').convert('RGBA')
-        source_poke=mouth(blink(base,metadata['eyes'],squeezed=True),metadata['mouth'],'closed').resize((240,240),Image.Resampling.LANCZOS)
+        from build_poke_reactions import umi_poke_pose
+        source_poke=umi_poke_pose().resize((240,240),Image.Resampling.LANCZOS)
         f,changes['poke']=protect_mouth({'id':'poke','pixels':poked},np.asarray(source_poke)[:,:,:3],data['palette'])
         base_after=data['frames'][data['ids']['idle-open']]['pixels']
         patch['pixels']=[[i,value] for i,value in enumerate(f['pixels']) if value!=base_after[i]];write(patch_path,patch)

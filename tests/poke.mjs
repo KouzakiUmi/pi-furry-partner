@@ -6,6 +6,9 @@ import { createActivity } from "../lib/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { POKE_DURATION_MS, withPokeFrame } from "../lib/poke.mjs";
 import { replaceActivityCopy } from "../lib/language.mjs";
+import { samplePixels } from "../lib/renderer.mjs";
+import { withWatchFrames } from "../lib/watch.mjs";
+import { withListenFrames } from "../lib/listen.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
 const zh = { copy: await read("assets/status-copy.json"), phrases: await read("assets/status-phrases.json") };
@@ -68,27 +71,71 @@ for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
   assert.ok(Math.max(...changedRows) < sheet.height * .7, "Only the face patch changes; body/paws/scarf stay exact");
   assert.strictEqual(withPokeFrame(sheet, { ...patch, width: -1 }), sheet);
   assert.strictEqual(withPokeFrame(sheet, { ...patch, pixels: [[-1, 1]] }), sheet);
+  const legacyPatch = { ...patch }; delete legacyPatch.motion;
+  const legacy = withPokeFrame(sheet, legacyPatch);
+  assert.strictEqual(legacy.motion, sheet.motion, "Single-frame patches without landmarks remain compatible");
+  const face = { normalized: true, polygon: [[.28,.35],[.64,.35],[.66,.6],[.31,.61]], pivot: [.46,.515] };
+  const mapped = withPokeFrame(sheet, { ...legacyPatch, motion: { face: { ...face, padding: Infinity, angle: NaN } } });
+  assert.deepEqual(mapped.motion.pokeFace.polygon, face.polygon);
+  assert.deepEqual(mapped.motion.pokeFace.pivot, face.pivot);
+  assert.equal(mapped.motion.pokeFace.padding, undefined, "Unvalidated deformation settings cannot reach the renderer");
+  assert.notStrictEqual(mapped.motion.pokeFace.polygon, face.polygon);
+  for (const invalid of [{ ...face, pivot: [Infinity, .5] }, { ...face, polygon: [[-.1,.2],[.5,.5],[.6,.3]] }, { ...face, polygon: [[.1,.1],[.1,.1],[.1,.1]] }, { ...face, polygon: Array(65).fill([.5,.5]) }, { ...face, normalized: false }]) {
+    assert.strictEqual(withPokeFrame(sheet, { ...legacyPatch, motion: { face: invalid } }).motion, sheet.motion);
+  }
+  if (style === "wumi" || style === "wumi-pixel") {
+    const combined = withListenFrames(withWatchFrames(mapped, await read(`assets/reactions/${style}/watch-frames.json`)), await read(`assets/reactions/${style}/listen-frames.json`));
+    assert.equal(combined.frames.length, 26); assert.strictEqual(combined.motion.pokeFace, mapped.motion.pokeFace);
+    assert.strictEqual(combined.palette, sheet.palette);
+  }
+  const cheekPlayer = createMotionPlayer({ now: () => 150 }), legacyPlayer = createMotionPlayer({ now: () => 150 });
+  const squeezed = cheekPlayer.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: 150 }).frame.pixels;
+  const unsqueezed = legacyPlayer.frame(legacy, legacy.ids.poke, { phase: "poked", reactionElapsedMs: 150 }).frame.pixels;
+  const cheekChanges = [...squeezed].flatMap((color, i) => color === unsqueezed[i] ? [] : [i]);
+  assert.ok(cheekChanges.length > 0, `${style}: optional landmarks visibly lift the cheeks beyond the compatible whole-body motion`);
+  assert.ok(cheekChanges.every((i) => Math.floor(i / sheet.width) < sheet.height * .72), "Cheek deformation leaves the scarf, body and paws untouched");
+  const upperFace = Math.min(...extended.motion.pokeFace.polygon.map(([, y]) => y)) * sheet.height;
+  assert.ok(cheekChanges.every((i) => Math.floor(i / sheet.width) >= upperFace), "Local cheek squeezing cannot disturb upper hair or ears");
+  cheekPlayer.dispose(); legacyPlayer.dispose();
   let time = 0;
   const player = createMotionPlayer({ now: () => time });
   player.frame(extended, extended.ids["idle-open"], { phase: "idle" });
   const samples = [];
-  for (const ms of [0, 100, 200, 300, 400, 500, 800, 1000]) {
+  for (const ms of Array.from({ length: 23 }, (_, i) => i * 50)) {
     time = ms;
     const sample = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: ms });
     assert.equal(sample.frame.id, "poke"); assert.equal(sample.transitioning, false);
+    assert.ok(sample.nextInMs <= 50, "The brief recoil is sampled at 50ms rather than stepping every 100ms");
+    for (const value of Object.values(sample.motion)) assert.ok(Number.isFinite(value));
+    assert.strictEqual(sample.sheet.palette, sheet.palette, "Poke motion never creates fade colors");
     samples.push(sample);
   }
   assert.ok(samples.some((sample) => sample.motion.x < 0) && samples.some((sample) => sample.motion.x > 0));
-  assert.ok(samples.some((sample) => sample.motion.scale < .95));
+  assert.ok(samples.some((sample) => sample.motion.scale < .985));
+  assert.ok(samples.every((sample) => sample.motion.scale >= .97 && sample.motion.scale <= 1.01));
+  assert.ok(samples.some((sample) => sample.motion.y > 0) && samples.some((sample) => sample.motion.y < 0), "A small vertical arc accompanies the side rebound");
   assert.ok(samples.some((sample) => sample.motion.earLeft !== 0));
-  assert.ok(new Set(samples.map((sample) => sample.cacheKey)).size >= 5);
+  assert.ok(new Set(samples.map((sample) => sample.cacheKey)).size >= 12);
+  assert.equal(samples[2].motion.earLeft, 0, "Ears lag behind the initial tuck instead of shaking in lockstep");
+  assert.ok(samples.some((sample) => sample.motion.earLeft !== -sample.motion.earRight), "The two ears react at slightly different moments");
+  assert.ok(samples.some((sample) => sample.motion.pokeSquash > .8));
+  const at8Rows = samples.map((sample) => Buffer.from(samplePixels(sample.frame, sheet.width, sheet.height, 160, 160)).toString("base64"));
+  assert.ok(new Set(at8Rows).size >= 12, `${style}: a normal eight-row Sixel portrait retains the expressive motion`);
+  const halfBlocks = samples.map((sample) => Buffer.from(samplePixels(sample.frame, sheet.width, sheet.height, 16, 16)).toString("base64"));
+  assert.ok(new Set(halfBlocks).size >= 4, `${style}: fallback 16×16 half-block sampling still shows the reaction`);
   assert.equal(samples.at(-1).motion.scale, 1);
-  const playfulX = samples[1].motion.x;
+  for (const sample of samples.slice(20)) for (const key of ["x", "y", "tilt", "earLeft", "earRight", "pokeSquash", "pokeCheekTilt"]) assert.equal(Math.abs(sample.motion[key]), 0, `The last 100ms rests at the original center: ${key}`);
+  const playfulX = samples[2].motion.x;
   time += 100;
   const gentle = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: 100, reactionStrength: .55 });
   assert.ok(Math.abs(gentle.motion.x) <= Math.abs(playfulX));
-  assert.ok(gentle.motion.scale > samples[1].motion.scale);
+  assert.ok(gentle.motion.scale > samples[2].motion.scale);
+  assert.ok(gentle.motion.pokeSquash < samples[2].motion.pokeSquash);
+  time += 100;
+  const ended = player.frame(extended, extended.ids["idle-open"], { phase: "idle" });
+  assert.equal(ended.transitioning, false, "Returning from a poke cannot dissolve the closed eyes over an open face");
   player.dispose();
 }
-checks.push("All four styles have clean >w< patches with unchanged original sheets/palette/alpha/body; real motion produces alternating side shakes, ear twitch and a recoverable shrink, with gentler busy motion");
+checks.push("Single-frame legacy patches remain compatible; optional normalized face landmarks are bounded, sanitized and preserved by the watch/listen composition without changing the 26-frame format");
+checks.push("All four styles retain source/palette/alpha/body; a grounded tuck leads into a curved damped rebound and delayed independent ears, visible at eight rows and in half-block fallback, with gentler busy motion and no entry/exit dissolve");
 console.log(JSON.stringify({ passed: true, modelRequests: 0, checks }, null, 2));

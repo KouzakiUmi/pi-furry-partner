@@ -70,7 +70,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 | Thinking it through | Getting things done | Waiting for you | Wrapping things up |
 | --- | --- | --- | --- |
-| Chin on a gray paw, blinks, and `· · ·` in a bubble | Typing paws for edits, a scanning magnifier for command runs; short calls stay visible | Head tilt and question mark, a nap after 10 seconds, then a startled wake-up | A little wave and wink for success; xx eyes for a stumble |
+| Chin on a gray paw, blinks, and `· · ·` in a bubble | Typing paws for edits; a smooth magnifier scan with brief side pauses for command runs; short calls stay visible | Head tilt and question mark, a nap after 10 seconds, then a startled wake-up | A little wave and wink for success; xx eyes for a stumble |
 
 Searching and context compaction share the paper-pile pose: a wave travels along the tail, the head gently burrows, and loose pages move at different moments. Speech uses four `w / — / o / O` mouth shapes and closes naturally when no new text arrives. Breathing, ear twitches and short transitions soften the changes between poses.
 
@@ -78,6 +78,8 @@ Searching and context compaction share the paper-pile pose: a wave travels along
 <summary><strong>See the full animation and both Umi styles</strong></summary>
 
 ![Offline preview of waking, thinking, speaking, working, searching, errors and success](editor-preview.gif)
+
+![Full magnifier loop: the head and gripping paw follow the lens in illustrated and pixel styles](magnifier-preview.gif)
 
 ![Illustrated and pixel renditions of the same Umi design](style-comparison.png)
 

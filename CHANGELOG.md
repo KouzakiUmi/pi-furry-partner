@@ -13,10 +13,12 @@
 - `prompt` 按当前语言精简已验证的 Pi 文档章节，关闭时恢复原生章节。原生身份句、工具、规则和动态上下文继续由 Pi 构造；角色口吻通过独立 `umi_persona` 章节注入，修复整串强制替换会屏蔽后续扩展更新的问题。`persona`、`prompt`、`locale` 继续独立开关，自定义系统提示词和项目规则保持原文。
 - 新增 `/mascot poke` 与全屏模式点击头像：按原眼角比例绘制日系弧形挤眼，眼线中心略厚、外端收细；配合缩脸、带弧线的阻尼回弹、滞后耳抖和随机第一人称回应。像素版保护眼线连通，空闲时更活泼、工作时更轻，工具与任务计时持续运行。
 - 将播放/暂停按钮改为显示当前状态的“表情：开 / 关”。关闭循环微动时，真实状态仍会切换静态表情，修复短工具动作结束后卡在旧姿态的问题；主动戳一戳仍有短暂反馈。
-- 运行时用六张连贯绘制的放大镜画帧左右查看输出，镜框、握爪和头部一起转动，消除局部拉伸造成的双框重影；插画版与像素版共用帧序列，旧两帧素材保留静态及眨眼回退。修改代码继续打字；空闲输入时会侧身把爪子放到耳边倾听、轻轻点头，停顿或发送后回到相应状态。
+- 放大镜扫描使用 MiniMax-H3 从已确认的角色原画生成连续动作，再离线抠图、抽帧；头部、握爪和镜片一起左右查看，镜片经过眼睛时呈现放大效果。运行时只播放完整画帧，不再变形或叠化镜框，修复双框重影与左侧斗篷边缘失真。插画与像素版共用播放节奏，兼容旧两帧与六帧素材包。
+- 修改代码继续打字；空闲输入时会侧身把爪子放到耳边倾听、轻轻点头，停顿或发送后回到相应状态。
 - 增加请求准备、等待首个模型输出、已收到思考内容但仍等正文的指示与秒数。关闭动画时也保留每秒一次的文字计时；收到真实内容、执行工具或结束时切换，不推测服务端排队原因。
 - 明确狼种族的角色设定，增强自然语气词和拟声词；技术交流保留温柔活泼的第一人称口吻，关键事实和严格格式依然优先。
 - `umi-pixel` 保留原角色造型，对嘴部等细线加入局部采样保护与轻微色彩整理，避免细笔画缩小后消失。
+- GitHub 中英文主页新增呜咪角色实拍和简短介绍；仅公开裁剪、缩小并清除元数据的照片，角色与照片保留全部版权。
 
 ### English
 
@@ -27,10 +29,12 @@
 - `prompt` condenses the verified Pi documentation section in the resolved language; off restores the native section. Pi still builds its identity sentence, tools, rules and dynamic context. An independent `umi_persona` section replaces whole-prompt forcing, preserving downstream extension updates. `persona`, `prompt` and `locale` stay independent; custom prompts and project rules remain exact.
 - Added `/mascot poke` and fullscreen portrait clicks: curved, tapered squeeze-eyes follow the original eye proportions, with protected pixel lines, a cheek scrunch, an arcing damped rebound, delayed ear twitches and random first-person replies. Idle reactions are playful; busy ones are gentler, without interrupting work or resetting tool clocks.
 - Replaced Play/Pause with the current state, `Motion: On / Off`. Disabling idle motion still updates static expressions for real activity, fixing a paused short-tool pose that could latch. Explicit pokes retain their short reaction.
-- Running scans with six consistently drawn magnifier cels: lens, gripping paw and head turn together, removing duplicate rim artifacts from local warping. Illustrated and pixel styles share the cel sequence; older two-frame packs retain static/blink fallback. Editing keeps its typing paws. Local idle typing prompts an ear-cupping, gently nodding listening pose; a pause or submission returns to the appropriate activity.
+- Rebuilt the magnifier scan with MiniMax-H3 from the approved character artwork, then keyed and sampled it offline. The head, gripping paw and lens scan together; the eye is enlarged as the lens passes in front of it. Runtime plays complete cels without lens deformation or dissolves, fixing duplicate rims and left-side cloak distortion. Illustrated and pixel styles share the timing; older two- and six-frame packs remain compatible.
+- Editing keeps its typing paws. Local idle typing prompts an ear-cupping, gently nodding listening pose; a pause or submission returns to the appropriate activity.
 - Added request preparation, first-output waiting and thinking-before-answer indicators with elapsed seconds. A once-per-second text heartbeat remains when animation is off. Real output, tools and completion control the indicator without guessing server queue or network causes.
 - Clarified Umi's wolf identity and encouraged natural interjections and playful sounds. Technical conversation keeps a gentle, lively first-person voice while facts and strict formats retain priority.
 - Preserved the original `umi-pixel` character design while protecting fine mouth strokes during sampling and lightly cleaning up line colors.
+- Added a costume photograph and a short Umi introduction to both GitHub READMEs. Only the cropped, downscaled, metadata-free photograph is published; character and photograph remain All Rights Reserved.
 
 ## 2.2.0 · 2026-10-16
 

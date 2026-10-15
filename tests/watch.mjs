@@ -24,17 +24,26 @@ for(const style of ["wumi","wumi-pixel"]){
   let different=0;
   for(let i=0;i<open.length;i++){
     if(!asset.sequence)assert.equal(open[i]===0,blink[i]===0,"Legacy blink preserves alpha/lens/paw silhouette");
+    if(asset.motion?.bakedMotion){
+      assert.equal(open[i]===0,blink[i]===0,"A local video blink preserves every alpha pixel");
+      const x=i%sheet.width,y=Math.floor(i/sheet.width),scale=sheet.width/640;
+      const eye=(x>=Math.floor(210*scale)-3&&x<=Math.ceil(286*scale)+3||
+        x>=Math.floor(342*scale)-3&&x<=Math.ceil(443*scale)+3)&&y>=Math.floor(215*scale)-3&&y<=Math.ceil(328*scale)+3;
+      if(!eye)assert.equal(open[i],blink[i],"Blink pixels outside the eyes, including cloak, paw, mouth and nose, must remain identical");
+    }
     if(open[i]!==blink[i])different++;
   }
   assert.ok(different>10);
   let time=0;const player=createMotionPlayer({now:()=>time});const states=new Set(),faces=new Set();
-  for(time=0;time<8400;time+=100){
+  for(time=0;time<Math.max(8400,asset.sequence?.periodMs??0);time+=50){
     const frame=player.frame(sheet,sheet.ids.watch,{phase:"running"});
     assert.equal(frame.sheet.palette,sheet.palette);assert.equal(frame.frame.pixels.length,sheet.width*sheet.height);
     assert.equal(frame.motion.x,0);assert.equal(frame.motion.tilt,0);
     assert.ok(frame.frame.pixels.every((p)=>p>=0&&p<sheet.palette.length));
     assert.equal(frame.motion.watchPhase,undefined,"Lens/head inverse deformation is disabled, including legacy packs");
     assert.equal(frame.motion.earLeft,0);assert.equal(frame.motion.pawLeft,0);
+    if(asset.sequence)assert.ok(frame.nextInMs<=50,"12fps authored steps must not be skipped by a 100ms refresh quantum");
+    if(asset.motion?.bakedMotion)assert.equal(frame.motion.y,0,"Movie-derived whole frames already include body motion");
     const selected=sheet.frames[sheet.ids[frame.motion.watchFrameId??"watch"]].pixels;
     const dy=frame.motion.y;
     // Every opaque output pixel comes from exactly the same authored frame.
@@ -47,7 +56,7 @@ for(const style of ["wumi","wumi-pixel"]){
     assert.equal(frame.transitioning,false,"Authored internal steps cannot start pose crossfades");
     states.add(Buffer.from(frame.frame.pixels).toString("base64"));faces.add(frame.motion.watchFrameId??"watch");
   }
-  if(asset.sequence){assert.equal(faces.size,asset.frames.length);assert.ok(states.size>=asset.frames.length,"Authored poses must actually play");}
+  if(asset.sequence){const used=new Set(asset.sequence.steps.map(step=>step.id));assert.equal(faces.size,used.size);assert.ok(states.size>=used.size,"Every scheduled authored pose must actually play");}
   else{assert.equal(faces.size,1);assert.ok(states.size>1,"Legacy fallback keeps a small rigid breathing movement");}
   const last=player.frame(sheet,sheet.ids.watch,{phase:"running",animate:false});time+=50000;
   const paused=player.frame(sheet,sheet.ids["watch-blink"],{phase:"running",animate:false});
@@ -66,6 +75,8 @@ for(const style of ["wumi","wumi-pixel"]){
   for(const invalid of [{...asset,sequence:{steps:[{id:"missing",durationMs:100},{id:"watch",durationMs:200}]}},
     {...asset,sequence:{...asset.sequence,periodMs:700}},
     {...asset,sequence:{steps:[{id:"watch",durationMs:0},{id:"watch-left",durationMs:200}]}},
+    {...asset,sequence:{steps:[{id:"watch",durationMs:49},{id:"watch-left",durationMs:200}]}},
+    {...asset,sequence:{steps:Array(129).fill({id:"watch",durationMs:50})}},
     {...asset,frames:[...asset.frames,frame("watch-left",2)]}])assert.equal(withWatchFrames(base,invalid),base);
   let time=0;const player=createMotionPlayer({now:()=>time});
   const expected=[[0,"watch"],[199,"watch"],[200,"watch-left"],[499,"watch-left"],[500,"watch-blink"],[599,"watch-blink"],[600,"watch"],[800,"watch-left"]];
@@ -73,6 +84,21 @@ for(const style of ["wumi","wumi-pixel"]){
   time=900;const paused=player.frame(sheet,sheet.ids.watch,{phase:"running",animate:false});
   time=9000;assert.equal(player.frame(sheet,sheet.ids.watch,{phase:"running",animate:false}).cacheKey,paused.cacheKey);
   player.dispose();checks.push("Authored step durations loop at exact boundaries, external blink cannot jump to center, invalid sequence metadata is rejected");
+}
+{
+  const frame=(id,color)=>({id,pixels:Array(16).fill(color)});
+  const base={width:4,height:4,palette:[[0,0,0],[250,250,250],[40,50,60]],frames:[],ids:{},motion:{ears:false,paws:false}};
+  const frames=[frame("watch",1),frame("watch-blink",2),...Array.from({length:94},(_,n)=>frame(`watch-video-${n}`,1))];
+  const steps=frames.map((value,n)=>({id:value.id,durationMs:n%3===1?84:83}));
+  const asset={width:4,height:4,frames,motion:{bakedMotion:true},sequence:{steps,periodMs:steps.reduce((sum,value)=>sum+value.durationMs,0)}};
+  const sheet=withWatchFrames(base,asset);assert.equal(sheet.frames.length,96,"A bounded 12fps movie pack is accepted");
+  assert.equal(withWatchFrames(base,{...asset,frames:[...frames,frame("watch-extra",1)]}),base,"97 frames exceeds the decoded asset budget");
+  const large={...base,width:300,height:300};
+  assert.equal(withWatchFrames(large,{...asset,width:300,height:300}),large,"A decoded pixel budget is enforced before traversing frame data");
+  let time=0;const player=createMotionPlayer({now:()=>time});const played=new Set();
+  for(time=0;time<asset.sequence.periodMs;time+=50){const value=player.frame(sheet,0,{phase:"running"});played.add(value.frame.id);assert.equal(value.motion.y,0);assert.ok(value.nextInMs<=50);}
+  assert.equal(played.size,96,"50ms refresh visits every 83/84ms frame without skipping intermediate motion");
+  player.dispose();checks.push("96-frame bounded video pack, exact 83/84ms steps, 50ms refresh, and baked body pixels without added deformation");
 }
 {
   let time=1000;const activity=createActivity({now:()=>time,random:()=>.25});activity.start({wake:false});activity.handle("agent_start");

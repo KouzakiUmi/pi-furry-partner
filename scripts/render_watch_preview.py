@@ -36,11 +36,15 @@ def main(folder,output):
         draw.text((28,680),'实际 production motion 帧 · 离线效果预览，非终端截图 · 角色与动画保留全部版权',font=font(13),fill='#7c96b1')
         frames.append(image)
     mosaic=Image.new('RGB',(2000,1420))
-    for i,at in enumerate((3,10,31,49)):mosaic.paste(frames[at],((i%2)*1000,(i//2)*710))
+    cycle_ms=manifest['durationMs']/2
+    for i,fraction in enumerate((0,.25,.55,.75)):
+        at=round(cycle_ms*fraction/manifest['stepMs'])%len(frames)
+        mosaic.paste(frames[at],((i%2)*1000,(i//2)*710))
     palette=mosaic.quantize(colors=256,method=Image.Quantize.MEDIANCUT)
     indexed=[im.quantize(palette=palette,dither=Image.Dither.NONE) for im in frames]
     output.parent.mkdir(parents=True,exist_ok=True)
-    indexed[0].save(output,save_all=True,append_images=indexed[1:],duration=manifest['stepMs'],loop=0,disposal=1,optimize=True)
+    durations=[moment.get('durationMs',manifest['stepMs']) for moment in manifest['timeline']]
+    indexed[0].save(output,save_all=True,append_images=indexed[1:],duration=durations,loop=0,disposal=1,optimize=True)
     contact=output.with_name(output.stem+'-contact.png');mosaic.save(contact)
     print(json.dumps({'gif':str(output),'contact':str(contact),'durationMs':manifest['durationMs'],'actualRuntimeMotion':True},ensure_ascii=False))
 

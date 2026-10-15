@@ -55,7 +55,7 @@ Prompt and persona changes apply to the next request. Language changes do not tr
 
 The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side; searching and compaction share the paper-pile pose. The tail carries a traveling wave rather than moving as a rigid piece. Speech uses `w / — / o / O` shapes and stops when text output stops.
 
-The magnifier scan uses six complete authored cels: centered, looking to each side, and a centered blink. The lens, gripping paw and head belong to the same cel. Cels switch without a dissolve or local lens deformation, avoiding duplicate rim artifacts. Older two-frame packs retain a static pose and blink fallback.
+The magnifier scan uses a continuous MiniMax-H3 animation made from the approved character artwork. Its background is removed and complete cels are prepared offline. The head and gripping paw follow the lens, which enlarges the eye when it passes in front of it. The cloak moves with the body and keeps a clean outline. Runtime only plays the cels in order, without local lens deformation or dissolving neighboring scan cels together. Illustrated and pixel styles share the timing. Older six-frame packs still play their own sequence, while two-frame packs retain a static pose and blink fallback.
 
 The startup wake-up lasts about five seconds. Waiting for your answer produces a curious head tilt and question mark; after ten seconds, Umi dozes off. Resuming work triggers a short startled wake-up. These are visual reactions and do not delay tools or model output.
 
@@ -138,4 +138,4 @@ The preview PNGs/GIFs are offline compositions exported from production state an
 
 Run `npm test` from the project directory. Full tests need actual Pi 1.2.0 modules; see [Contributing](../CONTRIBUTING.md) for setup, isolated installer checks and preview builds. The tested scope does not cover every terminal, font, window size or extension combination.
 
-Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).
+Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, photographs, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).

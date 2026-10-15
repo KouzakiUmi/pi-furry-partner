@@ -7,6 +7,7 @@ await import("./quick-actions.mjs");
 await import("./sixel.mjs");
 await import("./motion.mjs");
 await import("./style-ids.mjs");
+await import("./startup-eyelids.mjs");
 await import("./poke.mjs");
 await import("./watch.mjs");
 await import("./listen.mjs");

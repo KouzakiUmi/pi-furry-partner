@@ -11,7 +11,8 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
-from build_reactions import source_pixel, pixel_mouth, illustration_mouth
+from build_reactions import (source_pixel, pixel_mouth, illustration_mouth,
+                             pixel_lash_mask, illustration_clean_eyes)
 from build_wumi_reactions import (mouth, clean_pose, EYE_CLEAN_POLYGONS,
                                  texture_patch, keep_alpha)
 
@@ -90,21 +91,14 @@ def umi_poke_pose(base=None):
 def legacy_poke_pose(base,style):
     array=np.asarray(base).copy()
     if style=='pixel':
-        for left,right,bottom in [(34,40,54),(54,61,55)]:
+        array[np.asarray(pixel_lash_mask(base))>0]=(255,255,255,255)
+        for left,right,bottom in [(34,41,54),(54,62,55)]:
             region=array[43:bottom,left:right];hair=np.all(region[:,:,:3]==(192,188,206),axis=2)
             region[~hair]=(255,255,255,255)
         eyes={'left':(33,43,40,55),'right':(54,43,62,55)}
         return pixel_mouth(curved_squeeze_eyes(Image.fromarray(array),eyes),'closed')
-    for x0,x1,bottom in [(341,422,586),(541,631,586)]:
-        rgb=array[459:bottom,x0:x1,:3].astype(np.int16)
-        blue=(rgb[:,:,1]-rgb[:,:,0]>3)&(rgb[:,:,2]-rgb[:,:,0]>9)
-        dark=rgb.max(axis=2)<180;orange=(rgb[:,:,0]-rgb[:,:,1]>16)&(rgb[:,:,0]-rgb[:,:,2]>16)
-        orange[550-459:]=False
-        mask=Image.fromarray((blue|dark|orange).astype(np.uint8)*255).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(.5))
-        weight=np.asarray(mask)[:,:,None]/255
-        array[459:bottom,x0:x1,:3]=np.round(array[459:bottom,x0:x1,:3]*(1-weight)+np.array([253,253,253])*weight).astype(np.uint8)
     eyes={'left':(341,459,422,586),'right':(541,459,631,586)}
-    return illustration_mouth(curved_squeeze_eyes(Image.fromarray(array),eyes),'closed')
+    return illustration_mouth(curved_squeeze_eyes(illustration_clean_eyes(base),eyes),'closed')
 
 
 def face_motion(style):

@@ -21,24 +21,8 @@ KEYS = {"idle-blink":"neutral", "idle-wink":"neutral", "think-blink":"think",
 
 
 def proof(before, after, target):
-    keys=["idle-blink","think-blink","work-blink","talk-blink","happy-blink","rest","wait-blink"]
-    result=Image.new("RGB",(1680,1000),"#080f1c")
-    draw=ImageDraw.Draw(result)
-    draw.text((24,16),"闭眼修正 · 保留灰眉，只留真实眼位的一条闭眼线",font=font(26,True),fill="#e5edf5")
-    draw.text((24,59),"上：旧版残留上睫线 / 下：清完整只眼睛后，闭眼线落在原眼睛中下部",font=font(16),fill="#95aac4")
-    for column,key in enumerate(keys):
-        x=column*240
-        draw.text((x+12,100),key,font=font(14,True),fill="#bdd3ef")
-        for row,data in enumerate([before,after]):
-            image=decode(data,key)
-            # Compare the same facial region at the native palette resolution.
-            s=data["width"]/640
-            box=tuple(round(v*s) for v in (158,178,438,370))
-            crop=image.crop(box).resize((228,157),Image.Resampling.NEAREST)
-            result.paste(crop,(x+6,134+row*430),crop)
-            art=image.resize((230,230),Image.Resampling.NEAREST if data["style"].endswith("pixel") else Image.Resampling.LANCZOS)
-            result.paste(art,(x+5,290+row*430),art)
-    result.save(target)
+    from render_blink_review import proof as render_current_review
+    return render_current_review(before, after, target)
 
 
 def main():

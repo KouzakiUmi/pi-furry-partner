@@ -2,6 +2,20 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 未发布 · Unreleased
+
+### 简体中文
+
+- 完整检查四套输入框风格和两套标题头像。修复旧插画、原像素风格在启动、打瞌睡、眨眼、完成、错误及戳戳表情中遗留的开眼上睫、灰色抗锯齿重影和虹膜色点，保留真实眉毛、发丝、嘴型、调色板和透明轮廓。
+- 修复标题原像素版 wink 的旧上眼线，同步 native 帧和四档终端回退；其他帧与时间轴保持不变。清理角色版睡眠眼区的游离灰色痕迹。
+- 闭眼检查图直接读取最终播放素材，明确区分历史对照与当前结果。增加按实际保存风格加载启动首帧、十秒等待后打盹及标题 wink 的回归检查，避免仅验证默认角色版而遗漏旧风格。
+
+### English
+
+- Audited all four editor styles and both header portraits. Removed leftover open-eye lashes, gray antialiasing shadows and iris pixels from legacy illustration/pixel startup, dozing, blinking, success, error and poke expressions while preserving real brows, hair, mouths, palettes and alpha.
+- Fixed the pixel header wink in native frames and all four terminal fallback sizes without changing other frames or timing. Removed detached gray eye shadows from Umi's sleeping pose.
+- Generate eye review images from the final animation assets and clearly label historical references. Added regression coverage for the saved style's actual startup frame, dozing after ten seconds and header winks, including legacy styles rather than only the default Umi artwork.
+
 ## 2.3.1 · 2026-10-16
 
 ### 简体中文

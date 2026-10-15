@@ -81,16 +81,23 @@ def remove_connected_background(image: Image.Image, tolerance: int = 8):
 
 
 def make_wink(normal: Image.Image) -> Image.Image:
-    """Replace the viewer-right eye; retain eyebrow, hair and blush exactly."""
-    wink = normal.copy()
+    """Replace the whole viewer-right eye, including its open upper contour."""
     scale = normal.width // GRID
     if normal.width != normal.height or normal.width % GRID:
         raise ValueError("This source must be square with a size divisible by 100.")
+    rgba = np.array(normal.convert("RGBA"))
+    # The dark arch above the iris belongs to the OPEN eye, not an eyebrow.
+    # Clear the complete eye socket, protecting the lavender fringe, slate hood
+    # edge and coral blush. Filling only the iris used to leave two eyelids.
+    region = rgba[38 * scale:55 * scale, 52 * scale:67 * scale]
+    protected = np.zeros(region.shape[:2], dtype=bool)
+    for color in ((192, 188, 206), (87, 104, 124), (229, 134, 125)):
+        protected |= np.all(region[:, :, :3] == color, axis=2)
+    clear = ~protected & (region[:, :, 3] > 0)
+    region[clear, :3] = (255, 255, 255)
+    wink = Image.fromarray(rgba)
     draw = ImageDraw.Draw(wink)
-    # The colored eye is entirely inside x54..60, y43..54 (100 px grid).
-    draw.rectangle((54 * scale, 43 * scale, 61 * scale - 1, 55 * scale - 1),
-                   fill=(255, 255, 255, 255))
-    # A stepped closed eyelid, intentionally below the original arched brow.
+    # Keep the original stepped closed eyelid at the same eye-line position.
     eyelid = {
         (54, 51), (55, 50), (56, 49), (57, 49), (58, 49),
         (59, 50), (60, 51), (55, 51), (56, 50), (57, 50),
@@ -253,7 +260,18 @@ def verify(normal, wink, frames, data, native_data, out, removal):
         "exports": {},
     }
     assert set(np.unique(alpha)) == {0, 255}, "Unexpected alpha softening."
-    assert np.array_equal(before[:430], after[:430]), "Wink modified eyebrow/hair."
+    scale = normal.width // GRID
+    assert np.array_equal(before[:, :, 3], after[:, :, 3]), "Wink changed transparency."
+    eye_socket = np.zeros(before.shape[:2], dtype=bool)
+    eye_socket[38 * scale:55 * scale, 52 * scale:67 * scale] = True
+    assert not changed[~eye_socket].any(), "Wink modified artwork outside the right eye socket."
+    for color in ((192, 188, 206), (87, 104, 124), (229, 134, 125)):
+        protected = np.all(before[:, :, :3] == color, axis=2)
+        assert np.array_equal(before[protected], after[protected]), "Wink modified fringe/hood/blush."
+    upper = after[38 * scale:49 * scale, 52 * scale:67 * scale, :3]
+    assert not np.all(upper == (47, 58, 60), axis=2).any(), "Open-eye upper contour remains."
+    report["wholeEyeSocketCleaned"] = True
+    report["fringeHoodBlushAndAlphaPreserved"] = True
     for name, variant in data["variants"].items():
         expected = variant["width"] * variant["height"]
         assert all(len(frame["pixels"]) == expected for frame in variant["frames"])

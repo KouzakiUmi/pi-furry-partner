@@ -69,12 +69,38 @@ def pixel_mouth(base, shape):
     return preserve_alpha(base, result)
 
 
-def pixel_eyes(base, focused=False, cross=False, squeezed=False):
+def pixel_lash_mask(base, right_only=False):
+    """Original upper lashes, including the outer corner, never lavender hair."""
+    array = np.asarray(base)
+    mask = np.zeros(array.shape[:2], dtype=bool)
+    for name, (x0, y0, x1, y1) in {"left": (30,38,42,49), "right": (52,38,67,49)}.items():
+        if right_only and name != "right":
+            continue
+        mask[y0:y1,x0:x1] = np.all(array[y0:y1,x0:x1,:3] == PIXEL_DARK[:3], axis=2)
+    # The former half-open Python slices also missed one last iris column,
+    # leaving two orange glints beside a blink or an X eye.
+    for name,x,bottom in [("left",40,54),("right",61,55)]:
+        if right_only and name != "right":
+            continue
+        rgb=array[43:bottom,x,:3]
+        hair=np.all(rgb==(192,188,206),axis=1)
+        white=np.all(rgb==(255,255,255),axis=1)
+        mask[43:bottom,x] |= ~hair & ~white
+    return Image.fromarray(mask.astype(np.uint8) * 255)
+
+
+def pixel_eyes(base, focused=False, cross=False, squeezed=False, right_only=False):
     result = base.copy()
     array = np.array(result)
     # Remove blue/orange iris and its outline only; keep the lavender hair edge
-    # crossing the inner left eye. Eyebrows lie above y43 and stay untouched.
-    for left, right, bottom in [(34, 40, 54), (54, 61, 55)]:
+    # crossing the inner left eye. The dark arches above y43 are the open
+    # eye's lashes, so a full blink removes them too; lavender hair remains.
+    if not focused:
+        array[np.asarray(pixel_lash_mask(base, right_only)) > 0] = (255,255,255,255)
+    iris_boxes = [(34,40,54),(54,61,55)] if focused else [(34,41,54),(54,62,55)]
+    for index, (left, right, bottom) in enumerate(iris_boxes):
+        if right_only and index == 0:
+            continue
         region = array[43:bottom, left:right]
         protected_hair = np.all(region[:, :, :3] == (192, 188, 206), axis=2)
         if focused:
@@ -95,17 +121,16 @@ def pixel_eyes(base, focused=False, cross=False, squeezed=False):
     else:
         draw.line([(34, 51), (35, 50), (36, 49), (38, 49), (39, 50)], fill=PIXEL_DARK, width=1)
         draw.line([(54, 51), (55, 50), (56, 49), (58, 49), (59, 50), (60, 51)], fill=PIXEL_DARK, width=1)
+    if right_only:
+        # A wink changes only the viewer-right eye, including its old lash.
+        result.paste(base.crop((0,0,52,base.height)),(0,0))
     return preserve_alpha(base, result)
 
 
 def pixel_frames(base):
     blink = pixel_eyes(base)
     focused = pixel_eyes(base, focused=True)
-    wink = base.copy()
-    with Image.open(ASSETS / "avatar-wink.png") as source:
-        existing = source.convert("RGBA").resize((100, 100), Image.Resampling.NEAREST)
-        wink.paste(existing.crop((54, 43, 62, 55)), (54, 43))
-    preserve_alpha(base, wink)
+    wink = pixel_eyes(base, right_only=True)
     return {
         "idle-open": base.copy(), "idle-blink": blink,
         "talk-closed": pixel_mouth(base, "closed"),
@@ -251,10 +276,84 @@ def illustration_mouth(base, shape):
     return preserve_alpha(base, result)
 
 
-def illustration_eyes(base, focused=False, cross=False, squeezed=False):
+ILLUSTRATION_EYE_POLYGONS = {
+    "left": [(298,470),(316,447),(337,429),(356,420),(377,422),(395,432),(413,451),
+             (426,478),(428,585),(338,590),(326,529),(305,505)],
+    "right": [(526,476),(542,450),(563,431),(583,420),(607,427),(632,443),
+              (657,468),(684,492),(670,533),(643,522),(636,590),(539,591),(526,510)],
+}
+
+
+def illustration_hair_mask(base):
+    rgb=np.asarray(base)[:,:,:3].astype(np.int16)
+    r,g,b=rgb.transpose(2,0,1);yy,xx=np.indices(r.shape)
+    edge=np.interp(yy,[405,430,455,480,505,535,570],[382,396,410,432,463,496,520])
+    inner_right=np.interp(yy,[415,440,470,488],[540,533,527,526])
+    geometry=(((xx>=edge-3)&(xx<=edge+10)&(yy>=405)&(yy<=570)) |
+              ((xx<=304)&(yy>=455)&(yy<=510)) |
+              ((xx>=510)&(xx<=inner_right+3)&(yy>=415)&(yy<=488)))
+    return Image.fromarray(((r>110)&(np.abs(r-g)<16)&(b-r>7)&geometry).astype(np.uint8)*255)
+
+
+def illustration_eye_mask(base, right_only=False, lashes_only=False):
+    """Full original sockets; the original gray-violet forelock is protected."""
+    array = np.asarray(base)
+    mask = Image.new("L", base.size)
+    draw = ImageDraw.Draw(mask)
+    for name, polygon in ILLUSTRATION_EYE_POLYGONS.items():
+        if not right_only or name == "right":
+            draw.polygon(polygon, fill=255)
+    region = np.asarray(mask).copy()
+    rgb = array[:,:,:3].astype(np.int16)
+    r,g,b = rgb.transpose(2,0,1)
+    # Eyelash antialiasing is also violet gray. Color alone would keep an
+    # entire phantom upper lid, so protect this color only where the actual
+    # outer hair edge or diagonal forelock crosses an eye corner.
+    hair=np.asarray(illustration_hair_mask(base))>0
+    if lashes_only:
+        # Existing released closed-eye frames have already erased their iris.
+        # Refresh only source ink outside those old boxes, preserving every
+        # authored closed line and all mouth frames exactly.
+        old_iris = np.zeros(region.shape, dtype=bool)
+        # The old RGB-selective iris eraser also left pale gray crescents
+        # in its upper half. Refresh those too; preserve from y491 down so
+        # the current X, squeeze and ordinary closed strokes stay exact.
+        old_iris[491:586,341:422] = True
+        old_iris[491:586,541:631] = True
+        region[old_iris] = 0
+    region[hair | (array[:,:,3] == 0)] = 0
+    return Image.fromarray(region)
+
+
+def illustration_clean_eyes(base, right_only=False):
+    """Cover complete lashes with nearby authored cheek fur, preserving hair."""
+    result = base.copy()
+    for name, window in {"left": (355,594,405,621), "right": (548,595,599,621)}.items():
+        if right_only and name != "right":
+            continue
+        polygon = ILLUSTRATION_EYE_POLYGONS[name]
+        local = Image.new("L",base.size)
+        ImageDraw.Draw(local).polygon(polygon, fill=255)
+        full = np.asarray(illustration_eye_mask(base, right_only=name=="right"))
+        mask = Image.fromarray(np.minimum(np.asarray(local), full))
+        soft = mask.filter(ImageFilter.GaussianBlur(.65))
+        mask = Image.fromarray(np.minimum(np.asarray(mask),np.asarray(soft)))
+        x0=min(x for x,y in polygon); x1=max(x for x,y in polygon)
+        y0=min(y for x,y in polygon); y1=max(y for x,y in polygon)
+        sx0,sy0,sx1,sy1=window
+        scale_x=(sx1-sx0)/(x1-x0); scale_y=(sy1-sy0)/(y1-y0)
+        donor=base.transform(base.size,Image.Transform.AFFINE,
+            (scale_x,0,sx0-x0*scale_x,0,scale_y,sy0-y0*scale_y),Image.Resampling.BICUBIC)
+        result.paste(donor,(0,0),mask)
+    return preserve_alpha(base,result)
+
+
+def illustration_eyes(base, focused=False, cross=False, squeezed=False, right_only=False):
     original = np.array(base)
     array = original.copy()
-    for x0, x1, bottom in [(341, 422, 586), (541, 631, 586)]:
+    for index, (x0, x1, bottom) in enumerate([(341, 422, 586), (541, 631, 586)]):
+        if right_only and index == 0:
+            continue
         y0, y1 = 459, 501 if focused else bottom
         rgb = original[y0:y1, x0:x1, :3].astype(np.int16)
         blue = (rgb[:, :, 1] - rgb[:, :, 0] > 3) & (rgb[:, :, 2] - rgb[:, :, 0] > 9)
@@ -265,7 +364,7 @@ def illustration_eyes(base, focused=False, cross=False, squeezed=False):
         mask = mask.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(0.5))
         amount = np.asarray(mask).astype(float)[:, :, None] / 255
         array[y0:y1, x0:x1, :3] = np.round(array[y0:y1, x0:x1, :3] * (1-amount) + np.array([253, 253, 253]) * amount).astype(np.uint8)
-    result = Image.fromarray(array)
+    result = Image.fromarray(array) if focused else illustration_clean_eyes(base, right_only)
     draw = ImageDraw.Draw(result)
     dark = (38, 45, 53, 255)
     if squeezed:
@@ -281,19 +380,21 @@ def illustration_eyes(base, focused=False, cross=False, squeezed=False):
     else:
         round_line(draw, curve([(346, 540), (366, 517), (394, 517), (416, 541)]), dark, 9)
         round_line(draw, curve([(547, 541), (569, 516), (603, 516), (625, 540)]), dark, 9)
+    if right_only:
+        result.paste(base.crop((0,0,520,base.height)),(0,0))
     return preserve_alpha(base, result)
 
 
 def illustration_frames(base):
     blink = illustration_eyes(base)
     focused = illustration_eyes(base, focused=True)
+    # This authored one-eye wink already replaces the complete socket and
+    # has no open-eye residue. Retain its original tapered single eyelid.
     wink = base.copy()
     with Image.open(ASSETS / "illustration/avatar-wink.png") as source:
         existing = source.convert("RGBA")
-        # Reuse only the already-created viewer-right eye expression. The rest
-        # of this rig stays on the exact neutral portrait, including its alpha.
-        wink.paste(existing.crop((528, 420, 685, 589)), (528, 420))
-    preserve_alpha(base, wink)
+        wink.paste(existing.crop((528,420,685,589)),(528,420))
+    preserve_alpha(base,wink)
     frames = {
         "idle-open": base.copy(), "idle-blink": blink,
         "talk-closed": illustration_mouth(base, "closed"),
@@ -381,11 +482,10 @@ def validate(style, data):
     allowed = np.zeros(base.shape[:2], dtype=bool)
     # Includes only eye/mouth face patches, including their resize filter fringe.
     if style == "pixel":
-        allowed[43:55, 33:62] = True
+        allowed[38:55, 30:67] = True
         allowed[60:69, 38:55] = True
     else:
-        allowed[105:141, 77:151] = True
-        allowed[96:141, 121:163] = True  # Existing one-eye wink / eyebrow patch.
+        allowed[96:141, 67:164] = True  # Complete eye sockets and resize fringe.
         allowed[142:163, 93:133] = True
     report = {"style": style, "width": data["width"], "height": data["height"], "frameCount": len(images),
               "paletteSize": len(data["palette"]), "alphaAligned": True, "changesConfinedToFace": True, "frames": []}

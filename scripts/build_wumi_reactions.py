@@ -78,6 +78,34 @@ EYE_CLEAN_POLYGONS = {
     (193,278,265,311): [(190,277),(269,277),(269,313),(190,313)],
     (320,278,400,312): [(317,277),(403,277),(403,314),(317,314)],
 }
+# The authored sleeping pose has a second pale eye crease above each closed
+# lid. These are below the actual gray brows and are not forehead markings.
+# Its short lid boxes never covered them, leaving two detached eye shadows.
+REST_EYE_SHADOW_POLYGONS = {
+    (193,278,265,311): [(225,240),(234,236),(246,239),(252,247),(248,258),(238,262),(225,258),(220,249)],
+    (320,278,400,312): [(330,237),(341,234),(351,239),(355,249),(347,259),(335,259),(327,250)],
+}
+REST_HAIR_PROTECTION = [(232,225),(235,233),(241,243),(247,253),(255,263),(265,270),
+                        (274,270),(269,261),(260,251),(252,240),(244,230),(240,225)]
+
+
+def rest_hair_mask(size):
+    mask = Image.new("L", size)
+    ImageDraw.Draw(mask).polygon(REST_HAIR_PROTECTION, fill=255)
+    return mask
+
+
+def rest_shadow_mask(size, box=None):
+    mask = Image.new("L", size)
+    draw = ImageDraw.Draw(mask)
+    polygons = REST_EYE_SHADOW_POLYGONS.values() if box is None else [REST_EYE_SHADOW_POLYGONS[tuple(box)]]
+    for polygon in polygons:
+        draw.polygon(polygon, fill=255)
+    mask = np.asarray(mask.filter(ImageFilter.MaxFilter(3))).copy()
+    # The left crease almost touches the diagonal forelock. Include every
+    # antialiased hair pixel in a hard no-paint band, at every output size.
+    mask[np.asarray(rest_hair_mask(size)) > 0] = 0
+    return Image.fromarray(mask)
 # The generated happy wink occupied an 87px-wide, 33px-high box. Its open
 # counterpart is approximately the left eye's 56x74 dimensions, with a 2px
 # vertical face-axis offset. Use that geometry for a matching closed eyelid.
@@ -136,6 +164,20 @@ def blink(base, eyes, right_only=False, cross=False, lid_boxes=None, squeezed=Fa
         soft = region.filter(ImageFilter.GaussianBlur(1.8))
         mask = Image.fromarray(np.minimum(np.asarray(region), np.asarray(soft)))
         result = texture_patch(result, donor, mask)
+        shadow = REST_EYE_SHADOW_POLYGONS.get(tuple(box))
+        if shadow is not None:
+            # Register this small fur donor separately: changing the short
+            # eyelid donor's scale would also alter the surrounding eye fur.
+            x0 = min(x for x, _ in shadow); y0 = min(y for _, y in shadow)
+            x1 = max(x for x, _ in shadow); y1 = max(y for _, y in shadow)
+            scale_x, scale_y = (sx1-sx0)/(x1-x0), (sy1-sy0)/(y1-y0)
+            donor = clean.transform(base.size, Image.Transform.AFFINE,
+                                    (scale_x, 0, sx0-x0*scale_x, 0, scale_y, sy0-y0*scale_y),
+                                    Image.Resampling.BICUBIC)
+            region = rest_shadow_mask(base.size, box)
+            soft = region.filter(ImageFilter.GaussianBlur(1.2))
+            mask = Image.fromarray(np.minimum(np.asarray(region), np.asarray(soft)))
+            result = texture_patch(result, donor, mask)
     draw = ImageDraw.Draw(result)
     for name, (x0, y0, x1, y1) in eyes.items():
         if right_only and name != "right":

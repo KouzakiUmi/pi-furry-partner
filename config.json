@@ -1,0 +1,17 @@
+{
+  "name": "呜咪",
+  "subtitle": "你的工作搭档",
+  "animation": true,
+  "persona": false,
+  "chineseUI": true,
+  "compactPrompt": true,
+  "renderer": "auto",
+  "style": "wumi",
+  "headerStyle": "pixel",
+  "layout": "editor",
+  "dockSize": "auto",
+  "info": "compact",
+  "size": "auto",
+  "optimizeEditor": true,
+  "enabled": true
+}

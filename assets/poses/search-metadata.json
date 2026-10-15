@@ -1,0 +1,806 @@
+{
+  "schemaVersion": 1,
+  "pose": "search",
+  "file": "search.png",
+  "sourceFile": "search-generated-perspective.png",
+  "promptFile": "search-perspective-prompt.txt",
+  "identityReference": "User-provided Umi character design sheet (copyright reserved)",
+  "styleReference": "neutral.png",
+  "editTargetReference": "search.before-perspective.png",
+  "generatedUsing": "built-in image_gen with transparent_background=true",
+  "width": 640,
+  "height": 640,
+  "sourceSize": [
+    1254,
+    1254
+  ],
+  "sourceAlphaBounds": [
+    96,
+    84,
+    1180,
+    1219
+  ],
+  "scale": 0.44280442804428044,
+  "contentSize": [
+    480,
+    503
+  ],
+  "pasteOffset": [
+    80,
+    107
+  ],
+  "alphaBounds": [
+    80,
+    107,
+    560,
+    610
+  ],
+  "alphaExtrema": [
+    0,
+    255
+  ],
+  "borderTransparent": true,
+  "localRootWhiteningApplied": false,
+  "rootTreatment": "image-generated anatomical perspective repair: substantial white root blends into the rear rump; one curved volumetric tail tapers toward its deep-gray tip; no painted polygon patch",
+  "perspectiveRepair": "Only the tail and its rump attachment were edited; head remains buried, papers/hood/scarf/paw composition and colors retained. The normalized sprite is slightly shorter due to the foreshortened tail.",
+  "recolorPromptFile": "search-recolor-prompt.txt",
+  "tailColorOrderTipToRoot": [
+    "deep gray",
+    "light gray",
+    "white"
+  ],
+  "tailColorSamples": {
+    "tip": {
+      "point": [
+        350,
+        180
+      ],
+      "rgb": [
+        100,
+        100,
+        107
+      ]
+    },
+    "middle": {
+      "point": [
+        447,
+        248
+      ],
+      "rgb": [
+        183,
+        181,
+        183
+      ]
+    },
+    "root": {
+      "point": [
+        463,
+        327
+      ],
+      "rgb": [
+        250,
+        251,
+        250
+      ]
+    }
+  },
+  "tail": {
+    "roi": [
+      280,
+      95,
+      535,
+      405
+    ],
+    "pivot": [
+      425,
+      362
+    ],
+    "root": [
+      425,
+      362
+    ],
+    "tip": [
+      399,
+      109
+    ],
+    "maskPolygon": [
+      [
+        424,
+        363
+      ],
+      [
+        406,
+        351
+      ],
+      [
+        391,
+        336
+      ],
+      [
+        396,
+        314
+      ],
+      [
+        391,
+        291
+      ],
+      [
+        377,
+        279
+      ],
+      [
+        354,
+        286
+      ],
+      [
+        351,
+        274
+      ],
+      [
+        329,
+        277
+      ],
+      [
+        308,
+        265
+      ],
+      [
+        291,
+        246
+      ],
+      [
+        283,
+        223
+      ],
+      [
+        284,
+        198
+      ],
+      [
+        289,
+        172
+      ],
+      [
+        300,
+        151
+      ],
+      [
+        315,
+        133
+      ],
+      [
+        338,
+        116
+      ],
+      [
+        365,
+        103
+      ],
+      [
+        405,
+        96
+      ],
+      [
+        415,
+        104
+      ],
+      [
+        403,
+        120
+      ],
+      [
+        405,
+        139
+      ],
+      [
+        418,
+        151
+      ],
+      [
+        434,
+        148
+      ],
+      [
+        438,
+        171
+      ],
+      [
+        457,
+        187
+      ],
+      [
+        476,
+        214
+      ],
+      [
+        491,
+        190
+      ],
+      [
+        504,
+        191
+      ],
+      [
+        502,
+        222
+      ],
+      [
+        516,
+        252
+      ],
+      [
+        530,
+        260
+      ],
+      [
+        530,
+        291
+      ],
+      [
+        532,
+        304
+      ],
+      [
+        523,
+        326
+      ],
+      [
+        511,
+        348
+      ],
+      [
+        491,
+        367
+      ],
+      [
+        470,
+        380
+      ],
+      [
+        452,
+        378
+      ],
+      [
+        438,
+        370
+      ],
+      [
+        442,
+        389
+      ],
+      [
+        430,
+        401
+      ],
+      [
+        411,
+        390
+      ],
+      [
+        414,
+        373
+      ]
+    ],
+    "spine": [
+      [
+        425,
+        362
+      ],
+      [
+        452,
+        345
+      ],
+      [
+        476,
+        320
+      ],
+      [
+        484,
+        295
+      ],
+      [
+        465,
+        251
+      ],
+      [
+        438,
+        230
+      ],
+      [
+        407,
+        218
+      ],
+      [
+        377,
+        207
+      ],
+      [
+        350,
+        188
+      ],
+      [
+        340,
+        166
+      ],
+      [
+        350,
+        143
+      ],
+      [
+        373,
+        123
+      ],
+      [
+        399,
+        109
+      ]
+    ],
+    "spineOrder": "root-to-tip; all coordinates are in the final 640-square canvas",
+    "rootPinned": false,
+    "rootFlexible": true,
+    "rootBlendNormalized": 0.075,
+    "transparentMaskPaddingSourcePx": 10,
+    "recommendedAngleDeg": [
+      -9,
+      9
+    ],
+    "note": "Phase-lagged wave along the same tail spine; the root flexes about one native pixel and blends smoothly into a small upper-white-rump region. Lower rump, hood, scarf, paw and pile base stay still.",
+    "spineNormalized": [
+      [
+        0.6640625,
+        0.565625
+      ],
+      [
+        0.70625,
+        0.5390625
+      ],
+      [
+        0.74375,
+        0.5
+      ],
+      [
+        0.75625,
+        0.4609375
+      ],
+      [
+        0.7265625,
+        0.3921875
+      ],
+      [
+        0.684375,
+        0.359375
+      ],
+      [
+        0.6359375,
+        0.340625
+      ],
+      [
+        0.5890625,
+        0.3234375
+      ],
+      [
+        0.546875,
+        0.29375
+      ],
+      [
+        0.53125,
+        0.259375
+      ],
+      [
+        0.546875,
+        0.2234375
+      ],
+      [
+        0.5828125,
+        0.1921875
+      ],
+      [
+        0.6234375,
+        0.1703125
+      ]
+    ]
+  },
+  "papers": [
+    {
+      "id": "left-loose",
+      "polygon": [
+        [
+          99,
+          490
+        ],
+        [
+          139,
+          464
+        ],
+        [
+          183,
+          482
+        ],
+        [
+          173,
+          501
+        ],
+        [
+          142,
+          511
+        ]
+      ],
+      "pivot": [
+        170,
+        500
+      ],
+      "paddingNormalized": 0.0046875,
+      "angle": 1,
+      "amplitude": 1,
+      "phaseOffset": 0
+    },
+    {
+      "id": "upper-loose",
+      "polygon": [
+        [
+          184,
+          480
+        ],
+        [
+          240,
+          470
+        ],
+        [
+          287,
+          481
+        ],
+        [
+          275,
+          518
+        ],
+        [
+          221,
+          514
+        ],
+        [
+          214,
+          495
+        ],
+        [
+          177,
+          505
+        ]
+      ],
+      "pivot": [
+        247,
+        514
+      ],
+      "paddingNormalized": 0.003125,
+      "angle": 1,
+      "amplitude": 1,
+      "phaseOffset": 7
+    },
+    {
+      "id": "front-loose",
+      "polygon": [
+        [
+          282,
+          520
+        ],
+        [
+          382,
+          540
+        ],
+        [
+          412,
+          581
+        ],
+        [
+          327,
+          588
+        ],
+        [
+          303,
+          569
+        ]
+      ],
+      "pivot": [
+        327,
+        580
+      ],
+      "paddingNormalized": 0.003125,
+      "angle": 1,
+      "amplitude": 1,
+      "phaseOffset": 15
+    }
+  ],
+  "paperMotion": {
+    "periodMs": 2400,
+    "phaseOffsetsSteps": [
+      0,
+      7,
+      15
+    ],
+    "fixedPileBaseFromSourceY": 602,
+    "description": "Three asynchronous loose pages; one native pixel and one degree at most. Lower document stack is fixed."
+  },
+  "searchHead": [
+    {
+      "id": "hood",
+      "polygon": [
+        [
+          181,
+          399
+        ],
+        [
+          207,
+          405
+        ],
+        [
+          256,
+          429
+        ],
+        [
+          286,
+          416
+        ],
+        [
+          324,
+          413
+        ],
+        [
+          356,
+          413
+        ],
+        [
+          378,
+          437
+        ],
+        [
+          389,
+          471
+        ],
+        [
+          386,
+          507
+        ],
+        [
+          358,
+          533
+        ],
+        [
+          323,
+          537
+        ],
+        [
+          288,
+          525
+        ],
+        [
+          246,
+          517
+        ],
+        [
+          210,
+          510
+        ],
+        [
+          182,
+          491
+        ],
+        [
+          175,
+          459
+        ]
+      ],
+      "pivot": [
+        299,
+        519
+      ],
+      "paddingNormalized": 0.021875,
+      "amplitude": 1.4,
+      "nodAmplitude": 0.8,
+      "angle": 1,
+      "phaseOffset": 0
+    },
+    {
+      "id": "neck-scarf",
+      "polygon": [
+        [
+          255,
+          417
+        ],
+        [
+          281,
+          404
+        ],
+        [
+          315,
+          397
+        ],
+        [
+          347,
+          401
+        ],
+        [
+          376,
+          414
+        ],
+        [
+          389,
+          436
+        ],
+        [
+          376,
+          455
+        ],
+        [
+          359,
+          442
+        ],
+        [
+          338,
+          422
+        ],
+        [
+          310,
+          420
+        ],
+        [
+          286,
+          427
+        ]
+      ],
+      "pivot": [
+        370,
+        449
+      ],
+      "paddingNormalized": 0.0125,
+      "amplitude": 0.65,
+      "nodAmplitude": 0.35,
+      "angle": 0.6,
+      "phaseOffset": 2
+    }
+  ],
+  "searchOcclusion": [
+    [
+      [
+        99,
+        490
+      ],
+      [
+        139,
+        464
+      ],
+      [
+        183,
+        482
+      ],
+      [
+        173,
+        501
+      ],
+      [
+        142,
+        511
+      ]
+    ],
+    [
+      [
+        184,
+        480
+      ],
+      [
+        240,
+        470
+      ],
+      [
+        287,
+        481
+      ],
+      [
+        275,
+        518
+      ],
+      [
+        221,
+        514
+      ],
+      [
+        214,
+        495
+      ],
+      [
+        177,
+        505
+      ]
+    ],
+    [
+      [
+        137,
+        513
+      ],
+      [
+        237,
+        492
+      ],
+      [
+        263,
+        572
+      ],
+      [
+        168,
+        577
+      ]
+    ],
+    [
+      [
+        78,
+        519
+      ],
+      [
+        138,
+        511
+      ],
+      [
+        182,
+        516
+      ],
+      [
+        240,
+        510
+      ],
+      [
+        275,
+        516
+      ],
+      [
+        330,
+        520
+      ],
+      [
+        381,
+        496
+      ],
+      [
+        409,
+        504
+      ],
+      [
+        429,
+        550
+      ],
+      [
+        457,
+        574
+      ],
+      [
+        558,
+        579
+      ],
+      [
+        470,
+        608
+      ],
+      [
+        198,
+        610
+      ],
+      [
+        78,
+        598
+      ]
+    ]
+  ],
+  "burrowMotion": {
+    "periodMs": 2400,
+    "headSwayNativePx": 1.4,
+    "nodNativePx": 0.8,
+    "hoodAngleDeg": 1,
+    "scarfFollowSteps": 2,
+    "description": "Local hood and upper neck burrow behind foreground papers. Feathered attachment, fixed body and gray paw; no full-canvas sway."
+  },
+  "noseAlignment": "not applicable: head buried behind papers",
+  "geometryComparedWithBeforePerspectiveRepair": {
+    "file": "search.before-perspective.png",
+    "alphaIoU": 0.919736658942214,
+    "alphaBoundsUnchanged": false,
+    "tailRoiUnchanged": false,
+    "tailPivotUnchanged": false
+  }
+}

@@ -1,0 +1,44 @@
+name: Verify plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  optional-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Build and verify the preserved static website
+        run: |
+          npm run build:site
+          npm run test:site
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Install the verified Pi runtime for tests
+        run: npm install --prefix work/pi-runtime --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
+      - name: Run runtime and integration suites
+        shell: pwsh
+        run: |
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime/node_modules'
+          $env:PI_TEST_VERSION = '1.2.0'
+          npm test
+      - name: Verify PowerShell 7 install, upgrade and recovery
+        shell: pwsh
+        run: ./tests/installer.ps1 -WorkDir ./work/installer-core
+      - name: Verify Windows PowerShell 5.1 install, upgrade and recovery
+        shell: powershell
+        run: ./tests/installer.ps1 -WorkDir ./work/installer-desktop

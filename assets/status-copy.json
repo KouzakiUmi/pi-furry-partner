@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "labels": {
+    "idle": "我在呢",
+    "waking": "我醒啦",
+    "thinking": "我想想呀",
+    "speaking": "我讲给你听",
+    "reading": "我读读看",
+    "editing": "我改改这儿",
+    "running": "我盯着输出",
+    "searching": "我找找线索",
+    "waiting": "我等个回音",
+    "waiting_user": "我等你说呀",
+    "success": "我这轮先收尾",
+    "error": "我这步卡住了",
+    "cancelled": "我先停下啦",
+    "compacting": "我理理前文"
+  },
+  "bubbles": {
+    "idle": "我在呢",
+    "waking": "我醒啦",
+    "thinking": "我想想呀",
+    "speaking": "我讲讲",
+    "reading": "我读读看",
+    "editing": "我改改呀",
+    "running": "我盯着呢",
+    "searching": "我翻翻看",
+    "waiting": "我等回音",
+    "waiting_user": "我等你呀",
+    "success": "我收尾啦",
+    "error": "我卡住了",
+    "cancelled": "我停下啦",
+    "compacting": "我理理呀"
+  }
+}

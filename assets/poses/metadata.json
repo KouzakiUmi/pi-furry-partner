@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "character": "呜咪 / Umi",
+  "species": "anthropomorphic wolf",
+  "male": true,
+  "identityReference": "User-provided Umi character design sheet (copyright reserved)",
+  "styleReference": "../illustration/avatar.png",
+  "generatedUsing": "built-in image_gen, both references, transparent_background=true",
+  "originalSheet": "sprite-sheet-original.png",
+  "sheet": "sprite-sheet.png",
+  "sheetSize": [
+    1536,
+    1024
+  ],
+  "alphaCleanup": {
+    "below16": "transparent and RGB zero",
+    "atLeast250": "fully opaque"
+  },
+  "width": 640,
+  "height": 640,
+  "noseAnchor": [
+    288,
+    318
+  ],
+  "targetHeadWidth": 420,
+  "poses": {
+    "neutral": {
+      "file": "neutral.png",
+      "sourceWindow": [
+        0,
+        0,
+        550,
+        516
+      ],
+      "sourceNose": [
+        251.52941176470588,
+        262.8235294117647
+      ],
+      "sourceHeadWidth": 358,
+      "scale": 1.1731843575418994,
+      "pasteOffset": [
+        -7,
+        10
+      ],
+      "nose": [
+        288.09,
+        318.34
+      ],
+      "alphaBounds": [
+        58,
+        28,
+        610,
+        603
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 198097,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          207,
+          239,
+          260,
+          312
+        ],
+        "right": [
+          325,
+          239,
+          384,
+          313
+        ]
+      },
+      "mouth": [
+        259,
+        330,
+        326,
+        351
+      ],
+      "paws": [
+        101,
+        487,
+        482,
+        606
+      ]
+    },
+    "think": {
+      "file": "think.png",
+      "sourceWindow": [
+        550,
+        0,
+        1040,
+        516
+      ],
+      "sourceNose": [
+        730.7528089887641,
+        258.5168539325843
+      ],
+      "sourceHeadWidth": 364,
+      "scale": 1.1538461538461537,
+      "pasteOffset": [
+        79,
+        20
+      ],
+      "nose": [
+        287.561,
+        318.289
+      ],
+      "alphaBounds": [
+        107,
+        35,
+        627,
+        605
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 206943,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          223,
+          231,
+          273,
+          302
+        ],
+        "right": [
+          340,
+          248,
+          396,
+          319
+        ]
+      },
+      "mouth": [
+        276,
+        334,
+        316,
+        360
+      ],
+      "paws": [
+        164,
+        335,
+        493,
+        605
+      ]
+    },
+    "work": {
+      "file": "work.png",
+      "sourceWindow": [
+        1040,
+        0,
+        1536,
+        516
+      ],
+      "sourceNose": [
+        1255.2135922330096,
+        270.05825242718447
+      ],
+      "sourceHeadWidth": 366,
+      "scale": 1.1475409836065573,
+      "pasteOffset": [
+        41,
+        8
+      ],
+      "nose": [
+        287.966,
+        317.903
+      ],
+      "alphaBounds": [
+        51,
+        25,
+        588,
+        583
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 208344,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          206,
+          242,
+          262,
+          313
+        ],
+        "right": [
+          322,
+          242,
+          381,
+          314
+        ]
+      },
+      "mouth": [
+        259,
+        329,
+        321,
+        351
+      ],
+      "paws": [
+        101,
+        450,
+        489,
+        586
+      ]
+    },
+    "speak": {
+      "file": "speak.png",
+      "sourceWindow": [
+        0,
+        516,
+        535,
+        1024
+      ],
+      "sourceNose": [
+        239.0121951219512,
+        769.0731707317074
+      ],
+      "sourceHeadWidth": 364,
+      "scale": 1.1538461538461537,
+      "pasteOffset": [
+        12,
+        26
+      ],
+      "nose": [
+        287.783,
+        318.008
+      ],
+      "alphaBounds": [
+        36,
+        33,
+        611,
+        600
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 195374,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          215,
+          243,
+          272,
+          317
+        ],
+        "right": [
+          333,
+          244,
+          392,
+          319
+        ]
+      },
+      "mouth": [
+        264,
+        332,
+        329,
+        371
+      ],
+      "paws": [
+        34,
+        361,
+        493,
+        602
+      ]
+    },
+    "happy": {
+      "file": "happy.png",
+      "sourceWindow": [
+        535,
+        516,
+        1048,
+        1024
+      ],
+      "sourceNose": [
+        742.9879518072289,
+        766.710843373494
+      ],
+      "sourceHeadWidth": 365,
+      "scale": 1.1506849315068493,
+      "pasteOffset": [
+        49,
+        30
+      ],
+      "nose": [
+        288.329,
+        318.489
+      ],
+      "alphaBounds": [
+        66,
+        38,
+        625,
+        604
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 195018,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          214,
+          247,
+          270,
+          321
+        ],
+        "right": [
+          330,
+          273,
+          417,
+          306
+        ]
+      },
+      "mouth": [
+        262,
+        326,
+        338,
+        375
+      ],
+      "paws": [
+        109,
+        313,
+        593,
+        606
+      ]
+    },
+    "rest": {
+      "file": "rest.png",
+      "sourceWindow": [
+        1048,
+        516,
+        1536,
+        1024
+      ],
+      "sourceNose": [
+        1253.4772727272727,
+        773.2159090909091
+      ],
+      "sourceHeadWidth": 367,
+      "scale": 1.1444141689373297,
+      "pasteOffset": [
+        53,
+        24
+      ],
+      "nose": [
+        288.151,
+        318.362
+      ],
+      "alphaBounds": [
+        66,
+        33,
+        591,
+        588
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "transparentPixels": 211568,
+      "borderTransparent": true,
+      "eyes": {
+        "left": [
+          193,
+          278,
+          265,
+          311
+        ],
+        "right": [
+          320,
+          278,
+          400,
+          312
+        ]
+      },
+      "mouth": [
+        258,
+        331,
+        319,
+        354
+      ],
+      "paws": [
+        103,
+        486,
+        487,
+        592
+      ]
+    }
+  }
+}

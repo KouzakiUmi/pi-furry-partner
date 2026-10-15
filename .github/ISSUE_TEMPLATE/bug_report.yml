@@ -1,0 +1,28 @@
+name: Bug report / 问题反馈
+description: Report rendering, input, animation, or installation problems.
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Versions / 版本
+      description: Pi version and pi-furry-partner version.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 运行环境
+      description: OS, terminal, shell, regular or fullscreen, Sixel or blocks, other editor extensions.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction / 复现步骤
+      description: What did you do, what happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or logs / 截图或日志

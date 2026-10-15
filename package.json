@@ -1,0 +1,40 @@
+{
+  "name": "pi-furry-partner",
+  "version": "2.1.1",
+  "description": "Umi, a lively furry partner for Pi: animated expressions, a responsive editor, Chinese UI, and independent persona controls.",
+  "author": "KouzakiUmi",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/KouzakiUmi/pi-furry-partner#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KouzakiUmi/pi-furry-partner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KouzakiUmi/pi-furry-partner/issues"
+  },
+  "type": "module",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "themes": [
+      "./themes/pi-furry-night.json"
+    ]
+  },
+  "scripts": {
+    "test": "node tests/run.mjs",
+    "build:site": "node scripts/build-site.mjs",
+    "test:site": "node scripts/test-site.mjs"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "keywords": [
+    "pi-package",
+    "pi-coding-agent",
+    "furry",
+    "mascot",
+    "tui",
+    "wumi"
+  ]
+}

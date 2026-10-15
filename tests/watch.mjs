@@ -18,6 +18,7 @@ for(const style of ["wumi","wumi-pixel"]){
   for(let i=0;i<base.frames.length;i++)assert.equal(sheet.frames[i],base.frames[i]);
   assert.equal(withWatchFrames(base,{...asset,width:1}),base);
   assert.equal(withWatchFrames(base,{...asset,frames:[asset.frames[0]]}),base);
+  assert.equal(withWatchFrames(base,{...asset,frames:[...asset.frames,null]}),base);
   assert.equal(withWatchFrames(base,{...asset,frames:[{...asset.frames[0],pixels:[-1]},asset.frames[1]]}),base);
   const open=sheet.frames[sheet.ids.watch].pixels,blink=sheet.frames[sheet.ids["watch-blink"]].pixels;
   let different=0;

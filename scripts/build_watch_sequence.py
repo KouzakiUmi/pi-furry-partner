@@ -120,12 +120,14 @@ def main():
     assert all(sha(ROOT/f'assets/reactions/{style}/reaction-sheet.json')==expected for style,expected in originals.items())
     if args.apply:
         for style in assets:
-            for path in (stage/style).iterdir():shutil.copy2(path,ROOT/f'assets/reactions/{style}'/path.name)
+            for name in ['watch-frames.json',*[f'{frame_id}.png' for frame_id in IDS]]:
+                shutil.copy2(stage/style/name,ROOT/f'assets/reactions/{style}'/name)
         masters=ROOT/'assets/poses/watch-sequence';masters.mkdir(exist_ok=True)
         for name in IDS:shutil.copy2(stage/f'{name}.png',masters/f'{name}.png')
         report['sourceMaster']='assets/poses/watch-sequence-generated.png'
         report['frameDirectory']='assets/poses/watch-sequence'
         write(ROOT/'assets/poses/watch-sequence-metadata.json',report)
+        assert all(sha(ROOT/f'assets/reactions/{style}/reaction-sheet.json')==expected for style,expected in originals.items())
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
 if __name__=='__main__':main()

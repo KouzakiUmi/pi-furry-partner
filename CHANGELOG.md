@@ -6,6 +6,8 @@
 
 ### 简体中文
 
+- `/mascot demo` 和 `/mascot demo all` 使用独立的 70.9 秒巡演时间轴，包含倾听、戳戳、7.4 秒放大镜展示、各 7.2 秒的搜索与整理，以及 12.5 秒等待后的打盹和惊醒。单动作演示保留输入倾听与戳戳；`demo off` 或新真实任务退出，不改配置、草稿、工具或模型。
+- 修复全屏跨行拖选时自有 OSC 图像标记被原生选区切片复制，导致 Sixel 条带错列重画的问题：同绘制批次按行与 token 保留首个有效锚点并检查横向边界。释放拖选后继续输入、按钮、Esc、Enter 的行为已在 Pi 1.2 / 1.3 的真实鼠标路由中回归。
 - 将气泡宽度与头像尺寸解耦：普通头像保持 16 × 8 格，正常终端气泡扩到 20 列并让输入框右移 4 列，宽屏可到 24 列，窄屏收紧；英文保留自然短句与两侧爪子间隔。
 
 - 命令、默认配置、预览与中英文文档统一使用 `umi` / `umi-pixel`。旧 `wumi` / `wumi-pixel` 继续作为兼容别名；安装升级只迁移根配置中的旧风格值，其余用户字段保持原样。
@@ -14,6 +16,8 @@
 - 新增 `/mascot poke` 与全屏模式点击头像：按原眼角比例绘制日系弧形挤眼，眼线中心略厚、外端收细；配合缩脸、带弧线的阻尼回弹、滞后耳抖和随机第一人称回应。像素版保护眼线连通，空闲时更活泼、工作时更轻，工具与任务计时持续运行。
 - 将播放/暂停按钮改为显示当前状态的“表情：开 / 关”。关闭循环微动时，真实状态仍会切换静态表情，修复短工具动作结束后卡在旧姿态的问题；主动戳一戳仍有短暂反馈。
 - 放大镜扫描使用 MiniMax-H3 从已确认的角色原画生成连续动作，再离线抠图、抽帧；头部、握爪和镜片一起左右查看，镜片经过眼睛时呈现放大效果。运行时只播放完整画帧，不再变形或叠化镜框，修复双框重影与左侧斗篷边缘失真。插画与像素版共用播放节奏，兼容旧两帧与六帧素材包。
+- 搜索和整理改用同一套 MiniMax-H3 完整连续帧：72 幅画面、72 步、每圈 6580ms，保留尾尖深灰、中段浅灰、尾根白色与白毛臀部相连。甩尾、拱头、斗篷和纸页动作已经烘焙，运行时不再叠加旧局部形变，修复尾巴和身体连接处的割裂。
+- 绿色亮度信号先生成独立的 16 位灰度遮罩，反相为 Alpha，再恢复前景颜色并以同一预乘采样核缩小。640px 母版与视频保留柔和透明边缘；240px 终端外沿以原调色板近似配套黑底抗锯齿，80px 保留硬像素覆盖，不改原始 21 帧、调色板或戳戳素材。
 - 修改代码继续打字；空闲输入时会侧身把爪子放到耳边倾听、轻轻点头，停顿或发送后回到相应状态。
 - 增加请求准备、等待首个模型输出、已收到思考内容但仍等正文的指示与秒数。关闭动画时也保留每秒一次的文字计时；收到真实内容、执行工具或结束时切换，不推测服务端排队原因。
 - 明确狼种族的角色设定，增强自然语气词和拟声词；技术交流保留温柔活泼的第一人称口吻，关键事实和严格格式依然优先。
@@ -22,6 +26,8 @@
 
 ### English
 
+- `/mascot demo` and `/mascot demo all` use an independent 70.9-second tour, including listening, poking, a 7.4-second magnifier stage, 7.2 seconds each for searching and compaction, and a 12.5-second wait followed by dozing and a startled wake-up. Single-state demos retain typing and poke interactions. `demo off` or a new real task exits without changing settings, drafts, tools or models.
+- Fixed fullscreen selection slices copying private OSC image markers and repainting Sixel stripes in the wrong column. Each draw batch keeps the first valid anchor per row/token and checks horizontal bounds. Actual Pi 1.2 / 1.3 mouse routing verifies multi-row drag/release followed by typing, controls, Escape and Enter.
 - Decoupled caption width from portrait size: the normal avatar stays 16 × 8 cells, captions use 20 cells and move the editor four cells right, with 24-cell wide-screen and compact narrow-screen layouts. English retains natural short phrases with clear paw spacing.
 
 - Standardized commands, default preferences, previews and bilingual documentation on `umi` / `umi-pixel`. Earlier `wumi` / `wumi-pixel` values remain compatibility aliases; upgrades migrate only the root style value and retain other user fields.
@@ -30,6 +36,8 @@
 - Added `/mascot poke` and fullscreen portrait clicks: curved, tapered squeeze-eyes follow the original eye proportions, with protected pixel lines, a cheek scrunch, an arcing damped rebound, delayed ear twitches and random first-person replies. Idle reactions are playful; busy ones are gentler, without interrupting work or resetting tool clocks.
 - Replaced Play/Pause with the current state, `Motion: On / Off`. Disabling idle motion still updates static expressions for real activity, fixing a paused short-tool pose that could latch. Explicit pokes retain their short reaction.
 - Rebuilt the magnifier scan with MiniMax-H3 from the approved character artwork, then keyed and sampled it offline. The head, gripping paw and lens scan together; the eye is enlarged as the lens passes in front of it. Runtime plays complete cels without lens deformation or dissolves, fixing duplicate rims and left-side cloak distortion. Illustrated and pixel styles share the timing; older two- and six-frame packs remain compatible.
+- Searching and compaction share a complete MiniMax-H3 sequence: 72 cels and 72 steps over 6580ms. The dark-gray tip, light-gray middle and white tail root remain connected to the white rump. Tail, head, cloak and paper movement is baked into the cels, replacing additional local runtime warps and repairing the disconnected-looking tail/body motion.
+- Green-signal luminance now produces an independent 16-bit grayscale matte, inverted for alpha before foreground-color recovery and matched premultiplied resizing. The 640px masters and film retain soft alpha. The 240px terminal edge approximates antialiasing over the matching black background using the original palette; the 80px version keeps hard pixel coverage. Original 21-frame sheets, palettes and poke assets remain unchanged.
 - Editing keeps its typing paws. Local idle typing prompts an ear-cupping, gently nodding listening pose; a pause or submission returns to the appropriate activity.
 - Added request preparation, first-output waiting and thinking-before-answer indicators with elapsed seconds. A once-per-second text heartbeat remains when animation is off. Real output, tools and completion control the indicator without guessing server queue or network causes.
 - Clarified Umi's wolf identity and encouraged natural interjections and playful sounds. Technical conversation keeps a gentle, lively first-person voice while facts and strict formats retain priority.

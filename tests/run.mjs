@@ -10,6 +10,7 @@ await import("./style-ids.mjs");
 await import("./poke.mjs");
 await import("./watch.mjs");
 await import("./listen.mjs");
+await import("./search.mjs");
 await import("./integration.mjs");
 await import("./streaming-layout.mjs");
 await import("./overlay-visibility.mjs");

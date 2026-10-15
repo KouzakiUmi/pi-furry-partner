@@ -3,6 +3,7 @@ import { cp, readFile, writeFile, mkdir, mkdtemp, rename, rm } from "node:fs/pro
 import { dirname, join, resolve, sep } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { DEMO_PERIOD_MS, DEMO_SEQUENCE } from "../lib/activity.mjs";
 
 // Run actual extension factories and Pi rendering without a model/session runtime.
 // Commands save only to a temporary package copy under this workspace's work/.
@@ -410,6 +411,26 @@ try {
     for (let i = 0; i < count; i++) { tick(); rendered = currentEditor.render(100); }
     return rendered;
   };
+  const tourConfig=await readFile(join(scratch,"config.json"),"utf8"),tourSubmits=submits.length;
+  currentEditor.setText("Keep this draft during the animation tour");const tourDraft=currentEditor.getText();
+  await command("demo");currentEditor.render(100);advanceDock(6);
+  assert.match(notices.at(-1).message,/全部动作/);assert.match(currentEditor.displaySheet.frames[0].id,/^rest/);
+  assert.ok(currentEditor.motion.stats().logicalTime>0);
+  time+=DEMO_PERIOD_MS;currentEditor.render(100);
+  assert.equal(currentEditor.motion.stats().logicalTime,0,"Skipping a whole tour lap into the same waking state must restart its motion epoch once");
+  assert.equal(currentEditor.getText(),tourDraft);assert.equal(submits.length,tourSubmits);assert.equal(jobs.size,1);
+  assert.equal(await readFile(join(scratch,"config.json"),"utf8"),tourConfig,"Tour selection must not save or modify preferences");
+  await command("demo all");
+  const runningOffset=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.phase==="running")).reduce((sum,step)=>sum+step.durationMs,0);
+  time+=runningOffset+500;currentEditor.render(100);advanceDock(6);assert.match(currentEditor.displaySheet.frames[0].id,/^watch/);
+  await command("demo off");currentEditor.render(100);advanceDock(6);assert.match(currentEditor.displaySheet.frames[0].id,/^idle/);
+  await command("pause");const tourPausedConfig=await readFile(join(scratch,"config.json"),"utf8");
+  await command("demo all");currentEditor.render(100);assert.equal(jobs.size,0);assert.match(notices.at(-1).message,/动画目前暂停.*\/mascot play/);
+  assert.equal(await readFile(join(scratch,"config.json"),"utf8"),tourPausedConfig);await command("demo off");await command("play");
+  await command("layout header");const tourHeaderConfig=await readFile(join(scratch,"config.json"),"utf8");
+  await command("demo");assert.match(notices.at(-1).message,/\/mascot layout editor/);assert.equal(await readFile(join(scratch,"config.json"),"utf8"),tourHeaderConfig);
+  await command("demo off");await command("layout editor");currentEditor.setText("");
+  checks.push("Default/all demo loops every animation without requests, extra timers, draft/submission or preference changes; whole-lap same-state motion restarts, paused/header modes give actionable hints, and off restores the actual pose");
   for (const style of ["umi", "umi-pixel"]) {
     await command(`style ${style}`);
     await command("demo running"); currentEditor.render(100); advanceDock();
@@ -470,6 +491,8 @@ try {
   assert.equal(jobs.size, 1);
   const savedEnglish = JSON.parse(await readFile(join(scratch, "config.json"), "utf8"));
   assert.equal(savedEnglish.language, "en"); assert.equal(savedEnglish.chineseUI, true); assert.equal(savedEnglish.compactPrompt, true);
+  await command("demo all");assert.match(notices.at(-1).message,/every animation in a loop/);assert.ok(!/[\u3400-\u9fff]/u.test(notices.at(-1).message));
+  await command("demo off");assert.match(notices.at(-1).message,/real task state/);
   await command("language zh-CN");
   assert.equal(currentEditor.getText(), languageDraft);
   assert.equal(submits.length, languageSubmits);

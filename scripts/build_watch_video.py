@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+from collections import deque
 import numpy as np
 from PIL import Image
 from build_watch_reactions import palette_index
@@ -38,15 +39,47 @@ def eye_only_blink(image):
     return closed,{'baseId':'watch','source':'assets/poses/neutral-eyes-clean.png',
         'eyeBoxes':eyes,'changedPixels':int(changed.sum()),'alphaChangedPixels':0,'outsideEyeChangedPixels':0}
 
-def index_image(image,palette,size,pixel=False):
+def nearest_indices(rgb,palette):
     try:
         from scipy.spatial import cKDTree
-    except ImportError:return palette_index(image,palette,size,pixel)
+    except ImportError:
+        source=np.asarray(rgb,dtype=np.float64).reshape(-1,3);colors=np.asarray(palette,dtype=np.float64)
+        result=np.zeros(len(source),np.uint16)
+        for start in range(0,len(source),4096):result[start:start+4096]=np.argmin(((source[start:start+4096,None,:]-colors[None,:,:])**2).sum(2),1)
+        return result
+    return cKDTree(np.asarray(palette,dtype=float)).query(np.asarray(rgb).reshape(-1,3),k=1,eps=0,workers=1)[1]
+
+def border_connected_partial(alpha):
+    # Identify only the partial-coverage band connected to the outside. This
+    # is a terminal display approximation, never an erosion of the source.
+    mask=alpha<255;seen=np.zeros(mask.shape,bool);h,w=mask.shape;queue=deque()
+    for y,x in [*((0,x) for x in range(w)),*((h-1,x) for x in range(w)),*((y,0) for y in range(h)),*((y,w-1) for y in range(h))]:
+        if mask[y,x] and not seen[y,x]:seen[y,x]=True;queue.append((y,x))
+    while queue:
+        y,x=queue.popleft()
+        for yy,xx in ((y-1,x),(y+1,x),(y,x-1),(y,x+1)):
+            if 0<=yy<h and 0<=xx<w and mask[yy,xx] and not seen[yy,xx]:seen[yy,xx]=True;queue.append((yy,xx))
+    return seen
+
+def index_image(image,palette,size,pixel=False,background=None,keep_soft=False):
     image=image.resize((size,size),Image.Resampling.NEAREST if pixel else Image.Resampling.LANCZOS)
     array=np.asarray(image);rgb=array[:,:,:3].reshape(-1,3)
-    tree=cKDTree(np.asarray(palette[1:],dtype=float))
-    _,indices=tree.query(rgb,k=1,eps=0,workers=1)
-    indices=indices.astype(np.uint16)+1;indices[array[:,:,3].reshape(-1)<128]=0
+    indices=nearest_indices(rgb,palette[1:]).astype(np.uint16)+1
+    if background is not None:
+        alpha=array[:,:,3].reshape(-1,1)/255;bg=np.asarray(background,dtype=float)
+        flat=rgb*alpha+bg*(1-alpha);edge=border_connected_partial(array[:,:,3]).reshape(-1)
+        aa_palette=np.asarray(palette,dtype=float).copy();aa_palette[0]=bg
+        aa=nearest_indices(flat,aa_palette).astype(np.uint16)
+        # Duplicate opaque-black palette entries must never turn a fully
+        # transparent/background-matching pixel into an opaque black square.
+        bg_distance=((flat-bg)**2).sum(1);chosen_distance=((flat-aa_palette[aa])**2).sum(1)
+        aa[bg_distance<=chosen_distance+1e-9]=0
+        # A few pre-existing palette entries are visually black but are not
+        # index zero. On the AA derivative's outer partial-coverage band they
+        # represent the terminal background, not new opaque noise pixels.
+        aa[np.max(np.abs(aa_palette[aa]-bg),axis=1)<=3]=0
+        indices[edge]=aa[edge];indices[array[:,:,3].reshape(-1)==0]=0
+    else:indices[array[:,:,3].reshape(-1)<(1 if keep_soft else 128)]=0
     return indices.tolist()
 
 def preview_frame(frame,palette,size,path):
@@ -98,7 +131,12 @@ def main():
     parser.add_argument('--manifest',type=Path,required=True)
     parser.add_argument('--stage',type=Path,required=True)
     parser.add_argument('--apply',action='store_true')
+    parser.add_argument('--terminal-aa-background',help='Optional RRGGBB background for watch240 edge-only matte composition; palette and opaque interiors are unchanged')
     args=parser.parse_args();manifest_path=args.manifest.resolve();stage=args.stage.resolve();stage.mkdir(parents=True,exist_ok=True)
+    background=None
+    if args.terminal_aa_background:
+        value=args.terminal_aa_background.lstrip('#');assert re.fullmatch('[0-9a-fA-F]{6}',value)
+        background=[int(value[n:n+2],16) for n in (0,2,4)]
     manifest=json.loads(manifest_path.read_text(encoding='utf-8'))
     records=manifest['frames'];assert 2<=len(records)<=95
     original={style:sha(ROOT/f'assets/reactions/{style}/reaction-sheet.json') for style,_ in STYLES}
@@ -122,13 +160,15 @@ def main():
     steps[:1]=[{'id':'watch','durationMs':open_ms},{'id':'watch-blink','durationMs':blink_ms},
         {'id':'watch','durationMs':opening-open_ms-blink_ms}]
     names.insert(1,'watch-blink');poses.insert(1,closed)
+    native_folder=stage/'rgba';native_folder.mkdir(exist_ok=True)
+    for name,pose in zip(names,poses):pose.save(native_folder/f'{name}.png')
     sequence={'steps':steps,'periodMs':period}
     design='Video-derived whole-frame inspection, forward playback, eye-only local blink; no runtime deformation or temporal blending'
     assets={};sheets={};mouth_boxes=[]
     for style,size in STYLES:
         sheet=json.loads((ROOT/f'assets/reactions/{style}/reaction-sheet.json').read_text(encoding='utf-8'));sheets[style]=sheet
         assert len(sheet['frames'])==21
-        frames=[{'id':name,'pixels':index_image(pose,sheet['palette'],size,style.endswith('pixel'))} for name,pose in zip(names,poses)]
+        frames=[{'id':name,'pixels':index_image(pose,sheet['palette'],size,style.endswith('pixel'),background=background if size==240 else None)} for name,pose in zip(names,poses)]
         if size==80:
             for n,(frame,pose) in enumerate(zip(frames,poses)):
                 frames[n],box=protect_video_mouth(frame,pose,sheet['palette']);mouth_boxes.append({'id':frame['id'],'sourceBox':box})
@@ -147,7 +187,7 @@ def main():
     quant=mosaic.quantize(colors=255,method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE)
     flat=quant.getpalette()[:765];palette=[[0,0,0]]+[flat[n:n+3] for n in range(0,len(flat),3)]
     hd={'width':640,'height':640,'transparentIndex':0,'palette':palette,'ids':{name:n for n,name in enumerate(names)},
-        'frames':[{'id':name,'pixels':index_image(pose,palette,640)} for name,pose in zip(names,poses)],
+        'frames':[{'id':name,'pixels':index_image(pose,palette,640,keep_soft=True),'alpha':np.asarray(pose.getchannel('A')).reshape(-1).tolist()} for name,pose in zip(names,poses)],
         'motion':{'ears':False,'paws':False,'watch':{'bakedMotion':True,'sequence':sequence}}}
     write(stage/'watch-frames-640.json',hd)
     source=ROOT/'assets/poses/watch-h3-source.mp4'
@@ -163,6 +203,10 @@ def main():
         'sourceDurationsMs':[record['durationMs'] for record in records],
         'frameIds':names,'sequence':sequence,'blink':{**blink_metadata,'startsAtMs':open_ms,'durationMs':blink_ms},
         'pixelMouthTracking':mouth_boxes,'method':design,
+        'terminalAlphaApproximation':{'wumi240':'Only outside-connected partial-alpha edge pixels are composited over the recorded dark background and mapped into the immutable indexed palette' if background is not None else '1-bit alpha coverage at 128',
+            'backgroundRgb':background,'wumiPixel80':'Pixel style retains binary native-pixel coverage','opaqueInteriorsUnchanged':True,
+            'nearBackgroundPaletteHandling':'On terminal edge coverage only, colors within 3 RGB levels of the chosen background map to transparent index 0; the native source alpha is not thresholded',
+            'sourceAndFilmAlpha':'Native 640px RGBA and HD alpha sidecar retain all 8-bit fractional coverage; independent source mattes are 16-bit'},
         'mainSheetsSha256':original,'mainSheetsUnchanged':True,'pokeSha256':protected,'applied':args.apply}
     write(stage/'build-report.json',report)
     assert all(sha(ROOT/f'assets/reactions/{style}/reaction-sheet.json')==expected for style,expected in original.items())

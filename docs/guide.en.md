@@ -8,7 +8,7 @@ Umi is an animated companion for the interactive Pi Coding Agent terminal. This 
 
 ## Installation and updates
 
-The tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. Other operating systems have not been tested. Configure Pi and your model provider before installing the extension.
+The fully tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. Pi 1.3 has additional interaction regression checks; native Chinese UI and concise Pi documentation hints remain limited to 1.2.0. Other operating systems have not been tested. Configure Pi and your model provider before installing the extension.
 
 Choose one route:
 
@@ -53,9 +53,11 @@ Prompt and persona changes apply to the next request. Language changes do not tr
 
 ## States and animation
 
-The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side; searching and compaction share the paper-pile pose. The tail carries a traveling wave rather than moving as a rigid piece. Speech uses `w / — / o / O` shapes and stops when text output stops.
+The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side. Searching and compaction share a MiniMax-H3 paper-pile animation: 72 complete cels and 72 playback steps over 6.58 seconds, with coordinated head, tail, body, cloak and page movement. Runtime does not independently warp these parts. The tail remains dark gray at its tip, light gray in the middle and white at the root, joining the white rump. Speech uses `w / — / o / O` shapes and stops when text output stops.
 
 The magnifier scan uses a continuous MiniMax-H3 animation made from the approved character artwork. Its background is removed and complete cels are prepared offline. The head and gripping paw follow the lens, which enlarges the eye when it passes in front of it. The cloak moves with the body and keeps a clean outline. Runtime only plays the cels in order, without local lens deformation or dissolving neighboring scan cels together. Illustrated and pixel styles share the timing. Older six-frame packs still play their own sequence, while two-frame packs retain a static pose and blink fallback.
+
+The released magnifier has 64 video cels and one eye-only blink, arranged into 66 playback steps over 6.58 seconds. Its opening 420ms inspection hold becomes 200ms open, 80ms closed and 140ms open; other motion cels last at least 80ms. Offline processing extracts a separate grayscale matte from the green signal, inverts it for alpha, and recovers foreground color. The 640px masters and film retain soft alpha; the 240px terminal edge approximates antialiasing over the matching black background, while the 80px style keeps crisp pixel coverage. See the [asset workflow](../CONTRIBUTING.md#角色视频与透明边缘).
 
 The startup wake-up lasts about five seconds. Waiting for your answer produces a curious head tilt and question mark; after ten seconds, Umi dozes off. Resuming work triggers a short startled wake-up. These are visual reactions and do not delay tools or model output.
 
@@ -74,6 +76,8 @@ Caption and portrait widths are independent: the normal portrait stays 16 × 8 c
 ## Mouse and keyboard
 
 In **fullscreen**, the lower edge of the editor contains clickable controls, with model, thinking and more actions on the right. Clicking the character gives Umi a gentle poke: a brief `>w<` face, a little scrunch and wiggle, and a random line in the current language. The wiggle is gentler and the reply stays focused on the task while he's busy, and becomes more playful when he's idle, followed by a return to the current activity. Use `/mascot pause` or `/mascot play` to control animation playback. Dragging to select text is not treated as a button click.
+
+Multi-row dragging no longer duplicates portrait stripes over the editor. After release, typing, toolbar actions, Escape and Enter continue working, with Pi retaining the draft, caret and native selection behavior.
 
 In **regular**, the same space displays keyboard hints instead of mouse buttons. Pi's current native key mappings are used where available. The menu is always accessible through **Ctrl+Alt+W** or `/mascot menu`. Changing TUI mode in `/settings` updates the controls immediately while preserving your editor and draft. `/mascot poke` works in either mode and does not interrupt agent work.
 
@@ -101,10 +105,15 @@ Use `/mascot` for current settings. The command values remain the same in both l
 | `/mascot locale on` / `off` / `status` | Native Chinese UI preference |
 | `/mascot prompt on` / `off` / `status` | Concise bilingual Pi documentation-hint preference |
 | `/mascot persona on` / `off` / `status` | Umi's character voice |
-| `/mascot demo thinking` / `speaking` / `waking` | Preview a state without model calls |
+| `/mascot demo` / `/mascot demo all` | Cycle through all animations without model calls |
+| `/mascot demo thinking` / `speaking` / `waking` | Preview one state without model calls |
 | `/mascot demo off` | Return to the real session |
 
-Other demo states include `idle`, `reading`, `editing`, `running`, `searching`, `waiting`, `success`, `error`, `cancelled` and `compacting`.
+The full demo uses an independent 70.9-second looping timeline, including listening and a poke reaction. Its 7.4-second running stage shows an entire 6.58-second magnifier cycle; searching and compaction each have 7.2 seconds. The 12.5-second waiting stage allows dozing after ten seconds, followed by a startled wake-up. It does not execute tools, request or switch models, change the draft, save settings, or mutate real tool state. `/mascot demo off` or a new real agent task exits. If animation is paused, run `/mascot play` first. Full reaction demos use the `editor` layout.
+
+Single-state demos still respond to actual typing and intentional pokes; the full tour uses its own timing for these reactions so short external events cannot scramble the sequence.
+
+Single-state demos also include `idle`, `reading`, `editing`, `running`, `searching`, `waiting`, `success`, `error`, `cancelled` and `compacting`.
 
 ## Independent text features
 
@@ -136,6 +145,6 @@ Local animation, language processing, read-only panels and demos make no additio
 
 The preview PNGs/GIFs are offline compositions exported from production state and animation code. They are not captures of a native terminal window. `preview.html` is a local demonstration; it does not change the real Pi session. Optional showcase source in `site/` is retained and has not been published as a separate website.
 
-Run `npm test` from the project directory. Full tests need actual Pi 1.2.0 modules; see [Contributing](../CONTRIBUTING.md) for setup, isolated installer checks and preview builds. The tested scope does not cover every terminal, font, window size or extension combination.
+Run `npm test` from the project directory. The full suite passes with actual Pi 1.2.0 modules. Pi 1.3 additionally passes interaction checks for activity, listening, response waiting, real extension integration, Sixel and mouse routing, including multi-row SGR selection and input after release. Its full run stops at an explicitly 1.2.0-bound native-prompt fixture, so this is not a claim that the full 1.3 suite passes. Native Chinese UI and concise documentation hints remain guarded to 1.2.0, and CI still pins that version. See [Contributing](../CONTRIBUTING.md) for setup, isolated installer checks and preview builds. The tested scope does not cover every terminal, font, window size or extension combination.
 
 Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, photographs, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).

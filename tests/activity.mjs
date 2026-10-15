@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createActivity, DEMO_STATES } from "../lib/activity.mjs";
+import { createActivity, DEMO_STATES, DEMO_SEQUENCE, DEMO_PERIOD_MS } from "../lib/activity.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const checks = [];
@@ -285,6 +285,48 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.setDemo("invalid-state"); assert.equal(activity.snapshot().phase, "idle");
   activity.setDemo("thinking"); activity.handle("agent_start"); assert.equal(activity.snapshot().demo, false);
   checks.push("All declared demo expressions render, speaking demo outlives token timeout, off/invalid commands and new runs restore actual state");
+}
+
+{
+  const state=make(),{activity,advance}=state;activity.start({wake:false});activity.snapshot();
+  const randomBefore=state.randomCalls;activity.setDemo();
+  let offset=0,elapsed=0;const phases=new Set(),reactions=new Set();
+  for(const step of DEMO_SEQUENCE){
+    const at=offset+Math.min(400,step.durationMs-1);const view=advance(at-elapsed);elapsed=at;
+    assert.equal(view.phase,step.phase);assert.equal(view.demo,true);assert.equal(view.demoMode,"all");
+    assert.equal(view.phaseElapsedMs,at-offset,"Skipped snapshots use the segment's actual start, not the first render time");
+    phases.add(view.phase);if(view.reaction)reactions.add(view.reaction);
+    offset+=step.durationMs;
+  }
+  assert.ok(DEMO_STATES.every(phase=>phases.has(phase)));assert.ok(reactions.has("listening")&&reactions.has("poked")&&reactions.has("startled"));
+  assert.ok(DEMO_SEQUENCE.find(step=>step.phase==="running").durationMs>=7000);
+  assert.ok(DEMO_SEQUENCE.find(step=>step.phase==="waiting").durationMs>=12000);
+  assert.equal(offset,DEMO_PERIOD_MS);assert.equal(state.randomCalls,randomBefore,"The pure preview never rerolls real-run randomness");
+  activity.setDemo("all");const first=advance(1000),lap=advance(DEMO_PERIOD_MS);
+  assert.equal(lap.phase,"waking");assert.equal(lap.phaseElapsedMs,1000);assert.notEqual(lap.demoEpoch,first.demoEpoch);
+  const waitAt=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.phase==="waiting")).reduce((sum,step)=>sum+step.durationMs,0);
+  activity.setDemo("all");assert.equal(advance(waitAt+9999).drowsy,false);
+  assert.equal(advance(1).drowsy,true);assert.equal(activity.snapshot().face,"rest");
+  assert.equal(advance(2500).reaction,"startled");assert.equal(advance(650).reaction,undefined);
+  activity.setDemo("off");const actual=activity.snapshot();assert.equal(actual.phase,"idle");assert.equal(actual.drowsy,false);assert.equal(actual.reaction,undefined);
+  activity.setDemo("waiting");advance(12000);activity.handle("agent_start");
+  assert.equal(activity.snapshot().demo,false);assert.equal(activity.snapshot().reaction,undefined,"A dozing demo cannot fake a wake reaction on real agent_start");
+  checks.push("Default/all tours cover every state plus listening/poke, show a full running loop, doze at 10s and wake; skipped segments and whole laps use bounded independent epochs without fake reactions");
+}
+
+{
+  const {activity,advance}=make();activity.start({wake:false});activity.handle("agent_start");
+  activity.handle("message_update",update("text_delta"));activity.snapshot();advance(500);activity.setDemo("all");advance(600);
+  activity.setDemo("off");const silent=activity.snapshot();assert.equal(silent.phase,"speaking");assert.equal(silent.face,"talk-closed","Selecting a demo must not refresh the real speech token timeout");
+  assert.equal(silent.elapsedMs,1100);assert.equal(silent.phaseElapsedMs,1100);
+  activity.handle("tool_execution_start",{toolCallId:"real",toolName:"bash",args:{command:"PRIVATE_COMMAND"}});activity.snapshot();
+  activity.setDemo("all");advance(20000);activity.setDemo("off");const real=activity.snapshot();
+  assert.equal(real.phase,"running");assert.equal(real.busy,true);assert.equal(real.toolCount,1);assert.equal(real.elapsedMs,21100);assert.equal(real.phaseElapsedMs,20000);
+  assert.equal(real.reaction,undefined);assert.ok(!JSON.stringify(real).includes("PRIVATE_COMMAND"));
+  activity.handle("tool_execution_end",{toolCallId:"real"});activity.handle("ui_prompt_start");activity.snapshot();
+  activity.setDemo("all");advance(12000);activity.setDemo("off");assert.equal(activity.snapshot().drowsy,true,"A genuine user wait continues to age beneath the display-only tour");
+  activity.handle("ui_prompt_end");assert.equal(activity.snapshot().reaction,"startled");
+  checks.push("Demo overlays preserve real token silence, busy/tool clocks and metadata; genuine waiting still dozes and wakes while fake demo waits never leak");
 }
 
 {

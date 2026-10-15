@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
 import { withPokeFrame } from "../lib/poke.mjs";
-import { createActivity } from "../lib/activity.mjs";
+import { createActivity, DEMO_SEQUENCE } from "../lib/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 
 const read=async(path)=>JSON.parse(await readFile(new URL(`../${path}`,import.meta.url),"utf8"));
@@ -23,6 +23,16 @@ const checks=[];
   activity.setDemo("idle");assert.equal(activity.noteTyping(),true);assert.equal(activity.snapshot().reaction,"listening");
   activity.setDemo("running");assert.equal(activity.noteTyping(),false);assert.equal(activity.snapshot().reaction,undefined);
   activity.setDemo("waiting");activity.snapshot();time+=10000;assert.equal(activity.snapshot().drowsy,true);activity.noteTyping();assert.equal(activity.snapshot().drowsy,false);assert.equal(activity.snapshot().reaction,"listening");
+  activity.clearTyping();activity.setDemo("all");const initialTour=activity.snapshot();
+  assert.equal(activity.noteTyping(),false,"The automatic tour keeps its fixed timeline instead of accepting a real typing override");
+  assert.equal(activity.snapshot().demoEpoch,initialTour.demoEpoch);assert.equal(activity.snapshot().phase,"waking");assert.equal(activity.snapshot().reaction,undefined);
+  time+=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.reaction==="listening")).reduce((sum,step)=>sum+step.durationMs,0);
+  assert.equal(activity.snapshot().reaction,"listening","The tour still presents its scheduled listening gesture");
+  const listeningTour=activity.snapshot();assert.equal(activity.noteTyping(),false);assert.equal(activity.snapshot().demoEpoch,listeningTour.demoEpoch);
+  activity.setDemo("off");assert.equal(activity.snapshot().reaction,undefined,"The tour's virtual listening slot cannot start a real typing gesture");
+  activity.setDemo("idle");time+=5000;activity.poke();assert.equal(activity.snapshot().reaction,"poked");assert.equal(activity.snapshot().reactionElapsedMs,0);
+  time+=100;assert.equal(activity.snapshot().reactionElapsedMs,100,"An explicit poke during a single-state demo retains its own reaction clock");
+  activity.setDemo("off");time+=1100;
   activity.start();assert.equal(activity.snapshot().phase,"waking");assert.equal(activity.noteTyping(),true);assert.equal(activity.snapshot().phase,"idle");assert.equal(activity.snapshot().reaction,"listening","Real typing takes priority over the startup wake sequence");
   checks.push("Draft activity stays local, refreshes a finite 1800ms gesture, clears on empty/submit, gives poke priority, leaves running tools intact and listens during real/demo user waits including dozing");
 }

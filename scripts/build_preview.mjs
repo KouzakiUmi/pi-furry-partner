@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { QUICK_ACTIONS } from "../lib/quick-actions.mjs";
 import { STYLES, styleAssetDirectory } from "../lib/styles.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 import { POKE_DURATION_MS, withPokeFrame } from "../lib/poke.mjs";
 
@@ -36,6 +37,9 @@ for (const style of STYLES) {
     assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length, "Umi needs every authored watch pose");
     data = withListenFrames(data, listen);
     assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length, "Umi needs the listening poses");
+    try { const search=JSON.parse(await readFile(join(directory,"search-frames.json"),"utf8"));data=withSearchFrames(data,search);
+      assert.equal(data.frames.length,base.frames.length+1+watch.frames.length+listen.frames.length+search.frames.length,"Umi needs every complete search frame"); }
+    catch(error){if(error.code!=="ENOENT")throw error;}
   }
   assert.ok(data.ids["idle-open"] !== undefined && data.ids["talk-wide"] !== undefined);
   styles[style] = { width: data.width, height: data.height, palette: data.palette, ids: data.ids, motion: data.motion,

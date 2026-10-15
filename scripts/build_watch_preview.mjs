@@ -5,6 +5,7 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { styleAssetDirectory } from "../lib/styles.mjs";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -16,7 +17,8 @@ const read=async(path)=>JSON.parse(await readFile(path,"utf8"));
 let time=0;
 const styles=await Promise.all(["umi","umi-pixel"].map(async(style)=>{
   const directory=join(root,"assets/reactions",styleAssetDirectory(style));
-  const sheet=withWatchFrames(await read(join(directory,"reaction-sheet.json")),await read(join(directory,"watch-frames.json")));
+  let sheet=withWatchFrames(await read(join(directory,"reaction-sheet.json")),await read(join(directory,"watch-frames.json")));
+  try{sheet=withSearchFrames(sheet,await read(join(directory,"search-frames.json")));}catch(error){if(error.code!=="ENOENT")throw error;}
   return {style,sheet,player:createMotionPlayer({now:()=>time}),pixels:[]};
 }));
 const timeline=[];

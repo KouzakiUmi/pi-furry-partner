@@ -21,6 +21,7 @@ import { STYLES, normalizeStyle, styleAssetDirectory } from "./lib/styles.mjs";
 import { withPokeFrame } from "./lib/poke.mjs";
 import { withWatchFrames } from "./lib/watch.mjs";
 import { withListenFrames } from "./lib/listen.mjs";
+import { withSearchFrames } from "./lib/search.mjs";
 import { createResponseLatency, withResponseLatency } from "./lib/response-latency.mjs";
 import { normalizeLanguage, resolveLanguage, systemLanguage, localize, localizeSnapshot, replaceActivityCopy, nativeChineseEnabled, compactPromptEnabled, personaFilename, companionName, companionSubtitle, mascotDescription } from "./lib/language.mjs";
 
@@ -82,6 +83,7 @@ export default function (pi: ExtensionAPI) {
       try { augmented = withPokeFrame(sheet, read(`${directory}/poke-patch.json`)); } catch { /* Older local asset packs keep the ordinary blink fallback. */ }
       try { augmented = withWatchFrames(augmented, read(`${directory}/watch-frames.json`)); } catch { /* Earlier asset packs keep their work pose. */ }
       try { augmented = withListenFrames(augmented, read(`${directory}/listen-frames.json`)); } catch { /* Older packs keep their neutral listening fallback. */ }
+      try { augmented = withSearchFrames(augmented, read(`${directory}/search-frames.json`)); } catch { /* Earlier packs keep their articulated search pose. */ }
       reactions.set(settings.style, augmented);
     }
     return reactions.get(settings.style);
@@ -125,7 +127,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   function pausedSnapshot(next: ReturnType<typeof activity.snapshot>) {
-    if (next.reaction === "poked") return next;
+    if (next.reaction === "poked" && next.demoMode !== "all") return next;
     const faces: Record<string, string> = { idle: "idle-open", thinking: "think", speaking: "talk-closed", reading: "work", editing: "work", running: "watch", searching: "search", compacting: "search", waiting: "wait", success: "happy", error: "error", cancelled: "rest" };
     const bubbles: Record<string, string> = voice.bubbles;
     // A paused visual hold must never latch a previous work/blink pose after
@@ -209,6 +211,8 @@ export default function (pi: ExtensionAPI) {
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
       private motion = createMotionPlayer();
+      private demoMotionEpoch: string | undefined;
+      private demoMotionPhase: string | undefined;
       private displaySheet: any;
       private toolbarLine: string | undefined;
       private toolbarRow = -1;
@@ -307,6 +311,14 @@ export default function (pi: ExtensionAPI) {
         const framedLines = frameEditorLines({ nativeLines, width: frame.outerWidth, visibleLineCount: this.renderedVisibleLineCount,
           borderColor: (text: string) => this.borderColor(text), visibleWidth, truncateToWidth, cursorMarker: CURSOR_MARKER });
         const current = snapshot();
+        const motionPhase = current.reaction || (current.drowsy ? "dozing" : current.visualPhase || current.phase);
+        // Normal adjacent states retain their authored transitions. If renders
+        // skipped a whole lap and landed on the same state, restart its motion
+        // clock once instead of carrying the previous lap's phase age forward.
+        if (current.demoEpoch !== this.demoMotionEpoch &&
+            (current.demoEpoch !== undefined || this.demoMotionEpoch !== undefined) &&
+            motionPhase === this.demoMotionPhase) this.motion.reset();
+        this.demoMotionEpoch = current.demoEpoch; this.demoMotionPhase = motionPhase;
         const dockLines = renderDock({
           geometry, sheet: reactionSheet(), snapshot: current,
           motionPlayer: this.motion, animate: settings.animation,
@@ -494,7 +506,7 @@ export default function (pi: ExtensionAPI) {
       const [command, value] = args.trim().toLowerCase().split(/\s+/);
       if (!command) {
         const state = (value: boolean) => value ? l("开启", "on") : l("关闭", "off");
-        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${graphicsMode(settings.renderer)} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo ${DEMO_STATES.join("|")}|off`, "info"); return;
+        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${graphicsMode(settings.renderer)} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
       }
       if (command === "language") {
         const next = normalizeLanguage(value);
@@ -554,8 +566,16 @@ export default function (pi: ExtensionAPI) {
       else if (command === "size" && SIZES.includes(value)) { if (settings.layout === "editor") settings.dockSize = value; else settings.size = value; apply(ctx); }
       else if (command === "render" && ["auto", "sixel", "blocks"].includes(value)) { settings.renderer = value; apply(ctx); }
       else if (command === "info" && ["compact", "native"].includes(value)) { settings.info = value; apply(ctx); }
-      else if (command === "demo" && (DEMO_STATES.includes(value) || value === "off")) {
-        activity.setDemo(value); lastSnapshot = undefined; redraw(); armTimer();
+      else if (command === "demo" && (!value || value === "all" || DEMO_STATES.includes(value) || value === "off")) {
+        const mode = value || "all";
+        activity.setDemo(mode); lastSnapshot = undefined; redraw(); armTimer();
+        const message = mode === "off" ? l("好啦，演示收起来，回到真正的任务状态咯。", "The tour is off. I'm back to the real task state.")
+          : mode === "all" ? l("我来把全部动作轮流演给你看呀，会一直循环。用 /mascot demo off 收起来；真正开始任务时也会自动退出。", "I'll show every animation in a loop. Use /mascot demo off to stop; starting a real task also ends the tour.")
+          : l(`我来演示 ${mode} 这个动作呀。用 /mascot demo off 回到真实状态。`, `Showing the ${mode} animation. Use /mascot demo off to return to the real state.`);
+        const hint = mode === "off" ? "" : (!settings.enabled ? l(" 头像目前关闭，先用 /mascot on 让我出来吧。", " The avatar is hidden; use /mascot on to show it.") : "")
+          + (!settings.animation ? l(" 动画目前暂停，先用 /mascot play 再看我动起来呀。", " Animation is paused; use /mascot play to watch the tour.") : "")
+          + (settings.layout !== "editor" ? l(" 全部动作显示在输入框旁，用 /mascot layout editor 就能看到了。", " The full set of poses appears beside the input; use /mascot layout editor to see it.") : "");
+        ctx.ui.notify(message + hint, "info"); return;
       }
       else if (command === "wink") {
         if (settings.layout === "editor") activity.setDemo("waking");

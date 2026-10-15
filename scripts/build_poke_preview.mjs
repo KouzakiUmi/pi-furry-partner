@@ -12,6 +12,7 @@ import { withPokeFrame, POKE_DURATION_MS } from "../lib/poke.mjs";
 import { samplePixels } from "../lib/renderer.mjs";
 import { styleAssetDirectory } from "../lib/styles.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -24,8 +25,9 @@ const read = async (path) => JSON.parse(await readFile(path, "utf8"));
 const directory = join(root, "assets/reactions", styleAssetDirectory("umi"));
 const base = await read(join(directory, "reaction-sheet.json"));
 const watch = await read(join(directory, "watch-frames.json")), listen = await read(join(directory, "listen-frames.json"));
-const sheet = withListenFrames(withWatchFrames(withPokeFrame(base, await read(join(directory, "poke-patch.json"))), watch), listen);
-assert.equal(sheet.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length);
+let sheet = withListenFrames(withWatchFrames(withPokeFrame(base, await read(join(directory, "poke-patch.json"))), watch), listen),searchCount=0;
+try{const search=await read(join(directory,"search-frames.json"));sheet=withSearchFrames(sheet,search);searchCount=search.frames.length;}catch(error){if(error.code!=="ENOENT")throw error;}
+assert.equal(sheet.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length+searchCount);
 const copy = await read(join(root, "assets/status-copy.json"));
 const phrases = await read(join(root, "assets/status-phrases.json"));
 const themes = { fg: (_token, text) => text, bold: (text) => text };

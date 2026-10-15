@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { styleAssetDirectory } from "../lib/styles.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 import { withPokeFrame } from "../lib/poke.mjs";
 import vm from "node:vm";
@@ -45,8 +46,10 @@ for (const [style, data] of Object.entries(sheets)) {
   const patch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "poke-patch.json"), "utf8"));
   const watch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "watch-frames.json"), "utf8"));
   const listen = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "listen-frames.json"), "utf8"));
-  const runtime = withListenFrames(withWatchFrames(withPokeFrame(original, patch), watch), listen);
-  assert.equal(data.frames.length, original.frames.length + 1 + watch.frames.length + listen.frames.length); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
+  let runtime = withListenFrames(withWatchFrames(withPokeFrame(original, patch), watch), listen),searchCount=0;
+  try{const search=JSON.parse(await readFile(join(root,"assets/reactions",styleAssetDirectory(style),"search-frames.json"),"utf8"));runtime=withSearchFrames(runtime,search);searchCount=search.frames.length;}
+  catch(error){if(error.code!=="ENOENT")throw error;}
+  assert.equal(data.frames.length, original.frames.length + 1 + watch.frames.length + listen.frames.length+searchCount); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
   for (const { id } of runtime.frames.slice(original.frames.length)) assert.deepEqual([...Buffer.from(data.frames[data.ids[id]].pixels, "base64")], runtime.frames[runtime.ids[id]].pixels);
 }
 checks.push("Original frames and every authored interaction frame exactly match plugin", "Shared runtime files match plugin with only portable dependency URLs");

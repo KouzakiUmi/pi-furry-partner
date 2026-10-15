@@ -6,6 +6,7 @@
 
 - 项目名是 `pi-furry-partner`，发布主题是 `pi-furry-night`；`/mascot` 命令保留兼容。
 - 当前实际验证目标是 Windows、Pi **1.2.0**、PowerShell 5.1 / 7。其他平台的改进欢迎提交，请附上实际验证环境。
+- Pi 1.2.0 的完整测试通过；Pi 1.3 另通过实际编辑器集成、活动、倾听、响应计时、Sixel 与鼠标回归。1.3 的完整运行会在显式 1.2.0 提示词 fixture 处停止，不能写成“1.3 全套通过”。原生中文与文档提示精简仍严格守卫 1.2.0；CI 当前也固定安装 1.2.0。
 - 角色显示、界面中文、Pi 文档提示精简、角色口吻分别控制；`language` 支持默认的 `auto` 系统语言检测，也可明确选择简体中文或英文。功能修改应保留这些偏好的独立性，切换语言不应重置任务、草稿或中文补丁开关。
 - 原生界面兼容层不修改 Pi 安装文件；未知版本或结构应回退原行为。用户正文、工具输出、路径和内部保存值不进入普通翻译表。
 - 代码和文档是 Apache-2.0；呜咪角色及相关图像、动画是保留全部权利的素材。具体范围见 [ASSET_LICENSE.md](ASSET_LICENSE.md)。提交通用渲染代码不代表取得角色素材的再利用许可。
@@ -41,6 +42,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 
 第一条运行状态、素材、布局、渲染、鼠标、原生组件、补全和提示词边界检查。安装测试使用临时 `AgentDir`，验证备份、旧版迁移、配置保留和卸载恢复；不针对真实的 `~/.pi` 进行安装。测试报告会由测试脚本重新生成，不要将个人路径、认证信息或会话日志提交到仓库。
 
+Sixel 回归需要覆盖 Pi 的真实选区绘制，而不只模拟按钮命中：跨多行输入发送 SGR press / drag / release，检查同批次每个角色条带只在原头像列出现，随后继续输入、点按钮、Esc、Enter。选区切片可能复制零宽 OSC 标记；传输层必须按同批次的 `(row, token)` 去重，保留首个有效锚点并检查图像横向范围。不要通过吞掉原生拖选事件来掩盖重画问题。
+
 `preview.html` 是本地效果演示，可以直接在浏览器打开；它不控制实际 Pi 会话。需要查看真实加载行为时，在单独的测试用 Pi 配置中加载当前源码，避免把包管理来源和手动复制目录叠加。运行截图、窗口尺寸、终端版本与界面模式应一并记录。
 
 正式展示图由生产动画代码离线导出，另需带 Pillow 和 numpy 的 Python：
@@ -50,6 +53,29 @@ node .\scripts\build_motion_preview.mjs
 ```
 
 动画与素材的重建脚本可能覆盖导出文件。只修改文案或安装逻辑时，无需重新生成整套图片。代码不需要新增 API Key；重新生成 AI 绘制原稿则是独立的美术工作，不属于运行插件的必要步骤。
+
+## 角色视频与透明边缘
+
+正式连续动作以已审核的 MiniMax-H3 片段为离线来源，运行时只读取预计算的完整索引帧，不调用生成服务、解码 MP4 或依赖 Python。放大镜的来源视频、提示词、来源记录和最终时序分别在 `assets/poses/watch-h3-source.mp4`、`watch-h3-prompt.txt`、`watch-h3-provenance.json` 和 `watch-video-metadata.json`；旧六张原画仍保留作参考。来源记录应包含模型、哈希、实际帧率、帧数和时长，不提交密钥、签名 URL、账号或生成任务标识。
+
+搜索与整理共用 `search-h3-source.mp4`，对应的提示词、来源记录和时序在同目录的 `search-h3-prompt.txt`、`search-h3-provenance.json` 与 `search-video-metadata.json`。正式素材为 72 幅画面、72 个步骤，6580ms 一圈；`scripts/build_search_video.py` 从已审核的相同灰度遮罩／Alpha 流程导出 240px 与 80px 索引帧，`lib/search.mjs` 负责验证和加载。旧搜索地标只保留作兼容，不在视频素材上叠加形变。
+
+背景处理按“绿色亮度 → 独立灰度遮罩 → 反相 Alpha → 恢复前景”执行。为避免白毛被当作背景，绿色信号使用 `max(0, G - max(R, B))`，相对边框估计的背景绿色信号归一化为背景 matte；前景 `Alpha = 1 - matte`。恢复 straight RGB 后，将预乘 RGB 与 Alpha 用同一 Lanczos 核做整画布缩放，再还原 straight RGB。不要把灰度遮罩当作角色亮度，也不要用删绿通道、侵蚀轮廓或硬切 Alpha 来替代这条流程。
+
+独立背景 matte 与前景 Alpha 以 16 位 PNG 保存；640px RGBA 母版与影片侧车保留 8 位分数 Alpha。768 → 640 只用统一全画布缩放，不逐帧裁剪、fit 或自动居中。放大镜正式素材包含 64 个源视频画面与 1 个局部闭眼画面，66 个时序步骤合计 6580ms；原始 generic QC 的 WARN 与人工验收理由保留在元数据中，不把主观接受改写成程序 PASS。
+
+终端索引帧没有独立的连续 Alpha 通道：240px 版仅在与外部透明区域连通的边缘，把分数覆盖度合成到配套黑底，再映射回原 palette；不改不透明内部。80px 版保留硬像素覆盖与既有风格。该终端近似不回写母版或影片 Alpha，也不新增 palette 颜色。正式视频动作的尾巴、头部、纸页与镜片运动已经烘焙进完整帧，运行时不得叠加旧局部 warp、光流或帧间 dissolve。
+
+重建需要 Pillow、NumPy、ffmpeg，以及已审核的选择 manifest 和对应对照 PNG；完整 640px 工作帧不随仓库重复发布。以下以已准备的 `work/watch-review/selection.json` 为例，帧序号必须从 0 开始，manifest 中的 `sourceFrame`、相对文件名、时长和哈希必须对应真实输入：
+
+```powershell
+New-Item -ItemType Directory -Force work/watch-raw | Out-Null
+ffmpeg -hide_banner -loglevel error -i assets/poses/watch-h3-source.mp4 -map 0:v:0 -an -fps_mode passthrough -start_number 0 work/watch-raw/watch_%05d.png
+python scripts/build_watch_matte.py --selection work/watch-review/selection.json --raw-frames work/watch-raw --out work/watch-matte
+python scripts/build_watch_video.py --manifest work/watch-matte/manifest.json --stage work/watch-stage --terminal-aa-background 000000
+```
+
+先检查 staged 帧、matte、深浅背景与实际播放，再决定是否使用 `--apply` 写回正式资产；普通代码和文案修改不需要执行这些构建。不得改写原始 21 帧反应表、调色板或戳戳补丁来容纳新动作。完整母版遵循固定 canvas 与相同锚点；不通过倒放、叠化或扭曲来修补坏帧。源码的画面计数和播放步骤数分开验证，严格递增的来源帧序号、真实总时长、最短帧时长、首尾轮廓和眨眼眼区以外像素均需核对。
 
 ## 可选展示页
 
@@ -79,7 +105,7 @@ python -m http.server 8000 --directory dist
 - 使用的安装路线、扩展版本、是否还保留旧名插件或其它自定义编辑器。
 - 可复现的最短步骤，以及已去除私人内容的截图或错误信息。
 
-不要附上 API Key、认证码、完整会话或含私人路径的未经清理日志。可以用 `/mascot demo <状态>` 重现纯视觉问题，避免为了截图向模型发送请求。
+不要附上 API Key、认证码、完整会话或含私人路径的未经清理日志。可以用 `/mascot demo` 看完整 70.9 秒巡演，或用 `/mascot demo <状态>` 重现单一视觉问题，避免为了截图向模型发送请求。完整巡演不改草稿、配置或真实工具状态；`demo off` 或新的真实任务会退出。
 
 ## 提交改动
 

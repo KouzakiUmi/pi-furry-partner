@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { styleAssetDirectory } from "../lib/styles.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 import { withPokeFrame } from "../lib/poke.mjs";
 
@@ -38,8 +39,10 @@ for (const style of ["umi", "umi-pixel"]) {
   const watch = JSON.parse(await readFile(join(directory, "watch-frames.json"), "utf8"));
   const listen = JSON.parse(await readFile(join(directory, "listen-frames.json"), "utf8"));
   const watched = withWatchFrames(poked, watch);
-  const data = withListenFrames(watched, listen);
-  assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length);
+  let data = withListenFrames(watched, listen),searchCount=0;
+  try{const search=JSON.parse(await readFile(join(directory,"search-frames.json"),"utf8"));data=withSearchFrames(data,search);searchCount=search.frames.length;}
+  catch(error){if(error.code!=="ENOENT")throw error;}
+  assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length+searchCount);
   sheets[style] = { width: data.width, height: data.height, palette: data.palette, ids: data.ids,
     transparentIndex: data.transparentIndex, motion: data.motion,
     frames: data.frames.map(({ id, pixels }) => {

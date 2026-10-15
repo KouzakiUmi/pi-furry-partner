@@ -61,7 +61,7 @@
 <td align="center" width="50%">
 <strong>我钻进去找找</strong><br>
 <sub>资料堆里的小脑袋，和藏不住的尾巴</sub><br><br>
-<img src="tail-wave-preview.gif" alt="插画风和像素风呜咪在资料堆中翻找，尾巴左右传递波浪" width="520">
+<img src="tail-wave-preview.gif" alt="插画风和像素风呜咪埋进资料堆，脑袋、尾巴与纸页一起轻动" width="520">
 </td>
 </tr>
 </table>
@@ -72,7 +72,7 @@
 | --- | --- | --- | --- |
 | 灰爪托下巴、眨眼、气泡里的 `· · ·` | 修改时双爪打字，运行时举着放大镜平顺左右扫描、到边上稍停；短调用也能看清 | 歪头问号，10 秒后打盹，再工作时惊醒 | 成功挥爪 wink；出错时 xx 眼吃瘪 |
 
-搜索和整理会共用“埋进资料堆”的动作：尾巴沿长度传递波浪，脑袋轻轻拱动，纸页错开节奏晃动。说话有 `w / — / o / O` 四种嘴型，实际没有新文本时会自然闭嘴。呼吸、耳抖和短过渡让姿态衔接更轻柔。
+搜索和整理会共用“埋进资料堆”的连续动作：脑袋轻轻拱动，尾巴灵活地甩甩，纸页跟着轻晃，身体和斗篷一起自然衔接。说话有 `w / — / o / O` 四种嘴型，实际没有新文本时会自然闭嘴。呼吸、耳抖和短过渡让其他姿态也更有生气。
 
 <details>
 <summary><strong>展开看完整动画与两种呜咪风格</strong></summary>
@@ -89,7 +89,7 @@
 
 ## 安装
 
-需要先安装并配置 Pi。本项目的实际验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**。其他平台暂未完成实机验证。图片使用 Sixel 或真彩色半块字符；终端支持会影响清晰度。
+需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**，另在 Pi 1.3 验证了输入、拖选、鼠标和图像传输等交互。原生中文界面与 Pi 文档提示精简目前仅支持 1.2.0，其他版本保留 Pi 原有行为。其他平台暂未完成实机验证。图片使用 Sixel 或真彩色半块字符；终端支持会影响清晰度。
 
 两种安装方式选一种，避免把同一插件加载两次。
 
@@ -125,17 +125,21 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 /mascot poke                轻轻戳一下呜咪
 /mascot language en         切换为英文
 /mascot language zh-CN      切回简体中文
-/mascot demo thinking       看看托下巴，不调用模型
+/mascot demo                循环看看全部动作，不调用模型
 /mascot demo off            回到真实会话
 ```
 
 `/mascot` 查看当前设置。更多尺寸、布局、渲染和演示命令见[完整命令表](docs/guide.zh-CN.md#命令)。
+
+`/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
 角色英文名和风格命令统一使用 **Umi / `umi`**。旧命令 `wumi`、`wumi-pixel` 仍可作为兼容别名，新保存的风格使用 `umi`、`umi-pixel`。
 
 `umi-pixel` 保留角色版的造型、五官和动作，以 **80 × 80** 显示。嘴线等细节采用局部保线处理，减少细笔画在缩小采样中丢失；线条颜色轻微整理，不重新设计角色。
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
+
+全屏下拖选文本时，头像不会再重画到输入框里；释放鼠标后可以继续打字、点按钮，或按 Esc、Enter。拖选继续交给 Pi 原生处理。
 
 紧凑 footer 显示模型与 provider、思考等级、上下文和实际提供的 token / 缓存 / 费用数据。窄窗口优先保留编辑空间，空间不足时收起大头像。输入、补全和发送继续沿用 Pi 原生编辑器。
 
@@ -186,7 +190,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。完整测试需要 Pi 1.2.0 的实际模块；环境准备和执行方式见贡献指南。验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 的完整测试已通过；Pi 1.3 另做了交互回归，未据此扩大原生中文或提示词兼容范围。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
 
 ## 许可与致谢
 

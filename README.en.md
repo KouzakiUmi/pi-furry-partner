@@ -61,7 +61,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 <td align="center" width="50%">
 <strong>Let me dig into that</strong><br>
 <sub>A buried head and a tail that gives him away</sub><br><br>
-<img src="tail-wave-preview.gif" alt="Illustrated and pixel Umi searching through papers with a traveling tail wave" width="520">
+<img src="tail-wave-preview.gif" alt="Illustrated and pixel Umi burrowing into papers, with coordinated head, tail and page movement" width="520">
 </td>
 </tr>
 </table>
@@ -72,7 +72,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 | --- | --- | --- | --- |
 | Chin on a gray paw, blinks, and `· · ·` in a bubble | Typing paws for edits; a smooth magnifier scan with brief side pauses for command runs; short calls stay visible | Head tilt and question mark, a nap after 10 seconds, then a startled wake-up | A little wave and wink for success; xx eyes for a stumble |
 
-Searching and context compaction share the paper-pile pose: a wave travels along the tail, the head gently burrows, and loose pages move at different moments. Speech uses four `w / — / o / O` mouth shapes and closes naturally when no new text arrives. Breathing, ear twitches and short transitions soften the changes between poses.
+Searching and context compaction share a continuous paper-pile animation: the head gently burrows, the tail swishes, and loose pages flutter with the body and cloak. Speech uses four `w / — / o / O` mouth shapes and closes naturally when no new text arrives. Breathing, ear twitches and short transitions bring the other poses to life too.
 
 <details>
 <summary><strong>See the full animation and both Umi styles</strong></summary>
@@ -89,7 +89,7 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 ## Installation
 
-Install and configure Pi first. Tested on **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. Other operating systems have not been tested. Images use Sixel or true-color half-block characters; terminal support affects visual quality.
+Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**, with additional Pi 1.3 checks for editing, text selection, mouse input and image transport. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Other operating systems have not been tested. Images use Sixel or true-color half-block characters; terminal support affects visual quality.
 
 Choose one installation route to avoid loading the extension twice.
 
@@ -125,17 +125,21 @@ If you already installed with the script, keep that route for updates, or uninst
 /mascot poke                Give Umi a gentle poke
 /mascot language en         Switch to English
 /mascot language zh-CN      Switch to Simplified Chinese
-/mascot demo thinking       Try the chin-on-paw pose; no model request
+/mascot demo                Loop through all animations; no model request
 /mascot demo off            Return to the real session
 ```
 
 Use `/mascot` to inspect your settings. Size, layout, rendering and demo commands are listed in the [user guide](docs/guide.en.md#commands).
+
+`/mascot demo` or `/mascot demo all` starts a repeating tour lasting a little over a minute: listening, thinking, speaking, working and a playful poke, with complete magnifier and search loops and time to doze and wake again. It makes no model requests and preserves settings and your draft. `demo off` or a real task ends the tour. Use `/mascot demo thinking` or `/mascot demo running` to focus on one pose.
 
 The character name and style commands now consistently use **Umi / `umi`**. Legacy `wumi` and `wumi-pixel` commands remain accepted as aliases; new style saves use `umi` and `umi-pixel`.
 
 `umi-pixel` preserves the illustrated character's design, face and poses at **80 × 80**. Local line protection keeps fine mouth strokes from disappearing during sampling, with a light color cleanup around those strokes and no character redesign.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
+
+Fullscreen text selection no longer redraws the portrait over the editor. After releasing a drag, you can keep typing, click controls, or use Escape and Enter. Selection remains Pi's native interaction.
 
 The compact footer shows your actual model/provider, thinking level, context, and available token, cache and cost data. Narrow windows prioritize editing space and collapse the large portrait when needed. Text editing, completion and sending still use Pi's native editor.
 
@@ -186,7 +190,7 @@ Animations, local language processing, read-only panels and previews do not make
 | Release changes | [Changelog](CHANGELOG.md) |
 | Bug reports and ideas | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-Tests cover activity timing, editor layout, mouse routing, Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. Full tests need actual Pi 1.2.0 modules; see the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
+Tests cover activity timing, editor layout, mouse routing, Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0; additional Pi 1.3 interaction checks do not extend the native Chinese UI or prompt compatibility scope. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
 
 The GitHub README is the project's main landing page. Optional standalone showcase source remains in `site/` and has not been published as a separate website.
 

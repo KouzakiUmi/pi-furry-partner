@@ -185,27 +185,31 @@ def tail_preview(manifest, folder, output):
     native = [np.fromfile(folder / item["framesFile"], dtype=np.uint8).reshape(
         (len(item["frames"]), item["height"], item["width"])) for item in loops]
     frames = []
-    for index in range(24):
+    count=len(loops[0]['frames'])
+    durations=[item['durationMs'] for item in loops[0]['frames']]
+    for index in range(count):
         image = Image.new("RGB", (760, 500), BG)
         d = ImageDraw.Draw(image)
         text(d, (26, 20), "翻资料 · 轻拱脑袋与波浪甩尾", TEXT, 26, True)
-        text(d, (28, 66), "头部轻拱、散纸错拍，尾根柔软带动中段和尾尖；2.4 秒真实循环。", MUTED, 13)
+        detail=f"连续完整画面 · 尾巴与身体、纸堆一起动 · {loops[0]['periodMs']/1000:g} 秒真实循环。" if loops[0].get('bakedMotion') else "头部轻拱、散纸错拍，尾根柔软带动中段和尾尖；2.4 秒真实循环。"
+        text(d, (28, 66), detail, MUTED, 13)
         d.line((380, 103, 380, 448), fill="#2d445e", width=1)
         for column, item in enumerate(loops):
-            text(d, (34 + column * 380, 102), f"{item['style'].replace('wumi', 'umi')} · {index * 100} ms", BLUE, 14)
+            text(d, (34 + column * 380, 102), f"{item['style'].replace('wumi', 'umi')} · {item['frames'][index]['atMs']} ms", BLUE, 14)
             sprite = rgba_sprite(native[column][index], item["palette"], item["transparentIndex"])
             sprite = sprite.resize((320, 320), Image.Resampling.NEAREST if column else Image.Resampling.LANCZOS)
             image.paste(sprite, (30 + column * 380, 130), sprite)
         text(d, (28, 473), "实际 motion.mjs 帧 · 80px 像素版按四倍放大 · 效果预览，非终端截图", MUTED, 12)
         frames.append(image)
     contact = Image.new("RGB", (1520, 1000), BG)
-    for slot, index in enumerate((0, 6, 12, 18)):
+    contact_indices=[min(count-1,round(count*fraction)) for fraction in (0,.25,.5,.75)]
+    for slot, index in enumerate(contact_indices):
         contact.paste(frames[index], ((slot % 2) * 760, (slot // 2) * 500))
     contact.save(output / "tail-wave-contact.png")
     palette = contact.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
     indexed = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
     path = output / "tail-wave-preview.gif"
-    indexed[0].save(path, save_all=True, append_images=indexed[1:], duration=100, loop=0, disposal=1, optimize=True)
+    indexed[0].save(path, save_all=True, append_images=indexed[1:], duration=durations, loop=0, disposal=1, optimize=True)
     with Image.open(path) as image:
         total = 0
         for index in range(image.n_frames):
@@ -213,8 +217,8 @@ def tail_preview(manifest, folder, output):
         result = {"width": image.width, "height": image.height, "frames": image.n_frames,
                   "durationMs": total, "loop": image.info.get("loop"), "bytes": path.stat().st_size,
                   "styles": [{key: item[key] for key in ("style", "periodMs", "rootPinned", "rootFlexible", "spinePoints", "distinctFrames")} for item in loops],
-                  "contactSize": [1520, 1000], "contactPhasesMs": [0, 600, 1200, 1800]}
-    if result["frames"] != 24 or total != 2400:
+                  "contactSize": [1520, 1000], "contactPhasesMs": [loops[0]['frames'][index]['atMs'] for index in contact_indices]}
+    if result["frames"] < min(16,count) or total != loops[0]['periodMs']:
         raise ValueError("The independent tail export must preserve its complete real motion period")
     return result
 

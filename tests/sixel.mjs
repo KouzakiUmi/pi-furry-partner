@@ -171,6 +171,41 @@ function terminalSink(columns = 80, rows = 24) {
 }
 
 {
+  // Fullscreen selection slices a styled line into three ranges. Pi preserves
+  // preceding ANSI in each range, which also duplicates our zero-width OSC.
+  // Exercise the real host utility rather than manufacturing duplicate bytes.
+  const { terminal, writes } = terminalSink();
+  const transport = createSixelTransport(terminal, () => cell, () => sheet, () => "selection", () => true, {}, visibleWidth);
+  const stripe = transport.render({ frameIndex: 0, columns: 6, rows: 12 })[0];
+  const line = `  ${stripe}  │ drag this native input text │`;
+  const start = 18, end = 24;
+  const selected = sliceByColumn(line, 0, start, true)
+    + "\x1b[7m" + sliceByColumn(line, start, end - start, true) + "\x1b[27m"
+    + sliceByColumn(line, end, visibleWidth(line) - end, true);
+  assert.equal((line.match(/pi-furry-partner-/g) || []).length, 1);
+  assert.equal((selected.match(/pi-furry-partner-/g) || []).length, 3, "The regression must exercise the host's real three-marker selection transform");
+  const drawColumns = () => [...writes.join("").matchAll(/\x1b\[(\d+)G\x1bP/g)].map((match) => Number(match[1]) - 1);
+  terminal.write(`\x1b[?2026h\x1b[4;1H\x1b[2K${selected}\x1b[?2026l`);
+  assert.equal(dcStrings(writes).length, 1, "A selected line must emit one image stripe, never clones inside the text input");
+  assert.deepEqual(drawColumns(), [2]);
+  assert.deepEqual(decodeSixel(dcStrings(writes)[0]).pixels, expectedStripe(0, 0));
+  writes.length = 0;
+  terminal.write(`\x1b[?2026h\x1b[4;1H${selected}\x1b[5;1H${selected}\x1b[?2026l`);
+  assert.equal(dcStrings(writes).length, 2, "An identical stripe token on different rows must remain drawable once on each row");
+  assert.deepEqual(drawColumns(), [2, 2]);
+  writes.length = 0;
+  const marker = stripe.slice(6);
+  terminal.write(`\x1b[?2026h\x1b[4;1H${marker}\x1b[4;79H${stripe}\x1b[4;1H${line}\x1b[?2026l`);
+  assert.equal(dcStrings(writes).length, 1, "Invalid left/right anchors must neither draw nor hide a later valid anchor on that row");
+  assert.deepEqual(drawColumns(), [2]);
+  writes.length = 0;
+  terminal.write(`\x1b[?2026h\x1b[4;1H${marker}\x1b[5;79H${stripe}\x1b[?2026l`);
+  assert.equal(dcStrings(writes).length, 0, "Out-of-bounds stripes must never spill into a neighboring row or input cell");
+  transport.dispose();
+  checks.push("Real Pi selection slicing duplicates one OSC three times, but Sixel emits exactly one correctly positioned stripe per row; repeated tokens on different rows survive and invalid horizontal anchors cannot draw or shadow a later valid anchor");
+}
+
+{
   const { terminal, writes } = terminalSink(80, 1000);
   const originalWrite = terminal.write;
   const width = 20, height = 40;

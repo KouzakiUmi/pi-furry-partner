@@ -14,6 +14,7 @@ import { samplePixels } from "../lib/renderer.mjs";
 import { createEditorControls } from "../lib/editor-controls.mjs";
 import { withPokeFrame } from "../lib/poke.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
+import { withSearchFrames } from "../lib/search.mjs";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -29,10 +30,11 @@ const sheets = {};
 for (const style of ["wumi", "wumi-pixel"]) {
   const directory = join(root, "assets/reactions", style);
   sheets[style] = withListenFrames(withWatchFrames(withPokeFrame(await readJson(join(directory, "reaction-sheet.json")), await readJson(join(directory, "poke-patch.json"))), await readJson(join(directory, "watch-frames.json"))), await readJson(join(directory, "listen-frames.json")));
+  try{sheets[style]=withSearchFrames(sheets[style],await readJson(join(directory,"search-frames.json")));}catch(error){if(error.code!=="ENOENT")throw error;}
   for (const id of ["idle-open", "think", "talk-closed", "talk-small", "talk-medium", "talk-wide", "work", "error", "happy", "search", "wait", "wait-blink"]) {
     assert.ok(sheets[style].ids[id] !== undefined, `Missing final ${style}/${id}`);
   }
-  assert.ok(sheets[style].motion?.tail && sheets[style].motion?.wave, "Final tail/wave geometry is required");
+  assert.ok((sheets[style].motion?.searchVideo?.sequence || sheets[style].motion?.tail) && sheets[style].motion?.wave, "Final search action and success wave are required");
   assert.ok(sheets[style].palette.length <= 256);
 }
 const phrases = await readJson(join(root, "assets/status-phrases.json"));
@@ -191,23 +193,26 @@ waitingPlayer.dispose();
 const tailLoops = [];
 for (const style of ["wumi", "wumi-pixel"]) {
   const sheet = sheets[style];
-  assert.ok(sheet.motion.tail.spine?.length >= 3, "Final articulated tail spine is required");
+  const searchSequence=sheet.motion.searchVideo?.sequence;
+  if(!searchSequence)assert.ok(sheet.motion.tail.spine?.length >= 3, "Legacy articulated tail spine is required");
   let tailTime = 0;
   const tailPlayer = createMotionPlayer({ now: () => tailTime });
   const tailChunks = [], tailFrames = [];
-  for (tailTime = 0; tailTime < 2400; tailTime += 100) {
+  const periodMs=searchSequence?.periodMs||2400,stepMs=searchSequence?50:100;
+  for (tailTime = 0; tailTime < periodMs; tailTime += stepMs) {
     const visual = tailPlayer.frame(sheet, sheet.ids.search, { phase: "searching" });
-    assert.equal(visual.motion.tailPhase, tailTime / 100);
+    if(searchSequence){assert.ok(Number.isInteger(visual.motion.searchSequenceStep));assert.equal(visual.motion.tailPhase,undefined);assert.equal(visual.motion.paperPhase,undefined);assert.equal(visual.motion.burrowPhase,undefined);}
+    else assert.equal(visual.motion.tailPhase, tailTime / 100);
     const pixels = Buffer.from(visual.frame.pixels);
     tailChunks.push(pixels);
-    tailFrames.push({ atMs: tailTime, durationMs: 100, motion: visual.motion,
+    tailFrames.push({ atMs: tailTime, durationMs: Math.min(stepMs,periodMs-tailTime), motion: visual.motion,
       sha256: createHash("sha256").update(pixels).digest("hex") });
   }
   const file = `tail-${style}-frames.bin`;
   await writeFile(join(work, file), Buffer.concat(tailChunks));
   tailLoops.push({ style, width: sheet.width, height: sheet.height, palette: sheet.palette,
     transparentIndex: sheet.transparentIndex ?? 0, framesFile: file, frames: tailFrames,
-    periodMs: 2400, rootPinned: sheet.motion.tail.rootPinned === true, rootFlexible: sheet.motion.tail.rootFlexible === true, spinePoints: sheet.motion.tail.spine.length,
+    periodMs, bakedMotion:Boolean(searchSequence), rootPinned: searchSequence?false:sheet.motion.tail.rootPinned === true, rootFlexible: searchSequence?true:sheet.motion.tail.rootFlexible === true, spinePoints: searchSequence?0:sheet.motion.tail.spine.length,
     distinctFrames: new Set(tailFrames.map((frame) => frame.sha256)).size });
   tailPlayer.dispose();
 }
@@ -218,7 +223,7 @@ for (const style of ["wumi", "wumi-pixel"]) for (const id of ["think", "talk-wid
   comparisons.push({ style, id, file, width: sheet.width, height: sheet.height, palette: sheet.palette });
 }
 const provenance = {};
-for (const path of ["lib/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "lib/poke.mjs", "lib/watch.mjs", "lib/listen.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json", "assets/reactions/wumi/poke-patch.json", "assets/reactions/wumi-pixel/poke-patch.json", "assets/reactions/wumi/watch-frames.json", "assets/reactions/wumi-pixel/watch-frames.json", "assets/reactions/wumi/listen-frames.json", "assets/reactions/wumi-pixel/listen-frames.json"]) {
+for (const path of ["lib/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "lib/poke.mjs", "lib/watch.mjs", "lib/listen.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json", "assets/reactions/wumi/poke-patch.json", "assets/reactions/wumi-pixel/poke-patch.json", "assets/reactions/wumi/watch-frames.json", "assets/reactions/wumi-pixel/watch-frames.json", "assets/reactions/wumi/listen-frames.json", "assets/reactions/wumi-pixel/listen-frames.json", "lib/search.mjs", "assets/reactions/wumi/search-frames.json", "assets/reactions/wumi-pixel/search-frames.json"]) {
   provenance[path] = createHash("sha256").update(await readFile(join(root, path))).digest("hex");
 }
 const distinct = (phase) => new Set(frames.filter((frame) => frame.phase === phase).map((frame) => frame.sha256)).size;
@@ -230,7 +235,7 @@ const check = {
   requestedFrames: frames.length, transitions: frames.filter((frame) => frame.transitioning).length,
   speakingMouths: [...new Set(frames.filter((frame) => frame.phase === "speaking").map((frame) => frame.sourceFace))],
   runningScanMotion: frames.some((frame) => frame.phase === "running" && frame.motion.watchSequenceStep !== undefined),
-  searchTailMotion: frames.some((frame) => frame.phase === "searching" && frame.motion.tail),
+  searchTailMotion: frames.some((frame) => frame.phase === "searching" && (frame.motion.tail || frame.motion.searchSequenceStep !== undefined)),
   successWaveMotion: frames.some((frame) => frame.phase === "success" && frame.motion.wave),
   distinctFramesByPhase: Object.fromEntries(segments.map((segment) => [segment.phase, distinct(segment.phase)])),
 };

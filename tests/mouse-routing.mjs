@@ -342,6 +342,44 @@ try {
   await extension.commands.get("mascot").handler("render sixel",ctx);currentEditor.setText("");draw();
   assert.notEqual(screen.showOverlay,nativeShowOverlay,"Actual product editor must observe native public overlay handles");
   const countDcs=()=> (writes.join("").match(/\x1bP/g)||[]).length;
+  // Unlike block-only hit testing, exercise native selection after the real
+  // product transport has translated image markers into Sixel output.
+  await extension.commands.get("mascot").handler("demo off",ctx);
+  const selectionDraft="selection first input row\nselection middle input row\nselection final input row";
+  currentEditor.setText(selectionDraft);draw();
+  const selectedEditor=currentEditor,selectionCursor=currentEditor.getCursor(),selectionSubmits=submits.length;
+  const nativeSelectionEditor=nativeEditor();nativeSelectionEditor.setText(selectionDraft);nativeSelectionEditor.render(currentEditor.geometry.editorWidth);
+  const selectionStart=find("selection first"),selectionEnd=find("selection final");
+  const verifySelectionDraw=()=>{
+    const columns=[...writes.join("").matchAll(/\x1b\[(\d+)G\x1bP/g)].map((match)=>Number(match[1])-1);
+    assert.ok(columns.length>0,"Selecting across input rows must exercise image stripe repainting");
+    assert.ok(columns.length<=currentEditor.avatarBounds.height,"One selection redraw must never duplicate a stripe into the input area");
+    assert.ok(columns.every((column)=>column===currentEditor.avatarBounds.x),"All Sixel repaint columns must remain inside the original avatar lane");
+    assert.ok(!writes.join("").includes("\x1b]777;pi-furry-partner-"),"Private marker copies must never escape to the terminal");
+  };
+  writes.length=0;
+  sgr(0,selectionStart.x+3,selectionStart.y);
+  sgr(32,selectionEnd.x+8,selectionEnd.y);draw();verifySelectionDraw();
+  assert.equal(screen.hasActiveSelection(),true);
+  writes.length=0;
+  sgr(0,selectionEnd.x+8,selectionEnd.y,true);draw();
+  assert.equal(screen.hasActiveSelection(),true,"Releasing a native drag preserves its selected text");
+  assert.equal(currentEditor,selectedEditor);assert.equal(currentEditor.getText(),selectionDraft);
+  assert.deepEqual(currentEditor.getCursor(),selectionCursor);assert.equal(submits.length,selectionSubmits);
+  const selectedRows=screen.getScreenLines();
+  assert.ok(selectedRows.some((line)=>(line.match(/pi-furry-partner-/g)||[]).length>1),"The real fullscreen selection path must reproduce duplicated zero-width image markers");
+  input("Z");nativeSelectionEditor.handleInput("Z");draw();
+  assert.equal(currentEditor.getText(),nativeSelectionEditor.getText(),"Typing after Sixel selection must retain native editor semantics instead of entering a mouse-capture dead end");
+  assert.deepEqual(currentEditor.getCursor(),nativeSelectionEditor.getCursor());
+  const afterSelectionDraft=currentEditor.getText(),afterSelectionNativeActions=nativeActions.length;
+  const selectionModel=find("[模型]");click(selectionModel.x,selectionModel.y);await flush();draw();
+  assert.equal(nativeActions.length,afterSelectionNativeActions+1);assert.equal(nativeActions.at(-1),"app.model.select");
+  assert.equal(currentEditor.getText(),afterSelectionDraft);assert.equal(screen.getFocusedComponent(),currentEditor);
+  const previousEscape=currentEditor.onEscape;let selectionEscapes=0;currentEditor.onEscape=()=>{selectionEscapes++;};
+  input("\x1b");assert.equal(selectionEscapes,1,"Escape must reach the editor after releasing the drag");currentEditor.onEscape=previousEscape;
+  input("\r");assert.equal(submits.length,selectionSubmits+1);assert.equal(submits.at(-1),afterSelectionDraft);
+  screen.resetTextSelection();currentEditor.setText("");draw();
+  checks.push("Real fullscreen multi-row SGR drag/release with Sixel keeps native selection and caret/draft, emits each stripe only at the avatar column, and remains responsive to typing, toolbar actions, Escape and one Enter submission");
   const upperModal=screen.showOverlay({render:()=>["upper modal","options"],invalidate(){}},{row:2,col:0,width:22,nonCapturing:true});
   draw();writes.length=0;
   await extension.commands.get("mascot").handler("demo speaking",ctx);draw();

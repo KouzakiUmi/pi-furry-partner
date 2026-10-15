@@ -29,7 +29,7 @@
 
 ## 安装与启动
 
-实际验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7。其他操作系统暂未完成实机验证；界面中文与默认提示词兼容层严格匹配 Pi 1.2.0。请先安装并配置好 Pi。
+完整验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel 传输及实际扩展集成等交互回归。其他操作系统暂未完成实机验证；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
 
 从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
@@ -112,13 +112,15 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 
 放大镜动画使用 MiniMax-H3 从已确认的角色原画生成连续动作，再离线去除背景、抽取完整画帧。头部和握爪跟着镜片左右查看，镜片经过眼睛时能看到眼瞳放大，斗篷随身体轻摆并保留清楚的外轮廓。运行时只按顺序播放，不对镜框局部拉伸，也不在相邻扫描帧之间叠化。插画版与像素版使用相同节奏。旧六帧素材包仍按自己的序列播放，旧两帧素材包保留静态与眨眼回退。
 
+正式放大镜循环包含 64 张视频动作帧和 1 张仅修改眼区的闭眼帧，按 66 个播放步骤组成 6.58 秒的一圈。开头的 420ms 观察停顿拆成睁眼 200ms、闭眼 80ms、睁眼 140ms；其他动作帧至少停留 80ms。背景在离线阶段由绿色信号生成独立灰度遮罩，反相作为 Alpha，再恢复前景颜色。640px 母版和视频保留柔和的透明边缘；240px 终端版的外沿按配套黑色背景近似抗锯齿，80px 像素版保留硬像素轮廓。制作流程见[贡献指南](../CONTRIBUTING.md#角色视频与透明边缘)。
+
 收到修改或运行工具事件时，进入对应姿态并至少保持约 1.2 秒，包含约 200ms 的入场过渡，完整姿态可看见约 1 秒。回到思考时另有约 240ms 缓冲，避免短工具调用导致头像来回闪；即使工具在两次绘制之间快速完成，也会保留这次工作反应。这些措施只作用于角色，真实状态和顶边文案会立即更新。实际运行与预览共用 `lib/motion.mjs` 的动画逻辑；关闭表情时停止循环微动，静态姿态继续更新，主动戳戳仍有短暂反应。
 
 成功挥爪时的 wink 与眨眼已按对应眼区的宽高比例校正，让闭眼线的位置、长度和幅度与原眼睛协调。
 
 等待用户回应时，呜咪会轻轻歪头、带着淡蓝漫画问号眨眼等候；等待超过 10 秒后闭眼打盹。再次收到回应或开始工作时，会先出现约 650ms 的惊醒反应，随后继续真实工作状态。只有姿态受这段反应影响，工具执行和回答不会被延迟。
 
-搜索和整理时，埋着的脑袋会左右轻拱并稍稍点动，兜帽与颈部自然跟随，前面的纸页继续遮住脸，呈现往资料里翻找的感觉。尾巴使用沿尾长传播的左右波浪：尾根柔软带动，中段与尾尖有时间差，越靠尾尖摆幅越大，一个循环约 2.4 秒；与身体连接处平滑衔接。毛色和毛流随尾巴表面一起形变。最上面的几张散纸会错开节奏轻轻晃动，底层纸堆与身体保持稳定。露出耳朵的常规姿势带有单侧与双侧的短促弹抖，打瞌睡时保持安静。
+搜索和整理共用“埋进资料堆”的 MiniMax-H3 连续动作，共 72 幅完整画面、72 个播放步骤，每圈 6.58 秒：脑袋往纸堆里轻拱，尾巴、身体、斗篷和散纸一起衔接。甩尾的波浪与各部位的时间差已经包含在完整动作帧中，运行时不再分别拉动尾巴、头部或纸页，避免连接处被局部形变撕开。尾尖到根部保持深灰、浅灰、白色，尾根与臀部的白毛相连。露出耳朵的其他常规姿势仍有短促耳抖，打瞌睡时保持安静。
 
 默认的紧凑 footer 显示模型与 provider、思考等级、上下文使用比例和窗口大小，以及工作目录、Git 分支、输入/输出 token；缓存和费用只在 Pi 实际提供对应信息且宽度允许时显示。上下文未知时显示未知值。其他扩展的状态仍可显示。`/mascot info native` 可以切回 Pi 原生底部信息；这个设置只影响输入框布局。
 
@@ -160,6 +162,8 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 已有安装更新保留当前界面模式和完整 2.x `config.json`：已经选用 `regular` 的会继续使用它，风格、尺寸、语气等偏好也继续沿用。完整安装或重装按上方安装表管理四个 UI 字段；界面模式仅在缺失时采用 `fullscreen`。
 
 全屏模式也可以正常拖选文本，`/settings` 中的 **Fullscreen copy on select** 控制是否拖选后自动复制（配置字段为 `fullscreenCopyOnSelect`）。需要强制使用 Windows Terminal 自己的原生选区时，可以按住 **Shift** 拖选；并非所有拖选都必须按 Shift。参见 [Windows Terminal 文本选择说明](https://learn.microsoft.com/en-us/windows/terminal/selection)。
+
+已修复跨行拖选时头像条带误画进输入区的问题。正常拖选和释放后，仍可继续输入、点击模型等控件，或使用 Esc、Enter；草稿、光标与发送行为继续由 Pi 原生编辑器处理。
 
 ## 快捷菜单与详细信息
 
@@ -230,6 +234,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 | `/mascot persona on` | 开启呜咪的可爱活泼角色口吻，下一轮生效 |
 | `/mascot persona off` | 停止添加角色口吻模板，下一轮生效 |
 | `/mascot persona status` | 查看角色口吻开关 |
+| `/mascot demo` / `/mascot demo all` | 按顺序循环展示全部动作，不调用模型 |
 | `/mascot demo waking` | 循环预览睡醒过程，不调用模型 |
 | `/mascot demo speaking` | 预览多嘴型说话 |
 | `/mascot demo thinking` | 预览爪托下巴的思考动作 |
@@ -255,7 +260,11 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 尺寸也按布局分别保存：输入框使用 `dockSize`，标题使用 `size`。标题滚出可见区域时会暂停整个标题的更新，保护终端滚动记录；切换到输入框布局可让角色持续待在输入区。
 
-所有演示状态可使用 `/mascot demo <状态>`：`idle`、`waking`、`thinking`、`speaking`、`reading`、`editing`、`running`、`searching`、`waiting`、`success`、`error`、`cancelled`、`compacting`。演示只改变外观，不执行工具、不请求模型；用 `demo off` 退出。如果动画已经暂停，可以先执行 `/mascot play`。
+`/mascot demo` 或 `/mascot demo all` 使用独立的 70.9 秒时间轴循环展示全部动作，包括输入倾听和戳戳回应。运行阶段停留 7.4 秒，能看完 6.58 秒的放大镜一圈；搜索和整理各停留 7.2 秒，等待阶段停留 12.5 秒，超过十秒后打盹，接着展示惊醒。演示不执行工具、不请求或切换模型，不改配置、输入草稿及真实工具状态；`/mascot demo off` 或新的真实 agent 任务会退出演示。若动画已经暂停，可以先执行 `/mascot play`；完整多姿态演示用于 `editor` 布局。
+
+单状态演示继续接受真实输入倾听和主动戳戳，完整巡演则按自己的时间轴展示这些动作，避免外部短事件打乱顺序。
+
+单独看某个动作时，继续使用 `/mascot demo <状态>`：`idle`、`waking`、`thinking`、`speaking`、`reading`、`editing`、`running`、`searching`、`waiting`、`success`、`error`、`cancelled`、`compacting`。
 
 `off` 不会改变 Pi 当前主题，也不关闭原生界面中文、精简提示词或角色语气；这些功能分别使用自己的开关。配色由 `/theme` 管理，也可在卸载时按恢复规则还原。
 
@@ -378,7 +387,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 快捷入口的模型、思考、会话分组参考了 [tomsej/pi-ext 的 Leader Key README](https://github.com/tomsej/pi-ext#readme)，状态信息与工具详情的按需查看思路参考了 [narumiruna/pi-extensions README](https://github.com/narumiruna/pi-extensions#readme)。这里只参考交互设计，没有复制这两个项目的扩展源码；实际操作由本插件对接 Pi 原生能力。
 
-`editor-preview.gif` 和 `editor-preview.png` 是明确标注的离线效果预览，角色像素由生产环境同款 `activity`、输入区姿态选择和 `motion` 代码导出，再与示例输入区组合；它们不是实际终端截图，图片中的按钮仅展示外观。主 GIF 包含完整的 5 秒睡醒过程；`waiting-preview.gif` 单独展示歪头等待、十秒后打盹和再次惊醒，省略中间 7.8 秒的空等并在图中注明。`tail-wave-preview.gif` 并排展示插画版与像素版的完整 2.4 秒甩尾周期，`tail-wave-contact.png` 提供四个相位对照。`style-comparison.png` 对比同一呜咪的插画与新像素风。`preview.html` 提供不发送模型请求的本地交互预览。
+`editor-preview.gif` 和 `editor-preview.png` 是明确标注的离线效果预览，角色像素由生产环境同款 `activity`、输入区姿态选择和 `motion` 代码导出，再与示例输入区组合；它们不是实际终端截图，图片中的按钮仅展示外观。主 GIF 包含睡醒、思考与工作等状态；`waiting-preview.gif` 单独展示歪头等待、十秒后打盹和再次惊醒，压缩的空等时间会在图中注明。`tail-wave-preview.gif` 并排展示插画版与像素版的完整搜索动作，`tail-wave-contact.png` 提供相位对照。`style-comparison.png` 对比同一呜咪的插画与像素风。`preview.html` 提供不发送模型请求的本地交互预览。
 
 以下开发命令都在项目根目录执行。重建正式展示图需要 Node.js，以及带 Pillow、numpy 的 Python：
 
@@ -394,6 +403,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 ```
 
 `npm test` 的单元与素材测试覆盖活动状态、说话节奏、短句轮换、输入区几何、footer 数据来源与宽度、渲染传输、鼠标控件和透明帧，也验证原生组件中文的显示与原始数据还原、中文开关、24 个内置命令补全说明及文件和第三方补全不变，以及精简提示词对原生默认段落的识别、自定义和动态内容保留、关闭与不兼容结构回退。补全测试使用真实 `CombinedAutocompleteProvider` 检查补全应用结果保持一致。
+
+Pi 1.2.0 的完整测试已通过；Pi 1.3 另通过活动、倾听、响应等待、真实扩展集成、Sixel 和鼠标等交互检查，包括跨行 SGR 拖选、释放后继续打字、按钮、Esc 与 Enter。1.3 的整套运行会在明确绑定 1.2.0 的原生提示词 fixture 处停止，因此不宣称 1.3 全套通过，也不扩大中文界面或提示词兼容层。CI 目前固定使用 Pi 1.2.0。
 
 隔离安装测试使用临时 `AgentDir`，覆盖首次安装、1.x 配置迁移、2.x 配置除旧风格 ID 外逐字节保留、角色模板部署与 `persona` 偏好保留、中文 UTF-8、四个 UI 字段备份与恢复，以及 `tuiMode` 缺失、原先为 `regular`、旧 manifest 升级和用户后续改值的情况。运行后由测试脚本生成本地验证报告，不会更改真实 `~/.pi`。这些检查不等同于对所有终端、字体、窗口大小和其他扩展组合的实机验证；实际图像显示效果也取决于终端支持。
 

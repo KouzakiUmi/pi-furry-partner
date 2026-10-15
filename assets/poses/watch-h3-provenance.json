@@ -3,10 +3,13 @@
   "mode": "first-and-last-frame image-to-video",
   "reference": "watch-sequence/watch.png",
   "sameFirstAndLastReference": true,
-  "background": "#00FF00 for offline chroma keying",
+  "background": "#00FF00; continuous green-luminance matte inverted into alpha for foreground compositing",
   "requestedDurationSeconds": 6,
   "decodedDurationSeconds": 6.583333333333333,
-  "sourceDimensions": [768, 768],
+  "sourceDimensions": [
+    768,
+    768
+  ],
   "sourceFps": 24,
   "sourceFrames": 158,
   "sourceFile": "watch-h3-source.mp4",
@@ -23,5 +26,6 @@
     "firstLastContourDistanceP95SourcePixels": 1,
     "firstLastContourDistanceMaxSourcePixels": 2,
     "firstLastRgbMaeAt144Pixels": 1.42
-  }
+  },
+  "transparentProcessing": "Independent 16-bit grayscale green-luminance matte; inverse foreground alpha and inverse-composite straight RGB; 8-bit soft alpha retained for HD compositing. No hard color-distance cutoff, erosion, despill or separate green-channel clamp."
 }

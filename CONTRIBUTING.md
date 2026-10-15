@@ -44,6 +44,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 
 Sixel 回归需要覆盖 Pi 的真实选区绘制，而不只模拟按钮命中：跨多行输入发送 SGR press / drag / release，检查同批次每个角色条带只在原头像列出现，随后继续输入、点按钮、Esc、Enter。选区切片可能复制零宽 OSC 标记；传输层必须按同批次的 `(row, token)` 去重，保留首个有效锚点并检查图像横向范围。不要通过吞掉原生拖选事件来掩盖重画问题。
 
+选区回归必须带真实的 `CURSOR_MARKER`。Pi 的私有 `ESC _pi:c BEL`、`ESC _pi:fc BEL`、`ESC _pi:/fc BEL` 也可能被复制；宿主只移除首个硬件光标标记，剩余标记不能让流式解析器一直等待标准 APC 的 ST 结束符。传输层仅剥离这三种有限白名单标记，按每个字节边界拆分写入检查，并验证 `END_SYNC`、图像输出及随后输入的文字均能通过。标准 APC、OSC、DCS 等协议的终止规则保持原样；不要把图像 OSC 去重视为已覆盖所有拖选冻结原因。这些是协议模型与真实 Pi 模块回归，不能写成 Windows Terminal 实机画面自动验收通过。
+
 `preview.html` 是本地效果演示，可以直接在浏览器打开；它不控制实际 Pi 会话。需要查看真实加载行为时，在单独的测试用 Pi 配置中加载当前源码，避免把包管理来源和手动复制目录叠加。运行截图、窗口尺寸、终端版本与界面模式应一并记录。
 
 正式展示图由生产动画代码离线导出，另需带 Pillow 和 numpy 的 Python：

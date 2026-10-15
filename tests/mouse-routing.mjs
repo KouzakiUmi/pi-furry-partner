@@ -5,6 +5,7 @@ import { homedir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createEditorControls, renderKeyboardHints } from "../lib/editor-controls.mjs";
 import { DOCK_CAPTION_ROWS } from "../lib/editor-layout.mjs";
+import { createVTTerminal } from "./vt-terminal.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const work = resolve(root, "work"); await mkdir(work, { recursive: true });
@@ -17,10 +18,12 @@ const themeAPI = await load(join(agent, "dist/modes/interactive/theme/theme.js")
 const { validateThemeJson } = await load(join(agent, "dist/modes/interactive/theme/theme-schema.js"));
 const { KeybindingsManager } = await load(join(agent, "dist/core/keybindings.js"));
 const { CustomEditor } = await load(join(agent, "dist/modes/interactive/components/custom-editor.js"));
+const { createInteractiveTuiReference } = await load(join(agent, "dist/modes/interactive/tui-renderer.js"));
 const { createChatViewport } = await load(join(agent, "dist/modes/interactive/chat-viewport.js"));
 const api = await load(join(modules, "@earendil-works/pi-tui/dist/index.js"));
 const { stripTerminalSequences } = await load(join(modules, "@earendil-works/pi-tui/dist/utils.js"));
 const { TuiMainScreen, TuiAltScreen, Container, CombinedAutocompleteProvider, visibleWidth, sliceByColumn, setKeybindings } = api;
+const oldCellDimensions={...api.getCellDimensions()};api.setCellDimensions({widthPx:10,heightPx:20});
 const keys = new KeybindingsManager(); setKeybindings(keys);
 const checks = [], writes = [], submits = [], notices = [], actions = [], nativeActions = [];
 const originalClock = Date.now;
@@ -28,10 +31,13 @@ let clock = originalClock();
 let input, currentEditor, currentHeader, currentFooter, currentFactory, succeeded = false, selected = 0, busy = false;
 let nextMenuChoice, activeDetails;
 const nativeActionHandlers = new Map(["app.model.select", "app.thinking.cycle", "app.session.resume", "app.session.tree", "app.session.fork", "app.message.copy", "app.tools.expand", "app.thinking.toggle", "app.editor.external"].map((id) => [id, () => nativeActions.push(id)]));
+const vt=createVTTerminal({columns:110,rows:42,visibleWidth});
 const terminal = { columns: 110, rows: 42, kittyProtocolActive: false,
   start(onInput) { input = onInput; }, stop() {}, hideCursor() {}, showCursor() {}, moveBy() {}, clearLine() {}, clearFromCursor() {}, clearScreen() {},
-  setTitle() {}, setProgress() {}, setProgramStatus() {}, async drainInput() {}, write(data) { writes.push(data); } };
-const screen = new TuiAltScreen(terminal, true, undefined, { mouse: true, copyOnSelect: false }); screen.requestRender = () => {};
+  setTitle() {}, setProgress() {}, setProgramStatus() {}, async drainInput() {}, write(data) { writes.push(data);vt.terminal.columns=this.columns;vt.terminal.rows=this.rows;vt.terminal.write(data); } };
+const copiedSelections=[];let clipboardResult=true;
+const screen = new TuiAltScreen(terminal, true, undefined, { mouse: true, copyOnSelect: true, copySelection: async(text)=>{copiedSelections.push(text);return clipboardResult;} }); screen.requestRender = () => {};
+let activeRenderer=screen;const stableTui=createInteractiveTuiReference(()=>activeRenderer);
 const nativeShowOverlay = screen.showOverlay;
 const header = new Container(), editorBox = new Container(), footer = new Container(), document = new Container();
 const transcript = { render: () => Array.from({ length: 100 }, (_, i) => `history ${i}: transcript text`), invalidate() {} };
@@ -40,19 +46,19 @@ const empty = { render: () => [], invalidate() {} };
 const viewport = createChatViewport({ document, editor: editorBox, footer, status: empty, pendingMessages: empty, scrollbar: "never" });
 screen.setLayoutRoot(viewport.root);
 let editorTheme, theme;
-const nativeEditor = () => { const editor = new CustomEditor(screen, editorTheme, keys, { embedWorkingStatus: true }); editor.onSubmit = (text) => submits.push(text); return editor; };
+const nativeEditor = () => { const editor = new CustomEditor(stableTui, editorTheme, keys, { embedWorkingStatus: true }); editor.onSubmit = (text) => submits.push(text); return editor; };
 const manager = { getEntryCount: () => 0, getLeafId: () => "leaf", getSessionId: () => "mouse", getEntries: () => [], getCwd: () => scratch };
 const footerData = { getGitBranch: () => undefined, getExtensionStatuses: () => new Map(), getAvailableProviderCount: () => 1, onBranchChange: () => () => {} };
 const ctx = { mode: "tui", hasUI: true, cwd: scratch, sessionManager: manager, model: { provider: "test", id: "mouse", contextWindow: 200000 },
   isIdle: () => !busy, getContextUsage: () => ({ tokens: 0, percent: 0, contextWindow: 200000 }),
   ui: {
     get theme() { return theme; },
-    setHeader(factory) { currentHeader?.dispose?.(); currentHeader = factory?.(screen, theme); header.clear(); if (currentHeader) header.addChild(currentHeader); },
-    setFooter(factory) { currentFooter?.dispose?.(); currentFooter = factory?.(screen, theme, footerData); footer.clear(); if (currentFooter) footer.addChild(currentFooter); },
+    setHeader(factory) { currentHeader?.dispose?.(); currentHeader = factory?.(stableTui, theme); header.clear(); if (currentHeader) header.addChild(currentHeader); },
+    setFooter(factory) { currentFooter?.dispose?.(); currentFooter = factory?.(stableTui, theme, footerData); footer.clear(); if (currentFooter) footer.addChild(currentFooter); },
     getEditorComponent: () => currentFactory,
     setEditorComponent(factory) {
       const text = currentEditor?.getText() || ""; currentFactory = factory;
-      currentEditor = factory ? factory(screen, editorTheme, keys) : nativeEditor();
+      currentEditor = factory ? factory(stableTui, editorTheme, keys) : nativeEditor();
       currentEditor.onSubmit = (text) => submits.push(text); currentEditor.setText(text);
       // InteractiveMode copies these public handlers after the factory returns.
       for (const [id, handler] of nativeActionHandlers) currentEditor.actionHandlers.set(id, handler);
@@ -342,14 +348,25 @@ try {
   await extension.commands.get("mascot").handler("render sixel",ctx);currentEditor.setText("");draw();
   assert.notEqual(screen.showOverlay,nativeShowOverlay,"Actual product editor must observe native public overlay handles");
   const countDcs=()=> (writes.join("").match(/\x1bP/g)||[]).length;
+  const assertAvatarCells=(stage)=>{
+    const bounds=currentEditor.avatarBounds;
+    const top=terminal.rows-footer.render(terminal.columns).length-editorBox.render(terminal.columns).length+bounds.y;
+    const missing=[];
+    for(let y=top;y<top+bounds.height;y++)for(let x=bounds.x;x<bounds.x+bounds.width;x++)if(!vt.imageCells[y]?.[x])missing.push([x,y]);
+    assert.deepEqual(missing,[],`${stage}: EL/overwrites must not leave a missing Sixel stripe in the software display model`);
+  };
   // Unlike block-only hit testing, exercise native selection after the real
   // product transport has translated image markers into Sixel output.
   await extension.commands.get("mascot").handler("demo off",ctx);
   const selectionDraft="selection first input row\nselection middle input row\nselection final input row";
-  currentEditor.setText(selectionDraft);draw();
+  currentEditor.setText(selectionDraft);draw();assertAvatarCells("before selection");
+  const selectionStart=find("selection first"),selectionEnd=find("selection final");
+  // A caret before the dragged range is essential: native selection copies
+  // that zero-width APC into later runs, unlike a caret at the draft's end.
+  click(currentEditor.geometry.contentX+1,selectionStart.y);draw();screen.resetTextSelection();
   const selectedEditor=currentEditor,selectionCursor=currentEditor.getCursor(),selectionSubmits=submits.length;
   const nativeSelectionEditor=nativeEditor();nativeSelectionEditor.setText(selectionDraft);nativeSelectionEditor.render(currentEditor.geometry.editorWidth);
-  const selectionStart=find("selection first"),selectionEnd=find("selection final");
+  nativeSelectionEditor.handleMouse({type:"click",button:"left",x:1,y:1,screenX:0,screenY:0,width:currentEditor.geometry.editorWidth,height:currentEditor.geometry.nativeHeight,shift:false,alt:false,ctrl:false});
   const verifySelectionDraw=()=>{
     const columns=[...writes.join("").matchAll(/\x1b\[(\d+)G\x1bP/g)].map((match)=>Number(match[1])-1);
     assert.ok(columns.length>0,"Selecting across input rows must exercise image stripe repainting");
@@ -359,10 +376,11 @@ try {
   };
   writes.length=0;
   sgr(0,selectionStart.x+3,selectionStart.y);
-  sgr(32,selectionEnd.x+8,selectionEnd.y);draw();verifySelectionDraw();
+  sgr(32,selectionEnd.x+8,selectionEnd.y);draw();verifySelectionDraw();assertAvatarCells("while dragging");
   assert.equal(screen.hasActiveSelection(),true);
   writes.length=0;
-  sgr(0,selectionEnd.x+8,selectionEnd.y,true);draw();
+  sgr(0,selectionEnd.x+8,selectionEnd.y,true);await flush();draw();assertAvatarCells("after drag/copy release");
+  assert.ok(copiedSelections.at(-1)?.includes("selection middle"));
   assert.equal(screen.hasActiveSelection(),true,"Releasing a native drag preserves its selected text");
   assert.equal(currentEditor,selectedEditor);assert.equal(currentEditor.getText(),selectionDraft);
   assert.deepEqual(currentEditor.getCursor(),selectionCursor);assert.equal(submits.length,selectionSubmits);
@@ -379,7 +397,36 @@ try {
   input("\x1b");assert.equal(selectionEscapes,1,"Escape must reach the editor after releasing the drag");currentEditor.onEscape=previousEscape;
   input("\r");assert.equal(submits.length,selectionSubmits+1);assert.equal(submits.at(-1),afterSelectionDraft);
   screen.resetTextSelection();currentEditor.setText("");draw();
-  checks.push("Real fullscreen multi-row SGR drag/release with Sixel keeps native selection and caret/draft, emits each stripe only at the avatar column, and remains responsive to typing, toolbar actions, Escape and one Enter submission");
+  checks.push("Real stable-proxy fullscreen caret-before-selection SGR drag with copy-on-select keeps selection/caret/draft, leaves no missing avatar cells after EL/overwrite, strips private APC markers and remains responsive to typing, toolbar actions, Escape and one Enter submission");
+  await extension.commands.get("mascot").handler("play",ctx);
+  await extension.commands.get("mascot").handler("demo speaking",ctx);
+  currentEditor.setText("animated first input row\nanimated middle input row\nanimated final input row");draw();
+  const animatedStart=find("animated first"),animatedEnd=find("animated final");
+  click(currentEditor.geometry.contentX+1,animatedStart.y);screen.resetTextSelection();draw();
+  const animatedDraft=currentEditor.getText(),copiedBeforeAnimation=copiedSelections.length;
+  sgr(0,animatedStart.x+4,animatedStart.y);
+  for(let step=0;step<24;step++){
+    clock+=75;sgr(32,animatedEnd.x+4+step%8,step%3===0?animatedStart.y:animatedEnd.y);writes.length=0;draw();
+    assertAvatarCells(`animated selection ${step}`);
+    const output=writes.join("");
+    assert.ok(!["\x1b_pi:c\x07","\x1b_pi:fc\x07","\x1b_pi:/fc\x07"].some((marker)=>output.includes(marker)));
+    assert.equal((output.match(/\x1b\[\?2026h/g)||[]).length,(output.match(/\x1b\[\?2026l/g)||[]).length,"Every animated selection repaint must close synchronized output");
+    assert.equal(vt.cursor.pending,0);assert.equal(currentEditor.getText(),animatedDraft);
+  }
+  clipboardResult="Injected copy failure";
+  sgr(0,animatedEnd.x+9,animatedEnd.y,true);await flush();draw();
+  assert.equal(copiedSelections.length,copiedBeforeAnimation+1);assertAvatarCells("animated copy failure flash");
+  clipboardResult=true;
+  terminal.columns=100;draw();assertAvatarCells("selection resize narrower");
+  terminal.columns=110;draw();assertAvatarCells("selection resize restored");
+  screen.resetTextSelection();clock+=75;draw();assertAvatarCells("selection cleared while animation continues");
+  // Selection in the transcript uses a different scroll-view coordinate path.
+  sgr(0,20,3);sgr(32,32,5);clock+=75;draw();assertAvatarCells("transcript selection during animation");
+  sgr(0,32,5,true);await flush();screen.resetTextSelection();draw();
+  input("Z");assert.ok(currentEditor.getText().includes("Z"));
+  await extension.commands.get("mascot").handler("pause",ctx);await extension.commands.get("mascot").handler("demo off",ctx);
+  currentEditor.setText("");draw();
+  checks.push("Twenty-four animated selection repaints through the stable proxy preserve every software-model avatar cell and close sync; async copy failure/success, resize, clear and transcript selection leave typing live without changing real draft semantics");
   const upperModal=screen.showOverlay({render:()=>["upper modal","options"],invalidate(){}},{row:2,col:0,width:22,nonCapturing:true});
   draw();writes.length=0;
   await extension.commands.get("mascot").handler("demo speaking",ctx);draw();
@@ -416,6 +463,7 @@ try {
   await writeFile(join(root, "tests/mouse-routing-validation.json"), JSON.stringify(report, null, 2) + "\n");
   succeeded = true; console.log(JSON.stringify(report, null, 2));
 } finally {
+  api.setCellDimensions(oldCellDimensions);
   Date.now = originalClock;
   currentEditor?.dispose?.(); currentHeader?.dispose?.(); currentFooter?.dispose?.(); screen.stop({ preserveScreen: true });
   if (succeeded && scratch.startsWith(work + sep) && scratch.slice(work.length + 1).startsWith("mouse-routing-")) await rm(scratch, { recursive: true, force: true });

@@ -66,6 +66,28 @@ for (const bubble of ["唔？", "我醒啦", "你来啦", "唔！", "z", "z · z
   assert.ok(!cjk.test(localized.bubble));
 }
 checks.push("All English resource bubbles, including poke/listening extras, and hardcoded waking/dozing translations fit ten real terminal cells");
+for (const vocabulary of [copy, englishCopy, phrases, englishPhrases]) {
+  const text = JSON.stringify(vocabulary);
+  assert.doesNotMatch(text, /模型|回包|首个输出|服务端|请求|\b(?:model|token|server|agent|request)\b|first output|answer text/i,
+    "Companion narration must not become a third-person backend status report");
+}
+for (const vocabulary of [phrases, englishPhrases]) for (const key of ["waiting", "waiting_user"]) {
+  assert.ok(vocabulary.phrases[key].every((text) => !/读完|找到了|完成了|(?:finished|completed|found it|read the file)/i.test(text)),
+    "Waiting copy cannot claim completed work without an actual result");
+}
+{
+  let clock = 2000;
+  const sparse = createActivity({ now: () => clock, random: () => .25 });
+  sparse.start({ wake: false });
+  for (const phase of DEMO_STATES) {
+    sparse.setDemo(phase); clock += 2500;
+    const chinese = sparse.snapshot(), english = localizeSnapshot(chinese, "en");
+    assert.match(chinese.label, /我/, "Missing optional copy still uses Umi's first-person voice");
+    assert.ok(!cjk.test([english.label, english.phrase, english.bubble].join("\n")), `${phase}: sparse fallback must localize`);
+    assert.equal(english.phase, chinese.phase); assert.equal(english.elapsedMs, chinese.elapsedMs);
+  }
+}
+checks.push("Conversational resources avoid backend narration and premature completion claims; sparse-copy fallbacks retain a first-person voice and localize without changing state or clocks");
 const voice = { labels: {}, bubbles: {}, phrases: {} };
 replaceActivityCopy(voice, copy, phrases);
 let time = 2000;

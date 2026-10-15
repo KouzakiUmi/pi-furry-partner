@@ -63,7 +63,7 @@ try {
     for (const value of [legacy, canonical]) {
       await command(`style ${value}`);
       assert.equal(await readFile(join(scratch, "config.json"), "utf8"), before);
-      assert.ok(notices.at(-1).message.includes("reaction poses belong beside the editor"));
+      assert.ok(notices.at(-1).message.includes("/mascot layout editor"), "The layout restriction must keep its actionable editor-layout command");
     }
   }
   const command = await load({});

@@ -19,7 +19,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   const { activity, advance } = make();
   activity.start();
   assert.equal(activity.snapshot().phase, "waking");
-  assert.equal(activity.snapshot().label, "刚刚醒来", "A real wake phase must select its label after overriding idle");
+  assert.equal(activity.snapshot().label, "我醒啦", "A real wake phase must select its first-person label after overriding idle");
   assert.equal(activity.snapshot().face, "rest");
   assert.equal(advance(1199).face, "rest");
   assert.equal(advance(1).face, "think");

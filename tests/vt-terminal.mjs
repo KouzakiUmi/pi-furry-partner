@@ -105,5 +105,6 @@ export function createVTTerminal({ columns = 100, rows = 40, visibleWidth = () =
     get screen() { return Array.from({ length: terminal.rows }, (_, i) => row(top + i).slice(0, terminal.columns).join("").trimEnd()); },
     get history() { return cells.slice(0, top).map((line) => line.join("").trimEnd()); },
     get imageCellsInHistory() { return images.slice(0, top).reduce((sum, line) => sum + line.filter(Boolean).length, 0); },
+    get imageCells() { return Array.from({ length: terminal.rows }, (_, i) => imageRow(top + i).slice(0, terminal.columns)); },
   };
 }

@@ -51,12 +51,12 @@
       "I'll adjust this part to match what you had in mind."
     ],
     "running": [
-      "I'm watching the tool output for a reply.",
-      "This step is still running. I've got an eye on it.",
-      "I'll stay with this step and see what comes back.",
-      "I'll wait for the tool before I carry on.",
-      "Let me check how the output is coming along.",
-      "I'm still watching. No final result just yet."
+      "I've got an eye on this step. Let's see how it goes.",
+      "I'll stay right here while this bit runs.",
+      "Let me peek a little closer. This bit needs a moment.",
+      "I'm keeping my ears up for any new signs.",
+      "I'm watching. No jumping to guesses just yet.",
+      "I'm still with this step. I'll let it finish."
     ],
     "searching": [
       "I'm digging through the notes for a clue.",
@@ -67,36 +67,36 @@
       "Head down in the papers. One more place to look."
     ],
     "waiting": [
-      "I'm waiting for this step to reply before I continue.",
-      "I'll wait for an answer from the other side.",
-      "Nothing back yet. I'll give it a little more time.",
-      "This step hasn't replied, so I'll stay here for now.",
-      "No reply yet. I won't guess what happened.",
-      "I'm still waiting. No new update just yet."
+      "I'm still right here. Let's give it a little longer.",
+      "I'll wait for a little sign. Keep me company?",
+      "Nothing new on my side yet. I'll stay beside you.",
+      "My ears are up. I'll wait for a reply before I carry on.",
+      "I'm still waiting. I won't guess what happened.",
+      "I haven't wandered off. Just waiting here a moment."
     ],
     "waiting_user": [
-      "Your call. Take your time thinking it over.",
-      "I've left the question here. Tell me when you're ready.",
-      "I'm listening. Which way would you like to go?",
+      "I'll leave this one to you. Take your time.",
+      "I've put the question here. Tell me when you're ready.",
+      "I'm all ears. Which way would you like to go?",
       "I'll keep you company until you're ready to reply.",
-      "I'd like to hear your thoughts before I continue.",
-      "Paws tucked in. I'll wait for your say on this one."
+      "I'd love to hear your thoughts before I continue.",
+      "I've tucked my paws in. This one's your call."
     ],
     "success": [
-      "That's this turn from me. Take a look when you're ready.",
-      "I've left everything here for you to read.",
-      "Paws down for a moment. What's next?",
-      "Let's have a look at how this turn went.",
-      "I'm done writing for now, and still here to chat.",
-      "I'll wrap this part up and leave the next step to you."
+      "I'll leave it here for you. Have a look when you're ready.",
+      "I've put my thoughts here. What would you like to chat about next?",
+      "I'll rest my paws a moment. What's next?",
+      "I'll look over how that went with you.",
+      "I've put my pen down for now. Still right here, though!",
+      "I'll wrap this bit up and leave the next step to you."
     ],
     "error": [
-      "That step didn't work. The error is still here to check.",
-      "I've hit a snag. I still need to confirm why.",
-      "This run failed. Let me see what the error says.",
-      "I need to pause here. This result isn't a success.",
-      "I'm stuck on this bit. I need to check what went wrong.",
-      "This step hasn't worked yet. I need to rethink the approach."
+      "Oof, that step didn't work. Let me look at what went wrong.",
+      "I've hit a snag. I need to look a little closer.",
+      "That didn't go through. I'll need to check the error.",
+      "I'll stop here a moment. This step hasn't worked yet.",
+      "I'm stuck on this bit. I need to understand why.",
+      "I haven't got this step through yet. Let me rethink the approach."
     ],
     "cancelled": [
       "I'll stop here and wait for your next step.",
@@ -115,10 +115,10 @@
     ],
     "poke_busy": [
       "Mmm… I'm looking closely at this bit. One little moment?",
-      "Ears received! Let me finish this step carefully.",
+      "My ears felt that! Let me stay with this step.",
       "Hehe, still here. Let me keep an eye on this first.",
-      "Oh! Let me connect this clue, then I'm all yours.",
-      "Eep… I nearly had it! Keep me company one more moment?"
+      "Oh! I'm right here, just keeping my paws on this step.",
+      "Eep! I've got my paws full. Keep me company a moment?"
     ],
     "poke_waiting": [
       "Eep! I'm still right here waiting with you.",
@@ -127,17 +127,17 @@
       "Tickly… I'll keep you company. No rush."
     ],
     "compacting": [
-      "I'll gather what we've discussed and keep the key bits.",
-      "Let me sort the earlier context for what comes next.",
-      "I'm putting the story so far in order.",
-      "I'll collect these clues and keep the important ones close.",
-      "I'm jotting down the key points so we can keep going.",
-      "Let me gather your requests and where we've got to."
+      "I'll gather what we've talked about and keep the key bits close.",
+      "Let me sort through our chat for what comes next.",
+      "I'm putting our story so far in order.",
+      "I'll gather these clues. The important ones are coming with me.",
+      "I'm jotting down a few things so we can pick this up again.",
+      "Let me gather your wishes and where we've got to."
     ],
     "listening": [
-      "I'm listening. Take your time; you've got my ears.",
-      "Go on, I'm right here. My paws can wait a moment.",
-      "Mm-hm, I'm following. Tell me what you have in mind."
+      "I'm right here while you put it into words. No rush.",
+      "I've turned my ears your way. My paws can wait a little.",
+      "I'm here. Tell me when you've got it how you want."
     ]
   }
 }

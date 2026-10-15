@@ -2,9 +2,9 @@
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.0) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) · [架构说明](architecture.md)
 
-本指南针对 **pi-furry-partner 2.3.0**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+本指南针对 **pi-furry-partner 2.3.1**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
 角色英文名为 **Umi**，风格命令统一为 `umi`、`umi-pixel`。旧的 `wumi`、`wumi-pixel` 命令和配置作为兼容别名继续支持，保存设置时使用新 ID。`wumi-persona.md` 文件名和既有素材路径保持稳定。
 
@@ -31,7 +31,7 @@
 
 完整验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel 传输及实际扩展集成等交互回归。其他操作系统暂未完成实机验证；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -68,7 +68,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.1
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。
@@ -163,7 +163,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 全屏模式也可以正常拖选文本，`/settings` 中的 **Fullscreen copy on select** 控制是否拖选后自动复制（配置字段为 `fullscreenCopyOnSelect`）。需要强制使用 Windows Terminal 自己的原生选区时，可以按住 **Shift** 拖选；并非所有拖选都必须按 Shift。参见 [Windows Terminal 文本选择说明](https://learn.microsoft.com/en-us/windows/terminal/selection)。
 
-已修复跨行拖选时头像条带误画进输入区的问题。正常拖选和释放后，仍可继续输入、点击模型等控件，或使用 Esc、Enter；草稿、光标与发送行为继续由 Pi 原生编辑器处理。
+2.3.0 处理了选区切片复制图像 OSC 标记导致条带错列的问题；2.3.1 进一步修复隐藏光标 APC-BEL 标记被复制后，输出解析器持续等待结束符，造成头像黑条和后续文字停住的问题。两项分别处理图像锚点与光标标记；原生拖选事件不会被吞掉，草稿、光标与发送行为继续由 Pi 编辑器处理。回归使用真实 Pi 选区及输出协议，并覆盖分片写入，不代表每种终端环境都已完成实机验收。
 
 ## 快捷菜单与详细信息
 

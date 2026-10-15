@@ -2,7 +2,7 @@
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Latest release](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) · [Changelog](../CHANGELOG.md)
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
@@ -12,7 +12,7 @@ The fully tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and 
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.3.0.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-v2.3.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell
@@ -21,7 +21,7 @@ pi
 ```
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.1
 ```
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.
@@ -77,7 +77,7 @@ Caption and portrait widths are independent: the normal portrait stays 16 × 8 c
 
 In **fullscreen**, the lower edge of the editor contains clickable controls, with model, thinking and more actions on the right. Clicking the character gives Umi a gentle poke: a brief `>w<` face, a little scrunch and wiggle, and a random line in the current language. The wiggle is gentler and the reply stays focused on the task while he's busy, and becomes more playful when he's idle, followed by a return to the current activity. Use `/mascot pause` or `/mascot play` to control animation playback. Dragging to select text is not treated as a button click.
 
-Multi-row dragging no longer duplicates portrait stripes over the editor. After release, typing, toolbar actions, Escape and Enter continue working, with Pi retaining the draft, caret and native selection behavior.
+2.3.0 addressed misplaced stripes caused by selection slices duplicating image OSC markers. 2.3.1 separately fixes duplicated private caret APC-BEL markers leaving the output parser waiting for a terminator, which caused black portrait stripes and stalled subsequent text. Native drag events remain available, and Pi retains the draft, caret and submission behavior. Regression checks use real Pi selection and output protocols, including split writes; they are not native-screen acceptance for every terminal environment.
 
 In **regular**, the same space displays keyboard hints instead of mouse buttons. Pi's current native key mappings are used where available. The menu is always accessible through **Ctrl+Alt+W** or `/mascot menu`. Changing TUI mode in `/settings` updates the controls immediately while preserving your editor and draft. `/mascot poke` works in either mode and does not interrupt agent work.
 

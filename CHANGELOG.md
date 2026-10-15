@@ -2,6 +2,22 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.3.1 · 2026-10-16
+
+### 简体中文
+
+- 将中英文角色状态和相关通知统一为自然的第一人称口吻，覆盖输入回执、等待回复、思考、工具执行、等待用户、收尾和兜底文案；保留真实计时、模型与用量信息以及错误详情。
+- 修复全屏拖选后头像出现黑条、后续输出停止的问题。Pi 的原生选区切片会复制以 BEL 结束的私有 APC 光标／假光标标记；残留标记此前让传输解析器的 `pendingEscape` 持续等待 ST，连 `END_SYNC` 和后续文本也被暂存。
+- 仅剥离有限白名单中的 Pi 私有标记 `pi:c`、`pi:fc`、`pi:/fc`，保留标准 APC 的 ST 结束规则和其他终端协议。补充真实光标标记选区及任意分片写入边界回归，检查同步输出结束、Sixel 重画与后续文字恢复。
+- 2.3.0 的图像 OSC 锚点去重继续负责避免条带错列；本次修复单独处理光标标记终止解析。保留原生拖选、输入、按钮、Esc 与 Enter 行为，不以拦截选择事件规避问题。验证范围为真实 Pi 1.2 / 1.3 模块与协议模型，不宣称自动完成 Windows Terminal 实机画面验收。
+
+### English
+
+- Made bilingual companion status lines and related notices conversational and first-person, including input receipt, waiting, thinking, tool activity, user questions and wrap-up messages. Real timing, model/usage information and error details remain explicit.
+- Fixed black portrait stripes and stalled output after fullscreen text selection. Pi's native selection slices can duplicate private caret/fake-cursor APC markers terminated by BEL. Leftover markers previously kept `pendingEscape` waiting for ST, buffering `END_SYNC` and subsequent text as well.
+- Strip only the finite allowlist of Pi markers `pi:c`, `pi:fc` and `pi:/fc`. Standard APC still requires ST, and other terminal protocols retain their behavior. Added regression coverage for real caret-marker selection and every split-write boundary, checking synchronized-output completion, Sixel redraw and subsequent text.
+- The 2.3.0 image-OSC anchor deduplication still prevents misplaced stripes; this fix separately handles caret-marker termination. Native selection, input, controls, Escape and Enter remain available. Verification uses real Pi 1.2 / 1.3 modules and protocol models; it is not a claim of automated native Windows Terminal screen acceptance.
+
 ## 2.3.0 · 2026-10-16
 
 ### 简体中文

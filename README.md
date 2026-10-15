@@ -10,12 +10,12 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.3.0](https://img.shields.io/badge/release-v2.3.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.0)
+[![Release v2.3.1](https://img.shields.io/badge/release-v2.3.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载最新版**](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载 v2.3.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -95,7 +95,7 @@
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest) 下载 `pi-furry-partner-v2.3.0.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) 下载 `pi-furry-partner-v2.3.1.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -109,7 +109,7 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.1
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
@@ -139,7 +139,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
 
-全屏下拖选文本时，头像不会再重画到输入框里；释放鼠标后可以继续打字、点按钮，或按 Esc、Enter。拖选继续交给 Pi 原生处理。
+**2.3.1 修复拖选后头像出现黑条、输出停住的问题。** 图像标记去重与隐藏光标标记解析分别处理：前者避免条带错列，后者防止选区复制的 Pi 私有标记阻塞后续刷新。拖选、草稿、光标与发送仍由 Pi 原生处理；验证覆盖真实 Pi 的选区与输出协议，不等同于所有 Windows Terminal 环境的实机验收。
 
 紧凑 footer 显示模型与 provider、思考等级、上下文和实际提供的 token / 缓存 / 费用数据。窄窗口优先保留编辑空间，空间不足时收起大头像。输入、补全和发送继续沿用 Pi 原生编辑器。
 

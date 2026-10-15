@@ -415,7 +415,7 @@ export default function (pi: ExtensionAPI) {
         headerTransport = transport;
         const component = createHeader({
           sheet: sheets.fallback,
-          getSettings: () => ({ ...settings, name: companionName(settings), subtitle: l("你的像素搭档 · 一起把想法变成现实", "Your pixel partner · Let's bring ideas to life") }),
+          getSettings: () => ({ ...settings, name: companionName(settings), subtitle: l("我陪你，把想法变成现实", "I'm here to help bring your ideas to life.") }),
           getSnapshot: () => ({ busy: snapshot().busy, status: snapshot().label, model: ctx.model?.id, provider: ctx.model?.provider }),
           getRows: () => headerTui.terminal.rows || 30,
           theme: { fg: (token, text) => ctx.ui.theme.fg(token, text), bold: (text) => ctx.ui.theme.bold(text) },
@@ -467,7 +467,7 @@ export default function (pi: ExtensionAPI) {
       if (!template) throw new Error(l("模板内容为空", "The template is empty"));
       addPersonaSection(event.systemPromptOptions, template);
     } catch (error) {
-      ctx.ui.notify(`${l("呜咪语气模板不可用，已跳过本轮角色口吻：", "Umi's style template isn't available; I've skipped the persona for this turn: ")}${(error as Error).message}`, "warning");
+      ctx.ui.notify(`${l("我这轮没能用上角色语气模板：", "I couldn't use my character voice template for this turn: ")}${(error as Error).message}`, "warning");
     }
   });
   pi.on("session_start", (event, ctx) => {
@@ -519,7 +519,7 @@ export default function (pi: ExtensionAPI) {
           ctx.ui.notify(l("用法：/mascot language auto|en|zh-CN|status（zh 也可以）", "Usage: /mascot language auto|en|zh-CN|status (zh is also accepted)"), "warning"); return;
         }
         const languageStatus = settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language;
-        ctx.ui.notify(l(`呜咪现在说中文啦。语言：${languageStatus}。界面文案立即切换，Pi 文档提示精简与语气模板从下一轮生效；locale、prompt、persona 的偏好分别保留。`, `I'm speaking English now. Language: ${languageStatus}. UI text changes right away; concise Pi docs and persona apply from the next turn. Your locale, prompt and persona preferences stay independent.`), "info");
+        ctx.ui.notify(l(`我现在说中文啦。语言：${languageStatus}。界面文案立即切换，Pi 文档提示精简与语气模板从下一轮生效；locale、prompt、persona 的偏好分别保留。`, `I'm speaking English now. Language: ${languageStatus}. UI text changes right away; concise Pi docs and persona apply from the next turn. Your locale, prompt and persona preferences stay independent.`), "info");
         return;
       }
       if (command === "locale" || command === "prompt") {
@@ -559,7 +559,7 @@ export default function (pi: ExtensionAPI) {
       else if (command === "layout" && ["editor", "header"].includes(value)) { settings.layout = value; apply(ctx); }
       else if (command === "style" && normalizeStyle(value)) {
         const style = normalizeStyle(value)!;
-        if (settings.layout === "header" && ["umi", "umi-pixel"].includes(style)) { ctx.ui.notify(l("呜咪多姿态用于输入框版，请先执行 /mascot layout editor。标题版可选 pixel 或 illustration。", "Umi's reaction poses belong beside the editor. Run /mascot layout editor first. The title supports pixel or illustration."), "info"); return; }
+        if (settings.layout === "header" && ["umi", "umi-pixel"].includes(style)) { ctx.ui.notify(l("我的这些动作要在输入框旁边才能看见呀。先用 /mascot layout editor；标题版可选 pixel 或 illustration。", "My reaction poses appear beside your input. Use /mascot layout editor first. The title supports pixel or illustration."), "info"); return; }
         if (settings.layout === "header") settings.headerStyle = style; else settings.style = style;
         apply(ctx);
       }
@@ -571,9 +571,9 @@ export default function (pi: ExtensionAPI) {
         activity.setDemo(mode); lastSnapshot = undefined; redraw(); armTimer();
         const message = mode === "off" ? l("好啦，演示收起来，回到真正的任务状态咯。", "The tour is off. I'm back to the real task state.")
           : mode === "all" ? l("我来把全部动作轮流演给你看呀，会一直循环。用 /mascot demo off 收起来；真正开始任务时也会自动退出。", "I'll show every animation in a loop. Use /mascot demo off to stop; starting a real task also ends the tour.")
-          : l(`我来演示 ${mode} 这个动作呀。用 /mascot demo off 回到真实状态。`, `Showing the ${mode} animation. Use /mascot demo off to return to the real state.`);
-        const hint = mode === "off" ? "" : (!settings.enabled ? l(" 头像目前关闭，先用 /mascot on 让我出来吧。", " The avatar is hidden; use /mascot on to show it.") : "")
-          + (!settings.animation ? l(" 动画目前暂停，先用 /mascot play 再看我动起来呀。", " Animation is paused; use /mascot play to watch the tour.") : "")
+          : l(`我来演示 ${mode} 这个动作呀。用 /mascot demo off 回到真实状态。`, `I'll show you my ${mode} pose. Use /mascot demo off to return to the real state.`);
+        const hint = mode === "off" ? "" : (!settings.enabled ? l(" 我暂时躲起来啦，用 /mascot on 叫我出来吧。", " I'm tucked away right now; use /mascot on to show me.") : "")
+          + (!settings.animation ? l(" 我先乖乖不动啦，用 /mascot play 再看我动起来呀。", " I'm holding still right now; use /mascot play to watch me move.") : "")
           + (settings.layout !== "editor" ? l(" 全部动作显示在输入框旁，用 /mascot layout editor 就能看到了。", " The full set of poses appears beside the input; use /mascot layout editor to see it.") : "");
         ctx.ui.notify(message + hint, "info"); return;
       }

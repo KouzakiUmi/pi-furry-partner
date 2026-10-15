@@ -206,6 +206,50 @@ function terminalSink(columns = 80, rows = 24) {
 }
 
 {
+  const { terminal, writes } = terminalSink();
+  const transport = createSixelTransport(terminal, () => cell, () => sheet, () => "cursor-selection", () => true, {}, visibleWidth);
+  const stripe = transport.render({ frameIndex: 0, columns: 6, rows: 12 })[0];
+  const cursorMarker = api.CURSOR_MARKER;
+  const privateMarkers = [cursorMarker, "\x1b_pi:fc\x07", "\x1b_pi:/fc\x07"];
+  const screen = new TuiAltScreen(terminal, true, undefined, { mouse: true, copyOnSelect: false });
+  screen.selectionAnchor = { row: 0, col: 24 }; screen.selectionFocus = { row: 0, col: 26 };
+  const lines = screen.applySelection([`  ${stripe}${" ".repeat(12)}${cursorMarker}input text here`]);
+  assert.equal(lines[0].split(cursorMarker).length - 1, 3, "The caret must precede the selection so the real Pi transform duplicates its internal APC");
+  assert.deepEqual(screen.extractCursorPosition(lines, terminal.rows), { row: 0, col: 20 });
+  assert.equal(lines[0].split(cursorMarker).length - 1, 2, "Pi removes only the first copied cursor marker");
+  terminal.write(`\x1b[?2026h\x1b[4;1H\x1b[2K${lines[0]}\x1b[?2026l`);
+  assert.ok(writes.join("").endsWith("\x1b[?2026l"), "Residual Pi APC-BEL markers must not buffer the END_SYNC or lock the terminal writer");
+  assert.equal(dcStrings(writes).length, 1);
+  terminal.write("\x1b[?2026h\x1b[5;1Htyping after selection\x1b[?2026l");
+  assert.ok(writes.join("").includes("typing after selection"));
+  assert.ok(privateMarkers.every((marker) => !writes.join("").includes(marker)), "Pi's BEL-terminated internal APCs must never reach a real terminal");
+  transport.dispose();
+  // Every write boundary of all three internal markers must behave identically.
+  for (const marker of privateMarkers) for (let split = 0; split <= marker.length; split++) {
+    const sink = terminalSink();
+    const adapter = createSixelTransport(sink.terminal, () => cell, () => sheet, () => "split-cursor", () => true, {}, visibleWidth);
+    const image = adapter.render({ frameIndex: 0, columns: 6, rows: 12 })[0];
+    sink.terminal.write(`\x1b[?2026h\x1b[3;1H${image}${marker.slice(0, split)}`);
+    sink.terminal.write(`${marker.slice(split)}safe text\x1b[?2026l`);
+    sink.terminal.write("subsequent input");
+    const output = sink.writes.join("");
+    assert.ok(output.includes("safe text") && output.includes("subsequent input"), `Pi marker split ${split} must not swallow following output`);
+    assert.ok(output.includes("\x1b[?2026l")); assert.equal(dcStrings(sink.writes).length, 1);
+    assert.ok(privateMarkers.every((value) => !output.includes(value)));
+    adapter.dispose();
+  }
+  const sink = terminalSink();
+  const adapter = createSixelTransport(sink.terminal, () => cell, () => sheet);
+  const standard = "\x1b_Ga=T;payload\x07still APC payload\x1b\\";
+  for (const byte of standard) sink.terminal.write(byte);
+  const ordinaryPiNamedApc = "\x1b_pi:c\x1b\\";
+  sink.terminal.write(ordinaryPiNamedApc + "unrelated terminal output");
+  assert.equal(sink.writes.join(""), standard + ordinaryPiNamedApc + "unrelated terminal output", "Standard APC-ST strings, including BEL inside payload or Pi-like names, must remain byte-for-byte intact");
+  adapter.dispose();
+  checks.push("Real Pi caret-before-selection duplicates APC-BEL markers and leaves two after cursor extraction; transport strips only the three private markers across every byte split, closes synchronization, draws the avatar and keeps later typing live while preserving ordinary APC-ST payloads");
+}
+
+{
   const { terminal, writes } = terminalSink(80, 1000);
   const originalWrite = terminal.write;
   const width = 20, height = 40;

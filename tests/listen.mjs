@@ -29,8 +29,10 @@ const checks=[];
 for(const style of ["wumi","wumi-pixel"]){
   const base=await read(`assets/reactions/${style}/reaction-sheet.json`),original=JSON.stringify(base);
   const asset=await read(`assets/reactions/${style}/listen-frames.json`);
-  const sheet=withListenFrames(withWatchFrames(withPokeFrame(base,await read(`assets/reactions/${style}/poke-patch.json`)),await read(`assets/reactions/${style}/watch-frames.json`)),asset);
-  assert.equal(base.frames.length,21);assert.equal(sheet.frames.length,26);assert.equal(sheet.ids.listen,24);assert.equal(sheet.ids["listen-blink"],25);assert.equal(sheet.palette,base.palette);
+  const watch=await read(`assets/reactions/${style}/watch-frames.json`);
+  const sheet=withListenFrames(withWatchFrames(withPokeFrame(base,await read(`assets/reactions/${style}/poke-patch.json`)),watch),asset);
+  const listenStart=base.frames.length+1+watch.frames.length;
+  assert.equal(base.frames.length,21);assert.equal(sheet.frames.length,listenStart+asset.frames.length);assert.equal(sheet.ids.listen,listenStart);assert.equal(sheet.ids["listen-blink"],listenStart+1);assert.equal(sheet.palette,base.palette);
   assert.equal(withListenFrames(sheet,asset),sheet);assert.equal(withListenFrames(base,{...asset,width:1}),base);
   const open=sheet.frames[sheet.ids.listen].pixels,closed=sheet.frames[sheet.ids["listen-blink"]].pixels;let changes=0;
   for(let i=0;i<open.length;i++){

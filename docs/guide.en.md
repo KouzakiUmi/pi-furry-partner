@@ -55,6 +55,8 @@ Prompt and persona changes apply to the next request. Language changes do not tr
 
 The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side; searching and compaction share the paper-pile pose. The tail carries a traveling wave rather than moving as a rigid piece. Speech uses `w / — / o / O` shapes and stops when text output stops.
 
+The magnifier scan uses six complete authored cels: centered, looking to each side, and a centered blink. The lens, gripping paw and head belong to the same cel. Cels switch without a dissolve or local lens deformation, avoiding duplicate rim artifacts. Older two-frame packs retain a static pose and blink fallback.
+
 The startup wake-up lasts about five seconds. Waiting for your answer produces a curious head tilt and question mark; after ten seconds, Umi dozes off. Resuming work triggers a short startled wake-up. These are visual reactions and do not delay tools or model output.
 
 Short editing/running reactions remain visible for about 1.2 seconds, with a buffer before returning to thinking. The real status text updates immediately. Narrow or short terminals collapse the large portrait to preserve editing space. The `Motion: On` / `Motion: Off` control shows the current state. Turning it off pauses looping motion while static poses still update with agent activity; an intentional poke still plays its short reaction. Pi keeps working.

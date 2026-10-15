@@ -31,7 +31,9 @@ for(time=0;time<6300;time+=100){
   timeline.push({atMs:time,views});
 }
 for(const {style,pixels,player}of styles){await writeFile(join(folder,`${style}.bin`),Buffer.concat(pixels));player.dispose();}
-await writeFile(join(folder,"manifest.json"),JSON.stringify({durationMs:6300,stepMs:100,timeline},null,2));
+await writeFile(join(folder,"manifest.json"),JSON.stringify({durationMs:6300,stepMs:100,
+  title:"我拿放大镜看看呀",subtitle:"六张连贯原画循环 · 左右转头查看 · 回到正中轻眨眼",
+  detail:"完整画帧切换，镜框与握爪一起转动",timeline},null,2));
 const rendered=spawnSync(option("--python","python"),[join(root,"scripts/render_watch_preview.py"),"--input",folder,"--output",output],{encoding:"utf8"});
 if(rendered.stdout)process.stdout.write(rendered.stdout);
 if(rendered.status!==0)throw new Error(rendered.stderr||`Render failed: ${rendered.status}`);

@@ -30,10 +30,12 @@ for (const style of STYLES) {
   let data = withPokeFrame(base, JSON.parse(await readFile(join(directory, "poke-patch.json"), "utf8")));
   assert.equal(data.frames.length, base.frames.length + 1, "Every style needs a valid poke patch");
   if (["umi", "umi-pixel"].includes(style)) {
-    data = withWatchFrames(data, JSON.parse(await readFile(join(directory, "watch-frames.json"), "utf8")));
-    assert.equal(data.frames.length, base.frames.length + 3, "Umi needs the two watch poses");
-    data = withListenFrames(data, JSON.parse(await readFile(join(directory, "listen-frames.json"), "utf8")));
-    assert.equal(data.frames.length, base.frames.length + 5, "Umi needs the two listening poses");
+    const watch = JSON.parse(await readFile(join(directory, "watch-frames.json"), "utf8"));
+    const listen = JSON.parse(await readFile(join(directory, "listen-frames.json"), "utf8"));
+    data = withWatchFrames(data, watch);
+    assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length, "Umi needs every authored watch pose");
+    data = withListenFrames(data, listen);
+    assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length, "Umi needs the listening poses");
   }
   assert.ok(data.ids["idle-open"] !== undefined && data.ids["talk-wide"] !== undefined);
   styles[style] = { width: data.width, height: data.height, palette: data.palette, ids: data.ids, motion: data.motion,

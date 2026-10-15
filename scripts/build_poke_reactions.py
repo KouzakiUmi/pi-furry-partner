@@ -47,8 +47,11 @@ def curved_squeeze_eyes(base,eyes):
         # Perspective comes from the existing left/right eye boxes. The lower
         # arc is shorter and softer than the upper, rather than a mirrored V.
         def point(x,y):return(cx+direction*x*width,cy+y*height)
-        top=[point(-.48,-.23),point(-.20,-.15),point(.15,-.13),point(.40,0)]
-        lower=[point(.40,0),point(.14,.12),point(-.15,.21),point(-.43,.17)]
+        # Both strokes bow upward in screen space relative to their own
+        # endpoint chords. The lower lid must not bulge downward like a >
+        # glyph; the two upward sweeps meet at the same soft inner fold.
+        top=[point(-.48,-.23),point(-.20,-.23),point(.15,-.16),point(.40,0)]
+        lower=[point(.40,0),point(.14,-.025),point(-.10,.005),point(-.34,.14)]
         center=point(.40,0);heavy=max(1.2,width*.115);tip=max(.45,width*.025)
         color=(37,44,53,255)
         tapered_curve(draw,top,color,tip,heavy)

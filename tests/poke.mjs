@@ -84,8 +84,9 @@ for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
     assert.strictEqual(withPokeFrame(sheet, { ...legacyPatch, motion: { face: invalid } }).motion, sheet.motion);
   }
   if (style === "wumi" || style === "wumi-pixel") {
-    const combined = withListenFrames(withWatchFrames(mapped, await read(`assets/reactions/${style}/watch-frames.json`)), await read(`assets/reactions/${style}/listen-frames.json`));
-    assert.equal(combined.frames.length, 26); assert.strictEqual(combined.motion.pokeFace, mapped.motion.pokeFace);
+    const watch = await read(`assets/reactions/${style}/watch-frames.json`), listen = await read(`assets/reactions/${style}/listen-frames.json`);
+    const combined = withListenFrames(withWatchFrames(mapped, watch), listen);
+    assert.equal(combined.frames.length, mapped.frames.length + watch.frames.length + listen.frames.length); assert.strictEqual(combined.motion.pokeFace, mapped.motion.pokeFace);
     assert.strictEqual(combined.palette, sheet.palette);
   }
   const cheekPlayer = createMotionPlayer({ now: () => 150 }), legacyPlayer = createMotionPlayer({ now: () => 150 });
@@ -136,6 +137,6 @@ for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
   assert.equal(ended.transitioning, false, "Returning from a poke cannot dissolve the closed eyes over an open face");
   player.dispose();
 }
-checks.push("Single-frame legacy patches remain compatible; optional normalized face landmarks are bounded, sanitized and preserved by the watch/listen composition without changing the 26-frame format");
+checks.push("Single-frame legacy patches remain compatible; optional normalized face landmarks are bounded, sanitized and preserved by the append-only watch/listen composition");
 checks.push("All four styles retain source/palette/alpha/body; a grounded tuck leads into a curved damped rebound and delayed independent ears, visible at eight rows and in half-block fallback, with gentler busy motion and no entry/exit dissolve");
 console.log(JSON.stringify({ passed: true, modelRequests: 0, checks }, null, 2));

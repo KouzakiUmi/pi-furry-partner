@@ -48,7 +48,13 @@ def palette_index(image, palette, size, pixel=False):
     return result.tolist()
 
 
-def main(source, hd_output):
+def main(source, hd_output, legacy_rebuild=False):
+    current = ROOT / 'assets/reactions/wumi/watch-frames.json'
+    if current.exists() and json.loads(current.read_text(encoding='utf-8')).get('sequence') and not legacy_rebuild:
+        if source or hd_output:
+            raise ValueError('Authored watch sequence is protected. Use build_watch_sequence.py to stage/rebuild it; --legacy-rebuild explicitly restores the old two-pose pack.')
+        print(json.dumps({'preserved':True,'reason':'Authored whole-frame watch sequence is canonical','asset':'assets/reactions/wumi/watch-frames.json'}))
+        return
     original = POSES / "watch-generated.png"
     if source:
         original.write_bytes(source.read_bytes())
@@ -112,5 +118,6 @@ if __name__ == "__main__":
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source",type=Path)
     parser.add_argument("--hd-output",type=Path)
+    parser.add_argument("--legacy-rebuild",action='store_true',help='Explicitly replace the authored sequence with the legacy two-pose pack')
     args=parser.parse_args()
-    main(args.source,args.hd_output)
+    main(args.source,args.hd_output,args.legacy_rebuild)

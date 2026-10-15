@@ -417,7 +417,7 @@ try {
     assert.equal(currentEditor.displaySheet.width, style === "umi-pixel" ? 80 : 240);
     assert.equal(currentEditor.displaySheet.frames.length, 1);
     const watchKey = currentEditor.displaySheet.frames[0].cacheKey;
-    advanceDock(2); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "Magnifier/head scanning must produce actual new rendered pixels");
+    advanceDock(12); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "The authored magnifier sequence must advance beyond its readable first cel");
     for (const [phase, expectedId] of [["editing", /^work/], ["searching", /^search/], ["compacting", /^search/], ["error", /^error/], ["success", /^happy/]]) {
       const before = currentEditor.displaySheet.frames[0].cacheKey;
       await command(`demo ${phase}`); currentEditor.render(100);

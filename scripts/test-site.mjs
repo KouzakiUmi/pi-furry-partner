@@ -46,10 +46,10 @@ for (const [style, data] of Object.entries(sheets)) {
   const watch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "watch-frames.json"), "utf8"));
   const listen = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "listen-frames.json"), "utf8"));
   const runtime = withListenFrames(withWatchFrames(withPokeFrame(original, patch), watch), listen);
-  assert.equal(data.frames.length, 26); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
-  for (const id of ["poke", "watch", "watch-blink", "listen", "listen-blink"]) assert.deepEqual([...Buffer.from(data.frames[data.ids[id]].pixels, "base64")], runtime.frames[runtime.ids[id]].pixels);
+  assert.equal(data.frames.length, original.frames.length + 1 + watch.frames.length + listen.frames.length); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
+  for (const { id } of runtime.frames.slice(original.frames.length)) assert.deepEqual([...Buffer.from(data.frames[data.ids[id]].pixels, "base64")], runtime.frames[runtime.ids[id]].pixels);
 }
-checks.push("42 original frames plus 10 derived interaction frames exactly match plugin", "Shared runtime files match plugin with only portable dependency URLs");
+checks.push("Original frames and every authored interaction frame exactly match plugin", "Shared runtime files match plugin with only portable dependency URLs");
 const runtimeImports = [...app.matchAll(/import\("(\.\/runtime\/[^\"]+)"\)/g)];
 assert.equal(runtimeImports.length, 2);
 for (const [, specifier] of runtimeImports) {

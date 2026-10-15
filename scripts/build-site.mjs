@@ -35,9 +35,11 @@ for (const style of ["umi", "umi-pixel"]) {
   const base = JSON.parse(await readFile(join(directory, "reaction-sheet.json"), "utf8"));
   assert.equal(base.frames.length, 21);
   const poked = withPokeFrame(base, JSON.parse(await readFile(join(directory, "poke-patch.json"), "utf8")));
-  const watched = withWatchFrames(poked, JSON.parse(await readFile(join(directory, "watch-frames.json"), "utf8")));
-  const data = withListenFrames(watched, JSON.parse(await readFile(join(directory, "listen-frames.json"), "utf8")));
-  assert.equal(data.frames.length, 26);
+  const watch = JSON.parse(await readFile(join(directory, "watch-frames.json"), "utf8"));
+  const listen = JSON.parse(await readFile(join(directory, "listen-frames.json"), "utf8"));
+  const watched = withWatchFrames(poked, watch);
+  const data = withListenFrames(watched, listen);
+  assert.equal(data.frames.length, base.frames.length + 1 + watch.frames.length + listen.frames.length);
   sheets[style] = { width: data.width, height: data.height, palette: data.palette, ids: data.ids,
     transparentIndex: data.transparentIndex, motion: data.motion,
     frames: data.frames.map(({ id, pixels }) => {
@@ -53,4 +55,4 @@ const hashes = {};
 for (const file of ["index.html", "styles.css", "app.js", "runtime/activity.js", "runtime/motion.js", "runtime/poke.js", "runtime/listen.js", "assets/animation-sheets.json"]) hashes[file] = createHash("sha256").update(await readFile(join(out, file))).digest("hex");
 const manifest = { product: "pi-furry-partner", version: pkg.version, characterName: "Umi", basePathCompatible: true, buildDependencies: [], characterLicense: "ARR", copyright: "呜咪角色及动画素材保留全部版权。", sheets: Object.fromEntries(Object.entries(sheets).map(([key, value]) => [key, { width: value.width, height: value.height, frames: value.frames.length }])), hashes };
 await writeFile(join(out, "build-manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
-console.log(`Built ${out} (${Object.keys(sheets).length} character styles, 42 original frames + 2 poke + 4 watch + 4 listening runtime frames).`);
+console.log(`Built ${out} (${Object.keys(sheets).length} character styles, ${Object.values(sheets).reduce((sum, sheet) => sum + sheet.frames.length, 0)} total runtime frames).`);

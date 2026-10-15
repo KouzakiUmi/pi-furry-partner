@@ -229,7 +229,7 @@ const check = {
   modelRequests: 0, simulatedEventsOnly: true, durationMs: cumulative, fps,
   requestedFrames: frames.length, transitions: frames.filter((frame) => frame.transitioning).length,
   speakingMouths: [...new Set(frames.filter((frame) => frame.phase === "speaking").map((frame) => frame.sourceFace))],
-  runningScanMotion: frames.some((frame) => frame.phase === "running" && frame.motion.watchPhase !== undefined),
+  runningScanMotion: frames.some((frame) => frame.phase === "running" && frame.motion.watchSequenceStep !== undefined),
   searchTailMotion: frames.some((frame) => frame.phase === "searching" && frame.motion.tail),
   successWaveMotion: frames.some((frame) => frame.phase === "success" && frame.motion.wave),
   distinctFramesByPhase: Object.fromEntries(segments.map((segment) => [segment.phase, distinct(segment.phase)])),

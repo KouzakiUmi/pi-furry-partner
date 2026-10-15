@@ -13,12 +13,13 @@ coordinates. `canonical-repairs.json` records reviewed repair inputs and hashes.
 | `speak-clean.png` | Clean muzzle source for localized, continuous mouth animation on the same speaking pose |
 | `neutral-eyes-clean.png` | Clean eye-area source for pose-specific eye patches; preserve the real gray eyebrows and alpha silhouette |
 | `search.png` | Canonical search/compaction pose with the misplaced right-side cape fragment removed |
-| `watch.png` | Magnifier pose for running tools; lens/paw and head scan with their own landmarks |
+| `watch.png` | Original magnifier pose used as the identity reference for the authored scan sequence |
+| `watch-sequence-generated.png` | Six consistently drawn magnifier cels on a transparent 3 × 2 sheet; lens, gripping paw and head turn together |
 | `listen.png` | Cupped-ear listening pose for local idle typing; gentle nods use its own tilted-face landmarks |
 
 The new watching and listening masters were created with the built-in image tool,
 then aligned and rigged by local code. Their exact prompts are saved in
-[`watch-prompt.txt`](watch-prompt.txt) and [`listen-prompt.txt`](listen-prompt.txt).
+[`watch-prompt.txt`](watch-prompt.txt), [`watch-sequence-prompt.txt`](watch-sequence-prompt.txt) and [`listen-prompt.txt`](listen-prompt.txt).
 Original generated inputs and normalized metadata remain beside the masters.
 The pixel derivatives preserve the same character design and use local fine-line
 protection when reducing small strokes; they are not a separate character redesign.

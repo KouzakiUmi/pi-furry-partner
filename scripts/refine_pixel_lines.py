@@ -138,7 +138,7 @@ def refine(previews=False):
         base_after=data['frames'][data['ids']['idle-open']]['pixels']
         patch['pixels']=[[i,value] for i,value in enumerate(f['pixels']) if value!=base_after[i]];write(patch_path,patch)
     report={'passed':True,'method':'Original 80px character, small mouth-ROI coverage protection from the 240px master; original reference pink pixel line',
-            'paletteSize':48,'baseFrames':21,'runtimeFrames':26,'alphaGeometryIdsAndMotionPreserved':True,'mouthChangedPixels':changes,
+            'paletteSize':48,'baseFrames':21,'runtimeFrames':len(data['frames'])+(1 if patch_path.exists() else 0)+sum(len(asset['frames']) for asset in auxiliary_after.values()),'alphaGeometryIdsAndMotionPreserved':True,'mouthChangedPixels':changes,
             'subtleContourPaletteGroups':9,'mouthColor':[228,136,148],'originalPixelReference':'User supplied original pixel portrait',
             'outputSheetSha256':hashlib.sha256((PIXEL/'reaction-sheet.json').read_bytes()).hexdigest()}
     scratch=ROOT/'work/pixel-line-refine';scratch.mkdir(parents=True,exist_ok=True);write(scratch/'validation.json',report)

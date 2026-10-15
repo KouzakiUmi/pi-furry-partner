@@ -106,6 +106,26 @@
       "I'll set this step aside while you think.",
       "A little pause for now. We'll pick it up your way."
     ],
+    "poke_idle": [
+      "Eep! You made my ears wiggle!",
+      "Hehe, caught that poking paw!",
+      "Mmm, tickly… I might poke you back!",
+      "Oh! I'm right beside you, silly.",
+      "My ears! Hehe, I'm listening."
+    ],
+    "poke_busy": [
+      "Mmm… I'm looking closely at this bit. One little moment?",
+      "Ears received! Let me finish this step carefully.",
+      "Hehe, still here. Let me keep an eye on this first.",
+      "Oh! Let me connect this clue, then I'm all yours.",
+      "Eep… I nearly had it! Keep me company one more moment?"
+    ],
+    "poke_waiting": [
+      "Eep! I'm still right here waiting with you.",
+      "Hehe, I haven't gone anywhere. Take your time.",
+      "Hm? Got an idea? My ears are turning your way!",
+      "Tickly… I'll keep you company. No rush."
+    ],
     "compacting": [
       "I'll gather what we've discussed and keep the key bits.",
       "Let me sort the earlier context for what comes next.",
@@ -113,6 +133,11 @@
       "I'll collect these clues and keep the important ones close.",
       "I'm jotting down the key points so we can keep going.",
       "Let me gather your requests and where we've got to."
+    ],
+    "listening": [
+      "I'm listening. Take your time; you've got my ears.",
+      "Go on, I'm right here. My paws can wait a moment.",
+      "Mm-hm, I'm following. Tell me what you have in mind."
     ]
   }
 }

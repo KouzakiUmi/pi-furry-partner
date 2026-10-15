@@ -23,6 +23,8 @@ const { stripTerminalSequences } = await load(join(modules, "@earendil-works/pi-
 const { TuiMainScreen, TuiAltScreen, Container, CombinedAutocompleteProvider, visibleWidth, sliceByColumn, setKeybindings } = api;
 const keys = new KeybindingsManager(); setKeybindings(keys);
 const checks = [], writes = [], submits = [], notices = [], actions = [], nativeActions = [];
+const originalClock = Date.now;
+let clock = originalClock();
 let input, currentEditor, currentHeader, currentFooter, currentFactory, succeeded = false, selected = 0, busy = false;
 let nextMenuChoice, activeDetails;
 const nativeActionHandlers = new Map(["app.model.select", "app.thinking.cycle", "app.session.resume", "app.session.tree", "app.session.fork", "app.message.copy", "app.tools.expand", "app.thinking.toggle", "app.editor.external"].map((id) => [id, () => nativeActions.push(id)]));
@@ -93,6 +95,7 @@ const find = (text) => {
 const readConfig = async () => JSON.parse(await readFile(join(scratch, "config.json"), "utf8"));
 
 try {
+  Date.now = () => clock;
   // Pure hit-testing covers every width without needing the application host.
   let state = { hasText: true, animation: true, persona: false, mode: "fullscreen" };
   const controls = createEditorControls({ visibleWidth, getState: () => state, onAction: (id) => actions.push(id) });
@@ -165,12 +168,12 @@ try {
   }
   state = { ...state, mode: "fullscreen" }; modeControls.render(80);
   assert.ok(modeControls.regions.some((region) => region.id === "menu"));
-  modeControls.handleMouse({ type: "click", button: "left", x: 1, y: 5 }, toolbarLayout); assert.deepEqual(modeActions, ["animation"]);
+  modeControls.handleMouse({ type: "click", button: "left", x: 1, y: 5 }, toolbarLayout); assert.deepEqual(modeActions, ["poke"]);
   modeControls.dispose();
   checks.push("Live fullscreen/regular changes immediately block stale press/release, toolbar and avatar clicks, clear all regular hit regions, and restore clickable fullscreen controls after switching back");
 
   for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
-  await writeFile(join(scratch, "config.json"), JSON.stringify({ enabled: true, animation: false, persona: false, style: "wumi-pixel", layout: "editor", renderer: "blocks", info: "compact" }));
+  await writeFile(join(scratch, "config.json"), JSON.stringify({ language: "zh-CN", enabled: true, animation: false, persona: false, style: "wumi-pixel", layout: "editor", renderer: "blocks", info: "compact" }));
   themeAPI.setThemeJsonValidator(validateThemeJson); themeAPI.initTheme("dark", false);
   theme = themeAPI.loadThemeFromPath(join(root, "themes/pi-furry-night.json"), "truecolor"); editorTheme = themeAPI.getEditorTheme();
   const loaded = await loadExtensions([join(scratch, "index.ts")], scratch); assert.deepEqual(loaded.errors, []); loaded.runtime.getThinkingLevel = () => "medium";
@@ -194,7 +197,7 @@ try {
   assert.ok(phrase);assert.equal(busyRows.filter((line)=>line.includes(phrase)).length,1);
   assert.ok(!busyRows.join("\n").includes("Working"));
   assert.ok(sliceByColumn(busyRows.find((line)=>line.includes(phrase)),currentEditor.geometry.leftWidth,terminal.columns).trimStart().startsWith("╭──"));
-  checks.push("Actual fullscreen product input shows one dynamic Wumi phrase in its top border and suppresses the native Working caption without adding a status row");
+  checks.push("Actual fullscreen product input shows one dynamic Umi phrase in its top border and suppresses the native Working caption without adding a status row");
 
   currentEditor.setText("native action draft🙂"); draw();
   const actionEditor = currentEditor, beforeActionSubmit = submits.length;
@@ -283,12 +286,42 @@ try {
   }
   const avatar = { x: 5, y: dockTop + DOCK_CAPTION_ROWS };
   const sameEditor = currentEditor;
-  click(avatar.x, avatar.y); await flush(); assert.equal((await readConfig()).animation, true);
-  click(avatar.x, avatar.y); await flush(); assert.equal((await readConfig()).animation, false);
-  assert.equal(currentEditor, sameEditor, "Animation toggles should preserve the editor instance and current text");
+  const beforePokeConfig = await readFile(join(scratch, "config.json"), "utf8"), beforePokeText = currentEditor.getText();
+  click(avatar.x, avatar.y); await flush(); draw(); assert.equal((await readConfig()).animation, false);
+  assert.equal(currentEditor.displaySheet.frames[0].id, "poke");
+  const pokeBubbles = JSON.parse(await readFile(join(root, "assets/status-copy.json"), "utf8")).bubbles;
+  assert.ok(draw().some((line) => [pokeBubbles.poke_idle, pokeBubbles.poke_busy, pokeBubbles.poke_waiting].some((bubble) => line.includes(bubble))), "A real avatar click displays the local poke caption");
+  click(avatar.x, avatar.y); await flush(); draw();
+  assert.equal(await readFile(join(scratch, "config.json"), "utf8"), beforePokeConfig, "Poking is transient and never writes preferences");
+  assert.equal(currentEditor.getText(), beforePokeText);
+  assert.equal(currentEditor, sameEditor, "Poking preserves the editor instance, animation preference and current draft");
+  clock += 1200; draw();
+  assert.notEqual(currentEditor.displaySheet.frames[0].id, "poke", "An expired poke restores the actual pose before another UI operation");
+  for (const width of [79, 80, 100, 110, 119, 120, 160]) {
+    terminal.columns = width; draw();
+    const expectedOffset = width >= 120 ? 4 : width >= 80 ? 2 : 0;
+    const bounds = currentEditor.avatarBounds;
+    assert.deepEqual(bounds, { x: expectedOffset, y: DOCK_CAPTION_ROWS, width: 16, height: 8 }, `${width}: hit bounds follow the centered 16-column image, independently of the caption width`);
+    const imageTop = terminal.rows - footer.render(width).length - editorBox.render(width).length + bounds.y;
+    const preservedText = currentEditor.getText(), preservedConfig = await readFile(join(scratch, "config.json"), "utf8");
+    for (const x of [bounds.x - 1, bounds.x + bounds.width].filter((x) => x >= 0)) {
+      clock += 1200; draw();
+      click(x, imageTop); await flush(); draw();
+      assert.notEqual(currentEditor.displaySheet.frames[0].id, "poke", `${width}: blank cell ${x} beside the image must not trigger a poke`);
+    }
+    for (const x of [bounds.x, bounds.x + bounds.width - 1]) {
+      clock += 1200; draw();
+      click(x, imageTop); await flush(); draw();
+      assert.equal(currentEditor.displaySheet.frames[0].id, "poke", `${width}: both inclusive image edges remain clickable after centering`);
+    }
+    assert.equal(currentEditor.getText(), preservedText);
+    assert.equal(await readFile(join(scratch, "config.json"), "utf8"), preservedConfig);
+  }
+  clock += 1200; terminal.columns = 110; draw();
+  checks.push("Real SGR clicks at widths 79/80/100/110/119/120/160 follow the fixed 16-column avatar at offsets 0/2/4: image edges poke, neighboring blank cells do not, and the native draft and preferences remain intact");
   const stylePoint = find("[换装]"); click(stylePoint.x, stylePoint.y); await flush(); draw();
   assert.ok(selected > 0); assert.equal(screen.getFocusedComponent(), currentEditor, "Style selection must not refocus the detached old editor");
-  checks.push("All three caption rows stay outside the avatar hit box; real SGR clicks on its first image row toggle animation without replacing input, and style selection preserves text/focus");
+  checks.push("All three caption rows stay outside the avatar hit box; real SGR clicks on its first image row show a >w< poke reaction and caption even while animation is paused, without changing preferences/input; style selection preserves text/focus");
 
   const provider = new CombinedAutocompleteProvider(Array.from({ length: 12 }, (_, i) => ({ name: `mouse-${i}`, description: `item ${i}` })), scratch, null);
   currentEditor.setAutocompleteProvider(provider); currentEditor.setText("/"); currentEditor.handleInput("\t"); await flush(); draw();
@@ -345,6 +378,7 @@ try {
   await writeFile(join(root, "tests/mouse-routing-validation.json"), JSON.stringify(report, null, 2) + "\n");
   succeeded = true; console.log(JSON.stringify(report, null, 2));
 } finally {
+  Date.now = originalClock;
   currentEditor?.dispose?.(); currentHeader?.dispose?.(); currentFooter?.dispose?.(); screen.stop({ preserveScreen: true });
   if (succeeded && scratch.startsWith(work + sep) && scratch.slice(work.length + 1).startsWith("mouse-routing-")) await rm(scratch, { recursive: true, force: true });
 }

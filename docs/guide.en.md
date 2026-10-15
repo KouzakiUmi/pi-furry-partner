@@ -12,7 +12,7 @@ The tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and PowerS
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.2.0.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-v2.3.0.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell
@@ -21,50 +21,59 @@ pi
 ```
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.2.0
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 ```
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.
 
-Updates preserve existing 2.x companion configuration. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
+Updates preserve existing 2.x companion preferences. The installer migrates only legacy `wumi` / `wumi-pixel` style values to `umi` / `umi-pixel`; other configuration content is preserved. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
 
 The package-manager route does not configure those four Pi UI settings or migrate old script installations. Restart Pi, then select the theme with `/theme` and interface mode with `/settings`. Keep using the same installation route for updates, or uninstall the previous copy before switching. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
 
 ## Language
 
 ```text
+/mascot language auto
 /mascot language en
 /mascot language zh-CN
 /mascot language status
 ```
 
-The choice is saved in the extension's `config.json` under `language`. Existing configurations without this field default to `zh-CN`. `zh` is also accepted as an alias for Simplified Chinese.
+The choice is saved in the extension's `config.json` under `language`. The default, `auto`, detects the system language: Chinese environments use `zh-CN`; other languages use `en`. Existing configurations without this field also use automatic detection, while an explicit language preference is preserved. `zh` remains an alias for Simplified Chinese. Use `auto` to resume following the system, and `status` to inspect the preference and resolved language. Detection checks locale environment variables first, then the Windows UI culture when available, with the runtime locale as a fallback. It resolves at startup; selecting `auto` again refreshes detection.
 
 Companion status phrases, speech bubbles, editor controls, quick actions and information panels update immediately. The current task, input draft and animation timing continue. The default character name/subtitle becomes **Umi / Your coding companion** in English and “呜咪 / 你的工作搭档” in Chinese. Custom names and subtitles remain unchanged.
 
 | Independent setting | Simplified Chinese mode | English mode |
 | --- | --- | --- |
 | `locale` | Applies the native Chinese UI patch when enabled | Pauses that patch and retains your preference |
-| `prompt` | Uses concise Chinese for recognized default sections when enabled | Keeps Pi's native English default prompt |
+| `prompt` | Condenses recognized native Pi documentation hints into Chinese | Condenses recognized native Pi documentation hints into English |
 | `persona` | Adds the Chinese Umi template when enabled | Adds the English Umi template when enabled |
 
 Prompt and persona changes apply to the next request. Language changes do not translate conversation history, code, tool output, model names, paths, custom `SYSTEM.md` files or project `AGENTS.md` instructions.
 
 ## States and animation
 
-The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing and running share a typing motion; searching and compaction share the paper-pile pose. The tail carries a traveling wave rather than moving as a rigid piece. Speech uses `w / — / o / O` shapes and stops when text output stops.
+The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side; searching and compaction share the paper-pile pose. The tail carries a traveling wave rather than moving as a rigid piece. Speech uses `w / — / o / O` shapes and stops when text output stops.
 
 The startup wake-up lasts about five seconds. Waiting for your answer produces a curious head tilt and question mark; after ten seconds, Umi dozes off. Resuming work triggers a short startled wake-up. These are visual reactions and do not delay tools or model output.
 
-Short editing/running reactions remain visible for about 1.2 seconds, with a buffer before returning to thinking. The real status text updates immediately. Narrow or short terminals collapse the large portrait to preserve editing space. Animation can be paused without stopping Pi.
+Short editing/running reactions remain visible for about 1.2 seconds, with a buffer before returning to thinking. The real status text updates immediately. Narrow or short terminals collapse the large portrait to preserve editing space. The `Motion: On` / `Motion: Off` control shows the current state. Turning it off pauses looping motion while static poses still update with agent activity; an intentional poke still plays its short reaction. Pi keeps working.
 
-The `wumi` and `wumi-pixel` style IDs are retained for compatibility. The character's English name is **Umi**.
+The canonical style IDs are `umi` and `umi-pixel`, matching the English character name **Umi**. Older `wumi` and `wumi-pixel` commands and saved configurations remain accepted as compatibility aliases; new style saves use the canonical IDs. Internal asset paths remain stable.
+
+`umi-pixel` keeps the illustrated character's proportions, features and poses at 80 × 80. Local protection preserves fine mouth strokes that a sampling point could otherwise miss, with a gentle color adjustment around the lines. The magnifier, listening pose and other reactions retain the same character design.
+
+After you send, the editor status shows request preparation, waiting for the first output, or thinking received while waiting for answer text, together with elapsed seconds. If no first output arrives after 10 seconds of waiting, it says so explicitly; after 15 seconds, the indicator uses a warning color. The wait indicator still updates once a second with looping motion off. The indicator follows local lifecycle events and returns to the appropriate activity when tool work or a visible response starts.
+
+With motion enabled, actual draft changes while Umi is idle or awaiting your answer make him lift a gray paw to his ear, lean in and nod. After about 1.8 seconds without typing, he returns to the previous state. Cursor movement alone does not trigger this reaction, active tool work keeps its pose, and poking takes precedence. Sending the draft moves into request preparation and response waiting.
+
+Caption and portrait widths are independent: the normal portrait stays 16 × 8 cells. At 80–119 terminal columns, the caption expands to 20 cells, the portrait is centered with a two-cell inset, and the editor starts four cells farther right. At 120 columns or more, captions can use 24 cells. The 60–79-column layout stays compact; smaller or shorter terminals still collapse the portrait. English reserves two cells between the text and each paw, and longer text is clipped to the actual terminal width.
 
 ## Mouse and keyboard
 
-In **fullscreen**, the lower edge of the editor contains clickable controls, with model, thinking and more actions on the right. Clicking the character can pause or resume animation. Dragging to select text is not treated as a button click.
+In **fullscreen**, the lower edge of the editor contains clickable controls, with model, thinking and more actions on the right. Clicking the character gives Umi a gentle poke: a brief `>w<` face, a little scrunch and wiggle, and a random line in the current language. The wiggle is gentler and the reply stays focused on the task while he's busy, and becomes more playful when he's idle, followed by a return to the current activity. Use `/mascot pause` or `/mascot play` to control animation playback. Dragging to select text is not treated as a button click.
 
-In **regular**, the same space displays keyboard hints instead of mouse buttons. Pi's current native key mappings are used where available. The menu is always accessible through **Ctrl+Alt+W** or `/mascot menu`. Changing TUI mode in `/settings` updates the controls immediately while preserving your editor and draft.
+In **regular**, the same space displays keyboard hints instead of mouse buttons. Pi's current native key mappings are used where available. The menu is always accessible through **Ctrl+Alt+W** or `/mascot menu`. Changing TUI mode in `/settings` updates the controls immediately while preserving your editor and draft. `/mascot poke` works in either mode and does not interrupt agent work.
 
 The quick menu offers model selection, thinking level, usage, tool details, session history, conversation tree, branching, copying the latest answer, tool-output expansion, thinking-text visibility and an external editor. Actions unavailable during work are omitted or disabled. These use Pi's native handlers.
 
@@ -76,18 +85,19 @@ Use `/mascot` for current settings. The command values remain the same in both l
 
 | Commands | Purpose |
 | --- | --- |
-| `/mascot language en` / `zh-CN` / `status` | Choose or inspect the display language |
+| `/mascot language auto` / `en` / `zh-CN` / `status` | Follow the system, choose a language, or inspect the result |
 | `/mascot menu` | Open quick actions |
-| `/mascot style wumi` / `wumi-pixel` | Illustrated or pixel Umi |
+| `/mascot poke` | Give Umi a gentle poke without interrupting the agent |
+| `/mascot style umi` / `umi-pixel` | Illustrated or pixel Umi |
 | `/mascot style pixel` / `illustration` | Earlier header styles retained for comparison |
 | `/mascot layout editor` / `header` | Input-area companion or startup header |
-| `/mascot pause` / `play` | Pause or resume animation |
+| `/mascot pause` / `play` | Disable or enable looping motion; static activity poses keep updating |
 | `/mascot on` / `off` | Show or hide the companion |
 | `/mascot size auto` / `small` / `compact` / `normal` / `large` | Choose a size within terminal limits |
 | `/mascot render auto` / `sixel` / `blocks` | Select graphics transport |
 | `/mascot info compact` / `native` | Compact or native footer |
 | `/mascot locale on` / `off` / `status` | Native Chinese UI preference |
-| `/mascot prompt on` / `off` / `status` | Concise Chinese default-prompt preference |
+| `/mascot prompt on` / `off` / `status` | Concise bilingual Pi documentation-hint preference |
 | `/mascot persona on` / `off` / `status` | Umi's character voice |
 | `/mascot demo thinking` / `speaking` / `waking` | Preview a state without model calls |
 | `/mascot demo off` | Return to the real session |
@@ -100,9 +110,9 @@ Other demo states include `idle`, `reading`, `editing`, `running`, `searching`, 
 
 The native Chinese compatibility layer strictly targets known **Pi 1.2.0** structures and fixed labels, including 24 built-in command descriptions. Dynamic text, tool output, identifiers and stored values remain intact. Unknown versions or structures retain the original behavior. Pi's installed files are not rewritten.
 
-The prompt option changes only precisely recognized Pi default instructions in Chinese mode. Custom `SYSTEM.md`, project `AGENTS.md`, skills, tool rules and dynamic context remain unchanged. English mode keeps the native default prompt. Concise wording does not guarantee a fixed token reduction.
+The prompt option condenses only the precisely recognized native Pi documentation-hint section, using Chinese or English according to the resolved language. Documentation paths, complete-file reading and cross-reference requirements remain. Pi's identity preamble, tool list and rules stay native, so later extensions can still add tools, snippets and guidelines dynamically. Custom `SYSTEM.md`, forced prompts, custom documentation sections, project `AGENTS.md`, skills and other dynamic context remain unchanged. Disabling the option removes the documentation-section replacement from the next request. It never forces a whole rendered system prompt. Concise wording does not guarantee a fixed token reduction.
 
-The persona is gentle, cute, lively and playful, but serious about important work. Technical accuracy, code and structured output take priority. Chinese uses `prompts/wumi-persona.md`; English uses `prompts/umi-persona.en.md`. They share the same independent persona switch. Template edits affect the next request; historical messages are not rewritten.
+The persona is gentle, cute, lively and playful, but serious about important work. Technical accuracy, code and structured output take priority. Chinese uses `prompts/wumi-persona.md`; English uses `prompts/umi-persona.en.md`. They share the same independent persona switch. The template is added as its own `umi_persona` section, preserving subsequent extension contributions. Ordinary progress, explanations, debugging and delivery also use natural Umi phrasing and expressive sounds such as Hm, Mmm, Eep, Hehe and a small awoo, without a fixed quota or repetitive catchphrase while accurate technical work remains the priority. Template edits affect the next request; historical messages are not rewritten.
 
 ## Rendering and troubleshooting
 

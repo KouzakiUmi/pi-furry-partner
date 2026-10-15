@@ -17,7 +17,7 @@ const themeAPI = await load(join(agent, "dist/modes/interactive/theme/theme.js")
 const { validateThemeJson } = await load(join(agent, "dist/modes/interactive/theme/theme-schema.js"));
 const { KeybindingsManager } = await load(join(agent, "dist/core/keybindings.js"));
 const { CustomEditor } = await load(join(agent, "dist/modes/interactive/components/custom-editor.js"));
-const { TuiMainScreen, TuiAltScreen, Container, CURSOR_MARKER, visibleWidth, setKeybindings } = await load(join(modules, "@earendil-works/pi-tui/dist/index.js"));
+const { TuiMainScreen, TuiAltScreen, Container, CURSOR_MARKER, visibleWidth, setKeybindings, getCellDimensions } = await load(join(modules, "@earendil-works/pi-tui/dist/index.js"));
 const { stripTerminalSequences } = await load(join(modules, "@earendil-works/pi-tui/dist/utils.js"));
 const nativeShowOverlay = TuiMainScreen.prototype.showOverlay;
 themeAPI.setThemeJsonValidator(validateThemeJson); themeAPI.initTheme("dark", false);
@@ -26,17 +26,18 @@ const editorTheme = themeAPI.getEditorTheme(), keys = new KeybindingsManager(); 
 const baseline = process.argv.includes("--baseline"), checks = [], failures = [], cases = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
 
-async function scenario(initialMode, historyLines, switchMode = false) {
+async function scenario(initialMode, historyLines, switchMode = false, columns = 100) {
   const scratch = await mkdtemp(join(work, "regular-overlay-")); assert.ok(scratch.startsWith(work + sep));
   const models = new Map();
-  const modelFor = (mode) => { if (!models.has(mode)) models.set(mode, createVTTerminal({ columns: 100, rows: 40, visibleWidth })); return models.get(mode); };
+  const modelFor = (mode) => { if (!models.has(mode)) models.set(mode, createVTTerminal({ columns, rows: 40, visibleWidth })); return models.get(mode); };
   let activeModel = modelFor(initialMode), currentEditor, currentHeader, currentFooter, currentFactory, screen, mainState;
   let draws = [], allDraws = [], mode = initialMode, closed = false;
   const terminal = { ...activeModel.terminal, write(data) {
     let offset = 0;
     for (const match of data.matchAll(/\x1bP[\s\S]*?\x1b\\/g)) {
       activeModel.terminal.write(data.slice(offset, match.index));
-      const anchor = { row: activeModel.cursor.y, column: activeModel.cursor.x, mode };
+      const raster = /q"\d+;\d+;(\d+);(\d+)/.exec(match[0]);
+      const anchor = { row: activeModel.cursor.y, column: activeModel.cursor.x, mode, rasterWidth: raster ? Number(raster[1]) : undefined };
       draws.push(anchor); allDraws.push(anchor); activeModel.terminal.write(match[0]); offset = match.index + match[0].length;
     }
     activeModel.terminal.write(data.slice(offset));
@@ -81,11 +82,11 @@ async function scenario(initialMode, historyLines, switchMode = false) {
     return lines.flatMap((line, row) => line.includes("\x1b]777;pi-furry-partner-") ? [row - (state?.previousViewportTop ?? 0)] : []).filter((row) => row >= 0 && row < terminal.rows - 1);
   };
   const modal = (row, height = 2, col = 0, width = 22) => reference.showOverlay({ render: () => Array.from({ length: height }, (_, i) => `modal ${i}`), invalidate() {} }, { row, col, width, nonCapturing: true });
-  const result = { initialMode, historyLines, switched: switchMode, stages: [], modePresentation: [] };
+  const result = { initialMode, historyLines, columns, switched: switchMode, stages: [], modePresentation: [] };
   const modePresentation = () => {
     const instance = currentEditor, text = "模式切换🙂 draft\n第二行中文🙂";
     currentEditor.setText(text);
-    const beforeCursor = currentEditor.getCursor(), rows = currentEditor.render(100), plain = rows.map(stripTerminalSequences).join("\n");
+    const beforeCursor = currentEditor.getCursor(), rows = currentEditor.render(columns), plain = rows.map(stripTerminalSequences).join("\n");
     const fullscreen = mode === "fullscreen", regions = currentEditor.controls.regions;
     if (fullscreen) {
       check(regions.some((region) => region.id === "send") && regions.some((region) => region.id === "menu"), "Fullscreen exposes its clickable Send and More controls through the stable reference");
@@ -94,21 +95,21 @@ async function scenario(initialMode, historyLines, switchMode = false) {
     } else {
       check(regions.length === 0, "Regular mode has no toolbar click regions");
       check(currentEditor.avatarBounds === undefined, "Regular mode has no avatar click region");
-      check(!/\[(发送|换行|换装|语气[开关]|暂停|播放|模型|思考|更多)\]/.test(plain), "Regular mode never advertises fullscreen mouse buttons");
+      check(!/\[(发送|换行|换装|语气[开关]|表情：[开关]|模型|思考|更多)\]/.test(plain), "Regular mode never advertises fullscreen mouse buttons");
       check(/Enter|回车/i.test(plain) && /Ctrl\+Alt\+W|\/mascot menu/i.test(plain), "Regular wide editors show real Send and More keyboard entrances");
     }
     const baseline = new CustomEditor(reference, editorTheme, keys, { embedWorkingStatus: true });
     baseline.focused = true; baseline.setText(text);
     const nativeRows = baseline.render(currentEditor.geometry.editorWidth), marker = (lines) => {
       const row = lines.findIndex((line) => line.includes(CURSOR_MARKER));
-      check(row >= 0, "Focused native and Wumi editors retain their cursor marker");
+      check(row >= 0, "Focused native and Umi editors retain their cursor marker");
       return { row, column: row < 0 ? -1 : visibleWidth(lines[row].slice(0, lines[row].indexOf(CURSOR_MARKER))) };
     };
     const actual = marker(rows), expected = marker(nativeRows);
     check(actual.column === expected.column + currentEditor.geometry.contentX && actual.row === expected.row + currentEditor.geometry.offsetY,
       "Mode-dependent border presentation preserves CJK/emoji IME hardware-cursor coordinates plus dock and side-frame insets");
     check(currentEditor === instance && currentEditor.getText() === text && JSON.stringify(currentEditor.getCursor()) === JSON.stringify(beforeCursor), "Mode presentation never replaces the editor or changes the draft/cursor");
-    for (const width of [1, 4, 12, 18, 24, 39, 55, 60, 80, 100, 160]) {
+    for (const width of [1, 4, 12, 18, 24, 39, 55, 60, 79, 80, 100, 119, 120, 160]) {
       // Pi's native word wrapper cannot fit a two-cell grapheme in one cell.
       // Its pre-existing extreme-width case is exercised with empty input.
       currentEditor.setText(width < 8 ? "" : text);
@@ -125,15 +126,15 @@ async function scenario(initialMode, historyLines, switchMode = false) {
       } finally { keys.setUserBindings({}); }
     }
     currentEditor.setText(Array.from({ length: 35 }, (_, index) => `hidden ${index} 中文🙂`).join("\n"));
-    const hidden = currentEditor.render(100).map(stripTerminalSequences);
+    const hidden = currentEditor.render(columns).map(stripTerminalSequences);
     check(currentEditor.scrollOffset > 0 && hidden.some((line) => line.includes(`↑ ${currentEditor.scrollOffset} 行`)), "Mode-dependent bottom border preserves the native hidden-line counter in the top border");
-    currentEditor.setText(text); currentEditor.render(100);
+    currentEditor.setText(text); currentEditor.render(columns);
     result.modePresentation.push({ mode, editorWidth: currentEditor.geometry.editorWidth, clickRegions: currentEditor.controls.regions.map((region) => region.id), avatarClickable: Boolean(currentEditor.avatarBounds), cursor: currentEditor.getCursor() });
   };
   try {
     for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
     if (process.env.PI_TEST_OVERLAY_MODULE) await cp(process.env.PI_TEST_OVERLAY_MODULE, join(scratch, "lib/overlay-visibility.mjs"));
-    await writeFile(join(scratch, "config.json"), JSON.stringify({ enabled: true, animation: false, persona: false, style: "wumi-pixel", layout: "editor", renderer: "sixel", info: "compact" }));
+    await writeFile(join(scratch, "config.json"), JSON.stringify({ language: "zh-CN", enabled: true, animation: false, persona: false, style: "wumi-pixel", layout: "editor", renderer: "sixel", info: "compact" }));
     const loaded = await loadExtensions([join(scratch, "index.ts")], scratch); assert.deepEqual(loaded.errors, []);
     loaded.runtime.getThinkingLevel = () => "medium"; extension = loaded.extensions[0];
     mount(); await emit("session_start", { reason: "startup" }); draw(); modePresentation(); draw();
@@ -163,9 +164,15 @@ async function scenario(initialMode, historyLines, switchMode = false) {
     await command("demo speaking"); const initial = draw(), avatar = markerRows();
     check(initial.length > 0, `${initialMode}/${historyLines}/${switchMode}: initial avatar visible`);
     check(initial.every((item) => avatar.includes(item.row)), "Sixel anchors match the actual visible marker rows after subtracting the regular-mode viewport top");
+    const imageOffset = columns >= 120 ? 4 : 2;
+    const expectedRasterWidth = Math.round(16 * (process.env.WT_SESSION ? 10 : getCellDimensions().widthPx));
+    check(initial.every((item) => item.column === imageOffset), `${columns}: Sixel column anchors follow imageOffset independently of the wider caption`);
+    check(initial.every((item) => item.rasterWidth === expectedRasterWidth), `${columns}: centering the caption never enlarges the normal 16-column Sixel image`);
     check(avatar.length > 2, "Actual product avatar markers are present in the visible viewport");
     if (screen.mode === "regular" && historyLines >= 120) check(screen.captureRenderState().previousViewportTop > 0, "Regular long-history control has genuinely scrolled");
     result.initialAvatarRows = avatar;
+    result.initialAvatarColumns = [...new Set(initial.map((item) => item.column))];
+    result.rasterWidths = [...new Set(initial.map((item) => item.rasterWidth))];
     const top = Math.min(...avatar), above = modal(Math.max(0, top - 4));
     await emit("ui_prompt_start"); await command("demo waiting");
     const upperDraws = draw();
@@ -185,6 +192,7 @@ async function scenario(initialMode, historyLines, switchMode = false) {
     result.stages.push({ name: "hide-resumes", imageRows: resumed.map((item) => item.row) });
     check(resumed.some((item) => item.row < bounds.row + bounds.height && item.row + 2 > bounds.row), `${initialMode}/${historyLines}/${switchMode}: hiding the modal restores previously blocked image rows`);
     check([...models.values()].every((model) => model.counters.sixelScrolls === 0), "Overlay rendering never causes a Sixel-induced scroll");
+    check(allDraws.every((item) => item.column === imageOffset && item.rasterWidth === expectedRasterWidth), `${columns}: mode switches, overlay hide and pose changes preserve centered image anchors and raster size`);
     await emit("session_shutdown", { reason: "reload" });
     result.methodRestoredAfterReload = [...originalMethods].map(([renderer, original]) => ({ mode: renderer.mode, restored: renderer.showOverlay === original }));
     check(result.methodRestoredAfterReload.every((item) => item.restored), `${initialMode}/${historyLines}/${switchMode}: disposing a proxy-mounted observer restores every affected raw renderer method`);
@@ -208,12 +216,15 @@ await scenario("regular", 120);
 checks.push("Real Pi regular mode retains images below native question overlays with short and genuinely scrolled multi-line history, while a narrow modal suppresses only intersecting stripes");
 await scenario("fullscreen", 120, true);
 await scenario("regular", 120, true);
+await scenario("regular", 120, false, 120);
+await scenario("fullscreen", 120, true, 120);
+checks.push("At actual 100/120-column terminal widths, normal Sixel images remain exactly 16 cells wide and anchor at columns 2/4 across regular/fullscreen rendering, modal overlap and stable-reference mode switches");
 checks.push("The actual createInteractiveTuiReference proxy survives fullscreen-to-regular and regular/fullscreen/regular renderer replacements without losing image overlays");
 checks.push("Fresh and switched regular renderers show keyboard hints with zero toolbar/avatar click regions; fullscreen immediately restores complete clickable buttons through the same editor instance");
 checks.push("Mode-specific bottom borders fit narrow widths, preserve CJK/emoji cursor/IME coordinates and native hidden-line counts, and leave the draft untouched across actual renderer replacements");
 checks.push("Hiding question overlays resumes affected rows; reload and quit restore raw public methods despite the host proxy returning a fresh function for each method read");
 const report = { testedAt: new Date().toISOString(), piVersion: version, modelRequests: 0, passed: failures.length === 0, baseline,
-  verification: "Real Pi loader, Wumi editor/Sixel/overlay observer, native main/fullscreen renderers, actual stable InteractiveMode proxy, public modal handles and deterministic VT model; no native-window automation", checks, failures, cases };
+  verification: "Real Pi loader, Umi editor/Sixel/overlay observer, native main/fullscreen renderers, actual stable InteractiveMode proxy, public modal handles and deterministic VT model; no native-window automation", checks, failures, cases };
 await writeFile(baseline ? join(work, "regular-overlay-baseline.json") : join(root, "tests/regular-overlay-validation.json"), JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));
 if (!baseline) assert.deepEqual(failures, []);

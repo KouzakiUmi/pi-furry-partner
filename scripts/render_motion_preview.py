@@ -61,17 +61,17 @@ def baseline(controls, waiting=False):
     text(d, (50, 212), "› 帮我把这个项目的启动体验做得更清晰。", "#c1d7ef", 16)
     text(d, (50, 248), "呜咪　我会先了解现有结构，再把合适的调整落到代码里。", MUTED, 15)
     text(d, (86, 282), "你可以继续补充想法，我会留在输入框旁边。", MUTED, 15)
-    d.rectangle((292, 429, 1055, 546), fill="#101b2b", outline="#59708c", width=1)
-    text(d, (309, 459), "接下来，想一起做点什么？", "#718ba9", 18)
-    d.line((308, 504, 1039, 504), fill="#334761", width=1)
-    toolbar_left, toolbar_right = 310, 1039
+    d.rectangle((324, 429, 1055, 546), fill="#101b2b", outline="#59708c", width=1)
+    text(d, (341, 459), "接下来，想一起做点什么？", "#718ba9", 18)
+    d.line((340, 504, 1039, 504), fill="#334761", width=1)
+    toolbar_left, toolbar_right = 342, 1039
     cell_width = (toolbar_right - toolbar_left) / max(1, controls.get("width", 90))
     for item in controls["buttons"]:
         label = item["label"]
         x = toolbar_left + item.get("start", 0) * cell_width
         text(d, (x, 515), label, "#a6bedb" if item["enabled"] else "#546a84", 12)
-    d.line((292, 568, 1055, 568), fill="#283b54", width=1)
-    text(d, (292, 579), "示例状态 · F:/Projects/your-project (main)", "#7590b0", 11)
+    d.line((324, 568, 1055, 568), fill="#283b54", width=1)
+    text(d, (324, 579), "示例状态 · F:/Projects/your-project (main)", "#7590b0", 11)
     text(d, (805, 579), "本地帧 · 不发送模型请求", "#7590b0", 11)
     caption = ("等待演示省略中间 7.8 秒；打盹仍由真实十秒计时触发。本图为效果预览，不是实际终端截图。"
                if waiting else "角色固定在输入框旁；状态只在输入框顶边显示。本图为效果预览，不是实际终端截图。")
@@ -97,13 +97,13 @@ def paw_glyph(draw, x, y, color):
 
 def scene(base, indices, metadata, palette, transparent):
     image = base.copy().convert("RGBA")
-    image.alpha_composite(rgba_sprite(indices, palette, transparent), (48, 340))
+    image.alpha_composite(rgba_sprite(indices, palette, transparent), (64, 340))
     d = ImageDraw.Draw(image)
     color = TONES[metadata["color"]]
     # Draw the exact production activityBorder output in one native border row.
     # There is no extra status row or second Working caption above the input.
-    d.rectangle((293, 418, 1054, 438), fill=PANEL)
-    x = 296
+    d.rectangle((325, 418, 1054, 438), fill=PANEL)
+    x = 328
     for character in metadata["borderText"]:
         point = ord(character)
         wide = (0x1100 <= point <= 0x115f or 0x2e80 <= point <= 0xa4cf or
@@ -113,16 +113,17 @@ def scene(base, indices, metadata, palette, transparent):
         x += 16 if wide else 8
     # Complete closed caption with a centered phrase and one paw emoji on
     # either side, matching the production three-row dock caption.
-    d.rounded_rectangle((76, 309, 260, 345), radius=3, fill="#15253a", outline="#7e9fc7", width=1)
+    d.rounded_rectangle((64, 309, 304, 345), radius=3, fill="#15253a", outline="#7e9fc7", width=1)
     bubble = str(metadata.get("bubble", ""))
     bubble_font = BUBBLE_SYMBOL if bubble in ("♪", "✓", "▱", "▰") else FONTS[15]
-    while d.textlength(bubble, font=bubble_font) > 120:
+    while d.textlength(bubble, font=bubble_font) > 160:
         bubble = bubble[:-2] + "…" if len(bubble) > 1 else ""
     length = d.textlength(bubble, font=bubble_font)
-    group_width = 16 + 6 + length + 6 + 16
-    left = 168 - group_width / 2
+    gap = 16 if metadata.get("language") == "en" else 6
+    group_width = 16 + gap + length + gap + 16
+    left = 184 - group_width / 2
     paw_glyph(d, left + 8, 326, "#b4cfea")
-    d.text((left + 22, 317), bubble, fill="#b4cfea", font=bubble_font)
+    d.text((left + 16 + gap, 317), bubble, fill="#b4cfea", font=bubble_font)
     paw_glyph(d, left + group_width - 8, 326, "#b4cfea")
     return image.convert("RGB")
 
@@ -132,8 +133,8 @@ def comparison(manifest, folder, output):
     d = ImageDraw.Draw(image)
     text(d, (36, 28), "同一只呜咪，两种画风", TEXT, 26, True)
     text(d, (38, 80), "相同思考与大开口姿态 · 像素版保留颗粒，80 × 80 原生图按整数四倍放大", "#91a9c5", 14)
-    text(d, (70, 125), "呜咪角色版 · wumi", BLUE, 18, True)
-    text(d, (596, 125), "呜咪像素版 · wumi-pixel · 48 色", BLUE, 18, True)
+    text(d, (70, 125), "呜咪角色版 · umi", BLUE, 18, True)
+    text(d, (596, 125), "呜咪像素版 · umi-pixel · 48 色", BLUE, 18, True)
     for item in manifest["comparisons"]:
         column = 0 if item["style"] == "wumi" else 1
         row = 0 if item["id"] == "think" else 1
@@ -191,7 +192,7 @@ def tail_preview(manifest, folder, output):
         text(d, (28, 66), "头部轻拱、散纸错拍，尾根柔软带动中段和尾尖；2.4 秒真实循环。", MUTED, 13)
         d.line((380, 103, 380, 448), fill="#2d445e", width=1)
         for column, item in enumerate(loops):
-            text(d, (34 + column * 380, 102), f"{item['style']} · {index * 100} ms", BLUE, 14)
+            text(d, (34 + column * 380, 102), f"{item['style'].replace('wumi', 'umi')} · {index * 100} ms", BLUE, 14)
             sprite = rgba_sprite(native[column][index], item["palette"], item["transparentIndex"])
             sprite = sprite.resize((320, 320), Image.Resampling.NEAREST if column else Image.Resampling.LANCZOS)
             image.paste(sprite, (30 + column * 380, 130), sprite)

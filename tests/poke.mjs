@@ -1,0 +1,94 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { createActivity } from "../lib/activity.mjs";
+import { createMotionPlayer } from "../lib/motion.mjs";
+import { POKE_DURATION_MS, withPokeFrame } from "../lib/poke.mjs";
+import { replaceActivityCopy } from "../lib/language.mjs";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const read = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
+const zh = { copy: await read("assets/status-copy.json"), phrases: await read("assets/status-phrases.json") };
+const en = { copy: await read("assets/status-copy.en.json"), phrases: await read("assets/status-phrases.en.json") };
+const checks = [];
+let clock = 10000, randomCall = 0;
+const voice = { labels: {}, bubbles: {}, phrases: {} };
+replaceActivityCopy(voice, zh.copy, zh.phrases);
+const activity = createActivity({ ...voice, now: () => clock, random: () => (++randomCall % 11) / 11 });
+activity.start({ wake: false });
+const phrasesSeen = new Set();
+for (let i = 0; i < 15; i++) {
+  activity.poke(); const state = activity.snapshot();
+  assert.equal(state.phase, "idle"); assert.equal(state.face, "poke"); assert.equal(state.reaction, "poked");
+  assert.equal(state.pokeContext, "idle"); assert.equal(state.reactionStrength, 1);
+  assert.ok(zh.phrases.phrases.poke_idle.includes(state.phrase)); phrasesSeen.add(state.phrase);
+}
+assert.ok(phrasesSeen.size >= 3);
+clock += POKE_DURATION_MS - 1; assert.equal(activity.isPoked(), true);
+clock++; assert.equal(activity.isPoked(), false); assert.equal(activity.snapshot().reaction, undefined);
+
+activity.handle("agent_start");
+activity.handle("tool_execution_start", { toolCallId: "one", toolName: "bash", args: { command: "DO_NOT_SHOW_SECRET" } });
+clock += 700;
+const before = activity.snapshot(); activity.poke();
+const busy = activity.snapshot();
+for (const key of ["phase", "busy", "toolCount", "toolName", "toolObject", "elapsedMs", "phaseElapsedMs"]) assert.equal(busy[key], before[key], key);
+assert.equal(busy.pokeContext, "busy"); assert.equal(busy.reactionStrength, .55);
+assert.ok(zh.phrases.phrases.poke_busy.includes(busy.phrase));
+replaceActivityCopy(voice, en.copy, en.phrases);
+assert.ok(en.phrases.phrases.poke_busy.includes(activity.snapshot().phrase), "A language change updates the same ongoing reaction without restarting its timer");
+assert.equal(activity.snapshot().reactionElapsedMs, 0);
+clock += 350;
+activity.handle("tool_execution_end", { toolCallId: "one", isError: false });
+activity.handle("message_update", { assistantMessageEvent: { type: "text_delta" } });
+const speaking = activity.snapshot();
+assert.equal(speaking.reaction, "poked"); assert.equal(speaking.phase, "speaking"); assert.equal(speaking.toolCount, 0);
+assert.equal(speaking.elapsedMs, 1050); assert.equal(speaking.reactionElapsedMs, 350);
+clock += POKE_DURATION_MS - 350;
+const restored = activity.snapshot();
+assert.equal(restored.reaction, undefined); assert.equal(restored.phase, "speaking"); assert.notEqual(restored.face, "poke");
+assert.equal(restored.elapsedMs, 700 + POKE_DURATION_MS);
+activity.handle("ui_prompt_start"); activity.snapshot(); clock += 10000;
+assert.equal(activity.snapshot().drowsy, true);
+activity.poke(); assert.equal(activity.snapshot().pokeContext, "waiting"); assert.equal(activity.snapshot().reactionStrength, .8);
+assert.ok(en.phrases.phrases.poke_waiting.includes(activity.snapshot().phrase));
+clock += POKE_DURATION_MS; assert.equal(activity.snapshot().face, "rest"); assert.equal(activity.snapshot().drowsy, true);
+checks.push("Poke lasts exactly 1100ms; random idle/busy/waiting copy and strength differ, language changes live, tool/message events and original agent/waiting clocks continue through it");
+
+for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
+  const sheet = await read(`assets/reactions/${style}/reaction-sheet.json`);
+  const patch = await read(`assets/reactions/${style}/poke-patch.json`);
+  const before = JSON.stringify(sheet), extended = withPokeFrame(sheet, patch);
+  assert.notEqual(extended, sheet); assert.equal(extended.frames.length, sheet.frames.length + 1);
+  assert.strictEqual(extended.palette, sheet.palette); assert.equal(extended.ids.poke, sheet.frames.length);
+  assert.equal(JSON.stringify(sheet), before);
+  const pixels = extended.frames[extended.ids.poke].pixels, original = sheet.frames[sheet.ids["idle-open"]].pixels;
+  for (let i = 0; i < pixels.length; i++) assert.equal(pixels[i] === sheet.transparentIndex, original[i] === sheet.transparentIndex, `${style} silhouette at ${i}`);
+  const changedRows = patch.pixels.map(([index]) => Math.floor(index / sheet.width));
+  assert.ok(Math.max(...changedRows) < sheet.height * .7, "Only the face patch changes; body/paws/scarf stay exact");
+  assert.strictEqual(withPokeFrame(sheet, { ...patch, width: -1 }), sheet);
+  assert.strictEqual(withPokeFrame(sheet, { ...patch, pixels: [[-1, 1]] }), sheet);
+  let time = 0;
+  const player = createMotionPlayer({ now: () => time });
+  player.frame(extended, extended.ids["idle-open"], { phase: "idle" });
+  const samples = [];
+  for (const ms of [0, 100, 200, 300, 400, 500, 800, 1000]) {
+    time = ms;
+    const sample = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: ms });
+    assert.equal(sample.frame.id, "poke"); assert.equal(sample.transitioning, false);
+    samples.push(sample);
+  }
+  assert.ok(samples.some((sample) => sample.motion.x < 0) && samples.some((sample) => sample.motion.x > 0));
+  assert.ok(samples.some((sample) => sample.motion.scale < .95));
+  assert.ok(samples.some((sample) => sample.motion.earLeft !== 0));
+  assert.ok(new Set(samples.map((sample) => sample.cacheKey)).size >= 5);
+  assert.equal(samples.at(-1).motion.scale, 1);
+  const playfulX = samples[1].motion.x;
+  time += 100;
+  const gentle = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: 100, reactionStrength: .55 });
+  assert.ok(Math.abs(gentle.motion.x) <= Math.abs(playfulX));
+  assert.ok(gentle.motion.scale > samples[1].motion.scale);
+  player.dispose();
+}
+checks.push("All four styles have clean >w< patches with unchanged original sheets/palette/alpha/body; real motion produces alternating side shakes, ear twitch and a recoverable shrink, with gentler busy motion");
+console.log(JSON.stringify({ passed: true, modelRequests: 0, checks }, null, 2));

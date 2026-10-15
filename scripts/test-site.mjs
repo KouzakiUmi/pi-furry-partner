@@ -4,6 +4,10 @@ import { readFile, access } from "node:fs/promises";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { styleAssetDirectory } from "../lib/styles.mjs";
+import { withWatchFrames } from "../lib/watch.mjs";
+import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
+import { withPokeFrame } from "../lib/poke.mjs";
 import vm from "node:vm";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -17,7 +21,11 @@ const checks = [];
 function check(name, assertion) { assertion(); checks.push(name); }
 check("Chinese first responsive standalone page", () => { assert.match(html, /lang="zh-CN"/); assert.match(html, /name="viewport"/); assert.match(html, /pi-furry-partner/); assert.match(css, /@media\(max-width:600px\)/); });
 check("Actual character runtime, not an iframe", () => { assert.doesNotMatch(html, /<iframe/i); assert.match(app, /createMotionPlayer/); assert.match(app, /createActivity/); });
+check("Canonical Umi style controls and sheet keys", () => { assert.deepEqual(Object.keys(sheets), ["umi", "umi-pixel"]); assert.match(html, /data-style="umi"/); assert.match(html, /data-style="umi-pixel"/); assert.doesNotMatch(html, /data-style="wumi/); assert.match(app, /style = "umi"/); });
 check("Ten selectable animation states and two styles", () => { assert.equal((html.match(/data-state=/g) || []).length, 10); assert.equal((html.match(/data-style=/g) || []).length, 2); });
+check("Poke has button, keyboard portrait, real activity timing and busy/idle strength", () => { assert.match(html, /id="poke"/); assert.match(html, /id="mascot"[^>]+role="button"[^>]+tabindex="0"/); assert.match(app, /activity\.poke\(\)/); assert.match(app, /reactionElapsedMs: snapshot\.reactionElapsedMs/); assert.match(app, /reactionStrength: snapshot\.reactionStrength/); });
+check("Typing uses real listening events and keeps paused motion static", () => { assert.match(html, /<textarea id="demo-input"/); assert.match(app, /activity\.noteTyping\(\)/); assert.match(app, /activity\.clearTyping\(\)/); assert.match(app, /!paused && input\.value\.trim\(\)/); });
+check("Caption text cannot shrink or paint over paws", () => { assert.match(css, /\.speech:lang\(en\)\{gap:2ch\}/); assert.match(css, /\.speech>span\[aria-hidden\]\{flex:0 0 2ch;min-width:2ch/); assert.match(css, /#bubble\{[^}]*min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap/); assert.match(app, /\$\("\.speech"\)\.setAttribute\("lang"/); });
 check("Pause, reduced motion and hidden-page suspension", () => { assert.match(app, /prefers-reduced-motion/); assert.match(app, /visibilitychange/); assert.match(app, /aria-pressed/); assert.match(css, /prefers-reduced-motion/); });
 check("Three independent demo switches and no model calls", () => { assert.equal((html.match(/role="switch"/g) || []).length, 3); assert.match(app, /const toggleState = \{ locale: true, prompt: true, persona: false \}/); assert.doesNotMatch(app, /fetch\(["']https?:|XMLHttpRequest|sendBeacon|WebSocket/); });
 check("Install copy fallback and pinned version", () => { assert.ok(html.includes(`pi install git:github.com/KouzakiUmi/pi-furry-partner@v${pkg.version}`)); assert.match(app, /navigator\.clipboard/); assert.match(app, /selectNodeContents/); });
@@ -26,13 +34,22 @@ check("Keyboard accessible named controls and visible focus", () => { assert.mat
 check("Relative local URLs work under repository subpath", () => { for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) { if (!/^(?:https?:|#)/.test(url)) assert.ok(url.startsWith("./"), url); } assert.doesNotMatch(html, /(?:src|href)="\//); });
 check("All build hashes match", () => { assert.equal(manifest.version, pkg.version); assert.equal(manifest.characterName, "Umi"); assert.match(html, />UMI <span>/); assert.doesNotMatch(html, /\bWUMI\b|\bWumi\b/); });
 for (const [file, expected] of Object.entries(manifest.hashes)) assert.equal(createHash("sha256").update(await readFile(join(out, file))).digest("hex"), expected);
-for (const file of ["activity", "motion"]) assert.deepEqual(await readFile(join(out, "runtime", `${file}.js`)), await readFile(join(root, "lib", `${file}.mjs`)));
+for (const file of ["activity", "motion", "poke", "listen"]) assert.equal(await readFile(join(out, "runtime", `${file}.js`), "utf8"), (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replaceAll('"./poke.mjs"', '"./poke.js"').replaceAll('"./listen.mjs"', '"./listen.js"'));
+assert.match(await readFile(join(out, "runtime/activity.js"), "utf8"), /from "\.\/poke\.js"/);
+await access(join(out, "runtime/poke.js"));
+await access(join(out, "runtime/listen.js"));
 for (const [style, data] of Object.entries(sheets)) {
-  const original = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
-  assert.equal(data.frames.length, 21); assert.deepEqual(data.motion, original.motion); assert.deepEqual(data.ids, original.ids);
-  for (let i = 0; i < data.frames.length; i++) assert.deepEqual([...Buffer.from(data.frames[i].pixels, "base64")], original.frames[i].pixels);
+  const original = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "reaction-sheet.json"), "utf8"));
+  assert.equal(original.frames.length, 21);
+  for (let i = 0; i < original.frames.length; i++) assert.deepEqual([...Buffer.from(data.frames[i].pixels, "base64")], original.frames[i].pixels);
+  const patch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "poke-patch.json"), "utf8"));
+  const watch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "watch-frames.json"), "utf8"));
+  const listen = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "listen-frames.json"), "utf8"));
+  const runtime = withListenFrames(withWatchFrames(withPokeFrame(original, patch), watch), listen);
+  assert.equal(data.frames.length, 26); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
+  for (const id of ["poke", "watch", "watch-blink", "listen", "listen-blink"]) assert.deepEqual([...Buffer.from(data.frames[data.ids[id]].pixels, "base64")], runtime.frames[runtime.ids[id]].pixels);
 }
-checks.push("42 sprite frames and motion metadata exactly match plugin", "Shared runtime files byte-identical to plugin");
+checks.push("42 original frames plus 10 derived interaction frames exactly match plugin", "Shared runtime files match plugin with only portable dependency URLs");
 const runtimeImports = [...app.matchAll(/import\("(\.\/runtime\/[^\"]+)"\)/g)];
 assert.equal(runtimeImports.length, 2);
 for (const [, specifier] of runtimeImports) {
@@ -50,7 +67,7 @@ const fakeNode = () => ({ textContent: "", setAttribute() {}, replaceChildren() 
 const fallbackDocument = {
   hidden: false,
   querySelector(selector) { if (!fallbackNodes.has(selector)) fallbackNodes.set(selector, fakeNode()); return fallbackNodes.get(selector); },
-  querySelectorAll(selector) { return selector === "[data-state], [data-style], #pause" ? fallbackButtons : []; },
+  querySelectorAll(selector) { return selector === "[data-state], [data-style], #pause, #poke" ? fallbackButtons : []; },
   createElement: fakeNode, createTextNode: (text) => text, addEventListener() {},
 };
 const fallbackApp = app.replaceAll("import.meta.url", '"https://example.invalid/pi-furry-partner/app.js"');

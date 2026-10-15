@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { compactNativePrompt, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, NATIVE_PROMPT_PI_VERSION } from "../lib/native-prompt.mjs";
+import { compactNativePrompt, compactNativePromptSections, addPersonaSection, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, DEFAULT_EN_PREAMBLE, NATIVE_PROMPT_PI_VERSION } from "../lib/native-prompt.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { agentDir, version, modules } from "./pi-runtime.mjs";
@@ -31,9 +31,45 @@ assert.ok(!localized.systemPrompt.includes("- Be concise in your responses\n- Sh
 checks.push("Installed Pi 1.2.0 preamble, tools introduction, builtin rules and complete docs skeleton are recognized and localized");
 
 const suffix = original.slice(original.indexOf("\n\n<addendum>"));
+const english = apply(baseOptions, { language: "en" });
+assert.ok(english.systemPrompt.startsWith(DEFAULT_EN_PREAMBLE + "\n\n<tools>"));
+assert.ok(english.systemPrompt.endsWith(suffix));
+assert.ok(english.systemPrompt.length < original.length);
+assert.deepEqual(english.parts.filter((part) => part.changed).map((part) => part.name), ["preamble", "tools", "rules", "docs"]);
+for (const text of [baseOptions.toolSnippets.read, ...baseOptions.toolGuidelines.read, ...baseOptions.promptGuidelines, contextText]) assert.ok(english.systemPrompt.includes(text));
+for (const path of new Set([...original.matchAll(/docs\/[a-z-]+\.md|examples\/extensions\/|tui\.md/g)].map((match) => match[0]))) assert.equal(english.systemPrompt.split(path).length, original.split(path).length);
+assert.match(english.systemPrompt, /Read every Pi \.md file completely/);
+assert.match(english.systemPrompt, /Before implementing/);
+assert.equal((await readFile(join(root, "prompts/pi-system-en.md"), "utf8")).trim(), DEFAULT_EN_PREAMBLE);
+assert.equal(apply(baseOptions, { language: "en", enabled: false }).systemPrompt, original);
+assert.equal(apply(baseOptions, { language: "en", systemPrompt: english.systemPrompt }).reason, "already-localized");
+assert.equal(apply(baseOptions, { language: "unknown" }).systemPrompt, original);
+for (const custom of [{ customPrompt: "EXACT user SYSTEM.md" }, { forceSystemPrompt: "EXACT earlier extension" }, { sections: { tools: "EXACT custom tools", rules: "EXACT custom rules", docs: "EXACT custom docs" } }]) {
+  const options = { ...baseOptions, ...custom };
+  const result = apply(options, { language: "en" });
+  if (custom.sections) for (const text of Object.values(custom.sections)) assert.ok(result.systemPrompt.includes(text));
+  else assert.equal(result.systemPrompt, buildSystemPrompt(options));
+}
+checks.push("English compaction preserves tool/context bytes, all doc paths and complete-read rules; independent off, custom/forced prompts, custom sections and idempotence match Chinese safeguards");
 assert.ok(localized.systemPrompt.endsWith(suffix));
 for (const text of [baseOptions.toolSnippets.read, baseOptions.toolSnippets.bash, ...baseOptions.toolGuidelines.read, ...baseOptions.toolGuidelines.bash, ...baseOptions.promptGuidelines, contextText]) assert.ok(localized.systemPrompt.includes(text));
 const sections = buildSystemPromptSections(baseOptions);
+for (const language of ["zh-CN", "en"]) {
+  const result = compactNativePromptSections({ systemPrompt: original, systemPromptOptions: baseOptions, piVersion: version, language });
+  assert.deepEqual(Object.keys(result.sections), ["docs"]);
+  const runtimeSections = buildSystemPromptSections({ ...baseOptions, sections: { ...baseOptions.sections, ...result.sections } });
+  for (const key of Object.keys(sections)) if (key !== "docs") assert.equal(runtimeSections[key], sections[key], `Runtime must keep ${key} exact`);
+  assert.notEqual(runtimeSections.docs, sections.docs);
+  assert.equal(baseOptions.forceSystemPrompt, undefined);
+}
+const personaOptions = { sections: { before: "KEEP existing section" }, customPrompt: "KEEP SYSTEM.md" };
+addPersonaSection(personaOptions, "LOCAL voice");
+assert.equal(personaOptions.customPrompt, "KEEP SYSTEM.md"); assert.equal(personaOptions.forceSystemPrompt, undefined);
+assert.deepEqual(personaOptions.sections, { before: "KEEP existing section", umi_persona: "LOCAL voice" });
+const forcedPersonaOptions = { sections: {}, forceSystemPrompt: "KEEP opaque earlier override" };
+addPersonaSection(forcedPersonaOptions, "LOCAL voice");
+assert.equal(forcedPersonaOptions.forceSystemPrompt, "KEEP opaque earlier override\n\nLOCAL voice");
+checks.push("Runtime integration replaces only verified native docs, preserves all other structured sections and original custom SYSTEM text, adds persona independently and never introduces forced mode");
 for (const name of ["addendum", "project_context", "skills", "cwd", "date", "extra_extension"]) assert.ok(localized.systemPrompt.includes(sections[name]));
 assert.equal(localized.systemPrompt.indexOf(sections.project_context) < localized.systemPrompt.indexOf(sections.skills), true);
 checks.push("Dynamic tool snippets/guidelines and the whole ordered addendum/project/skills/cwd/date/extension suffix remain exact, including nested fake tags");

@@ -27,9 +27,13 @@
     "searching": "Digging",
     "waiting": "Waiting",
     "waiting_user": "You pick",
-    "success": "Wrapped!",
+    "success": "All done!",
     "error": "A snag",
     "cancelled": "Paused",
-    "compacting": "Sorting"
+    "compacting": "Sorting",
+    "poke_idle": "Eep!",
+    "poke_busy": "One sec…",
+    "poke_waiting": "I'm here!",
+    "listening": "All ears"
   }
 }

@@ -12,6 +12,9 @@ import { createMotionPlayer } from "../lib/motion.mjs";
 import { activityBorder, renderDock } from "../lib/editor-layout.mjs";
 import { samplePixels } from "../lib/renderer.mjs";
 import { createEditorControls } from "../lib/editor-controls.mjs";
+import { withPokeFrame } from "../lib/poke.mjs";
+import { withWatchFrames } from "../lib/watch.mjs";
+import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -24,7 +27,8 @@ await mkdir(work, { recursive: true });
 const readJson = async (path) => JSON.parse(await readFile(path, "utf8"));
 const sheets = {};
 for (const style of ["wumi", "wumi-pixel"]) {
-  sheets[style] = await readJson(join(root, "assets/reactions", style, "reaction-sheet.json"));
+  const directory = join(root, "assets/reactions", style);
+  sheets[style] = withListenFrames(withWatchFrames(withPokeFrame(await readJson(join(directory, "reaction-sheet.json")), await readJson(join(directory, "poke-patch.json"))), await readJson(join(directory, "watch-frames.json"))), await readJson(join(directory, "listen-frames.json")));
   for (const id of ["idle-open", "think", "talk-closed", "talk-small", "talk-medium", "talk-wide", "work", "error", "happy", "search", "wait", "wait-blink"]) {
     assert.ok(sheets[style].ids[id] !== undefined, `Missing final ${style}/${id}`);
   }
@@ -102,9 +106,9 @@ const controls = { text: toolbarText, width: toolbarWidth, buttons: toolbar.regi
 })), staticIllustrationOnly: true, nativeMouseRouting: "fullscreen" };
 toolbar.dispose();
 function capture(snapshot, motionPlayer, atMs, durationMs, chunks, frames, extra = {}) {
-  const borderText = activityBorder({ snapshot, width: 94, theme,
+  const borderText = activityBorder({ snapshot, width: 90, theme,
     visibleWidth: cells, truncateToWidth: truncateCells, borderColor: (text) => text });
-  assert.ok(cells(borderText) <= 94, "Top-border preview must fit its input width");
+  assert.ok(cells(borderText) <= 90, "Top-border preview must fit its input width");
   let display, visual;
   const instrumentedPlayer = { frame(...parameters) { visual = motionPlayer.frame(...parameters); return visual; } };
   // The production dock selects pose/blink aliases and applies the real motion.
@@ -214,7 +218,7 @@ for (const style of ["wumi", "wumi-pixel"]) for (const id of ["think", "talk-wid
   comparisons.push({ style, id, file, width: sheet.width, height: sheet.height, palette: sheet.palette });
 }
 const provenance = {};
-for (const path of ["lib/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json"]) {
+for (const path of ["lib/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "lib/poke.mjs", "lib/watch.mjs", "lib/listen.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json", "assets/reactions/wumi/poke-patch.json", "assets/reactions/wumi-pixel/poke-patch.json", "assets/reactions/wumi/watch-frames.json", "assets/reactions/wumi-pixel/watch-frames.json", "assets/reactions/wumi/listen-frames.json", "assets/reactions/wumi-pixel/listen-frames.json"]) {
   provenance[path] = createHash("sha256").update(await readFile(join(root, path))).digest("hex");
 }
 const distinct = (phase) => new Set(frames.filter((frame) => frame.phase === phase).map((frame) => frame.sha256)).size;
@@ -225,14 +229,14 @@ const check = {
   modelRequests: 0, simulatedEventsOnly: true, durationMs: cumulative, fps,
   requestedFrames: frames.length, transitions: frames.filter((frame) => frame.transitioning).length,
   speakingMouths: [...new Set(frames.filter((frame) => frame.phase === "speaking").map((frame) => frame.sourceFace))],
-  runningPawMotion: frames.some((frame) => frame.phase === "running" && (frame.motion.pawLeft || frame.motion.pawRight)),
+  runningScanMotion: frames.some((frame) => frame.phase === "running" && frame.motion.watchPhase !== undefined),
   searchTailMotion: frames.some((frame) => frame.phase === "searching" && frame.motion.tail),
   successWaveMotion: frames.some((frame) => frame.phase === "success" && frame.motion.wave),
   distinctFramesByPhase: Object.fromEntries(segments.map((segment) => [segment.phase, distinct(segment.phase)])),
 };
 assert.equal(check.durationMs, 16800);
 assert.ok(["talk-closed", "talk-small", "talk-medium", "talk-wide"].every((id) => check.speakingMouths.includes(id)));
-assert.ok(check.runningPawMotion && check.searchTailMotion && check.successWaveMotion && check.transitions > 0);
+assert.ok(check.runningScanMotion && check.searchTailMotion && check.successWaveMotion && check.transitions > 0);
 assert.ok(check.distinctFramesByPhase.error > 1);
 const manifest = { schemaVersion: 1, characterWidth: edge, characterHeight: edge,
   palette: sheets.wumi.palette, transparentIndex: sheets.wumi.transparentIndex ?? 0,

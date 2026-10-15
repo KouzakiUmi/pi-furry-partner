@@ -100,7 +100,7 @@ def texture_patch(base, donor, mask):
     return keep_alpha(base, result)
 
 
-def blink(base, eyes, right_only=False, cross=False, lid_boxes=None):
+def blink(base, eyes, right_only=False, cross=False, lid_boxes=None, squeezed=False):
     result = base.copy()
     clean = clean_pose("neutral-eyes-clean.png")
     # Sample actual blank fur well inside the authored eye sockets. Extending
@@ -143,7 +143,16 @@ def blink(base, eyes, right_only=False, cross=False, lid_boxes=None):
         if lid_boxes and name in lid_boxes:
             x0,y0,x1,y1 = lid_boxes[name]
         width, height = x1-x0, y1-y0
-        if cross:
+        if squeezed:
+            # >w<: inward chevrons sit in the fully cleaned eye sockets. They
+            # reuse the actual fur plate, rather than covering open eyes.
+            cx, cy = (x0+x1)/2, y0+height*.62
+            half_width, half_height = width*.28, min(width*.29, height*.23)
+            direction = 1 if name == "left" else -1
+            line(draw, [(cx-direction*half_width, cy-half_height),
+                        (cx+direction*half_width, cy),
+                        (cx-direction*half_width, cy+half_height)], (37,44,53,255), 6)
+        elif cross:
             x, y = (x0+x1)/2, (y0+y1)/2
             radius = min(width*.29, height*.25)
             line(draw, [(x-radius, y-radius), (x+radius, y+radius)], (37, 44, 53, 255), 6)

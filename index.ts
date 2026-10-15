@@ -8,28 +8,32 @@ import { CURSOR_MARKER, getCellDimensions, matchesKey, truncateToWidth, visibleW
 import { createHeader, headerCanAnimate, renderPixels, safeText, samplePixels, terminalVariants } from "./lib/renderer.mjs";
 import { createSixelTransport, graphicsMode } from "./lib/sixel.mjs";
 import { createActivity, DEMO_STATES } from "./lib/activity.mjs";
-import { dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
+import { DOCK_CAPTION_ROWS, dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
 import { createStatusFooter } from "./lib/footer.mjs";
 import { createMotionPlayer } from "./lib/motion.mjs";
 import { createEditorControls } from "./lib/editor-controls.mjs";
 import { createOverlayVisibility } from "./lib/overlay-visibility.mjs";
 import { createQuickActions } from "./lib/quick-actions.mjs";
-import { compactNativePrompt } from "./lib/native-prompt.mjs";
+import { compactNativePromptSections, addPersonaSection } from "./lib/native-prompt.mjs";
 import { installChineseUi } from "./lib/ui-chinese.mjs";
 import { createChineseAutocompleteFactory } from "./lib/command-chinese.mjs";
-import { normalizeLanguage, localize, localizeSnapshot, replaceActivityCopy, nativeChineseEnabled, compactChineseEnabled, personaFilename, companionName, companionSubtitle, mascotDescription } from "./lib/language.mjs";
+import { STYLES, normalizeStyle, styleAssetDirectory } from "./lib/styles.mjs";
+import { withPokeFrame } from "./lib/poke.mjs";
+import { withWatchFrames } from "./lib/watch.mjs";
+import { withListenFrames } from "./lib/listen.mjs";
+import { createResponseLatency, withResponseLatency } from "./lib/response-latency.mjs";
+import { normalizeLanguage, resolveLanguage, systemLanguage, localize, localizeSnapshot, replaceActivityCopy, nativeChineseEnabled, compactPromptEnabled, personaFilename, companionName, companionSubtitle, mascotDescription } from "./lib/language.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const configPath = join(root, "config.json");
 const read = (path: string) => JSON.parse(readFileSync(join(root, path), "utf8"));
 const DEFAULTS = {
   name: "呜咪", subtitle: "你的工作搭档", enabled: true, animation: true, persona: false,
-  layout: "editor", style: "wumi", headerStyle: "pixel", renderer: "auto",
+  layout: "editor", style: "umi", headerStyle: "pixel", renderer: "auto",
   size: "auto", dockSize: "auto", info: "compact", optimizeEditor: true,
-  chineseUI: true, compactPrompt: true, language: "zh-CN",
+  chineseUI: true, compactPrompt: true, language: "auto",
 };
 const SIZES = ["auto", "small", "compact", "normal", "large"];
-const STYLES = ["wumi", "wumi-pixel", "pixel", "illustration"];
 function terminalCursor(tui: any) {
   const state = tui.mode === "regular" && tui.captureRenderState?.();
   return state ? { row: state.hardwareCursorRow - state.previousViewportTop, column: 0 } : undefined;
@@ -48,7 +52,7 @@ export default function (pi: ExtensionAPI) {
     for (const key of ["size", "dockSize"] as const) if (SIZES.includes(saved[key])) settings[key] = saved[key];
     if (["auto", "sixel", "blocks"].includes(saved.renderer)) settings.renderer = saved.renderer;
     if (["editor", "header"].includes(saved.layout)) settings.layout = saved.layout;
-    if (STYLES.includes(saved.style)) settings.style = saved.style;
+    if (normalizeStyle(saved.style)) settings.style = normalizeStyle(saved.style)!;
     if (["pixel", "illustration"].includes(saved.headerStyle)) settings.headerStyle = saved.headerStyle;
     if (["compact", "native"].includes(saved.info)) settings.info = saved.info;
     if (normalizeLanguage(saved.language)) settings.language = normalizeLanguage(saved.language)!;
@@ -61,16 +65,25 @@ export default function (pi: ExtensionAPI) {
   const voice = { labels: {}, bubbles: {}, phrases: {} };
   const l = (zh: string, en: string) => localize(settings.language, zh, en);
   function updateVoice() {
-    const selected = settings.language === "en" ? voices.en : voices["zh-CN"];
+    const selected = resolveLanguage(settings.language) === "en" ? voices.en : voices["zh-CN"];
     replaceActivityCopy(voice, selected.copy, selected.phrases);
   }
   updateVoice();
   const activity = createActivity({ ...voice, rotationMs: voices["zh-CN"].phrases.rotationMs });
+  const responseLatency = createResponseLatency();
   const readSnapshot = () => localizeSnapshot(activity.snapshot(), settings.language);
   const reactions = new Map<string, any>();
   const headerSheets = new Map<string, { native: any; fallback: any }>();
   function reactionSheet() {
-    if (!reactions.has(settings.style)) reactions.set(settings.style, read(`assets/reactions/${settings.style}/reaction-sheet.json`));
+    if (!reactions.has(settings.style)) {
+      const directory = `assets/reactions/${styleAssetDirectory(settings.style)}`;
+      const sheet = read(`${directory}/reaction-sheet.json`);
+      let augmented = sheet;
+      try { augmented = withPokeFrame(sheet, read(`${directory}/poke-patch.json`)); } catch { /* Older local asset packs keep the ordinary blink fallback. */ }
+      try { augmented = withWatchFrames(augmented, read(`${directory}/watch-frames.json`)); } catch { /* Earlier asset packs keep their work pose. */ }
+      try { augmented = withListenFrames(augmented, read(`${directory}/listen-frames.json`)); } catch { /* Older packs keep their neutral listening fallback. */ }
+      reactions.set(settings.style, augmented);
+    }
     return reactions.get(settings.style);
   }
   function titleSheets() {
@@ -111,16 +124,28 @@ export default function (pi: ExtensionAPI) {
     }
   }
 
+  function pausedSnapshot(next: ReturnType<typeof activity.snapshot>) {
+    if (next.reaction === "poked") return next;
+    const faces: Record<string, string> = { idle: "idle-open", thinking: "think", speaking: "talk-closed", reading: "work", editing: "work", running: "watch", searching: "search", compacting: "search", waiting: "wait", success: "happy", error: "error", cancelled: "rest" };
+    const bubbles: Record<string, string> = voice.bubbles;
+    // A paused visual hold must never latch a previous work/blink pose after
+    // its real tool has ended. Keep the state readable without running motion.
+    return { ...next, face: next.drowsy ? "rest" : faces[next.phase] || next.face,
+      visualPhase: next.phase, blink: false, reaction: undefined,
+      bubble: next.phase === "thinking" ? bubbles.thinking || next.bubble : next.phase === "speaking" ? bubbles.speaking || next.bubble : next.bubble };
+  }
   function snapshot() {
-    if (settings.animation || !lastSnapshot) lastSnapshot = readSnapshot();
-    return lastSnapshot;
+    if (settings.animation || activity.isPoked() || lastSnapshot?.reaction === "poked" || !lastSnapshot) {
+      const next = readSnapshot(); lastSnapshot = settings.animation ? next : pausedSnapshot(next);
+    }
+    return withResponseLatency(lastSnapshot, responseLatency.snapshot(), settings.language);
   }
   function refreshState() {
-    if (!settings.animation && lastSnapshot) {
-      const next = readSnapshot();
+    if (!settings.animation && lastSnapshot && !activity.isPoked() && lastSnapshot.reaction !== "poked") {
+      const next = pausedSnapshot(readSnapshot());
       // Pausing keeps motion still while real state and tool metadata remain live.
       lastSnapshot = next.phase === lastSnapshot.phase ? {
-        ...next, face: lastSnapshot.face, blink: lastSnapshot.blink,
+        ...next,
         bubble: lastSnapshot.bubble, glyph: lastSnapshot.glyph, phrase: lastSnapshot.phrase,
       } : next;
     } else lastSnapshot = undefined;
@@ -133,16 +158,16 @@ export default function (pi: ExtensionAPI) {
   function redraw() { if (!suspended) tui?.requestRender(); }
   function armTimer() {
     // Token events must not continually postpone the animation deadline.
-    if (timer !== undefined || suspended || !settings.enabled || !settings.animation || !tui) return;
+    if (!settings.animation && !activity.isPoked() && !responseLatency.isWaiting()) { stopTimer(); return; }
+    if (timer !== undefined || suspended || !settings.enabled || !tui) return;
     if (settings.layout === "header" && !header) return;
-    const delay = settings.layout === "header"
-      ? Math.max(60, titleSheets().native.frames[headerFrame].durationMs)
-      : 50;
+    const delay = !settings.animation && !activity.isPoked() ? 1000 : settings.layout === "header"
+      ? Math.max(60, titleSheets().native.frames[headerFrame].durationMs) : 50;
     timer = setTimeout(() => {
       timer = undefined;
       if (suspended) return;
       if (visible() && (settings.layout !== "header" || headerCanAnimate(tui))) {
-        if (settings.layout === "header") {
+        if (settings.layout === "header" && settings.animation) {
           headerFrame = (headerFrame + 1) % titleSheets().native.frames.length;
           header?.setFrame(headerFrame);
         }
@@ -179,7 +204,7 @@ export default function (pi: ExtensionAPI) {
       ctx.ui.notify(l("检测到其他扩展的输入框，已保留。可用 /mascot layout header 显示标题头像。", "Another extension owns the editor, so I've kept it. Use /mascot layout header to show me in the title instead."), "warning");
       return;
     }
-    class WumiEditor extends CustomEditor {
+    class UmiEditor extends CustomEditor {
       private transport: ReturnType<typeof createSixelTransport> | undefined;
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
@@ -203,12 +228,13 @@ export default function (pi: ExtensionAPI) {
         getState: () => ({ animation: settings.animation, persona: settings.persona, style: settings.style, hasText: Boolean(this.getText().trim()), busy: !ctx.isIdle(), mode: tui?.mode === "fullscreen" ? "fullscreen" : "regular" }),
         getKeys: (action: string) => this.shortcutKeys?.getKeys(action),
         onAction: (action: string) => {
-          if (action === "send") this.handleInput("\r");
+          if (action === "poke") { activity.poke(); lastSnapshot = undefined; redraw(); armTimer(); }
+          else if (action === "send") this.handleInput("\r");
           else if (action === "newline") this.insertTextAtCursor("\n");
           else if (["model", "thinking", "menu"].includes(action)) void this.openQuickActions(action);
           else if (action === "animation") {
             settings.animation = !settings.animation;
-            if (!settings.animation) { lastSnapshot = readSnapshot(); stopTimer(); }
+            if (!settings.animation) { activity.clearTyping(); lastSnapshot = pausedSnapshot(readSnapshot()); stopTimer(); if (activity.isPoked()) armTimer(); }
             else { lastSnapshot = undefined; armTimer(); }
             save(ctx); redraw();
           } else if (action === "persona") { settings.persona = !settings.persona; save(ctx); redraw(); }
@@ -292,8 +318,22 @@ export default function (pi: ExtensionAPI) {
         });
         this.geometry = joinEditor({ width, nativeLines: framedLines, dockLines, geometry, snapshot: current, theme: ctx.ui.theme, visibleWidth, truncateToWidth, editorInset: frame.inset, nativeRenderWidth });
         if (toolbarIndex >= 0) this.toolbarRow = this.geometry.offsetY + toolbarIndex;
-        this.avatarBounds = geometry.collapsed || tui?.mode !== "fullscreen" ? undefined : { x: 0, y: 3, width: geometry.columns, height: geometry.rows };
+        this.avatarBounds = geometry.collapsed || tui?.mode !== "fullscreen" ? undefined : { x: geometry.imageOffset, y: DOCK_CAPTION_ROWS, width: geometry.columns, height: geometry.rows };
         return this.geometry.lines;
+      }
+      handleInput(data: string) {
+        // Observe only the native editor's result. Never intercept text, IME,
+        // pasted content, shortcuts or submission; no draft content is logged.
+        const before = this.getText();
+        const result = super.handleInput(data);
+        const after = this.getText();
+        if (before !== after) {
+          if (settings.animation && after.length) activity.noteTyping();
+          else activity.clearTyping();
+          lastSnapshot = undefined;
+          redraw();
+        }
+        return result;
       }
       handleMouse(event: any) {
         const geometry = this.geometry;
@@ -318,7 +358,7 @@ export default function (pi: ExtensionAPI) {
       }
       dispose() { this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined; this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose(); }
     }
-    editorFactory = (editorTui, theme, keybindings) => new WumiEditor(editorTui, theme, keybindings);
+    editorFactory = (editorTui, theme, keybindings) => new UmiEditor(editorTui, theme, keybindings);
     ctx.ui.setEditorComponent(editorFactory);
   }
 
@@ -396,37 +436,45 @@ export default function (pi: ExtensionAPI) {
   }
   pi.on("before_agent_start", (event, ctx) => {
     if (ctx.mode !== "tui") return;
-    let systemPrompt = event.systemPrompt;
-    if (compactChineseEnabled(settings)) {
+    responseLatency.handle("before_agent_start"); refreshState(); redraw(); armTimer();
+    if (compactPromptEnabled(settings)) {
       try {
-        systemPrompt = compactNativePrompt({ systemPrompt, piVersion: agentUI.VERSION,
+        const compact = compactNativePromptSections({ systemPrompt: event.systemPrompt, piVersion: agentUI.VERSION,
           systemPromptOptions: event.systemPromptOptions, enabled: true,
-          basePrompt: readFileSync(join(root, "prompts", "pi-system-zh.md"), "utf8") }).systemPrompt;
+          language: resolveLanguage(settings.language) });
+        if (compact.changed) Object.assign(event.systemPromptOptions.sections, compact.sections);
       } catch (error) {
-        ctx.ui.notify(`${l("中文精简提示词不可用，本轮保留原提示词：", "The compact Chinese prompt isn't available; I've kept the original for this turn: ")}${(error as Error).message}`, "warning");
+        ctx.ui.notify(`${l("Pi 文档提示精简不可用，本轮保留原文：", "The concise Pi documentation prompt isn't available; I've kept the original: ")}${(error as Error).message}`, "warning");
       }
     }
-    if (!settings.persona) return systemPrompt === event.systemPrompt ? undefined : { systemPrompt };
+    if (!settings.persona) return;
     try {
-      // Append for this run only. Preserve every existing system instruction.
+      // A separate section keeps downstream extension additions and dynamic
+      // tools/guidelines live. Do not return a whole-prompt override.
       const template = readFileSync(join(root, "prompts", personaFilename(settings.language)), "utf8").trim();
       if (!template) throw new Error(l("模板内容为空", "The template is empty"));
-      return { systemPrompt: `${systemPrompt}\n\n${template}` };
+      addPersonaSection(event.systemPromptOptions, template);
     } catch (error) {
       ctx.ui.notify(`${l("呜咪语气模板不可用，已跳过本轮角色口吻：", "Umi's style template isn't available; I've skipped the persona for this turn: ")}${(error as Error).message}`, "warning");
-      return systemPrompt === event.systemPrompt ? undefined : { systemPrompt };
     }
   });
   pi.on("session_start", (event, ctx) => {
+    responseLatency.handle("session_start");
     installLanguage(ctx);
     activity.start({ isBusy: !ctx.isIdle(), wake: event.reason !== "reload" });
     apply(ctx);
   });
+  for (const type of ["input", "before_provider_request"] as const) pi.on(type, (event, ctx) => {
+    if (ctx.mode !== "tui") return;
+    responseLatency.handle(type, event); refreshState(); redraw(); armTimer();
+  });
   const events = ["agent_start", "message_start", "message_update", "message_end", "tool_execution_start", "tool_execution_end", "agent_before_settle", "agent_settled", "ui_prompt_start", "ui_prompt_end", "session_before_compact", "session_compact", "session_compact_failed"] as const;
   for (const type of events) pi.on(type, (event) => {
+    responseLatency.handle(type, event);
     activity.handle(type, event); refreshState(); redraw(); armTimer();
   });
   pi.on("session_shutdown", () => {
+    responseLatency.handle("session_shutdown");
     languageReleased = true;
     languagePatch?.dispose(); languagePatch = undefined;
     activity.handle("session_shutdown"); release();
@@ -446,28 +494,30 @@ export default function (pi: ExtensionAPI) {
       const [command, value] = args.trim().toLowerCase().split(/\s+/);
       if (!command) {
         const state = (value: boolean) => value ? l("开启", "on") : l("关闭", "off");
-        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${graphicsMode(settings.renderer)} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("中文精简提示词偏好", "Compact Chinese prompt preference")}: ${state(settings.compactPrompt)}\n/mascot language en|zh-CN|status\n/mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style wumi|wumi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo ${DEMO_STATES.join("|")}|off`, "info"); return;
+        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${graphicsMode(settings.renderer)} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo ${DEMO_STATES.join("|")}|off`, "info"); return;
       }
       if (command === "language") {
         const next = normalizeLanguage(value);
         if (next) {
           settings.language = next;
+          if (next === "auto") systemLanguage({ refresh: true });
           updateVoice(); lastSnapshot = undefined;
           registerQuickShortcut(); apply(ctx); save(ctx);
         } else if (value && value !== "status") {
-          ctx.ui.notify(l("用法：/mascot language en|zh-CN|status（zh 也可以）", "Usage: /mascot language en|zh-CN|status (zh is also accepted)"), "warning"); return;
+          ctx.ui.notify(l("用法：/mascot language auto|en|zh-CN|status（zh 也可以）", "Usage: /mascot language auto|en|zh-CN|status (zh is also accepted)"), "warning"); return;
         }
-        ctx.ui.notify(l(`呜咪现在说中文啦。语言：${settings.language}。界面文案立即切换，提示词与语气模板从下一轮生效；locale、prompt、persona 的偏好分别保留。`, `I'm speaking English now. Language: ${settings.language}. UI text changes right away; prompts and persona apply from the next turn. Your locale, prompt and persona preferences stay independent.`), "info");
+        const languageStatus = settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language;
+        ctx.ui.notify(l(`呜咪现在说中文啦。语言：${languageStatus}。界面文案立即切换，Pi 文档提示精简与语气模板从下一轮生效；locale、prompt、persona 的偏好分别保留。`, `I'm speaking English now. Language: ${languageStatus}. UI text changes right away; concise Pi docs and persona apply from the next turn. Your locale, prompt and persona preferences stay independent.`), "info");
         return;
       }
       if (command === "locale" || command === "prompt") {
         const key = command === "locale" ? "chineseUI" : "compactPrompt";
         if (value === "on" || value === "off") { settings[key] = value === "on"; save(ctx); redraw(); }
         else if (value && value !== "status") { ctx.ui.notify(`${l("用法：", "Usage: ")}/mascot ${command} on|off|status`, "warning"); return; }
-        const name = command === "locale" ? l("Pi 界面中文", "Pi Chinese UI preference") : l("Pi 中文精简提示词", "Pi compact Chinese prompt preference");
+        const name = command === "locale" ? l("Pi 界面中文", "Pi Chinese UI preference") : l("Pi 文档提示精简", "Concise Pi documentation prompt");
         const state = settings[key] ? l("开启", "on") : l("关闭", "off");
-        const effect = settings.language === "en" ? "English mode keeps Pi's native English UI and default system prompt; this preference is saved for Chinese mode. "
-          : command === "locale" ? "下次绘制或打开原生菜单时生效。" : "从下一轮请求生效；自定义 SYSTEM.md 和其它项目指令保持原文。";
+        const effect = command === "locale" ? l("下次绘制或打开原生菜单时生效。", "English uses Pi's native UI; this preference is saved for Chinese mode. ")
+          : l("仅精简 Pi 文档提示章节，跟随当前语言，从下一轮生效；关闭后恢复该章节原文。身份、tools、rules 保持 Pi 原生，项目指令与其他扩展保持动态。", "Only Pi's documentation section is condensed in your language from the next request; off restores that section. Identity, tools and rules stay native, while project instructions and other extensions remain dynamic. ");
         ctx.ui.notify(`${name}: ${state}. ${effect}${l("呜咪 persona 开关保持独立。", "Umi's persona switch stays independent.")}`, "info");
         return;
       }
@@ -482,14 +532,23 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`${l(`呜咪语气：${settings.persona ? "开启" : "关闭"}。从下一轮回答生效，独立于头像显示开关；代码、格式和技术准确性优先。模板：`, `Umi's persona: ${settings.persona ? "on" : "off"}. Applies from the next answer, independently of the avatar. Code, format and technical accuracy come first. Template: `)}${join(root, "prompts", personaFilename(settings.language))}`, "info");
         return;
       }
-      if (command === "pause") { settings.animation = false; lastSnapshot = readSnapshot(); stopTimer(); redraw(); }
+      if (command === "poke") {
+        if (settings.layout !== "editor" || !settings.enabled) {
+          ctx.ui.notify(l("先让我回到输入框旁边呀：/mascot on，然后 /mascot layout editor。", "Bring me beside your input with /mascot on, then /mascot layout editor."), "info");
+          return;
+        }
+        activity.poke(); lastSnapshot = undefined; redraw(); armTimer();
+        return;
+      }
+      if (command === "pause") { settings.animation = false; activity.clearTyping(); lastSnapshot = pausedSnapshot(readSnapshot()); stopTimer(); redraw(); if (activity.isPoked()) armTimer(); }
       else if (command === "play") { settings.enabled = true; settings.animation = true; apply(ctx); }
       else if (command === "off") { settings.enabled = false; apply(ctx); }
       else if (command === "on") { settings.enabled = true; apply(ctx); }
       else if (command === "layout" && ["editor", "header"].includes(value)) { settings.layout = value; apply(ctx); }
-      else if (command === "style" && STYLES.includes(value)) {
-        if (settings.layout === "header" && ["wumi", "wumi-pixel"].includes(value)) { ctx.ui.notify(l("呜咪多姿态用于输入框版，请先执行 /mascot layout editor。标题版可选 pixel 或 illustration。", "Umi's reaction poses belong beside the editor. Run /mascot layout editor first. The title supports pixel or illustration."), "info"); return; }
-        if (settings.layout === "header") settings.headerStyle = value; else settings.style = value;
+      else if (command === "style" && normalizeStyle(value)) {
+        const style = normalizeStyle(value)!;
+        if (settings.layout === "header" && ["umi", "umi-pixel"].includes(style)) { ctx.ui.notify(l("呜咪多姿态用于输入框版，请先执行 /mascot layout editor。标题版可选 pixel 或 illustration。", "Umi's reaction poses belong beside the editor. Run /mascot layout editor first. The title supports pixel or illustration."), "info"); return; }
+        if (settings.layout === "header") settings.headerStyle = style; else settings.style = style;
         apply(ctx);
       }
       else if (command === "size" && SIZES.includes(value)) { if (settings.layout === "editor") settings.dockSize = value; else settings.size = value; apply(ctx); }

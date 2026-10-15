@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { dirname, join, resolve, sep } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { compactNativePrompt } from "../lib/native-prompt.mjs";
+import { compactNativePromptSections } from "../lib/native-prompt.mjs";
 
 // Exercise the real extension factory, runner's prompt/options contract and
 // native host autocomplete lifecycle. All writes stay in a work/ package copy.
@@ -41,7 +41,12 @@ const options = normalizeBuildSystemPromptOptions({
   sections: { date: "KEEP date 2026-10-16", third_party: "KEEP final extension section" },
 });
 const original = buildSystemPrompt(options);
-const localized = compactNativePrompt({ systemPrompt: original, systemPromptOptions: options, piVersion: version }).systemPrompt;
+const structuredPrompt = (language, promptOptions = options) => buildSystemPrompt({ ...promptOptions, sections: {
+  ...promptOptions.sections, ...compactNativePromptSections({ systemPrompt: buildSystemPrompt(promptOptions), systemPromptOptions: promptOptions, piVersion: version, language }).sections,
+} });
+const localized = structuredPrompt("zh-CN");
+const compactEnglish = structuredPrompt("en");
+const withPersona = (prompt, template) => `${prompt}\n\n<umi_persona>\n${template}\n</umi_persona>`;
 const nativeTextRender = tuiUI.Text.prototype.render;
 const nativeThinkingRender = agentUI.ThinkingSelectorComponent.prototype.render;
 const text = (component) => component.render(100).map(stripTerminalSequences).join("\n");
@@ -97,14 +102,14 @@ try {
   for (const name of ["index.ts", "lib", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
   await mkdir(join(scratch, "assets"));
   for (const name of ["status-phrases.json", "status-copy.json", "status-phrases.en.json", "status-copy.en.json", "ui-zh-CN.json"]) await cp(join(root, "assets", name), join(scratch, "assets", name));
-  await writeFile(join(scratch, "config.json"), JSON.stringify({ enabled: false, animation: false, chineseUI: true, compactPrompt: true, persona: false }));
+  await writeFile(join(scratch, "config.json"), JSON.stringify({ language: "zh-CN", enabled: false, animation: false, chineseUI: true, compactPrompt: true, persona: false }));
   let instance = await instantiate({ fresh: true });
   const persona = (await readFile(join(scratch, "prompts/wumi-persona.md"), "utf8")).trim();
   assert.ok(persona && localized !== original);
   for (const compact of [false, true]) for (const personaOn of [false, true]) {
     await instance.command(`prompt ${compact ? "on" : "off"}`);
     await instance.command(`persona ${personaOn ? "on" : "off"}`);
-    const expected = (compact ? localized : original) + (personaOn ? `\n\n${persona}` : "");
+    const expected = personaOn ? withPersona(compact ? localized : original, persona) : compact ? localized : original;
     assert.equal(await instance.prompt(), expected);
     assert.equal(await instance.prompt(), expected, "Each new request starts from the original options and cannot accumulate persona text");
     assert.equal(options.forceSystemPrompt, undefined, "Pi's runner clones event options rather than changing future runs");
@@ -116,7 +121,7 @@ try {
     const customOptions = { ...options, customPrompt };
     for (const personaOn of [false, true]) {
       await instance.command("prompt on"); await instance.command(`persona ${personaOn ? "on" : "off"}`);
-      assert.equal(await instance.prompt(customOptions), buildSystemPrompt(customOptions) + (personaOn ? `\n\n${persona}` : ""));
+      assert.equal(await instance.prompt(customOptions), personaOn ? withPersona(buildSystemPrompt(customOptions), persona) : buildSystemPrompt(customOptions));
     }
   }
   for (const forceSystemPrompt of ["", "KEEP an earlier extension's complete prompt"]) {
@@ -125,16 +130,16 @@ try {
   }
   checks.push("Custom SYSTEM.md, native-looking custom SYSTEM text and earlier extension forceSystemPrompt (including empty) stay exact; only the independent persona switch appends its own template");
 
-  for (const missing of ["pi-system-zh.md", "wumi-persona.md"]) {
+  for (const missing of ["wumi-persona.md"]) {
     const path = join(scratch, "prompts", missing); await rename(path, path + ".saved");
     try {
       await instance.command("prompt on"); await instance.command("persona on");
       const noticeCount = notices.length;
-      assert.equal(await instance.prompt(), missing === "pi-system-zh.md" ? `${original}\n\n${persona}` : localized);
+      assert.equal(await instance.prompt(), localized);
       assert.equal(notices.length, noticeCount + 1);
     } finally { await rename(path + ".saved", path); }
   }
-  checks.push("A missing Chinese base preserves the original plus requested persona; a missing persona preserves successful compaction; both fail open with one warning");
+  checks.push("A missing persona preserves the independently condensed docs section and fails open with one warning");
 
   await instance.command("persona off"); await instance.command("prompt on");
   await instance.emit("session_start", { reason: "startup" });
@@ -159,18 +164,18 @@ try {
   assert.equal((await saved()).compactPrompt, true);
   assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
   assert.equal(text(thinking()).includes("思考档位"), false);
-  assert.equal(await instance.prompt(), original, "English retains the exact native Pi system prompt even when compactPrompt is on");
+  assert.equal(await instance.prompt(), compactEnglish, "English selects its own concise Pi template when compactPrompt is on");
   for (const enabled of [false, true]) {
     await instance.command(`locale ${enabled ? "on" : "off"}`);
     await instance.command(`prompt ${enabled ? "on" : "off"}`);
-    assert.equal(await instance.prompt(), original);
+    assert.equal(await instance.prompt(), enabled ? compactEnglish : original);
     assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
     assert.equal(text(thinking()).includes("思考档位"), false);
   }
   await instance.command("persona on");
-  assert.equal(await instance.prompt(), `${original}\n\n${englishPersona}`);
+  assert.equal(await instance.prompt(), withPersona(compactEnglish, englishPersona));
   const englishCustom = { ...options, customPrompt: "KEEP user SYSTEM.md exactly\n用户自己写的中文项目约束" };
-  assert.equal(await instance.prompt(englishCustom), `${buildSystemPrompt(englishCustom)}\n\n${englishPersona}`);
+  assert.equal(await instance.prompt(englishCustom), withPersona(buildSystemPrompt(englishCustom), englishPersona));
   await instance.command("persona off");
   const beforeLanguageStatus = await readFile(join(scratch, "config.json"), "utf8");
   for (const command of ["language status", "language", "language invalid", "locale status", "prompt status"]) await instance.command(command);
@@ -181,7 +186,7 @@ try {
   instance = await instantiate({ fresh: true });
   await instance.emit("session_start", { reason: "reload" });
   assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
-  assert.equal(await instance.prompt(), original, "A fresh extension load keeps the saved English language");
+  assert.equal(await instance.prompt(), compactEnglish, "A fresh extension load keeps the saved English language and its compact template");
   assert.equal(instance.extension.shortcuts.get("ctrl+alt+w").description, "Open Umi's quick actions");
   await instance.command("language zh");
   assert.equal((await saved()).language, "zh-CN");
@@ -191,7 +196,30 @@ try {
   assert.equal(text(thinking()).includes("思考档位"), true);
   assert.equal(await instance.prompt(), localized);
   assert.equal(instance.extension.shortcuts.get("ctrl+alt+w").description, "打开呜咪的快捷操作菜单");
-  checks.push("English language persists across an actual loader reload, restores exact native menus/default prompts while keeping locale/prompt preferences, uses its independent English persona, preserves custom multilingual SYSTEM.md, leaves status/invalid requests read-only and restores saved Chinese preferences via the zh alias");
+  checks.push("English persists across actual loader reload, keeps native English menus and independently switchable compact/default prompts, uses its English persona, preserves custom SYSTEM.md, leaves status read-only and restores Chinese via zh");
+
+  const previousLocale = process.env.LC_ALL;
+  try {
+    process.env.LC_ALL = "en_US.UTF-8";
+    await instance.command("language auto");
+    assert.equal((await saved()).language, "auto", "Auto must persist as a preference rather than pinning the detected language");
+    assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, englishDescription);
+    assert.equal(await instance.prompt(), compactEnglish);
+    await instance.command("persona on"); assert.equal(await instance.prompt(), withPersona(compactEnglish, englishPersona));
+    await instance.command("persona off");
+    await shutdown(instance, "reload"); InteractiveMode.prototype.resetExtensionUI.call(hostState.host);
+    instance = await instantiate({ fresh: true }); await instance.emit("session_start", { reason: "reload" });
+    assert.equal((await saved()).language, "auto"); assert.equal(await instance.prompt(), compactEnglish);
+    process.env.LC_ALL = "zh_TW.UTF-8";
+    await instance.command("language auto");
+    assert.equal(await instance.prompt(), localized);
+    assert.equal((await request(hostState.host.autocompleteProvider)).items[0].description, chineseDescription);
+    await instance.command("language en"); assert.equal(await instance.prompt(), compactEnglish);
+    await instance.command("language zh-CN");
+  } finally {
+    if (previousLocale === undefined) delete process.env.LC_ALL; else process.env.LC_ALL = previousLocale;
+  }
+  checks.push("Auto survives reload, refreshes locale detection on reselection, drives real menus and both prompt templates, and never overwrites a manual choice or independent persona preference");
 
   const beforeStatus = await readFile(join(scratch, "config.json"), "utf8");
   for (const command of ["locale status", "prompt status", "persona status", "locale bad", "prompt bad", "persona bad"]) await instance.command(command);

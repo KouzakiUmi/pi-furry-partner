@@ -161,6 +161,8 @@ def append_waiting():
         validation["waitingRig"]={"passed":True,"ids":["wait","wait-blink"],"angleDeg":5.5,"existingFramesPreserved":True}
         validation["pixelDerivative"]["frameCount"]=reports[1]["frameCount"]
         validation_path.write_text(json.dumps(validation,ensure_ascii=False,indent=2),encoding="utf-8")
+    from refine_pixel_lines import refine
+    refine()  # Protect subpixel mouth strokes after the 21-frame bank is complete.
     return report
 
 

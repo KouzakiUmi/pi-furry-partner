@@ -46,7 +46,8 @@ $config = Read $configPath
 $manifest = Read $manifestPath
 $firstId = $manifest.installationId
 $firstBackup = $manifest.initialBackup
-Assert ($config.layout -eq 'editor' -and $config.style -eq 'wumi' -and $config.name -ceq $name -and $config.info -eq 'compact') 'fresh installation selects editor/wumi/Chinese name/compact info'
+Assert ($config.layout -eq 'editor' -and $config.style -eq 'umi' -and $config.name -ceq $name -and $config.info -eq 'compact') 'fresh installation selects editor/umi/Chinese name/compact info'
+Assert ($config.language -ceq 'auto') 'fresh installation follows the system language by default'
 Assert ($config.persona -eq $false) 'fresh installation leaves the optional persona disabled'
 Assert ($config.chineseUI -eq $true -and $config.compactPrompt -eq $true) 'fresh installation enables independent native UI and compact Chinese prompt preferences'
 Assert (Test-Path -LiteralPath (Join-Path $agent 'extensions\pi-furry-partner\prompts\wumi-persona.md') -PathType Leaf) 'persona template is installed alongside the extension'
@@ -69,7 +70,7 @@ Save $configPath $legacyRaw
 & $install -AgentDir $agent
 $config = Read $configPath
 $manifest = Read $manifestPath
-Assert ($config.layout -eq 'editor' -and $config.style -eq 'wumi' -and $config.headerStyle -eq 'illustration' -and $config.name -ceq $name -and $config.info -eq 'compact') '1.x upgrade enables the editor companion and preserves its old style as headerStyle'
+Assert ($config.layout -eq 'editor' -and $config.style -eq 'umi' -and $config.headerStyle -eq 'illustration' -and $config.name -ceq $name -and $config.info -eq 'compact') '1.x upgrade enables the editor companion with the canonical umi ID and preserves its old style as headerStyle'
 Assert ($config.persona -eq $false) '1.x upgrade leaves the new persona opt-in'
 Assert ($config.animation -eq $false -and $config.renderer -eq 'blocks' -and $config.size -eq 'small' -and $config.optimizeEditor -eq $false -and $config.enabled -eq $false -and $config.userOption.value -eq 23) '1.x upgrade retains animation/renderer/size/enabled/editor/custom preferences'
 Assert ($config.subtitle -ceq $name) 'UTF-8 Chinese preference survives migration in this PowerShell runtime'
@@ -87,6 +88,7 @@ $v2Raw = @'
   "persona": true,
   "chineseUI": false,
   "compactPrompt": false,
+  "language": "en",
   "animation": false,
   "renderer": "blocks",
   "size": "compact",
@@ -104,9 +106,25 @@ $v2Bytes = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)
 Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)) -ceq $v2Bytes) '2.x explicit-layout configuration remains byte-for-byte unchanged'
 Assert ((Read $configPath).persona -eq $true) '2.x user persona selection survives reinstall'
 Assert ((Read $configPath).chineseUI -eq $false -and (Read $configPath).compactPrompt -eq $false) 'disabled Chinese UI and native prompt preferences survive reinstall independently of persona'
+Assert ((Read $configPath).language -ceq 'en') 'an explicit English language choice survives upgrade'
 $manifest = Read $manifestPath
 Assert ($manifest.originalTheme -eq 'before-wumi' -and $manifest.initialBackup -eq $firstBackup) 'repeated 2.x installation retains the original recovery baseline'
 Assert (-not $manifest.originalTuiModePropertyExisted) 'repeat installation retains the first missing tuiMode baseline'
+
+# Rename only a root legacy style, even with minified/nested/escaped fields and
+# UTF-8 BOM. Keep all other preference bytes and the original recoverable copy.
+foreach ($styleCase in @(
+    @{ Old = '{"layout":"editor","custom":{"style":"wumi","text":"wumi"},"style":"wumi","language":"zh-CN","persona":true}'; New = '{"layout":"editor","custom":{"style":"wumi","text":"wumi"},"style":"umi","language":"zh-CN","persona":true}' },
+    @{ Old = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"wumi-pixel","language":"en","persona":false}'; New = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"umi-pixel","language":"en","persona":false}' }
+)) {
+    $rawLegacy = ([char]0xFEFF).ToString() + $styleCase.Old + "`r`n"
+    $rawCanonical = ([char]0xFEFF).ToString() + $styleCase.New + "`r`n"
+    Save $configPath $rawLegacy
+    & $install -AgentDir $agent
+    Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)) -ceq [Convert]::ToBase64String($utf8.GetBytes($rawCanonical))) '2.x style migration changes only the root style value; nested values, BOM, formatting and other preferences survive'
+    $backupConfig = Join-Path (Read $manifestPath).lastBackup 'previous-extension\config.json'
+    Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($backupConfig)) -ceq [Convert]::ToBase64String($utf8.GetBytes($rawLegacy))) '2.x style migration archives the complete original preference bytes'
+}
 
 $settings = Read $settingsPath
 $settings | Add-Member -NotePropertyName addedLater -NotePropertyValue 'keep-later'
@@ -184,6 +202,7 @@ $oldConfig = @'
   "persona": true,
   "chineseUI": false,
   "compactPrompt": true,
+  "language": "zh-CN",
   "custom": { "remember": "unchanged bytes" }
 }
 '@
@@ -208,7 +227,8 @@ $originalConfigBytes = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes(
 $migrated = Read $newManifestPath
 Assert (-not (Test-Path -LiteralPath $legacyPath) -and (Test-Path -LiteralPath (Join-Path $newPath 'index.ts'))) 'rename removes the old automatic entry point before installing the new one'
 Assert (-not (Test-Path -LiteralPath $legacyManifestPath) -and (Test-Path -LiteralPath (Join-Path $migrated.lastBackup 'legacy-installation.json'))) 'legacy manifest is archived so the old uninstaller cannot remove the migrated installation'
-Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes((Join-Path $newPath 'config.json'))) -ceq $originalConfigBytes) 'rename preserves every byte of persona/localization/custom preferences'
+Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi-pixel"')) 'rename changes only the legacy style ID and preserves all persona/localization/custom preference text'
+Assert ((Read (Join-Path $newPath 'config.json')).language -ceq 'zh-CN') 'an explicit Chinese language choice survives the renamed installation'
 Assert ($migrated.installationId -ceq 'legacy-first-id' -and $migrated.initialBackup -ceq $baseline -and $migrated.originalTheme -ceq 'original-theme') 'rename keeps the first-install recovery identity, backup and theme baseline'
 Assert ($migrated.recoveryExtensionPath -ceq $legacyPath -and $migrated.recoveryThemePath -ceq $legacyThemePath) 'original pre-plugin files retain their legacy recovery destinations'
 $current = Read $settingsPath
@@ -245,7 +265,7 @@ Save $settingsPath '{"theme":"pi-wink-night","tuiMode":"regular","keep":true}'
 Save (Join-Path $agent 'themes\pi-wink-night.json') '{"name":"legacy theme"}'
 & $install -AgentDir $agent
 Assert (-not (Test-Path -LiteralPath $oldPath) -and (Test-Path -LiteralPath $newPath)) 'an unmanaged legacy copy is also archived instead of double-loaded'
-Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig) 'an unmanaged legacy config retains its exact bytes'
+Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi-pixel"')) 'an unmanaged legacy config migrates its style ID while retaining all other text'
 & $uninstall -AgentDir $agent
 Assert ($null -eq (Read $settingsPath).PSObject.Properties['theme'] -and (Read $settingsPath).keep -eq $true) 'without a prior recovery manifest uninstall removes only the renamed theme selection and retains unrelated settings'
 Assert (-not (Test-Path -LiteralPath $oldPath) -and -not (Test-Path -LiteralPath $newPath)) 'uninstall does not reactivate an unmanaged legacy plugin'

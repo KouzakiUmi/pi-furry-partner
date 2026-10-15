@@ -54,6 +54,34 @@ function Set-Property($Object, [string]$Name, $Value) {
     $Object | Add-Member -MemberType NoteProperty -Name $Name -Value $Value -Force
 }
 
+function Copy-StylePreferences([string]$Source, [string]$Destination, $Preferences) {
+    $property = $Preferences.PSObject.Properties['style']
+    $canonical = if ($null -ne $property -and $property.Name -ceq 'style' -and $property.Value -ceq 'wumi') { 'umi' } elseif ($null -ne $property -and $property.Name -ceq 'style' -and $property.Value -ceq 'wumi-pixel') { 'umi-pixel' } else { $null }
+    if ($null -eq $canonical) {
+        Copy-Item -LiteralPath $Source -Destination $Destination -Force
+        return
+    }
+    # Locate only the top-level JSON style value. Tokenizing avoids changing a
+    # nested custom style or text in a string, and preserves BOM/spacing/newlines
+    # and all other preference bytes instead of reserializing the user's file.
+    $raw = [System.Text.Encoding]::UTF8.GetString([System.IO.File]::ReadAllBytes($Source))
+    $tokens = [regex]::Matches($raw, '"(?:\\.|[^"\\])*"|[{}\[\]:,]')
+    $depth = 0
+    for ($index = 0; $index -lt $tokens.Count; $index++) {
+        $token = $tokens[$index]
+        if ($token.Value -eq '{' -or $token.Value -eq '[') { $depth++; continue }
+        if ($token.Value -eq '}' -or $token.Value -eq ']') { $depth--; continue }
+        if ($depth -ne 1 -or -not $token.Value.StartsWith('"') -or $index + 2 -ge $tokens.Count -or $tokens[$index + 1].Value -ne ':') { continue }
+        $key = ConvertFrom-Json -InputObject $token.Value
+        if ($key -cne 'style') { continue }
+        $value = $tokens[$index + 2]
+        $raw = $raw.Substring(0, $value.Index) + '"' + $canonical + '"' + $raw.Substring($value.Index + $value.Length)
+        [System.IO.File]::WriteAllText($Destination, $raw, $utf8)
+        return
+    }
+    throw "Unable to migrate the top-level style preference: $Source"
+}
+
 $sourceRoot = [System.IO.Path]::GetFullPath($PSScriptRoot)
 $sourcePackagePath = Join-Path $sourceRoot 'package.json'
 if (-not (Test-Path -LiteralPath $sourcePackagePath -PathType Leaf)) { throw "Missing package metadata: $sourcePackagePath" }
@@ -131,9 +159,9 @@ $stagedConfig = Assert-ManagedPath (Join-Path $stagePath 'config.json')
 if (Test-Path -LiteralPath $existingConfig -PathType Leaf) {
     $preferences = Read-JsonObject $existingConfig
     if ($null -ne $preferences.PSObject.Properties['layout']) {
-        # An explicit layout identifies a 2.x configuration. Keep the user's
-        # complete file, including unknown fields and original formatting.
-        Copy-Item -LiteralPath $existingConfig -Destination (Join-Path $stagePath 'config.json') -Force
+        # An explicit layout identifies a 2.x configuration. Only rename an
+        # old style ID; keep every other preference and the original formatting.
+        Copy-StylePreferences $existingConfig $stagedConfig $preferences
     } else {
         # Migrate 1.x preferences, retaining animation/rendering/size/enablement
         # and other custom fields. Keep the former style for header mode.
@@ -141,7 +169,7 @@ if (Test-Path -LiteralPath $existingConfig -PathType Leaf) {
         $headerStyle = if ($null -ne $previousStyle -and @('pixel', 'illustration') -contains $previousStyle.Value) { $previousStyle.Value } else { 'pixel' }
         Set-Property $preferences 'headerStyle' $headerStyle
         Set-Property $preferences 'layout' 'editor'
-        Set-Property $preferences 'style' 'wumi'
+        Set-Property $preferences 'style' 'umi'
         Set-Property $preferences 'name' $companionName
         Set-Property $preferences 'info' 'compact'
         Set-Property $preferences 'persona' $false
@@ -150,7 +178,7 @@ if (Test-Path -LiteralPath $existingConfig -PathType Leaf) {
 } else {
     $preferences = if (Test-Path -LiteralPath $stagedConfig -PathType Leaf) { Read-JsonObject $stagedConfig } else { [pscustomobject]@{} }
     Set-Property $preferences 'layout' 'editor'
-    Set-Property $preferences 'style' 'wumi'
+    Set-Property $preferences 'style' 'umi'
     Set-Property $preferences 'name' $companionName
     Set-Property $preferences 'info' 'compact'
     Write-Json $stagedConfig $preferences

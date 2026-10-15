@@ -16,7 +16,7 @@ const snapshot = { face: "idle-open", phase: "idle", color: "accent", glyph: "�
 const checks = [], cases = [];
 const paint = (width, bubble, extra = {}) => {
   const geometry = { collapsed: false, columns: width, rows: 6, leftWidth: width + 3 };
-  const rows = renderDock({ geometry, sheet, snapshot: { ...snapshot, bubble }, theme, visibleWidth, truncateToWidth,
+  const rows = renderDock({ geometry, sheet, snapshot: { ...snapshot, bubble, language: extra.language }, theme, visibleWidth, truncateToWidth,
     renderAvatar: ({ columns, rows }) => Array.from({ length: rows }, (_, i) => `A${i}`.padEnd(columns).slice(0, columns)), ...extra });
   return { geometry, rows, plain: rows.map(stripTerminalSequences) };
 };
@@ -48,6 +48,59 @@ for (const [phase, bubble] of Object.entries(copy.bubbles)) {
   assert.ok(!plain[1].includes("…")); assert.equal((plain[1].match(/🐾/gu) || []).length, 2);
 }
 checks.push("All normal 12/14/16/20-cell docks use a complete three-row frame with two two-cell paws and cell-centered CJK/emoji; every real short caption fits whole in the normal 16-cell dock");
+
+const englishCopy = JSON.parse(await readFile(join(root, "assets/status-copy.en.json"), "utf8"));
+for (const [key, bubble] of Object.entries(englishCopy.bubbles)) {
+  assert.ok(visibleWidth(bubble) <= 10, `${key} must leave two cells between each paw and the text`);
+  const { plain } = paint(20, bubble, { language: "en" });
+  assert.equal(visibleWidth(plain[1]), 20);
+  assert.ok(plain[1].includes(bubble), `The ${key} bubble fits without truncation`);
+  const [before, words, after] = plain[1].split("🐾");
+  assert.equal(visibleWidth(before + "🐾" + words + "🐾" + after), 20);
+  assert.ok(words.startsWith("  ") && words.endsWith("  "), `${key}: English text cannot touch the paw ink`);
+  assert.equal(words.trim(), bubble);
+}
+for (const language of ["en", "zh-CN"]) for (let width = 0; width <= 80; width++) {
+  for (const text of ["Still here! I'm listening to your idea", "中文🙂👩‍💻正在认真思考", "e\u0301 and cafe\u0301", "\x1b[35mLONG styled text\x1b[0m", "z · z · z"]) {
+    const lines = renderDockCaption({ text, width, language, theme, visibleWidth, truncateToWidth });
+    for (const line of lines) assert.equal(visibleWidth(line), width, `${language}: exact caption width at ${width}`);
+    if (width >= 2) {
+      const middle = stripTerminalSequences(lines[1]);
+      assert.ok(middle.startsWith("│") && middle.endsWith("│"));
+      const pieces = middle.split("🐾");
+      if (pieces.length === 3) {
+        const gap = language === "en" ? "  " : " ";
+        assert.ok(pieces[1].startsWith(gap) && pieces[1].endsWith(gap), `${language}: reserved paw spacing at ${width}`);
+      }
+      assert.ok(!/[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/u.test(middle));
+    }
+  }
+}
+checks.push("Every English bubble, including poke and listening, fits the normal dock with two-cell paw gaps; real Pi widths 0–80 clip long ANSI/CJK/combining/emoji text without invading paws or side walls");
+
+for (const terminalWidth of [60, 79, 80, 100, 119, 120, 140, 160]) {
+  const geometry = dockGeometry(terminalWidth, 40);
+  assert.equal(geometry.columns, 16, "A wider caption cannot enlarge the normal avatar");
+  assert.equal(geometry.rows, 8);
+  const captionWidth = terminalWidth >= 120 ? 24 : terminalWidth >= 80 ? 20 : 16;
+  assert.equal(geometry.captionColumns, captionWidth);
+  assert.equal(geometry.imageOffset, (captionWidth - 16) / 2);
+  assert.equal(geometry.leftWidth, captionWidth + 3);
+  assert.ok(terminalWidth - geometry.leftWidth >= 41, "Narrow terminals retain at least the original native editing space");
+  let imageRequest;
+  const rows = renderDock({ geometry, sheet, snapshot: { ...snapshot, bubble: "All ears", language: "en" }, theme, visibleWidth, truncateToWidth,
+    renderAvatar(request) { imageRequest = request; return Array.from({ length: request.rows }, (_, i) => `A${i}`.padEnd(request.columns)); } });
+  assert.equal(imageRequest.columns, 16);
+  assert.equal(imageRequest.rows, 8);
+  assert.ok(stripTerminalSequences(rows[3]).startsWith(" ".repeat(geometry.imageOffset) + "A0"));
+  for (const row of rows) assert.equal(visibleWidth(row), captionWidth);
+  const framedNative = ["─".repeat(terminalWidth - geometry.leftWidth), "│ " + CURSOR_MARKER + "draft│", "─".repeat(terminalWidth - geometry.leftWidth)];
+  const combined = joinEditor({ width: terminalWidth, nativeLines: framedNative, dockLines: rows, geometry, snapshot, theme, visibleWidth, truncateToWidth, editorInset: 1 });
+  assert.equal(combined.contentX, geometry.leftWidth + 1);
+  assert.equal(visibleWidth(combined.lines[combined.offsetY + 1].split(CURSOR_MARKER)[0]), geometry.leftWidth + 2);
+  assert.ok(combined.lines.every((line) => visibleWidth(line) <= terminalWidth));
+}
+checks.push("80/120-column thresholds widen only the caption to 20/24 cells; the 16×8 avatar is centered by 2/4 cells and native editor/cursor follow the caption lane without double offsets");
 
 assert.deepEqual(renderDockCaption({ text: "中文🙂", width: 0, theme, visibleWidth, truncateToWidth }).map(stripTerminalSequences), ["", "", ""]);
 for (let width = 1; width <= 80; width++) {

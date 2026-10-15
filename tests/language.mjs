@@ -1,24 +1,46 @@
 import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { modules } from "./pi-runtime.mjs";
 import { createActivity, DEMO_STATES } from "../lib/activity.mjs";
 import { createEditorControls } from "../lib/editor-controls.mjs";
 import { activityLine, activityBorder } from "../lib/editor-layout.mjs";
 import { createStatusFooter } from "../lib/footer.mjs";
 import { createQuickActions, buildUsageDetails } from "../lib/quick-actions.mjs";
 import { createChineseAutocompleteFactory } from "../lib/command-chinese.mjs";
-import { normalizeLanguage, replaceActivityCopy, localizeSnapshot, nativeChineseEnabled, compactChineseEnabled, companionName, companionSubtitle, personaFilename, mascotDescription } from "../lib/language.mjs";
+import { normalizeLanguage, resolveLanguage, detectSystemLanguage, replaceActivityCopy, localizeSnapshot, nativeChineseEnabled, compactChineseEnabled, compactPromptEnabled, compactPromptFilename, companionName, companionSubtitle, personaFilename, mascotDescription } from "../lib/language.mjs";
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), "utf8"));
 const [copy, phrases, englishCopy, englishPhrases] = await Promise.all([
   read("../assets/status-copy.json"), read("../assets/status-phrases.json"), read("../assets/status-copy.en.json"), read("../assets/status-phrases.en.json"),
 ]);
 const checks = [];
+const { visibleWidth: terminalWidth } = await import(pathToFileURL(join(modules, "@earendil-works/pi-tui/dist/index.js")).href);
 const cjk = /[\u3400-\u9fff]/u;
-for (const [value, expected] of [["zh", "zh-CN"], ["ZH-cn", "zh-CN"], ["en", "en"], [" EN ", "en"], ["en-US", undefined], [undefined, undefined]]) assert.equal(normalizeLanguage(value), expected);
+for (const [value, expected] of [["zh", "zh-CN"], ["ZH-cn", "zh-CN"], ["en", "en"], [" EN ", "en"], ["auto", "auto"], ["en-US", undefined], [undefined, undefined]]) assert.equal(normalizeLanguage(value), expected);
+for (const [env, expected] of [
+  [{ LC_ALL: "zh_TW.UTF-8", LANG: "en_US.UTF-8" }, "zh-CN"],
+  [{ LC_MESSAGES: "en_GB.UTF-8", LANGUAGE: "zh_CN:en" }, "en"],
+  [{ LANGUAGE: "zh-HK:en", LANG: "en_US.UTF-8" }, "zh-CN"],
+  [{ LANG: "ja_JP.UTF-8" }, "en"], [{ LANG: "C.UTF-8" }, "en"],
+  [{ LC_ALL: "", LANG: "zh_CN.UTF-8" }, "zh-CN"],
+]) assert.equal(detectSystemLanguage({ env, platform: "linux", readIntlLocale: () => "en-US" }), expected);
+let probes = 0;
+assert.equal(detectSystemLanguage({ env: {}, platform: "win32", readWindowsLocale: () => { probes++; return "zh-CN"; }, readIntlLocale: () => "en-US" }), "zh-CN");
+assert.equal(probes, 1);
+assert.equal(detectSystemLanguage({ env: { LANG: "en_US" }, platform: "win32", readWindowsLocale: () => assert.fail("Explicit locale must skip Windows probe") }), "en");
+assert.equal(detectSystemLanguage({ env: {}, platform: "win32", readWindowsLocale: () => { throw Error("unavailable"); }, readIntlLocale: () => "zh-Hant-TW" }), "zh-CN");
+assert.equal(detectSystemLanguage({ env: {}, platform: "linux", readIntlLocale: () => { throw Error("unavailable"); } }), "en");
+assert.equal(resolveLanguage("auto", "en"), "en"); assert.equal(resolveLanguage(undefined, "zh-CN"), "zh-CN");
+assert.equal(resolveLanguage("en", "zh-CN"), "en"); assert.equal(resolveLanguage("zh", "en"), "zh-CN");
+checks.push("Auto language honors explicit locale priority, Windows UI culture, Intl fallback and safe English fallback; explicit choices override system detection");
 for (const language of ["en", "zh-CN"]) for (const chineseUI of [true, false]) for (const compactPrompt of [true, false]) {
   const settings = { language, chineseUI, compactPrompt };
   assert.equal(nativeChineseEnabled(settings), language !== "en" && chineseUI);
   assert.equal(compactChineseEnabled(settings), language !== "en" && compactPrompt);
+  assert.equal(compactPromptEnabled(settings), compactPrompt);
+  assert.equal(compactPromptFilename(language), language === "en" ? "pi-system-en.md" : "pi-system-zh.md");
   assert.deepEqual(settings, { language, chineseUI, compactPrompt });
 }
 assert.equal(personaFilename("en"), "umi-persona.en.md"); assert.equal(personaFilename("zh-CN"), "wumi-persona.md");
@@ -34,10 +56,16 @@ assert.deepEqual(Object.keys(englishPhrases.phrases).sort(), Object.keys(phrases
 for (const key of Object.keys(copy.labels)) {
   assert.ok(englishCopy.labels[key] && !cjk.test(englishCopy.labels[key]));
   assert.ok(englishCopy.bubbles[key] && !cjk.test(englishCopy.bubbles[key]));
-  assert.ok([...englishCopy.bubbles[key]].length <= 8, `${key} bubble must fit the normal 16-cell paw frame without truncation`);
   assert.equal(englishPhrases.phrases[key].length, phrases.phrases[key].length);
   assert.ok(englishPhrases.phrases[key].every((text) => text && !cjk.test(text)));
 }
+for (const [key, bubble] of Object.entries(englishCopy.bubbles)) assert.ok(terminalWidth(bubble) <= 10, `${key} needs two cells of paw clearance on each side`);
+for (const bubble of ["唔？", "我醒啦", "你来啦", "唔！", "z", "z · z", "z · z · z"]) {
+  const localized = localizeSnapshot({ bubble, phrase: "", drowsy: bubble.startsWith("z") }, "en");
+  assert.ok(terminalWidth(localized.bubble) <= 10, `${bubble}: waking and dozing bubbles must keep English paw clearance`);
+  assert.ok(!cjk.test(localized.bubble));
+}
+checks.push("All English resource bubbles, including poke/listening extras, and hardcoded waking/dozing translations fit ten real terminal cells");
 const voice = { labels: {}, bubbles: {}, phrases: {} };
 replaceActivityCopy(voice, copy, phrases);
 let time = 2000;
@@ -58,6 +86,7 @@ for (const state of DEMO_STATES) {
     time += age;
     const value = localizeSnapshot(activity.snapshot(), "en");
     assert.ok(!cjk.test([value.label, value.phrase, value.bubble].join("\n")), `${state} at ${age} leaked Chinese copy`);
+    assert.ok(terminalWidth(value.bubble) <= 10, `${state} at ${age}: runtime bubble must leave room beside both paws`);
   }
 }
 activity.start({ wake: false }); activity.handle("agent_start"); activity.handle("ui_prompt_start"); activity.snapshot(); time += 11000;
@@ -83,7 +112,12 @@ for (mode of ["fullscreen", "regular"]) for (let width = 0; width < 181; width++
   if (mode === "regular") assert.equal(controls.regions.length, 0);
 }
 mode = "fullscreen"; assert.ok(controls.render(140, theme).includes("[Send]"));
+assert.ok(controls.render(140, theme).includes("[Motion: On]"));
 language = "zh-CN"; assert.ok(controls.render(140, theme).includes("[发送]"));
+assert.ok(controls.render(140, theme).includes("[表情：开]"));
+const pausedControls = createEditorControls({ visibleWidth, getLanguage: () => language, getState: () => ({ mode: "fullscreen", animation: false }) });
+assert.ok(pausedControls.render(140, theme).includes("[表情：关]"));
+language = "en"; assert.ok(pausedControls.render(140, theme).includes("[Motion: Off]")); pausedControls.dispose();
 language = "en";
 const running = localizeSnapshot({ ...after, toolCount: 2, toolObject: "" }, language);
 assert.ok(activityLine(running, 140, theme, visibleWidth, truncateToWidth).includes("2 tools"));

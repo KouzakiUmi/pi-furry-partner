@@ -69,7 +69,7 @@ def pixel_mouth(base, shape):
     return preserve_alpha(base, result)
 
 
-def pixel_eyes(base, focused=False, cross=False):
+def pixel_eyes(base, focused=False, cross=False, squeezed=False):
     result = base.copy()
     array = np.array(result)
     # Remove blue/orange iris and its outline only; keep the lavender hair edge
@@ -82,7 +82,10 @@ def pixel_eyes(base, focused=False, cross=False):
         region[~protected_hair] = (255, 255, 255, 255)
     result = Image.fromarray(array)
     draw = ImageDraw.Draw(result)
-    if cross:
+    if squeezed:
+        draw.line([(34, 47), (39, 50), (34, 53)], fill=PIXEL_DARK, width=1)
+        draw.line([(60, 47), (55, 50), (60, 53)], fill=PIXEL_DARK, width=1)
+    elif cross:
         for x0, x1 in [(34, 39), (54, 60)]:
             draw.line((x0, 47, x1, 52), fill=PIXEL_DARK, width=1)
             draw.line((x0, 52, x1, 47), fill=PIXEL_DARK, width=1)
@@ -248,7 +251,7 @@ def illustration_mouth(base, shape):
     return preserve_alpha(base, result)
 
 
-def illustration_eyes(base, focused=False, cross=False):
+def illustration_eyes(base, focused=False, cross=False, squeezed=False):
     original = np.array(base)
     array = original.copy()
     for x0, x1, bottom in [(341, 422, 586), (541, 631, 586)]:
@@ -265,7 +268,10 @@ def illustration_eyes(base, focused=False, cross=False):
     result = Image.fromarray(array)
     draw = ImageDraw.Draw(result)
     dark = (38, 45, 53, 255)
-    if cross:
+    if squeezed:
+        round_line(draw, [(357, 502), (405, 525), (357, 548)], dark, 9)
+        round_line(draw, [(610, 502), (562, 525), (610, 548)], dark, 9)
+    elif cross:
         for x, y in [(381, 523), (586, 523)]:
             round_line(draw, [(x-24, y-25), (x+24, y+25)], dark, 10)
             round_line(draw, [(x-24, y+25), (x+24, y-25)], dark, 10)

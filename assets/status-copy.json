@@ -30,6 +30,10 @@
     "success": "我收尾啦",
     "error": "我卡住了",
     "cancelled": "我停下啦",
-    "compacting": "我理理呀"
+    "compacting": "我理理呀",
+    "poke_idle": "呜呀！",
+    "poke_busy": "唔，等我",
+    "poke_waiting": "我在呢呀",
+    "listening": "我听着呢"
   }
 }

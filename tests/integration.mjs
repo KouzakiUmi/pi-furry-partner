@@ -132,7 +132,7 @@ function detachHostUI() {
 
 try {
   for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
-  await writeFile(join(scratch, "config.json"), JSON.stringify({ layout:"editor", style:"wumi", renderer:"auto", info:"compact", enabled:true, animation:true, dockSize:"auto" }));
+  await writeFile(join(scratch, "config.json"), JSON.stringify({ language:"zh-CN", layout:"editor", style:"wumi", renderer:"auto", info:"compact", enabled:true, animation:true, dockSize:"auto" }));
   themeAPI.setThemeJsonValidator(validateThemeJson); themeAPI.initTheme("dark", false);
   theme = themeAPI.loadThemeFromPath(join(root, "themes/pi-furry-night.json"), "truecolor");
   editorTheme = themeAPI.getEditorTheme();
@@ -159,6 +159,86 @@ try {
   assert.notStrictEqual(terminal.write, nativeWrite);
   checks.push("Real Pi loader/theme/keybindings create the editor/header/footer; RPC has no terminal factories, hook or timer");
 
+  // Actual native typing, cursor-only input, paste and submission are observed
+  // without intercepting or rewriting their data. Busy phases keep priority.
+  time += 6000; currentEditor.setText("");
+  currentEditor.handleInput("h"); currentEditor.render(100); tick(); tick(); tick(); tick(); currentEditor.render(100);
+  assert.match(currentEditor.displaySheet.frames[0].id,/^listen/);assert.equal(currentEditor.getText(),"h");
+  const typingConfig=await readFile(join(scratch,"config.json"),"utf8"),typingSubmits=submits.length;
+  currentEditor.handleInput("\x1b[D");time+=1900;tick();currentEditor.render(100);tick();tick();tick();tick();currentEditor.render(100);
+  assert.match(currentEditor.displaySheet.frames[0].id,/^idle/);assert.equal(currentEditor.getText(),"h");
+  currentEditor.handleInput("\x1b[200~hello你好🙂\x1b[201~");time+=250;currentEditor.render(100);
+  assert.ok(currentEditor.getText().includes("hello你好🙂"));assert.equal(submits.length,typingSubmits);
+  assert.equal(await readFile(join(scratch,"config.json"),"utf8"),typingConfig);
+  currentEditor.setText("listen-submit");currentEditor.handleInput("\r");
+  assert.equal(currentEditor.getText(),"");assert.equal(submits.at(-1),"listen-submit");
+  currentEditor.render(100);tick();tick();tick();tick();currentEditor.render(100);
+  assert.doesNotMatch(currentEditor.displaySheet.frames[0].id,/^listen/,"Submitting an emptied draft must cancel the local listening gesture");
+  await emit("agent_start");await emit("tool_execution_start",{toolCallId:"typing-priority",toolName:"bash",args:{}});
+  currentEditor.handleInput("x");time+=1300;tick();currentEditor.render(100);tick();tick();tick();tick();currentEditor.render(100);
+  assert.match(currentEditor.displaySheet.frames[0].id,/^watch/);
+  await emit("tool_execution_end",{toolCallId:"typing-priority",isError:false});await emit("agent_before_settle",{outcome:"completed"});await emit("agent_settled",{aborted:false});
+  time+=3000;currentEditor.setText("");tick();currentEditor.render(100);
+  checks.push("Actual typing/paste triggers a local cupped-ear listening gesture; cursor movement cannot extend it, timeout restores idle, native draft/config/submission count survive and running work keeps priority");
+
+  // Animation off keeps state changes live, and an explicit poke can finish
+  // its local reaction without silently turning the motion preference on.
+  await command("pause"); assert.equal(jobs.size, 0);
+  currentEditor.render(100);const beforePausedTyping=currentEditor.displaySheet.frames[0].cacheKey;
+  currentEditor.handleInput("q");currentEditor.render(100);assert.equal(currentEditor.displaySheet.frames[0].cacheKey,beforePausedTyping,"Paused motion must ignore typing gestures");currentEditor.setText("");
+  const latencyPreferences = await readFile(join(scratch, "config.json"), "utf8");
+  await emit("input", { source: "interactive", text: "a downstream extension handles this input" });
+  for (let i = 0; i < 3; i++) tick();
+  assert.equal(jobs.size, 0, "Unconfirmed input receipts expire instead of looping after a handled input or preflight failure");
+  assert.doesNotMatch(plain(currentEditor.render(140)).join("\n"), /收到你的输入|准备这次请求/);
+  await emit("input", { source: "interactive", text: "offline latency fixture" });
+  assert.match(plain(currentEditor.render(140)).join("\n"), /收到你的输入/);
+  assert.equal(jobs.size, 1); assert.equal([...jobs.values()][0].ms, 1000);
+  await emit("agent_start"); await emit("before_provider_request", { payload: {} });
+  for (let i = 0; i < 15; i++) tick();
+  const waitingRows = plain(currentEditor.render(140)).join("\n");
+  assert.match(waitingRows, /模型还没开口/); assert.match(waitingRows, /15s/);
+  for (let width = 1; width <= 180; width++) for (const row of currentEditor.render(width)) assert.ok(visibleWidth(row) <= width);
+  await emit("message_update", { assistantMessageEvent: { type: "thinking_delta", delta: "reasoning" } });
+  assert.match(plain(currentEditor.render(140)).join("\n"), /思考内容/);
+  await emit("message_update", { assistantMessageEvent: { type: "text_delta", delta: "answer" } });
+  assert.equal(jobs.size, 0, "The metadata-only heartbeat stops at real answer text while motion remains off");
+  assert.doesNotMatch(plain(currentEditor.render(140)).join("\n"), /等正文|模型还没开口/);
+  assert.equal(await readFile(join(scratch, "config.json"), "utf8"), latencyPreferences);
+  await emit("agent_settled", { aborted: false });
+  await command("layout header"); await command("pause");
+  const titleImageMarkers = () => currentHeader.render(140).join("\n").match(/\x1b\]777;pi-furry-partner-[^\x07\x1b]+/g) || [];
+  const pausedTitle = titleImageMarkers(); assert.ok(pausedTitle.length > 0);
+  await emit("agent_start"); await emit("before_provider_request", { payload: {} });
+  assert.equal([...jobs.values()][0].ms, 1000);
+  for (let i = 0; i < 3; i++) tick();
+  assert.deepEqual(titleImageMarkers(), pausedTitle, "A waiting heartbeat cannot advance paused title image frames; state text remains live");
+  await emit("message_update", { assistantMessageEvent: { type: "text_delta", delta: "answer" } });
+  assert.equal(jobs.size, 0); await emit("agent_settled", { aborted: false });
+  await command("layout editor");
+  checks.push("Real input/provider/stream hooks show submission, first-output wait seconds and thinking-before-text; paused motion gets one 1s metadata heartbeat, no narrow overflow, preference write or lingering timer");
+  await emit("agent_start");
+  await emit("tool_execution_start", { toolCallId: "pause-work", toolName: "bash", args: {} });
+  currentEditor.render(100); assert.match(currentEditor.displaySheet.frames[0].id, /^watch/);
+  await emit("tool_execution_end", { toolCallId: "pause-work", isError: false });
+  currentEditor.render(100); assert.match(currentEditor.displaySheet.frames[0].id, /^think/);
+  time += 10000; currentEditor.render(100);
+  assert.match(currentEditor.displaySheet.frames[0].id, /^think/, "A paused work hold cannot permanently latch the old work face after the tool ends");
+  currentEditor.setText("keep my poke draft🙂");
+  const beforePokeConfig = await readFile(join(scratch, "config.json"), "utf8"), beforePokeSubmits = submits.length;
+  await command("poke"); assert.equal(jobs.size, 1); currentEditor.render(100);
+  assert.equal(currentEditor.displaySheet.frames[0].id, "poke");
+  const pokeFirst = currentEditor.displaySheet.frames[0].cacheKey;
+  tick(); tick(); currentEditor.render(100);
+  assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, pokeFirst);
+  while (jobs.size) { tick(); currentEditor.render(100); }
+  assert.match(currentEditor.displaySheet.frames[0].id, /^think/);
+  assert.equal(currentEditor.getText(), "keep my poke draft🙂"); assert.equal(submits.length, beforePokeSubmits);
+  assert.equal(await readFile(join(scratch, "config.json"), "utf8"), beforePokeConfig);
+  await emit("agent_before_settle", { outcome: "completed" }); await emit("agent_settled", { aborted: false });
+  currentEditor.setText(""); await command("play");
+  checks.push("Paused work→thinking changes immediately and stays correct across a tokenless gap; regular /mascot poke shakes a >w< face then restores the real static pose, stops its temporary timer and preserves draft/config/submission count");
+
   let menuNativeCalls = 0;
   currentEditor.actionHandlers.set("app.message.copy", () => { menuNativeCalls++; });
   ctx.ui.select = async (_title, options) => options.find((option) => /复制/.test(option));
@@ -184,29 +264,32 @@ try {
   const originalPrompt="原始系统提示词：保持事实准确。\nTools and permissions remain unchanged.\nLiteral suffix: <END>";
   const runBeforeAgent=async(targetCtx=ctx)=>{
     let result;
-    for(const handler of beforeAgentHandlers){const value=await handler({type:"before_agent_start",prompt:"hello",systemPrompt:originalPrompt},targetCtx);if(value!==undefined)result=value;}
-    return result;
+    const systemPromptOptions = { customPrompt: originalPrompt, sections: {} };
+    for(const handler of beforeAgentHandlers){const value=await handler({type:"before_agent_start",prompt:"hello",systemPrompt:originalPrompt,systemPromptOptions},targetCtx);if(value!==undefined)result=value;}
+    return { result, systemPromptOptions };
   };
-  assert.equal(await runBeforeAgent(),undefined,"Persona must be off by default");
+  assert.deepEqual(await runBeforeAgent(),{result:undefined,systemPromptOptions:{customPrompt:originalPrompt,sections:{}}},"Persona must be off by default");
   await command("persona on");
   const personaPrompt=await runBeforeAgent();
   const templatePath=join(scratch,"prompts/wumi-persona.md");
   const template=(await readFile(templatePath,"utf8")).trim();
   assert.ok(template.length>0);
-  assert.ok(personaPrompt?.systemPrompt.startsWith(originalPrompt+"\n\n"),"The original system prompt must remain an intact prefix");
-  assert.ok(personaPrompt.systemPrompt.includes(template),"The saved template must be appended");
-  assert.equal(await runBeforeAgent({...ctx,mode:"rpc"}),undefined,"Persona must not inject outside TUI");
+  assert.equal(personaPrompt.result,undefined,"Persona must not return a whole-prompt override");
+  assert.equal(personaPrompt.systemPromptOptions.customPrompt,originalPrompt,"The original custom system prompt stays exact");
+  assert.equal(personaPrompt.systemPromptOptions.forceSystemPrompt,undefined);
+  assert.equal(personaPrompt.systemPromptOptions.sections.umi_persona,template,"The saved template has its own structured section");
+  assert.deepEqual(await runBeforeAgent({...ctx,mode:"rpc"}),{result:undefined,systemPromptOptions:{customPrompt:originalPrompt,sections:{}}},"Persona must not inject outside TUI");
   await command("persona status");
-  await command("persona off");assert.equal(await runBeforeAgent(),undefined,"Disabling persona must remove injection from the next request");
+  await command("persona off");assert.deepEqual((await runBeforeAgent()).systemPromptOptions.sections,{},"Disabling persona must remove injection from the next request");
   assert.equal(JSON.parse(await readFile(join(scratch,"config.json"),"utf8")).persona,false);
   await command("persona on");
   const missingNoticeCount=notices.length;
   await rename(templatePath,templatePath+".saved");
   try{
-    assert.equal(await runBeforeAgent(),undefined,"A missing template must fail open without replacing the original prompt");
+    assert.deepEqual((await runBeforeAgent()).systemPromptOptions.sections,{},"A missing template must fail open without replacing the original prompt");
     assert.ok(notices.length>missingNoticeCount,"A missing template must notify the user");
   }finally{await rename(templatePath+".saved",templatePath);await command("persona off");}
-  checks.push("Persona hook defaults off; TUI on appends its template after an intact system prompt, off retracts it, RPC never injects and missing templates fail open with a notice");
+  checks.push("Persona hook defaults off; TUI on adds an independent structured section without a forced prompt, custom text stays exact, off retracts it, RPC never injects and missing templates fail open with a notice");
 
   const framePreviews = [];
   for (const language of ["en", "zh-CN"]) {
@@ -327,19 +410,20 @@ try {
     for (let i = 0; i < count; i++) { tick(); rendered = currentEditor.render(100); }
     return rendered;
   };
-  for (const style of ["wumi", "wumi-pixel"]) {
+  for (const style of ["umi", "umi-pixel"]) {
     await command(`style ${style}`);
     await command("demo running"); currentEditor.render(100); advanceDock();
-    assert.match(currentEditor.displaySheet.frames[0].id, /^work/);
-    assert.equal(currentEditor.displaySheet.width, style === "wumi-pixel" ? 80 : 240);
+    assert.match(currentEditor.displaySheet.frames[0].id, /^watch/);
+    assert.equal(currentEditor.displaySheet.width, style === "umi-pixel" ? 80 : 240);
     assert.equal(currentEditor.displaySheet.frames.length, 1);
-    const typingKey = currentEditor.displaySheet.frames[0].cacheKey;
-    advanceDock(2); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, typingKey, "Typing/micro-motion must produce actual new rendered pixels");
+    const watchKey = currentEditor.displaySheet.frames[0].cacheKey;
+    advanceDock(2); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "Magnifier/head scanning must produce actual new rendered pixels");
     for (const [phase, expectedId] of [["editing", /^work/], ["searching", /^search/], ["compacting", /^search/], ["error", /^error/], ["success", /^happy/]]) {
       const before = currentEditor.displaySheet.frames[0].cacheKey;
       await command(`demo ${phase}`); currentEditor.render(100);
       assert.equal(currentEditor.displaySheet.frames[0].cacheKey, before, "A phase change starts from the displayed frame instead of jumping to a new pose");
-      advanceDock(); assert.match(currentEditor.displaySheet.frames[0].id, expectedId);
+      // Distinct work/watch tool poses now honor the 1200ms readable gesture.
+      advanceDock(phase === "editing" ? 30 : 5); assert.match(currentEditor.displaySheet.frames[0].id, expectedId);
       assert.ok(currentEditor.motion.stats().frames <= 64);
       for (const line of currentEditor.render(100)) assert.ok(visibleWidth(line) <= 100);
     }
@@ -352,8 +436,8 @@ try {
     assert.equal(jobs.size, 0);
     await command("play"); currentEditor.render(100); assert.equal(jobs.size, 1);
   }
-  await command("demo off"); await command("style wumi"); currentEditor.render(100);
-  checks.push("Real wumi and crisp wumi-pixel docks render one-frame motion sheets through Sixel: typing, buried searching/compacting, XX error and success transition from the displayed frame, stay bounded and pause completely");
+  await command("demo off"); await command("style umi"); currentEditor.render(100);
+  checks.push("Real umi and crisp umi-pixel docks render one-frame motion sheets through Sixel: magnifier scan, typing, buried searching/compacting, XX error and success transition from the displayed frame, stay bounded and pause completely");
 
   terminal.columns=100;terminal.rows=40;currentEditor.setText("");historyLength=120;
   renderer.renderNow();assert.ok(renderer.captureRenderState().previousViewportTop>0);

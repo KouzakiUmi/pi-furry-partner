@@ -55,6 +55,8 @@ def main():
             # Match the canonical pixel-style derivative: 240px indexed pose
             # sampled nearest to 80px, using its existing 48-color palette.
             source=image
+    from refine_pixel_lines import refine
+    refine()
     report={"passed":True,"source":"assets/poses/search.png","styles":reports}
     (ROOT/"tests/search-asset-validation.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report,ensure_ascii=False,indent=2))

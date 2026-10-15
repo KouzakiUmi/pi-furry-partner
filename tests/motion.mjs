@@ -176,19 +176,20 @@ const alphaComponent = (pixels, width, height, transparent, seed) => {
   player.frame(sheet, 1, { phase: "speaking" });
   set(100); const moving = player.frame(sheet, 1, { phase: "speaking" });
   set(150); const paused = player.frame(sheet, 1, { phase: "speaking", animate: false });
-  assert.equal(paused.cacheKey, moving.cacheKey); assert.equal(paused.nextInMs, Infinity);
+  assert.notEqual(paused.cacheKey, moving.cacheKey, "Pausing a crossfade settles its target instead of freezing a mixed face");
+  assert.equal(paused.frame.pixels[12 * 24 + 12], 2); assert.equal(paused.transitioning, false); assert.equal(paused.nextInMs, Infinity);
   set(90000); const frozen = player.frame(sheet, 3, { phase: "speaking", animate: false, blink: true });
   assert.equal(frozen.cacheKey, paused.cacheKey); assert.deepEqual(frozen.motion, paused.motion);
   assert.equal(player.stats().logicalTime, 100);
   const resumed = player.frame(sheet, 1, { phase: "speaking" });
-  assert.equal(resumed.cacheKey, moving.cacheKey); assert.equal(resumed.transitioning, true);
+  assert.equal(resumed.cacheKey, paused.cacheKey); assert.equal(resumed.transitioning, false, "A settled pause must not restart an abandoned crossfade");
   set(90100); assert.equal(player.frame(sheet, 1, { phase: "speaking" }).transitioning, false);
   const changed = player.frame(sheet, 4, { phase: "thinking", animate: false });
   assert.equal(changed.transitioning, false); assert.equal(changed.frame.id, "think");
   set(95000); assert.equal(player.frame(sheet, 5, { phase: "thinking", animate: false }).cacheKey, changed.cacheKey);
   assert.equal(player.frame(sheet, 7, { phase: "thinking", animate: false }).cacheKey, changed.cacheKey, "Even a caller-provided pose change in the same paused phase remains still");
   player.dispose();
-  checks.push("Pause freezes pixels, blink, mouth, ears and breathing; resume continues the same logical clock and a real paused phase change updates once");
+  checks.push("Pause settles an active crossfade to its current target, then freezes pixels, blink, mouth, ears and breathing; resume keeps the logical clock and a real paused phase change updates once");
 }
 
 {

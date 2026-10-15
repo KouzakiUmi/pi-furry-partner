@@ -2,7 +2,7 @@
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.2](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) · [Changelog](../CHANGELOG.md)
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
@@ -12,7 +12,7 @@ The fully tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and 
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.3.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-v2.3.2.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell
@@ -21,7 +21,7 @@ pi
 ```
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.2
 ```
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.

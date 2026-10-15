@@ -10,12 +10,12 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release v2.3.1](https://img.shields.io/badge/release-v2.3.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1)
+[![Release v2.3.2](https://img.shields.io/badge/release-v2.3.2-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download v2.3.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download v2.3.2**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -95,7 +95,7 @@ Choose one installation route to avoid loading the extension twice.
 
 ### Complete Windows installation
 
-Download `pi-furry-partner-v2.3.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.1), extract it, close Pi, and open PowerShell in the extracted directory:
+Download `pi-furry-partner-v2.3.2.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2), extract it, close Pi, and open PowerShell in the extracted directory:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -109,7 +109,7 @@ If you used **pi-wink-companion**, run the new installer directly: it backs up a
 ### Pi package manager
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.2
 ```
 
 This loads the extension and theme through the package manifest. It **does not run the PowerShell installer or configure Pi's four UI options**. Restart Pi, select `pi-furry-night` with `/theme`, and choose your interface mode in `/settings`. The Git tag pins your version; choose a newer release tag when updating. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
@@ -138,6 +138,8 @@ The character name and style commands now consistently use **Umi / `umi`**. Lega
 `umi-pixel` preserves the illustrated character's design, face and poses at **80 × 80**. Local line protection keeps fine mouth strokes from disappearing during sampling, with a light color cleanup around those strokes and no character redesign.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
+
+**2.3.2 completes the closed-eye fixes across all styles.** Legacy illustration and pixel startup, dozing, blinking, error and poke expressions no longer retain open-eye lashes, gray shadows or iris pixels. The pixel header wink is fixed too. Saved styles and other preferences are preserved; restart Pi after upgrading to load the new artwork.
 
 **2.3.1 fixes black portrait stripes and stalled output after text selection.** Image-marker deduplication prevents misplaced stripes; separate parsing of Pi's duplicated private caret markers prevents later output from being buffered indefinitely. Pi retains native selection, drafts, cursor and submission behavior. Verification exercises the real Pi selection and output protocols; it does not establish native-screen coverage of every Windows Terminal environment.
 

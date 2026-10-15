@@ -31,6 +31,24 @@
 
 外观之外，插件也整理了输入框、底部信息和常用操作。角色短句、控件和信息面板默认跟随系统，也可以切换**简体中文或 English**；**原生界面中文、Pi 文档提示精简、可选角色口吻**则各有开关。你可以继续使用熟悉的模型和工作方式。
 
+## 认识呜咪
+
+<table>
+<tr>
+<td align="center" width="360">
+<img src="assets/profile/umi-photo.jpg" alt="呜咪角色实拍：戴着星纹兜帽和蓝围巾，蓝眼睛望向镜头，伸出灰色爪子" width="320"><br>
+<sub>角色实拍 · Umi in costume</sub>
+</td>
+<td valign="middle">
+<h3>呜咪 · Umi</h3>
+<p>一只白灰毛、蓝眼睛的 Kemono 狼少年。灰爪子、星纹兜帽和蓝围巾，让你一眼就认出他。</p>
+<p>温柔、活泼，带一点俏皮；平时会歪头听你说，也会忍不住晃晃尾巴。到了需要认真拿主意的时候，他会收起玩心，稳稳陪你把事情做好。</p>
+<p>🐾「唔，把想法告诉我吧。咱们一起慢慢做出来！」</p>
+<sub>呜咪的角色实拍。角色与照片保留全部版权，详见 <a href="ASSET_LICENSE.md">素材版权说明</a>。</sub>
+</td>
+</tr>
+</table>
+
 ## 先看看呜咪
 
 <table>
@@ -170,7 +188,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.0
 
 ## 许可与致谢
 
-代码与文档采用 [Apache License 2.0](LICENSE)。**呜咪的角色设计、形象、插画、像素图、动画和包含角色的预览图保留全部权利**，不随代码许可开放；详见 [ASSET_LICENSE.md](ASSET_LICENSE.md)。
+代码与文档采用 [Apache License 2.0](LICENSE)。**呜咪的角色设计、形象、照片、插画、像素图、动画和包含角色的预览图保留全部权利**，不随代码许可开放；详见 [ASSET_LICENSE.md](ASSET_LICENSE.md)。
 
 
 本项目是独立制作的 Pi 扩展。感谢 [Pi](https://github.com/earendil-works/pi) 提供扩展与终端界面能力；快捷入口和按需详情的交互设计参考了 [tomsej/pi-ext](https://github.com/tomsej/pi-ext) 与 [narumiruna/pi-extensions](https://github.com/narumiruna/pi-extensions)，未复制其扩展源码。

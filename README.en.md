@@ -31,6 +31,24 @@ Umi stays beside the [Pi Coding Agent](https://github.com/earendil-works/pi) edi
 
 The extension also tidies up the editor, footer and everyday actions. Companion text, controls and information panels follow your system language by default and support **English and Simplified Chinese**. The **native Chinese UI patch, concise bilingual Pi documentation hints and optional character voice** each have their own switch, so you can keep your existing models and workflow.
 
+## The wolf behind the paws
+
+<table>
+<tr>
+<td align="center" width="360">
+<img src="assets/profile/umi-photo.jpg" alt="Umi in costume, wearing a star-patterned hood and blue scarf, with blue eyes and a gray paw reaching toward the camera" width="320"><br>
+<sub>Umi in costume · 角色实拍</sub>
+</td>
+<td valign="middle">
+<h3>Umi · 呜咪</h3>
+<p>A young Kemono wolf with white-and-gray fur and blue eyes. His gray paws, star-patterned hood and blue scarf are his familiar little signatures.</p>
+<p>Gentle, lively and a little playful, he listens with a curious head tilt and a tail that sometimes gives him away. When a decision matters, he settles down and helps you see it through with care.</p>
+<p>🐾 “Hm, tell me what you're thinking. We'll work it out together!”</p>
+<sub>Umi in costume. Character and photograph: All Rights Reserved. See <a href="ASSET_LICENSE.md">asset rights</a>.</sub>
+</td>
+</tr>
+</table>
+
 ## Meet Umi
 
 <table>
@@ -172,6 +190,6 @@ The GitHub README is the project's main landing page. Optional standalone showca
 
 ## License and thanks
 
-Code and documentation use [Apache License 2.0](LICENSE). **The Umi character design, illustrations, pixel art, animations and previews containing the character are All Rights Reserved** and are excluded from the code license. See [ASSET_LICENSE.md](ASSET_LICENSE.md).
+Code and documentation use [Apache License 2.0](LICENSE). **The Umi character design, photographs, illustrations, pixel art, animations and previews containing the character are All Rights Reserved** and are excluded from the code license. See [ASSET_LICENSE.md](ASSET_LICENSE.md).
 
 This is an independently made Pi extension. Thanks to [Pi](https://github.com/earendil-works/pi) for its extension and terminal UI capabilities. Quick-action and on-demand detail interaction designs were informed by [tomsej/pi-ext](https://github.com/tomsej/pi-ext) and [narumiruna/pi-extensions](https://github.com/narumiruna/pi-extensions); their extension source code was not copied.

@@ -522,7 +522,17 @@ try {
   checks.push("Real fullscreen layout clips the actual dock to visible row stripes, and a narrow overlay suppresses Sixel until dismissed");
 
   for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render auto","off","on"]){
+    const outgoingEditor = currentEditor;
     await command(args);
+    if (outgoingEditor !== currentEditor && outgoingEditor?.motion) {
+      const writesBefore = terminalWrites.length, timersBefore = jobs.size;
+      for (const width of [100, 40, 1, 0]) assert.deepEqual(outgoingEditor.render(width), [], `Retired editor renders nothing after ${args}`);
+      outgoingEditor.dispose();
+      outgoingEditor.handleInput("must not enter the retired draft");
+      assert.equal(outgoingEditor.handleMouse(mouse(0, 0, 100, 40)), undefined);
+      assert.equal(terminalWrites.length, writesBefore);
+      assert.equal(jobs.size, timersBefore);
+    }
     assert.ok(jobs.size<=1,`More than one timer after ${args}`);
     currentEditor.render(100);currentHeader?.render(100);currentFooter?.render(100);
     if(args==="off"){assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
@@ -541,14 +551,18 @@ try {
   checks.push("External header/footer takeover revokes ownership: mascot off leaves foreign components intact, while explicit on can reclaim its configured UI");
   await command("demo thinking");await command("off");assert.strictEqual(terminal.write,nativeWrite);assert.equal(jobs.size,0);
   await command("on");currentEditor.render(100);
+  const shutdownEditor = currentEditor;
   const writeBeforeShutdown=terminal.write;assert.notStrictEqual(writeBeforeShutdown,nativeWrite);
   await emit("session_shutdown",{reason:"reload"});assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);
   detachHostUI();hostDisposed=true;
+  assert.deepEqual(shutdownEditor.render(100), []);
+  assert.equal(await shutdownEditor.openQuickActions(), false);
   // A stale context is never accessed by a timer after teardown.
   assert.equal(jobs.size,0);hostDisposed=false;
   await emit("session_start",{reason:"reload"});assert.equal(jobs.size,1);currentEditor.render(100);
   await emit("session_shutdown",{reason:"quit"});assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);detachHostUI();
   checks.push("Repeated style/layout/size/info/render/off/on changes retain a single timer/hook; reload and quit dispose factories, branch callbacks and restore the original terminal write");
+  checks.push("Retired editors ignore late rendering, input, mouse and quick actions after replacement/shutdown; repeated disposal is harmless and stale UI contexts remain untouched");
 
   const report={testedAt:new Date(originalClock()).toISOString(),piVersion:version,modelRequests:0,passed:true,verification:"Real Pi extension loader, CustomEditor, Theme, Keybindings and main/fullscreen rendering with fake terminal/clock; no model session or credentials",checks};
   await writeFile(join(root,"tests/integration-validation.json"),JSON.stringify(report,null,2)+"\n");

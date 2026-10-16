@@ -2,6 +2,26 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.3.3 · 2026-10-16
+
+### 简体中文
+
+- 中文系统提示词及代码中的中文默认文本同步加入“必须使用中文思考和回复。”。
+- 修复输入框已释放后，Pi 在切换布局、重新加载或退出期间再次测量渲染旧实例导致的 `Motion player has been disposed` 崩溃。释放后的旧输入框忽略渲染与交互，重复释放保持安全；增加真实 Pi 输入框生命周期回归。
+- 新增 GitHub Actions 远程发布流程：版本 tag 触发运行时、集成、安装及静态页验证，通过后生成源码 ZIP、SHA-256 校验文件并发布 Release。
+- 中英文安装文档及安装完成提示补充 Sixel 高清显示要求、Windows Terminal 1.22+、自动选择规则和字符块回退方法。
+- 下载并解压 `pi-furry-partner-v2.3.3.zip`，在项目目录运行 `pwsh -NoProfile -File .\install.ps1`；或使用 `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3`。升级后重新启动 Pi。
+- 保持现有 Pi 版本兼容范围；本次不增加 Pi 1.3 的原生提示词兼容支持。
+
+### English
+
+- Added “必须使用中文思考和回复。” (must think and reply in Chinese) to the Chinese system prompt and its matching default text.
+- Fixed `Motion player has been disposed` crashes when Pi measures an outgoing editor after layout changes, reload or shutdown. Retired editors ignore late rendering and interaction, disposal is idempotent, and real Pi editor lifecycle regression coverage verifies the boundary.
+- Added remote GitHub Actions releases: version tags run runtime, integration, installer and static-site checks before packaging a source ZIP and SHA-256 checksum and publishing the Release.
+- Added Sixel display requirements, Windows Terminal 1.22+, automatic renderer selection and character-block fallback guidance to bilingual installation docs and installer output.
+- Extract `pi-furry-partner-v2.3.3.zip` and run `pwsh -NoProfile -File .\install.ps1` from the project directory, or use `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3`. Restart Pi after upgrading.
+- Existing Pi compatibility boundaries remain in place; this release does not add native prompt compatibility for Pi 1.3.
+
 ## 2.3.2 · 2026-10-16
 
 ### 简体中文

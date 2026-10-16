@@ -211,6 +211,7 @@ export default function (pi: ExtensionAPI) {
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
       private motion = createMotionPlayer();
+      private disposed = false;
       private demoMotionEpoch: string | undefined;
       private demoMotionPhase: string | undefined;
       private displaySheet: any;
@@ -262,7 +263,7 @@ export default function (pi: ExtensionAPI) {
         activeEditor = this;
         armTimer();
       }
-      openQuickActions(action = "menu") { return this.quickActions.run(action); }
+      openQuickActions(action = "menu") { return this.disposed ? Promise.resolve(false) : this.quickActions.run(action); }
       private async showDetails(title: string, lines: string[]) {
         await ctx.ui.custom<void>((detailTui, theme, _keys, done) => {
           let offset = 0, pageRows = 1, totalRows = 1;
@@ -296,6 +297,9 @@ export default function (pi: ExtensionAPI) {
         }, { overlay: true, overlayOptions: { anchor: "center", width: "85%", maxHeight: "85%", margin: 2 } });
       }
       render(width: number): string[] {
+        // Pi can still measure the outgoing editor during replacement/shutdown.
+        // Never touch released motion, terminal hooks or the old UI context.
+        if (this.disposed) return [];
         if (width <= 0) { this.geometry = undefined; this.controls.render(0); return []; }
         const geometry = dockGeometry(width, tui?.terminal.rows || 30, settings.dockSize);
         const frame = editorFrameGeometry(width - geometry.leftWidth);
@@ -334,6 +338,7 @@ export default function (pi: ExtensionAPI) {
         return this.geometry.lines;
       }
       handleInput(data: string) {
+        if (this.disposed) return;
         // Observe only the native editor's result. Never intercept text, IME,
         // pasted content, shortcuts or submission; no draft content is logged.
         const before = this.getText();
@@ -348,6 +353,7 @@ export default function (pi: ExtensionAPI) {
         return result;
       }
       handleMouse(event: any) {
+        if (this.disposed) return undefined;
         const geometry = this.geometry;
         if (!geometry) return undefined;
         const control = tui?.mode === "fullscreen" ? this.controls.handleMouse(event, { row: this.toolbarRow, offsetX: geometry.contentX + 3, avatar: this.avatarBounds }) : undefined;
@@ -368,7 +374,13 @@ export default function (pi: ExtensionAPI) {
         this.toolbarLine = this.borderColor("── ") + content + this.borderColor("─".repeat(Math.max(0, width - length - 3)));
         return this.toolbarLine;
       }
-      dispose() { this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined; this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose(); }
+      dispose() {
+        if (this.disposed) return;
+        this.disposed = true;
+        this.geometry = undefined; this.avatarBounds = undefined;
+        this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined;
+        this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose();
+      }
     }
     editorFactory = (editorTui, theme, keybindings) => new UmiEditor(editorTui, theme, keybindings);
     ctx.ui.setEditorComponent(editorFactory);

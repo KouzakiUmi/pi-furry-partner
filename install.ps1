@@ -310,6 +310,10 @@ try {
 
 Write-Host "Installed Pi Furry Partner: $extensionPath"
 Write-Host "Theme: $themeName"
+Write-Host 'High-resolution portraits: use Windows Terminal 1.22+ (Settings > About); Sixel is built in.'
+Write-Host 'Renderer auto selects Sixel in Windows Terminal outside tmux; upgrades preserve your renderer preference.'
+Write-Host 'In Pi: /mascot shows the renderer; /mascot render auto restores auto; /mascot render blocks is the fallback.'
+Write-Host 'No external image tools or terminal-settings script required. See docs/guide.zh-CN.md or docs/guide.en.md.'
 Write-Host 'Layout: editor companion; existing regular/fullscreen mode is preserved.'
 Write-Host 'Fresh startup: header retained, resource list hidden, changelog collapsed; upgrades preserve current choices.'
 Write-Host "Backup: $backupPath"

@@ -2,13 +2,14 @@
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.2](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [架构说明](architecture.md)
 
-本指南针对 **pi-furry-partner 2.3.2**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+本指南针对 **pi-furry-partner 2.3.3**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
 角色英文名为 **Umi**，风格命令统一为 `umi`、`umi-pixel`。旧的 `wumi`、`wumi-pixel` 命令和配置作为兼容别名继续支持，保存设置时使用新 ID。`wumi-persona.md` 文件名和既有素材路径保持稳定。
 
 - [安装与启动](#安装与启动)
+- [高清显示与终端要求](#高清显示与终端要求)
 - [中英文切换](#中英文切换)
 - [界面与状态反应](#界面与状态反应)
 - [鼠标控件与界面模式](#鼠标控件与界面模式)
@@ -31,7 +32,7 @@
 
 完整验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel 传输及实际扩展集成等交互回归。其他操作系统暂未完成实机验证；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -59,6 +60,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 
 扩展由 Pi 的扩展目录自动发现，脚本不再向 `settings.extensions` 或 `settings.packages` 注册第二份。保留这一种加载方式即可。
 
+### 高清显示与终端要求
+
+高清头像使用 **Sixel 图片协议**，需要终端支持；普通字符块模式仍可使用插件和动画。Windows 推荐 **Windows Terminal 1.22 或更新版本**，可在“设置 → 关于”查看版本，通过 Microsoft Store 更新。[微软的 1.22 发布说明](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/)介绍了内置 Sixel 支持；通常不需要另开终端设置。PowerShell 5.1 / 7 是 shell，单独升级 PowerShell 不会让旧终端支持 Sixel。
+
+1. 在 Windows Terminal 中打开 PowerShell，安装插件并启动 Pi。默认 `renderer: "auto"` 在检测到 `WT_SESSION` 且没有 `TMUX` 时选择 Sixel；这只是环境识别，不是终端能力探测，也不检查终端版本。其他环境自动使用字符块。升级会保留已有的渲染偏好。
+2. 在 Pi 输入 `/mascot`，查看当前渲染结果是否为 `sixel`。输入 `/mascot demo` 可观察实际显示，`/mascot demo off` 退出演示。
+3. 若曾选过字符块，可输入 `/mascot render auto` 恢复默认。其他已确认支持 Sixel 的终端可输入 `/mascot render sixel`；该命令只选择插件的图片输出，不能替终端增加协议支持。
+4. 若头像不显示、乱码或错位，先更新终端，并在不经过 tmux、SSH 或嵌入式终端的本地 Windows Terminal 中重试；可输入 `/mascot render blocks` 恢复字符块显示，再排查当前终端与转发链路。
+
+插件自己编码 Sixel，无需额外安装 libsixel、chafa 或 ffmpeg。安装器不会修改 Windows Terminal 配置、安装或升级终端，也不会设置永久环境变量；无需运行所谓“高清开启脚本”。其他操作系统与终端的实际效果仍以实机验证为准。
+
 ### 从旧名称迁移
 
 已有 `pi-wink-companion` 脚本安装时，直接运行新版 `install.ps1`。脚本会保存旧扩展、旧主题和安装记录，迁移到 `extensions/pi-furry-partner/` 与 `themes/pi-furry-night.json`，归档旧扩展目录，避免两份同时自动加载。2.x 的 `config.json` 仅精准迁移旧风格 ID，其余字节保留，原有界面模式和首次安装前的恢复基线也继续沿用。迁移后完整退出并重启 Pi；不要同时手动复制旧目录回来。
@@ -68,7 +80,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.2
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。

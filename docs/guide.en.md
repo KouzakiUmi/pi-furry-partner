@@ -2,7 +2,7 @@
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.2](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [Changelog](../CHANGELOG.md)
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
@@ -12,7 +12,7 @@ The fully tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and 
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.3.2.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-v2.3.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell
@@ -21,7 +21,7 @@ pi
 ```
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.2
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 ```
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.
@@ -29,6 +29,17 @@ The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs
 Updates preserve existing 2.x companion preferences. The installer migrates only legacy `wumi` / `wumi-pixel` style values to `umi` / `umi-pixel`; other configuration content is preserved. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
 
 The package-manager route does not configure those four Pi UI settings or migrate old script installations. Restart Pi, then select the theme with `/theme` and interface mode with `/settings`. Keep using the same installation route for updates, or uninstall the previous copy before switching. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
+
+## Terminal requirements and high-resolution display
+
+High-resolution portraits use **Sixel**, which requires terminal support. Character-block mode still supports the plugin and animation. On Windows, use **Windows Terminal 1.22 or newer**; check Settings → About and update through Microsoft Store. Microsoft's [1.22 announcement](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/) describes built-in Sixel support, which normally requires no extra setting. PowerShell is the shell; updating PowerShell alone does not add graphics support to an old terminal.
+
+1. Launch Pi in Windows Terminal. The default `renderer: "auto"` selects Sixel when `WT_SESSION` is set and `TMUX` is absent, otherwise character blocks. This is an environment heuristic, not a capability or terminal-version probe. Upgrades preserve existing renderer preferences.
+2. Run `/mascot` to inspect the selected renderer, then `/mascot demo` to check actual display. Stop with `/mascot demo off`.
+3. Use `/mascot render auto` to restore automatic selection after manually choosing blocks. In another confirmed Sixel-capable terminal, use `/mascot render sixel`. This selects plugin output; it cannot add protocol support to a terminal.
+4. For missing, garbled or misplaced portraits, update the terminal and retry directly in local Windows Terminal without tmux, SSH or an embedded terminal. Use `/mascot render blocks` for a usable fallback while investigating the terminal and forwarding path.
+
+The plugin encodes Sixel itself; libsixel, chafa and ffmpeg are not required. The installer does not edit Windows Terminal settings, install/update the terminal or set persistent environment variables. No separate graphics-enabling script is needed. Other platforms and terminals still require real-world verification.
 
 ## Language
 

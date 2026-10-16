@@ -11,6 +11,10 @@
 - 原生界面兼容层不修改 Pi 安装文件；未知版本或结构应回退原行为。用户正文、工具输出、路径和内部保存值不进入普通翻译表。
 - 代码和文档是 Apache-2.0；呜咪角色及相关图像、动画是保留全部权利的素材。具体范围见 [ASSET_LICENSE.md](ASSET_LICENSE.md)。提交通用渲染代码不代表取得角色素材的再利用许可。
 
+## 远程发布
+
+更新 `package.json`、下载链接及 `CHANGELOG.md` 后，将匹配版本的 `v` 前缀 tag 推送到 GitHub（例如 `v2.3.3`）。`Build and publish release` 工作流复用完整验证流程，通过后从该提交的 Git 跟踪文件生成 ZIP 和 SHA-256 校验文件，再发布为最新 GitHub Release。版本 tag 必须与包版本一致，更新记录必须包含对应版本章节；构建不会包含本地 `work/` 或用户配置。
+
 ## 本地环境
 
 需要 Git 和 Node.js。完整测试使用 Pi 1.2.0 的真实模块，Node 版本也需要满足 Pi 的要求（该版本要求 Node **22.19.0 或以上**）。PowerShell 安装测试在 Windows 下运行。

@@ -10,12 +10,12 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.3.2](https://img.shields.io/badge/release-v2.3.2-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2)
+[![Release v2.3.3](https://img.shields.io/badge/release-v2.3.3-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 v2.3.2**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载 v2.3.3**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -89,13 +89,15 @@
 
 ## 安装
 
+**高清头像需要支持 Sixel 的终端。** Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）；它已内置 Sixel 支持，通常无需额外开启开关。插件默认 `render auto`，在 Windows Terminal 且未经过 tmux 时自动选择 Sixel；其他环境默认使用字符块。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
+
 需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**，另在 Pi 1.3 验证了输入、拖选、鼠标和图像传输等交互。原生中文界面与 Pi 文档提示精简目前仅支持 1.2.0，其他版本保留 Pi 原有行为。其他平台暂未完成实机验证。图片使用 Sixel 或真彩色半块字符；终端支持会影响清晰度。
 
 两种安装方式选一种，避免把同一插件加载两次。
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.2) 下载 `pi-furry-partner-v2.3.2.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) 下载 `pi-furry-partner-v2.3.3.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -109,7 +111,7 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.2
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。

@@ -89,9 +89,7 @@
 
 ## 安装
 
-**高清头像需要支持 Sixel 的终端。** Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）；它已内置 Sixel 支持，通常无需额外开启开关。插件默认 `render auto`，在 Windows Terminal 且未经过 tmux 时自动选择 Sixel；其他环境默认使用字符块。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
-
-需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**，另在 Pi 1.3 验证了输入、拖选、鼠标和图像传输等交互。原生中文界面与 Pi 文档提示精简目前仅支持 1.2.0，其他版本保留 Pi 原有行为。其他平台暂未完成实机验证。图片使用 Sixel 或真彩色半块字符；终端支持会影响清晰度。
+需要先安装并配置 Pi。本项目的完整自动化验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**；另在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成实机补充验证，角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互正常。Pi 1.3 还验证了输入、拖选、鼠标和图像传输等交互，但完整运行仍会在明确绑定 1.2.0 的提示词 fixture 停止。原生中文界面与 Pi 文档提示精简目前仅支持 1.2.0，其他版本保留 Pi 原有行为。图片使用 Kitty PNG、Sixel 或真彩色半块字符；终端支持会影响清晰度。
 
 两种安装方式选一种，避免把同一插件加载两次。
 
@@ -194,7 +192,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 的完整测试已通过；Pi 1.3 另做了交互回归，未据此扩大原生中文或提示词兼容范围。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 的完整测试已通过；Pi 1.3 另做了交互回归，未据此扩大原生中文或提示词兼容范围。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
 
 ## 许可与致谢
 

@@ -7,6 +7,7 @@ import * as tuiUI from "@earendil-works/pi-tui";
 import { CURSOR_MARKER, getCellDimensions, matchesKey, truncateToWidth, visibleWidth, wrapTextWithAnsi } from "@earendil-works/pi-tui";
 import { createHeader, headerCanAnimate, renderPixels, safeText, samplePixels, terminalVariants } from "./lib/renderer.mjs";
 import { createSixelTransport, graphicsMode } from "./lib/sixel.mjs";
+import { createKittyTransport } from "./lib/kitty.mjs";
 import { createActivity, DEMO_STATES } from "./lib/activity.mjs";
 import { DOCK_CAPTION_ROWS, dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
 import { createStatusFooter } from "./lib/footer.mjs";
@@ -51,7 +52,7 @@ export default function (pi: ExtensionAPI) {
       if (typeof saved[key] === "string") settings[key] = safeText(saved[key]).slice(0, 120);
     }
     for (const key of ["size", "dockSize"] as const) if (SIZES.includes(saved[key])) settings[key] = saved[key];
-    if (["auto", "sixel", "blocks"].includes(saved.renderer)) settings.renderer = saved.renderer;
+    if (["auto", "kitty", "sixel", "blocks"].includes(saved.renderer)) settings.renderer = saved.renderer;
     if (["editor", "header"].includes(saved.layout)) settings.layout = saved.layout;
     if (normalizeStyle(saved.style)) settings.style = normalizeStyle(saved.style)!;
     if (["pixel", "illustration"].includes(saved.headerStyle)) settings.headerStyle = saved.headerStyle;
@@ -70,6 +71,12 @@ export default function (pi: ExtensionAPI) {
     replaceActivityCopy(voice, selected.copy, selected.phrases);
   }
   updateVoice();
+  function selectedGraphicsMode() {
+    let imageProtocol;
+    try { imageProtocol = typeof (tuiUI as any).getCapabilities === "function" ? (tuiUI as any).getCapabilities().images : undefined; }
+    catch { /* Capability probing failure keeps the terminal-cell fallback. */ }
+    return graphicsMode(settings.renderer, process.env, imageProtocol);
+  }
   const activity = createActivity({ ...voice, rotationMs: voices["zh-CN"].phrases.rotationMs });
   const responseLatency = createResponseLatency();
   const readSnapshot = () => localizeSnapshot(activity.snapshot(), settings.language);
@@ -208,6 +215,7 @@ export default function (pi: ExtensionAPI) {
     }
     class UmiEditor extends CustomEditor {
       private transport: ReturnType<typeof createSixelTransport> | undefined;
+      private kittyTransport: ReturnType<typeof createKittyTransport> | undefined;
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
       private motion = createMotionPlayer();
@@ -260,6 +268,11 @@ export default function (pi: ExtensionAPI) {
         this.overlayVisibility = createOverlayVisibility(editorTui);
         this.transport = createSixelTransport(editorTui.terminal, getCellDimensions,
           () => this.displaySheet || reactionSheet(), () => settings.style, (rect: any) => this.overlayVisibility.allows(rect), process.env, visibleWidth, () => terminalCursor(editorTui));
+        this.kittyTransport = createKittyTransport({ getCellDimensions,
+          getSheet: () => this.displaySheet || reactionSheet(), getStyle: () => settings.style,
+          renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
+          deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
+            ? (imageId: number) => editorTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
         activeEditor = this;
         armTimer();
       }
@@ -328,7 +341,8 @@ export default function (pi: ExtensionAPI) {
           motionPlayer: this.motion, animate: settings.animation,
           renderAvatar: (frame: any) => {
             this.displaySheet = frame.sheet;
-            return graphicsMode(settings.renderer) === "sixel" ? this.transport?.render(frame) : undefined;
+            const mode = selectedGraphicsMode();
+            return mode === "kitty" ? this.kittyTransport?.render(frame) : mode === "sixel" ? this.transport?.render(frame) : undefined;
           },
           theme: ctx.ui.theme, visibleWidth, truncateToWidth, renderPixels, samplePixels,
         });
@@ -379,6 +393,7 @@ export default function (pi: ExtensionAPI) {
         this.disposed = true;
         this.geometry = undefined; this.avatarBounds = undefined;
         this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined;
+        this.kittyTransport?.dispose(); this.kittyTransport = undefined;
         this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose();
       }
     }
@@ -424,6 +439,10 @@ export default function (pi: ExtensionAPI) {
         tui = headerTui;
         const transport = createSixelTransport(headerTui.terminal, getCellDimensions, () => sheets.native,
           () => settings.headerStyle, () => !headerTui.hasOverlay(), process.env, visibleWidth, () => terminalCursor(headerTui));
+        const kittyTransport = createKittyTransport({ getCellDimensions, getSheet: () => sheets.native,
+          getStyle: () => settings.headerStyle, renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
+          deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
+            ? (imageId: number) => headerTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
         headerTransport = transport;
         const component = createHeader({
           sheet: sheets.fallback,
@@ -432,7 +451,8 @@ export default function (pi: ExtensionAPI) {
           getRows: () => headerTui.terminal.rows || 30,
           theme: { fg: (token, text) => ctx.ui.theme.fg(token, text), bold: (text) => ctx.ui.theme.bold(text) },
           visibleWidth, truncateToWidth,
-          renderAvatar: (frame: any) => graphicsMode(settings.renderer) === "sixel" ? transport.render(frame) : undefined,
+          renderAvatar: (frame: any) => selectedGraphicsMode() === "kitty" ? kittyTransport.render(frame)
+            : selectedGraphicsMode() === "sixel" ? transport.render(frame) : undefined,
         });
         header = component; component.setFrame(headerFrame);
         let lastWidth = -1, lastLines: string[] | undefined;
@@ -444,7 +464,7 @@ export default function (pi: ExtensionAPI) {
           },
           invalidate: () => component.invalidate(),
           dispose() {
-            transport.dispose();
+            transport.dispose(); kittyTransport.dispose();
             if (header === component) header = undefined;
             if (headerOwner === titleOwner) { ownsHeader = false; headerOwner = undefined; stopTimer(); }
           },
@@ -518,7 +538,7 @@ export default function (pi: ExtensionAPI) {
       const [command, value] = args.trim().toLowerCase().split(/\s+/);
       if (!command) {
         const state = (value: boolean) => value ? l("开启", "on") : l("关闭", "off");
-        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${graphicsMode(settings.renderer)} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
+        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${selectedGraphicsMode()} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|kitty|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
       }
       if (command === "language") {
         const next = normalizeLanguage(value);
@@ -576,7 +596,7 @@ export default function (pi: ExtensionAPI) {
         apply(ctx);
       }
       else if (command === "size" && SIZES.includes(value)) { if (settings.layout === "editor") settings.dockSize = value; else settings.size = value; apply(ctx); }
-      else if (command === "render" && ["auto", "sixel", "blocks"].includes(value)) { settings.renderer = value; apply(ctx); }
+      else if (command === "render" && ["auto", "kitty", "sixel", "blocks"].includes(value)) { settings.renderer = value; apply(ctx); }
       else if (command === "info" && ["compact", "native"].includes(value)) { settings.info = value; apply(ctx); }
       else if (command === "demo" && (!value || value === "all" || DEMO_STATES.includes(value) || value === "off")) {
         const mode = value || "all";

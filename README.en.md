@@ -89,9 +89,7 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 ## Installation
 
-**High-resolution portraits require a Sixel-capable terminal.** On Windows, use **Windows Terminal 1.22 or newer** (Settings → About). Sixel support is built in and normally needs no extra switch. The plugin defaults to `render auto`, selecting Sixel in Windows Terminal outside tmux and character blocks elsewhere. Images are encoded by the plugin; no libsixel, chafa or image conversion tool is needed. See [terminal requirements and high-resolution display](docs/guide.en.md#terminal-requirements-and-high-resolution-display).
-
-Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**, with additional Pi 1.3 checks for editing, text selection, mouse input and image transport. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Other operating systems have not been tested. Images use Sixel or true-color half-block characters; terminal support affects visual quality.
+Install and configure Pi first. The full automated baseline is **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. A supplementary production check was completed on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`): companion display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction worked normally. Pi 1.3 also has checks for editing, text selection, mouse input and image transport, but its full run stops at an explicitly 1.2.0-bound prompt fixture. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.
 
 Choose one installation route to avoid loading the extension twice.
 
@@ -194,7 +192,7 @@ Animations, local language processing, read-only panels and previews do not make
 | Release changes | [Changelog](CHANGELOG.md) |
 | Bug reports and ideas | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-Tests cover activity timing, editor layout, mouse routing, Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0; additional Pi 1.3 interaction checks do not extend the native Chinese UI or prompt compatibility scope. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
+Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0; additional Pi 1.3 interaction checks do not extend the native Chinese UI or prompt compatibility scope. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
 
 The GitHub README is the project's main landing page. Optional standalone showcase source remains in `site/` and has not been published as a separate website.
 

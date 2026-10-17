@@ -13,7 +13,7 @@ flowchart TD
   B --> D[姿态选择与视觉缓冲]
   E[本地完整动作帧与微动地标] --> F[motion：帧播放 眨眼 微动 过渡]
   D --> F
-  F --> G[renderer：Sixel 或半块字符]
+  F --> G[renderer：Kitty PNG、Sixel 或半块字符]
   C --> H[Pi 原生编辑器布局]
   G --> H
   I[当前 TUI 模式与键位] --> J[鼠标控件或快捷键提示]
@@ -37,7 +37,7 @@ flowchart TD
 | `lib/motion.mjs` | 播放完整连续帧；为其他姿态处理耳、爪、眨眼、过渡及旧素材兼容 |
 | `lib/watch.mjs` | 验证、追加放大镜帧与独立时序，保留旧两帧和六帧包兼容 |
 | `lib/search.mjs` | 验证并追加搜索／整理的完整连续帧，保留原主帧对象与旧素材回退 |
-| `lib/renderer.mjs` / `lib/sixel.mjs` | 图像采样、Sixel 编码与终端传输；半块字符回退 |
+| `lib/renderer.mjs` / `lib/kitty.mjs` / `lib/sixel.mjs` | 图像采样、indexed-frame PNG 与 Sixel 编码和终端传输；半块字符回退 |
 | `lib/editor-controls.mjs` | 全屏命中区域、常规模式键位提示与窄宽度取舍 |
 | `lib/quick-actions.mjs` | 将菜单选择映射到 Pi 原生操作，以及只读用量与工具详情 |
 | `lib/footer.mjs` | 根据实际提供的数据组织紧凑信息，未知值保持未知 |
@@ -83,7 +83,7 @@ Pi 的原生选区绘制会按列切片文本，零宽的自有 OSC 标记可能
 
 光标标记解析是另一条独立边界。Pi 的 `CURSOR_MARKER` 为 `ESC _pi:c BEL`，假光标使用 `ESC _pi:fc BEL` 与 `ESC _pi:/fc BEL`；它们不是标准的 ST 结束 APC。选区切片可能复制这些零宽标记，而宿主提取硬件光标时只移除首份。2.3.1 在传输层有限识别并剥离这三种残留私有标记，支持跨写入分片，避免 `pendingEscape` 把 `END_SYNC` 和后续正文一直暂存。其他 APC 仍以 ST 结束；图像锚点去重不能代替这项光标终止解析。测试须检查完成同步输出、重画条带和后续文字，而不只检查 DCS 锚点的横向位置。
 
-Sixel 需要终端支持。`auto` 在 Windows Terminal 环境优先选择 Sixel，在其他环境选择半块字符；用户可以强制切换。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代每一种终端环境的实机验收。
+Kitty 与 Sixel 都需要终端协议支持。`auto` 优先使用 Pi 检测到的 Kitty Graphics Protocol，在 Windows Terminal 环境选择 Sixel，其他环境选择半块字符；用户可以强制切换。Kitty 后端把 motion player 的 indexed frame 按终端行采样并编码为透明 palette PNG，复用稳定 image ID 和 Pi 原生图片生命周期；有界 PNG 缓存避免未变化帧重复压缩或传输。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代每一种终端环境的实机验收。
 
 ## 三个互不合并的文本功能
 

@@ -5,6 +5,7 @@ await import("./footer.mjs");
 await import("./dock-layout.mjs");
 await import("./quick-actions.mjs");
 await import("./sixel.mjs");
+await import("./kitty.mjs");
 await import("./motion.mjs");
 await import("./style-ids.mjs");
 await import("./startup-eyelids.mjs");

@@ -30,7 +30,7 @@
 
 ## 安装与启动
 
-完整验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel 传输及实际扩展集成等交互回归。其他操作系统暂未完成实机验证；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
+完整自动化验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel/Kitty 图像传输及实际扩展集成等交互回归。另在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成实机补充验证，角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互正常。该手动验证不替代 Pi 1.2.0 完整套件；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
 
 从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
@@ -62,14 +62,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 
 ### 高清显示与终端要求
 
-高清头像使用 **Sixel 图片协议**，需要终端支持；普通字符块模式仍可使用插件和动画。Windows 推荐 **Windows Terminal 1.22 或更新版本**，可在“设置 → 关于”查看版本，通过 Microsoft Store 更新。[微软的 1.22 发布说明](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/)介绍了内置 Sixel 支持；通常不需要另开终端设置。PowerShell 5.1 / 7 是 shell，单独升级 PowerShell 不会让旧终端支持 Sixel。
+高清头像可使用 **Kitty Graphics Protocol** 或 **Sixel**；普通字符块模式仍可使用插件和动画。`renderer: "auto"` 优先使用 Pi 检测到的 Kitty 图片能力，在 `WT_SESSION` 且未经过 tmux 的 Windows Terminal 中使用 Sixel，其余环境回退字符块。Windows 推荐 **Windows Terminal 1.22 或更新版本**；PowerShell 是 shell，单独升级 PowerShell 不会让旧终端支持图片协议。
 
-1. 在 Windows Terminal 中打开 PowerShell，安装插件并启动 Pi。默认 `renderer: "auto"` 在检测到 `WT_SESSION` 且没有 `TMUX` 时选择 Sixel；这只是环境识别，不是终端能力探测，也不检查终端版本。其他环境自动使用字符块。升级会保留已有的渲染偏好。
-2. 在 Pi 输入 `/mascot`，查看当前渲染结果是否为 `sixel`。输入 `/mascot demo` 可观察实际显示，`/mascot demo off` 退出演示。
-3. 若曾选过字符块，可输入 `/mascot render auto` 恢复默认。其他已确认支持 Sixel 的终端可输入 `/mascot render sixel`；该命令只选择插件的图片输出，不能替终端增加协议支持。
-4. 若头像不显示、乱码或错位，先更新终端，并在不经过 tmux、SSH 或嵌入式终端的本地 Windows Terminal 中重试；可输入 `/mascot render blocks` 恢复字符块显示，再排查当前终端与转发链路。
+已在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）实机确认 Kitty PNG 的角色显示与实时动画正常。该结果不代表 tmux、SSH、嵌入式终端或所有字体、DPI、窗口尺寸组合均已验证。
 
-插件自己编码 Sixel，无需额外安装 libsixel、chafa 或 ffmpeg。安装器不会修改 Windows Terminal 配置、安装或升级终端，也不会设置永久环境变量；无需运行所谓“高清开启脚本”。其他操作系统与终端的实际效果仍以实机验证为准。
+1. 在支持的本地终端启动 Pi；输入 `/mascot` 查看实际选中的 `kitty`、`sixel` 或 `blocks`，再用 `/mascot demo` 检查动画，`/mascot demo off` 退出演示。
+2. 使用 `/mascot render auto` 恢复自动选择；可用 `/mascot render kitty` 或 `/mascot render sixel` 强制图片后端。明确选择 `kitty` 但 Pi 未检测到该协议时会安全回退到字符块；命令不能为终端增加协议支持。
+3. 若头像不显示、乱码或错位，先在不经过 tmux、SSH 或嵌入式终端的本地会话重试；可用 `/mascot render blocks` 获得可用回退，再排查终端与转发链路。
+
+Kitty 使用 Pi 的原生图片编码与生命周期；插件自行编码 Sixel，无需额外安装 libsixel、chafa 或 ffmpeg。Windows 安装器不会修改 Windows Terminal 配置、安装或升级终端，也不会设置永久环境变量；无需运行所谓“高清开启脚本”。
 
 ### 从旧名称迁移
 
@@ -416,7 +417,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 
 `npm test` 的单元与素材测试覆盖活动状态、说话节奏、短句轮换、输入区几何、footer 数据来源与宽度、渲染传输、鼠标控件和透明帧，也验证原生组件中文的显示与原始数据还原、中文开关、24 个内置命令补全说明及文件和第三方补全不变，以及精简提示词对原生默认段落的识别、自定义和动态内容保留、关闭与不兼容结构回退。补全测试使用真实 `CombinedAutocompleteProvider` 检查补全应用结果保持一致。
 
-Pi 1.2.0 的完整测试已通过；Pi 1.3 另通过活动、倾听、响应等待、真实扩展集成、Sixel 和鼠标等交互检查，包括跨行 SGR 拖选、释放后继续打字、按钮、Esc 与 Enter。1.3 的整套运行会在明确绑定 1.2.0 的原生提示词 fixture 处停止，因此不宣称 1.3 全套通过，也不扩大中文界面或提示词兼容层。CI 目前固定使用 Pi 1.2.0。
+Pi 1.2.0 的完整测试已通过；Pi 1.3 另通过活动、倾听、响应等待、真实扩展集成、Sixel、Kitty 和鼠标等交互检查，包括跨行 SGR 拖选、释放后继续打字、按钮、Esc 与 Enter。另在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成实机补充验证，角色显示、实时 Kitty 动画、`auto`/`kitty`/`blocks` 切换和日常交互正常。1.3 的整套运行会在明确绑定 1.2.0 的原生提示词 fixture 处停止，因此不宣称 1.3 全套通过，也不扩大中文界面或提示词兼容层。CI 目前固定使用 Pi 1.2.0。
 
 隔离安装测试使用临时 `AgentDir`，覆盖首次安装、1.x 配置迁移、2.x 配置除旧风格 ID 外逐字节保留、角色模板部署与 `persona` 偏好保留、中文 UTF-8、四个 UI 字段备份与恢复，以及 `tuiMode` 缺失、原先为 `regular`、旧 manifest 升级和用户后续改值的情况。运行后由测试脚本生成本地验证报告，不会更改真实 `~/.pi`。这些检查不等同于对所有终端、字体、窗口大小和其他扩展组合的实机验证；实际图像显示效果也取决于终端支持。
 

@@ -89,7 +89,7 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 ## Installation
 
-Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**, with additional Pi 1.3 checks for editing, text selection, mouse input and image transport. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Other operating systems have not been tested. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.
+Install and configure Pi first. The full automated baseline is **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. A supplementary production check was completed on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`): companion display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction worked normally. Pi 1.3 also has checks for editing, text selection, mouse input and image transport, but its full run stops at an explicitly 1.2.0-bound prompt fixture. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.
 
 Choose one installation route to avoid loading the extension twice.
 

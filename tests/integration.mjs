@@ -524,6 +524,7 @@ try {
 
   api.setCapabilities({images:"kitty",trueColor:true,hyperlinks:true});
   for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render kitty","render auto","off","on"]){
+    const outgoingEditor = currentEditor;
     await command(args);
     if (outgoingEditor !== currentEditor && outgoingEditor?.motion) {
       const writesBefore = terminalWrites.length, timersBefore = jobs.size;

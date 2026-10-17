@@ -388,7 +388,14 @@ export default function (pi: ExtensionAPI) {
         this.toolbarLine = this.borderColor("── ") + content + this.borderColor("─".repeat(Math.max(0, width - length - 3)));
         return this.toolbarLine;
       }
-      dispose() { this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined; this.kittyTransport?.dispose(); this.kittyTransport = undefined; this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose(); }
+      dispose() {
+        if (this.disposed) return;
+        this.disposed = true;
+        this.geometry = undefined; this.avatarBounds = undefined;
+        this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined;
+        this.kittyTransport?.dispose(); this.kittyTransport = undefined;
+        this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose();
+      }
     }
     editorFactory = (editorTui, theme, keybindings) => new UmiEditor(editorTui, theme, keybindings);
     ctx.ui.setEditorComponent(editorFactory);

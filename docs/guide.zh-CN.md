@@ -298,9 +298,9 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 ## 渲染与配置
 
-`auto` 在 Windows Terminal 环境中选择 Sixel，在其他环境中使用半块字符。Sixel 可以呈现更细腻的透明插画；半块字符不要求终端图片协议。两种方式都使用本地帧数据，角色外部显示终端自己的背景。若当前终端不能显示 Sixel，可执行 `/mascot render blocks`。GIF/APNG 是可复用的导出文件，Pi 运行时不直接播放 GIF。
+`auto` 在 Pi 检测到 Kitty Graphics Protocol 时选择 Kitty PNG，在 Windows Terminal 环境中选择 Sixel，其他环境使用半块字符。Kitty 与 Sixel 可以呈现更细腻的透明插画；半块字符不要求终端图片协议。三种方式都使用本地帧数据，角色外部显示终端自己的背景。Kitty 后端将每个终端行编码为独立透明 PNG，使输入框旁的图片继续参与 Pi 的逐行布局与差分重绘。若图片协议不可用，可执行 `/mascot render blocks`。GIF/APNG 是可复用的导出文件，Pi 运行时不直接播放 GIF。
 
-需要在启动前覆盖渲染方式时，可设置 `PI_FURRY_RENDER=auto`、`sixel` 或 `blocks`。旧的 `PI_WINK_RENDER` 作为兼容别名继续支持；新变量优先。通常使用 `/mascot render <方式>` 即可，不要求修改所有 PowerShell 的启动配置。
+需要在启动前覆盖渲染方式时，可设置 `PI_FURRY_RENDER=auto`、`kitty`、`sixel` 或 `blocks`。显式 `kitty` 在 Pi 未检测到该协议时安全回退到半块字符。旧的 `PI_WINK_RENDER` 作为兼容别名继续支持；新变量优先。通常使用 `/mascot render <方式>` 即可，不要求修改 shell 启动配置。
 
 已安装目录中的 `config.json` 保存设置。可以使用命令修改，或退出 Pi 后编辑文件并重新启动。2.3 默认字段如下：
 
@@ -353,7 +353,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 ### 头像没有显示，或者图片变成乱码
 
-先执行 `/mascot render blocks` 切换到半块字符渲染，再检查终端是否支持 Sixel。`auto` 在 Windows Terminal 环境优先使用 Sixel，这不保证每个终端版本都已启用图片协议。不要把图片数据复制到命令行执行。
+先执行 `/mascot render blocks` 切换到半块字符渲染，再检查终端是否支持 Pi 检测到的 Kitty Graphics Protocol 或 Sixel。`auto` 在 Kitty 环境优先使用 Kitty PNG，在 Windows Terminal 环境优先使用 Sixel；这不保证每个终端版本都已启用图片协议。不要把图片数据复制到命令行执行。
 
 ### 下面的操作不能点
 

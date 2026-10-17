@@ -100,7 +100,7 @@ Use `/mascot` for current settings. The command values remain the same in both l
 | `/mascot pause` / `play` | Disable or enable looping motion; static activity poses keep updating |
 | `/mascot on` / `off` | Show or hide the companion |
 | `/mascot size auto` / `small` / `compact` / `normal` / `large` | Choose a size within terminal limits |
-| `/mascot render auto` / `sixel` / `blocks` | Select graphics transport |
+| `/mascot render auto` / `kitty` / `sixel` / `blocks` | Select graphics transport |
 | `/mascot info compact` / `native` | Compact or native footer |
 | `/mascot locale on` / `off` / `status` | Native Chinese UI preference |
 | `/mascot prompt on` / `off` / `status` | Concise bilingual Pi documentation-hint preference |
@@ -127,7 +127,7 @@ The persona is gentle, cute, lively and playful, but serious about important wor
 
 ## Rendering and troubleshooting
 
-Sixel requires terminal support. `auto` prefers Sixel in Windows Terminal and uses true-color half-blocks in other environments. Force `/mascot render blocks` if images are missing or the terminal shows protocol text. Font, DPI and terminal dimensions affect the result.
+`auto` uses Kitty PNG images when Pi detects the Kitty Graphics Protocol, prefers Sixel in Windows Terminal, and uses true-color half-blocks elsewhere. Kitty renders one transparent PNG per terminal row so the side-by-side editor keeps Pi's ordinary line layout and differential redraw behavior. An explicit `kitty` preference safely falls back to blocks when Pi does not detect the protocol. Force `/mascot render blocks` if images are missing or the terminal shows protocol text. Font, DPI and terminal dimensions affect the result.
 
 For missing portraits, first check `/mascot on`, available terminal space, and whether another extension already owns the editor. The extension preserves another custom editor; use the header layout or review that extension combination. In regular mode, controls are keyboard hints by design.
 

@@ -270,6 +270,7 @@ export default function (pi: ExtensionAPI) {
           () => this.displaySheet || reactionSheet(), () => settings.style, (rect: any) => this.overlayVisibility.allows(rect), process.env, visibleWidth, () => terminalCursor(editorTui));
         this.kittyTransport = createKittyTransport({ getCellDimensions,
           getSheet: () => this.displaySheet || reactionSheet(), getStyle: () => settings.style,
+          isAllowed: () => !editorTui.hasOverlay(),
           renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
           deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
             ? (imageId: number) => editorTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
@@ -440,7 +441,8 @@ export default function (pi: ExtensionAPI) {
         const transport = createSixelTransport(headerTui.terminal, getCellDimensions, () => sheets.native,
           () => settings.headerStyle, () => !headerTui.hasOverlay(), process.env, visibleWidth, () => terminalCursor(headerTui));
         const kittyTransport = createKittyTransport({ getCellDimensions, getSheet: () => sheets.native,
-          getStyle: () => settings.headerStyle, renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
+          getStyle: () => settings.headerStyle, isAllowed: () => !headerTui.hasOverlay(),
+          renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
           deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
             ? (imageId: number) => headerTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
         headerTransport = transport;
@@ -455,12 +457,15 @@ export default function (pi: ExtensionAPI) {
             : selectedGraphicsMode() === "sixel" ? transport.render(frame) : undefined,
         });
         header = component; component.setFrame(headerFrame);
-        let lastWidth = -1, lastLines: string[] | undefined;
+        let lastWidth = -1, lastLines: string[] | undefined, lastHadOverlay = false;
         return {
           render(width) {
             // A changing offscreen header makes Pi's main screen clear scrollback.
-            if ((!headerCanAnimate(headerTui) || headerTui.hasOverlay()) && lastLines && lastWidth === width) return lastLines;
-            lastWidth = width; lastLines = component.render(width); return lastLines;
+            // Re-render when overlay visibility changes so Kitty image lines never
+            // make Pi skip composition of an otherwise ordinary popup row.
+            const hasOverlay = headerTui.hasOverlay();
+            if ((!headerCanAnimate(headerTui) || hasOverlay) && lastLines && lastWidth === width && lastHadOverlay === hasOverlay) return lastLines;
+            lastWidth = width; lastHadOverlay = hasOverlay; lastLines = component.render(width); return lastLines;
           },
           invalidate: () => component.invalidate(),
           dispose() {

@@ -44,13 +44,13 @@ const sheet = {
   width: 8, height: 8, transparentIndex: 0, palette,
   frames: [0,1].map((frame) => ({ cacheKey: `frame-${frame}`, pixels: Array.from({ length: 64 }, (_, i) => (i + frame) % 4) })),
 };
-let nextId = 100, calls = [], deleted = [];
+let nextId = 100, calls = [], deleted = [], allowed = true;
 const fakeRenderImage = (data, dimensions, options) => {
   calls.push({ data, dimensions, options });
   return { sequence: `\x1b_Ga=T,f=100,i=${options.imageId},c=${options.maxWidthCells},r=1,C=1;${data}\x1b\\`, columns: options.maxWidthCells, rows: 1, imageId: options.imageId };
 };
 const transport = createKittyTransport({
-  getCellDimensions: () => ({ widthPx: 10, heightPx: 20 }), getSheet: () => sheet, getStyle: () => "umi",
+  getCellDimensions: () => ({ widthPx: 10, heightPx: 20 }), getSheet: () => sheet, getStyle: () => "umi", isAllowed: () => allowed,
   renderImage: fakeRenderImage, allocateImageId: () => ++nextId, deleteImage: (imageId) => deleted.push(imageId), maxFrames: 2,
 });
 const first = transport.render({ frameIndex: 0, columns: 4, rows: 4 });
@@ -64,6 +64,11 @@ for (const call of calls) {
 }
 assert.strictEqual(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), first);
 assert.equal(calls.length, 4, "An unchanged frame must not be recompressed or retransmitted");
+allowed = false;
+assert.equal(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), undefined, "An overlay guard must remove Kitty image lines so Pi can composite popup text");
+allowed = true;
+assert.strictEqual(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), first, "The same stripe lines resume after the overlay closes");
+assert.equal(calls.length, 4);
 const second = transport.render({ frameIndex: 1, columns: 4, rows: 4 });
 assert.notDeepEqual(second, first); assert.equal(calls.length, 8);
 assert.deepEqual(calls.slice(4).map((call) => call.options.imageId), [101,102,103,104], "Frame updates reuse row image IDs");

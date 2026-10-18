@@ -540,6 +540,18 @@ try {
     if(args==="render kitty") assert.ok(editorLines.some((line)=>line.includes("\x1b_Ga=T")),"Explicit Kitty mode must reach the extension's native image branch");
     if(args==="off"){assert.ok(terminalWrites.join("").includes("\x1b_Ga=d,d=I,"),"Disposal must release Kitty image IDs");assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
   }
+  const kittyBeforeOverlay = currentEditor.render(100);
+  assert.ok(kittyBeforeOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows render before a popup opens");
+  const kittyOverlay = renderer.showOverlay({ render: () => ["popup body"], invalidate() {} }, { row: 2, col: 26, width: 20, nonCapturing: true });
+  const kittyDuringOverlay = currentEditor.render(100);
+  assert.ok(!kittyDuringOverlay.some((line) => line.includes("\x1b_G")), "An active popup replaces Kitty image rows with compositable block rows");
+  renderer.renderNow();
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("popup body")), "Pi composites popup text into the former Kitty rows");
+  assert.ok(!renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
+  kittyOverlay.hide(); renderer.renderNow();
+  const kittyAfterOverlay = currentEditor.render(100);
+  assert.ok(kittyAfterOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows resume after the popup closes");
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
   assert.ok(branchUnsubs>0);
   let foreignHeaderDisposals=0, foreignFooterDisposals=0;
   const foreignHeader={render:()=>["foreign header"],invalidate(){},dispose(){foreignHeaderDisposals++}};

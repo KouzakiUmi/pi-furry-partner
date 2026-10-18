@@ -60,7 +60,7 @@ assert.ok(calls.every((call) => call.options.maxHeightCells === 1 && call.option
 for (const call of calls) {
   const png = decodeIndexedPng(Buffer.from(call.data, "base64"));
   assert.deepEqual({ width: png.width, height: png.height }, { width: 8, height: 4 });
-  assert.deepEqual(call.dimensions, { widthPx: 8, heightPx: 4 });
+  assert.deepEqual(call.dimensions, { widthPx: 40, heightPx: 20 }, "Kitty placement reserves the requested cell rectangle even when its PNG is source-limited");
 }
 assert.strictEqual(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), first);
 assert.equal(calls.length, 4, "An unchanged frame must not be recompressed or retransmitted");
@@ -84,6 +84,26 @@ checks.push("Kitty transport emits one transparent PNG per terminal row, reuses 
 // protocol/layout bytes, not pixels in a native Kitty window.
 const api = await import(pathToFileURL(join(modules, "@earendil-works/pi-tui/dist/index.js")));
 const savedCapabilities = api.getCapabilities(), savedCell = { ...api.getCellDimensions() };
+const geometrySheet = (size) => ({ width: size, height: size, transparentIndex: 0, palette,
+  frames: [{ cacheKey: `source-${size}`, pixels: Array.from({ length: size * size }, (_, i) => i % palette.length) }],
+});
+const geometryCases = [
+  { source: 80, cell: { widthPx: 9, heightPx: 20 }, stripe: { widthPx: 80, heightPx: 11 } },
+  { source: 80, cell: { widthPx: 10, heightPx: 23 }, stripe: { widthPx: 80, heightPx: 12 } },
+  { source: 240, cell: { widthPx: 10, heightPx: 23 }, stripe: { widthPx: 160, heightPx: 23 } },
+];
+for (const { source, cell, stripe } of geometryCases) {
+  api.setCapabilities({ images: "kitty", trueColor: true, hyperlinks: true }); api.setCellDimensions(cell);
+  let imageId = 1000;
+  const geometryTransport = createKittyTransport({ getCellDimensions: api.getCellDimensions, getSheet: () => geometrySheet(source),
+    renderImage: api.renderImage, allocateImageId: () => ++imageId });
+  const lines = geometryTransport.render({ frameIndex: 0, columns: 16, rows: 8 });
+  assert.equal(lines.length, 8);
+  assert.ok(lines.every((line) => /,c=16,r=1,/.test(line)), `${source}px source at ${cell.widthPx}x${cell.heightPx}px cells must retain a 16-column Kitty placement`);
+  const base64 = /;([A-Za-z0-9+/=]+)\x1b\\/.exec(lines[0])?.[1];
+  assert.deepEqual(api.getImageDimensions(base64, "image/png"), stripe, "PNG sampling remains source-limited while placement retains the full cell rectangle");
+}
+checks.push("Kitty placements retain their requested 16-cell width across 9x20 and 10x23 cell ratios for 80px and 240px source frames");
 const writes = [];
 const terminal = {
   columns: 80, rows: 30, kittyProtocolActive: true,

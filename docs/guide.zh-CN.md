@@ -2,9 +2,9 @@
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.4.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [架构说明](architecture.md)
 
-本指南针对 **pi-furry-partner 2.3.3**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+本指南针对 **pi-furry-partner 2.4.0**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
 角色英文名为 **Umi**，风格命令统一为 `umi`、`umi-pixel`。旧的 `wumi`、`wumi-pixel` 命令和配置作为兼容别名继续支持，保存设置时使用新 ID。`wumi-persona.md` 文件名和既有素材路径保持稳定。
 
@@ -32,7 +32,7 @@
 
 完整自动化验证环境是 Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7；Pi 1.3 另通过输入、拖选、鼠标、Sixel/Kitty 图像传输及实际扩展集成等交互回归。另在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成实机补充验证，角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互正常。该手动验证不替代 Pi 1.2.0 完整套件；界面中文与 Pi 文档提示精简仍严格匹配 Pi 1.2.0，不能把 1.3 的交互检查视作这两个兼容层已开放。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -81,7 +81,7 @@ Kitty 使用 Pi 的原生图片编码与生命周期；插件自行编码 Sixel�
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.0
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。

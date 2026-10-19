@@ -2,6 +2,24 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.4.0 · 2026-10-19
+
+### 简体中文
+
+- 新增 Kitty Graphics Protocol 渲染器；`auto` 根据终端能力选择 Kitty、Sixel 或字符块，也可用 `/mascot render kitty` 手动选择。编辑器与标题头像均支持透明 PNG 条带、稳定图像 ID 和有界帧缓存。
+- 视口大小变化时重新注册缓存 PNG，避免全屏重画后仅放置已被终端清除的图像；图像尺寸独立声明，保持源素材受限时的预期列宽。overlay 期间让出图像区域，关闭后恢复。
+- 完整自动化兼容目标仍为 Pi 1.2.0；Pi 1.3.0 通过针对性真实模块回归及此前 NixOS / Kitty 实机验证。Pi 1.3 的原生中文与文档提示精简仍按版本守卫回退，不宣称完整套件通过。
+- 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。
+- 下载 `pi-furry-partner-v2.4.0.zip`，或使用 `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.0`；升级后重启 Pi。
+
+### English
+
+- Added a Kitty Graphics Protocol renderer. `auto` selects Kitty, Sixel or character blocks using terminal capabilities; `/mascot render kitty` selects it explicitly. Editor and header portraits use transparent PNG stripes, stable image IDs and a bounded frame cache.
+- Re-register cached PNGs when viewport dimensions change so fullscreen redraws upload cleared images again. Explicit placement dimensions preserve the requested cell width for source-limited artwork. Portraits yield to overlays and return when they close.
+- Pi 1.2.0 remains the full automated compatibility target. Pi 1.3.0 has targeted real-module regression coverage and prior native NixOS / Kitty validation. Native Chinese UI and concise documentation prompts still fall back behind their version guards on Pi 1.3; this is not a full-suite compatibility claim.
+- Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1).
+- Download `pi-furry-partner-v2.4.0.zip`, or use `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.0`. Restart Pi after upgrading.
+
 ## 2.3.3 · 2026-10-16
 
 ### 简体中文

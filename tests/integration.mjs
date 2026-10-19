@@ -138,6 +138,7 @@ try {
   theme = themeAPI.loadThemeFromPath(join(root, "themes/pi-furry-night.json"), "truecolor");
   editorTheme = themeAPI.getEditorTheme();
   process.env.WT_SESSION = "offline-test-windows-terminal"; delete process.env.TMUX; delete process.env.PI_WINK_RENDER;
+  api.setCapabilities({images:null,trueColor:true,hyperlinks:true});
   Date.now = () => time;
   const result = await loadExtensions([join(scratch, "index.ts")], scratch);
   assert.deepEqual(result.errors, []); assert.equal(result.extensions.length, 1);
@@ -521,7 +522,8 @@ try {
   renderer.stop({preserveScreen:true});renderer=main;
   checks.push("Real fullscreen layout clips the actual dock to visible row stripes, and a narrow overlay suppresses Sixel until dismissed");
 
-  for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render auto","off","on"]){
+  api.setCapabilities({images:"kitty",trueColor:true,hyperlinks:true});
+  for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render kitty","render auto","off","on"]){
     const outgoingEditor = currentEditor;
     await command(args);
     if (outgoingEditor !== currentEditor && outgoingEditor?.motion) {
@@ -534,9 +536,22 @@ try {
       assert.equal(jobs.size, timersBefore);
     }
     assert.ok(jobs.size<=1,`More than one timer after ${args}`);
-    currentEditor.render(100);currentHeader?.render(100);currentFooter?.render(100);
-    if(args==="off"){assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
+    const editorLines=currentEditor.render(100);currentHeader?.render(100);currentFooter?.render(100);
+    if(args==="render kitty") assert.ok(editorLines.some((line)=>line.includes("\x1b_Ga=T")),"Explicit Kitty mode must reach the extension's native image branch");
+    if(args==="off"){assert.ok(terminalWrites.join("").includes("\x1b_Ga=d,d=I,"),"Disposal must release Kitty image IDs");assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
   }
+  const kittyBeforeOverlay = currentEditor.render(100);
+  assert.ok(kittyBeforeOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows render before a popup opens");
+  const kittyOverlay = renderer.showOverlay({ render: () => ["popup body"], invalidate() {} }, { row: 2, col: 26, width: 20, nonCapturing: true });
+  const kittyDuringOverlay = currentEditor.render(100);
+  assert.ok(!kittyDuringOverlay.some((line) => line.includes("\x1b_G")), "An active popup replaces Kitty image rows with compositable block rows");
+  renderer.renderNow();
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("popup body")), "Pi composites popup text into the former Kitty rows");
+  assert.ok(!renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
+  kittyOverlay.hide(); renderer.renderNow();
+  const kittyAfterOverlay = currentEditor.render(100);
+  assert.ok(kittyAfterOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows resume after the popup closes");
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
   assert.ok(branchUnsubs>0);
   let foreignHeaderDisposals=0, foreignFooterDisposals=0;
   const foreignHeader={render:()=>["foreign header"],invalidate(){},dispose(){foreignHeaderDisposals++}};
@@ -561,8 +576,7 @@ try {
   assert.equal(jobs.size,0);hostDisposed=false;
   await emit("session_start",{reason:"reload"});assert.equal(jobs.size,1);currentEditor.render(100);
   await emit("session_shutdown",{reason:"quit"});assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);detachHostUI();
-  checks.push("Repeated style/layout/size/info/render/off/on changes retain a single timer/hook; reload and quit dispose factories, branch callbacks and restore the original terminal write");
-  checks.push("Retired editors ignore late rendering, input, mouse and quick actions after replacement/shutdown; repeated disposal is harmless and stale UI contexts remain untouched");
+  checks.push("Repeated style/layout/size/info/render/off/on changes exercise the native Kitty branch, retain a single timer/hook and release image IDs on reload/quit");
 
   const report={testedAt:new Date(originalClock()).toISOString(),piVersion:version,modelRequests:0,passed:true,verification:"Real Pi extension loader, CustomEditor, Theme, Keybindings and main/fullscreen rendering with fake terminal/clock; no model session or credentials",checks};
   await writeFile(join(root,"tests/integration-validation.json"),JSON.stringify(report,null,2)+"\n");

@@ -465,16 +465,21 @@ function terminalSink(columns = 80, rows = 24) {
   checks.push("Product overlay guard drops retained anchors instead of drawing across a narrow modal, then resumes when allowed");
 }
 
-assert.equal(graphicsMode("auto", { WT_SESSION:"test" }), "sixel");
+assert.equal(graphicsMode("auto", { WT_SESSION:"test" }, "kitty"), "kitty");
 assert.equal(graphicsMode("auto", { WT_SESSION:"test", TMUX:"test" }), "blocks");
+assert.equal(graphicsMode("auto", {}, "kitty"), "kitty");
 assert.equal(graphicsMode("auto", {}), "blocks");
-assert.equal(graphicsMode("blocks", { WT_SESSION:"test" }), "blocks");
+assert.equal(graphicsMode("kitty", {}, "kitty"), "kitty");
+assert.equal(graphicsMode("kitty", {}, null), "blocks");
+assert.equal(graphicsMode("blocks", { WT_SESSION:"test" }, "kitty"), "blocks");
 assert.equal(graphicsMode("blocks", { WT_SESSION:"test", PI_WINK_RENDER:"sixel" }), "blocks");
-assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"sixel" }), "sixel");
+assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"sixel" }, "kitty"), "sixel");
+assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"kitty" }, "kitty"), "kitty");
+assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"kitty" }, null), "blocks");
 assert.equal(graphicsMode("auto", { PI_WINK_RENDER:"sixel" }), "sixel");
-assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"blocks", PI_WINK_RENDER:"sixel" }), "blocks");
-assert.equal(graphicsMode("blocks", { PI_FURRY_RENDER:"sixel" }), "blocks");
-checks.push("Graphics selection: Windows Terminal auto, multiplexed/unknown terminal fallback and explicit block preference");
+assert.equal(graphicsMode("auto", { PI_FURRY_RENDER:"blocks", PI_WINK_RENDER:"sixel" }, "kitty"), "blocks");
+assert.equal(graphicsMode("blocks", { PI_FURRY_RENDER:"sixel" }, "kitty"), "blocks");
+checks.push("Graphics selection: Pi-detected Kitty images, Windows Terminal Sixel, unsupported Kitty and explicit block fallback");
 
 const report = { testedAt: new Date().toISOString(), piVersion:version, verification:"protocol-level: fake terminal bytes, independent Sixel decoder and real Pi rendering; native screen pixels not inspected", modelRequests:0, passed:true, checks };
 await writeFile(join(root, "tests/sixel-validation.json"), JSON.stringify(report,null,2)+"\n");

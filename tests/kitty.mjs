@@ -44,13 +44,13 @@ const sheet = {
   width: 8, height: 8, transparentIndex: 0, palette,
   frames: [0,1].map((frame) => ({ cacheKey: `frame-${frame}`, pixels: Array.from({ length: 64 }, (_, i) => (i + frame) % 4) })),
 };
-let nextId = 100, calls = [], deleted = [], allowed = true;
+let nextId = 100, calls = [], deleted = [], allowed = true, viewport = [100, 40];
 const fakeRenderImage = (data, dimensions, options) => {
   calls.push({ data, dimensions, options });
   return { sequence: `\x1b_Ga=T,f=100,i=${options.imageId},c=${options.maxWidthCells},r=1,C=1;${data}\x1b\\`, columns: options.maxWidthCells, rows: 1, imageId: options.imageId };
 };
 const transport = createKittyTransport({
-  getCellDimensions: () => ({ widthPx: 10, heightPx: 20 }), getSheet: () => sheet, getStyle: () => "umi", isAllowed: () => allowed,
+  getCellDimensions: () => ({ widthPx: 10, heightPx: 20 }), getSheet: () => sheet, getStyle: () => "umi", getViewport: () => viewport, isAllowed: () => allowed,
   renderImage: fakeRenderImage, allocateImageId: () => ++nextId, deleteImage: (imageId) => deleted.push(imageId), maxFrames: 2,
 });
 const first = transport.render({ frameIndex: 0, columns: 4, rows: 4 });
@@ -69,9 +69,18 @@ assert.equal(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), undefined
 allowed = true;
 assert.strictEqual(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), first, "The same stripe lines resume after the overlay closes");
 assert.equal(calls.length, 4);
+viewport = [100, 32];
+const resized = transport.render({ frameIndex: 0, columns: 4, rows: 4 });
+assert.deepEqual(resized, first, "A resize retains identical row strings while refreshing their Pi upload generation");
+assert.equal(calls.length, 8, "A viewport change must re-register every existing PNG");
+assert.deepEqual(calls.slice(4).map((call) => call.options.imageId), [101,102,103,104], "Resize refreshes retain stable image IDs");
+assert.deepEqual(calls.slice(4).map((call) => call.data), calls.slice(0, 4).map((call) => call.data), "Resize refreshes reuse cached PNG payloads");
+assert.equal(transport.stats().frames, 1, "A viewport change must not expand the PNG cache");
+assert.strictEqual(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), resized);
+assert.equal(calls.length, 8, "A stable viewport still skips duplicate Pi registration");
 const second = transport.render({ frameIndex: 1, columns: 4, rows: 4 });
-assert.notDeepEqual(second, first); assert.equal(calls.length, 8);
-assert.deepEqual(calls.slice(4).map((call) => call.options.imageId), [101,102,103,104], "Frame updates reuse row image IDs");
+assert.notDeepEqual(second, first); assert.equal(calls.length, 12);
+assert.deepEqual(calls.slice(8).map((call) => call.options.imageId), [101,102,103,104], "Frame updates reuse row image IDs");
 transport.render({ frameIndex: 0, columns: 5, rows: 4 });
 assert.equal(transport.stats().frames, 2, "PNG frame cache is bounded");
 transport.dispose(); assert.deepEqual(deleted, [101,102,103,104]);
@@ -126,6 +135,21 @@ try {
   assert.match(update, /\x1b_Ga=d,d=I,i=\d+,q=2\x1b\\/, "Changed rows free their prior Kitty image data");
   assert.match(update, /\x1b_Ga=T,f=100,q=2,C=1,c=4,r=1,i=\d+/);
   checks.push("Pi " + version + " main-screen renderer recognizes row-sized Kitty images beside editor text and replaces changed frame IDs without cursor-cell drift");
+
+  const resizeWrites = [];
+  const resizeTerminal = { ...terminal, columns: 110, rows: 38, write(data) { resizeWrites.push(data); } };
+  const resizeTransport = createKittyTransport({ getCellDimensions: api.getCellDimensions, getSheet: () => sheet, getStyle: () => "umi",
+    getViewport: () => [resizeTerminal.columns, resizeTerminal.rows], renderImage: api.renderImage, allocateImageId: api.allocateImageId });
+  const resizeComponent = { render() { return resizeTransport.render({ frameIndex: 0, columns: 4, rows: 4 }).map((line) => `  ${line}   editor`); }, invalidate() {} };
+  const resizeScreen = new api.TuiAltScreen(resizeTerminal, false, undefined, { mouse: false });
+  resizeScreen.setLayoutRoot(new api.VStack([{ component: resizeComponent, basis: 4, shrink: 0 }]));
+  resizeScreen.start(); resizeScreen.renderNow();
+  resizeWrites.length = 0; resizeTerminal.rows = 32; resizeScreen.renderNow();
+  const resizeOutput = resizeWrites.join("");
+  assert.match(resizeOutput, /\x1b_Ga=T,f=100,q=2,C=1,c=4,r=1,i=\d+/, "A fullscreen resize retransmits the static Kitty PNG instead of only placing a stale image ID");
+  assert.doesNotMatch(resizeOutput, /\x1b_Ga=p,q=2,C=1,c=4,r=1,i=\d+/, "A fullscreen resize must not reduce unchanged stripes to placement-only commands");
+  resizeScreen.stop({ preserveScreen: true }); resizeTransport.dispose();
+  checks.push("Pi " + version + " fullscreen resize reuploads cached static PNG stripes while retaining their image IDs");
 } finally {
   screen.stop({ preserveScreen: true }); realTransport.dispose(); api.setCapabilities(savedCapabilities); api.setCellDimensions(savedCell);
 }

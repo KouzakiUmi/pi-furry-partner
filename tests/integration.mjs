@@ -149,7 +149,13 @@ try {
     if (type === "agent_settled") busy = false;
     for (const handler of extension.handlers.get(type) || []) await handler({ type, ...event }, targetCtx);
   };
-  const command = (args) => extension.commands.get("mascot").handler(args, ctx);
+  const mascotCommand = extension.commands.get("mascot");
+  assert.equal(typeof mascotCommand.getArgumentCompletions, "function");
+  assert.deepEqual(mascotCommand.getArgumentCompletions("style u").map(({ value, label }) => ({ value, label })), [
+    { value: "style umi", label: "umi" }, { value: "style umi-pixel", label: "umi-pixel" },
+  ]);
+  checks.push("The real extension registers hierarchical /mascot argument completions");
+  const command = (args) => mascotCommand.handler(args, ctx);
   globalThis.setTimeout = (fn, ms) => { const id = { id:++nextJob, unref() {} }; jobs.set(id, { fn, ms }); return id; };
   globalThis.clearTimeout = (id) => jobs.delete(id);
   mainRenderer(); currentEditor = nativeEditor();

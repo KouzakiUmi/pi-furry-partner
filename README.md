@@ -1,4 +1,4 @@
-> 单仓库构建：`npm run build:hd` / `npm run build:animated` / `npm run build:all`。两种构建共用原始像素素材；新版像素动画已移除。详见 [构建说明](docs/plugin-lines.md)。
+> `main` 发布全动态版 v2.5.0，运行 `npm run build:animated` 构建 Pi 与 DSH 包；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护保留 v2.4.0 原资源的 v2.4.1。详见[构建说明](docs/plugin-lines.md)。
 
 <div align="center">
 
@@ -12,13 +12,12 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.4.5](https://img.shields.io/badge/release-v2.4.5-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5)
-[![全动态预览 v2.5.0-preview.6](https://img.shields.io/badge/preview-v2.5.0--preview.6-c4b5e6?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6)
+[![Release v2.5.0](https://img.shields.io/badge/release-v2.5.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载稳定版 v2.4.5**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [全动态预览 v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载全动态 v2.5.0**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0) · [原资源 legacy v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -56,9 +55,9 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 与 DSH 共用 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先，DSH 摸摸也会收到开心举爪的回应。
 
-当前提供两条产品线：**原逻辑高清重制版 v2.4.5** 保留原有简单帧动画、标题循环与高清插画；**全动态重做版 v2.5.0-preview.6** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡）。两端共用同一仓库和动作逻辑，按所选产品线构建。
+`main` 的**全动态重做版 v2.5.0** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡），Pi 与 DSH 共用动作逻辑。原资源 **legacy v2.4.1** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
-两条产品线都只保留原始 **100 × 100** 像素画与旧简单帧，不启用插画缩小生成的新版像素动画。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
+全动态版的像素风保留原始 **100 × 100** 像素画与旧简单帧，不启用插画缩小生成的新版像素动画。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
 DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠状态切换；加载失败或启用减少动态效果时显示原静态图。输入框里的状态按钮已移除，浮动桌宠继续互动和倾听输入。
 
@@ -102,18 +101,18 @@ DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠�
 
 **高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
 
-需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮双构建已在该环境重新验收。终端支持会影响清晰度。
+需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮全动态构建已在该环境重新验收。终端支持会影响清晰度。
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关代码和回归测试继续保留在共用源码中。
 
-先选产品线，再选平台包：稳定版见 [v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5)，全动态预览见 [v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6)。同一宿主只安装其中一版。
+从[全动态正式版 v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0)选择平台包。需要 v2.4.0 原素材与原简单帧时，使用 [legacy v2.4.1 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)的独立发行说明。同一宿主只安装一版。
 
-| 平台 | 原逻辑高清重制版 | 全动态重做版 |
-| --- | --- | --- |
-| Pi 终端 | `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz` |
-| DSH 桌面 | `pi-furry-partner-hd-remaster-2.4.5.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6.tgz` |
+| 平台 | 全动态 v2.5.0 |
+| --- | --- |
+| Pi 终端 | `pi-furry-partner-full-animation-2.5.0-pi-core.tgz` |
+| DSH 桌面 | `pi-furry-partner-full-animation-2.5.0.tgz` |
 
-GitHub 自动提供的 **Source code** 是两版共用源码，不是已选择产品线的安装包。开发者使用它时，需先运行 `npm run build:hd` 或 `npm run build:animated`，再安装生成的对应平台包。
+GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运行 `npm run build:animated`，再安装生成的对应平台包；main 不再构建高清重制产品线。
 
 ### Pi 终端安装
 
@@ -133,10 +132,10 @@ pi
 下载所选不带 `-pi-core` 的完整 `.tgz`，在 DSH 提供的终端中运行官方插件命令，例如：
 
 ```sh
-dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0.tgz"
 ```
 
-稳定版把文件名替换为 `pi-furry-partner-hd-remaster-2.4.5.tgz`。命令会注册包声明的 bundle；更新后重启 DSH 以加载新代码。使用其他 profile 时替换 `desktop`。详见[官方插件安装说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
+命令会注册包声明的 bundle；更新后重启 DSH 以加载新代码。使用其他 profile 时替换 `desktop`。详见[官方插件安装说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
 
 ## 开始相处
 

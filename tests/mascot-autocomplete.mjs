@@ -18,7 +18,7 @@ assert.deepEqual(labels(""), [
 ]);
 assert.deepEqual(labels("st"), ["style"]);
 assert.deepEqual(values("style"), ["style "]);
-assert.deepEqual(values("style "), ["style umi", "style umi-pixel", "style pixel", "style illustration"]);
+assert.deepEqual(values("style "), ["style umi", "style umi-pixel"]);
 assert.deepEqual(values("style um"), ["style umi", "style umi-pixel"]);
 assert.deepEqual(values("STYLE U"), ["style umi", "style umi-pixel"]);
 assert.deepEqual(values("language zh"), ["language zh-CN"]);

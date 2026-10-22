@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { compactNativePrompt, compactNativePromptSections, addPersonaSection, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, DEFAULT_EN_PREAMBLE, NATIVE_PROMPT_PI_VERSION } from "../lib/native-prompt.mjs";
+import { compactNativePrompt, compactNativePromptSections, addPersonaSection, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, DEFAULT_EN_PREAMBLE, SUPPORTED_PROMPT_PI_VERSIONS } from "../lib/native-prompt.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { agentDir, version, modules } from "./pi-runtime.mjs";
@@ -21,14 +21,14 @@ const baseOptions = {
   sections: { date: "Current date: 2026-10-16", extra_extension: "EXTRA EXTENSION EXACT\n<docs>Do not match me</docs>" },
 };
 const apply = (options = baseOptions, extra = {}) => compactNativePrompt({ systemPrompt: buildSystemPrompt(options), piVersion: version, systemPromptOptions: options, ...extra });
-assert.equal(version, NATIVE_PROMPT_PI_VERSION, "This offline compatibility fixture targets the installed Pi 1.2.0");
+assert.ok(SUPPORTED_PROMPT_PI_VERSIONS.includes(version), "This offline compatibility fixture targets an explicitly supported installed Pi version");
 
 const original = buildSystemPrompt(baseOptions), localized = apply();
 assert.equal(localized.changed, true);
 assert.deepEqual(localized.parts.filter((part) => part.changed).map((part) => part.name), ["preamble", "tools", "rules", "docs"]);
 assert.ok(localized.systemPrompt.startsWith(DEFAULT_ZH_PREAMBLE + "\n\n<tools>"));
 assert.ok(!localized.systemPrompt.includes("- Be concise in your responses\n- Show file paths clearly when working with files\n</rules>"));
-checks.push("Installed Pi 1.2.0 preamble, tools introduction, builtin rules and complete docs skeleton are recognized and localized");
+checks.push(`Installed Pi ${version} preamble, tools introduction, builtin rules and complete docs skeleton are recognized and localized`);
 
 const suffix = original.slice(original.indexOf("\n\n<addendum>"));
 const english = apply(baseOptions, { language: "en" });

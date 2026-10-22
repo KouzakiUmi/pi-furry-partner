@@ -125,7 +125,7 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--edition', choices=['hd-remaster', 'full-animation'], help='Audit both platforms of only this edition; default requires all four combinations')
+    parser.add_argument('--edition', choices=list(read(ROOT / 'build/editions.json')['editions']), help='Audit both platforms of one edition; default requires all configured edition/platform combinations')
     args = parser.parse_args()
     results = audit_builds(edition=args.edition)
     filename = f'edition-audit-{args.edition}.json' if args.edition else 'edition-audit.json'

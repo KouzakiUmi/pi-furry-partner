@@ -1,26 +1,27 @@
-"""Build either edition from this repository's shared sources and artwork.
+"""Build this branch's configured editions from repository sources and artwork.
 
 Only the generated edition literal, package metadata and motion asset inclusion
 differ. No historical worktree or absolute user path is a build dependency.
 """
-import argparse, hashlib, json, os, shutil, subprocess, sys
+import argparse, hashlib, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))
 def run(args,cwd): subprocess.run(args,cwd=cwd,check=True)
 def main():
+    configuration=read(ROOT/'build/editions.json')
+    specs=configuration['editions']
+    platforms=configuration['platforms']
+    assert configuration['defaultEdition'] in specs,'Default edition must be configured'
     parser=argparse.ArgumentParser()
-    parser.add_argument('--edition',choices=['hd-remaster','full-animation','all'],default='all')
+    parser.add_argument('--edition',choices=[*specs,'all'],default='all')
     parser.add_argument('--profile',choices=['full','pi-core'],default='full')
-    parser.add_argument('--platform',choices=['pi','dsh','all'],help='Build host-specific packages; --profile remains supported for older commands')
+    parser.add_argument('--platform',choices=[*platforms,'all'],help='Build host-specific packages; --profile remains supported for older commands')
     parser.add_argument('--out',type=Path,default=ROOT/'dist/releases')
     parser.add_argument('--prepare-only',action='store_true')
     parser.add_argument('--test',action='store_true')
     args=parser.parse_args()
-    configuration=read(ROOT/'build/editions.json')
-    specs=configuration['editions']
-    platforms=configuration['platforms']
     targets=list(platforms) if args.platform=='all' else [args.platform] if args.platform else ['pi' if args.profile=='pi-core' else 'dsh']
     names=list(specs) if args.edition=='all' else [args.edition]
     build_info=[]
@@ -50,9 +51,12 @@ def main():
         if (ROOT/'docs').exists():shutil.copytree(ROOT/'docs',stage/'docs')
         profile=stage/'lib/build-profile.mjs'
         source=profile.read_text(encoding='utf-8')
-        literal="export const BUILD_EDITION = 'hd-remaster';"
-        assert source.count(literal)==1,'Build profile must have exactly one edition literal'
-        profile.write_text(source.replace(literal,f"export const BUILD_EDITION = '{edition}';"),encoding='utf-8')
+        literal=r"^export const BUILD_EDITION = '([^'\r\n]+)';$"
+        defaults=re.findall(literal,source,flags=re.MULTILINE)
+        assert defaults==[configuration['defaultEdition']],'Build profile must have exactly one configured default edition literal'
+        source,count=re.subn(literal,lambda _:f"export const BUILD_EDITION = '{edition}';",source,flags=re.MULTILINE)
+        assert count==1,'Build profile replacement must occur exactly once'
+        profile.write_text(source,encoding='utf-8')
         package=read(stage/'package.json');package['version']=spec['version']
         # Only the published runtime is declared; build/test entrypoints remain
         # at repository root, not broken commands inside the install package.

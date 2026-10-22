@@ -1,51 +1,49 @@
-# 呜咪插件：一个仓库，构建时选择版本
+# 呜咪插件：全动态与原资源维护分支
 
-所有维护中的源码、高清重制素材、全动态插画与原始像素素材均位于本仓库。
-新构建不读取旁边的 regular worktree 或 work/animated-remake；旧目录和安装包保留作历史回退。
+`main` 独立发布全动态 **v2.5.0**；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)独立维护 **v2.4.1**，只优化代码，保留 v2.4.0 全部原素材与原简单帧。main 不再发行高清重制产品线。
 
-| 构建 | 插画动作 | 像素画风 |
+| 分支 | 插画动作 | 像素画风 |
 | --- | --- | --- |
-| 原逻辑高清重制版 | 原简单帧与交互、固定眼区眨眼、修复后的生气配色 | 原始像素与原简单帧 |
-| 全动态重做版 | 17段完整H3动作与2段键盘过渡 | 共用同一份原始像素 |
+| main · 全动态 v2.5.0 | 17 段完整动作与 2 段键盘过渡 | v2.4.0 原始像素与原简单帧 |
+| legacy · v2.4.1 | v2.4.0 原始素材与原简单帧 | v2.4.0 原始像素与原简单帧 |
 
-旧像素来自v2.4.0：100×100原画、16个基础表情、戳碰补丁，以及15帧／4800ms像素标题。
-不是新插画缩图。文件出处与SHA-256记录在build/legacy-pixel-provenance.json。
-旧风格名称作为输入别名兼容，界面只展示插画、像素两种。
+本次正式发行沿用已经验收的全部动作和资源；后续优化在发布后进行。已发布的 v2.4.5 与 v2.5.0-preview.6 保留为历史，tag 不移动、不重写。
 
-## 构建
+## main 构建
 
-在仓库根目录运行：
+所有运行时源码、全动态插画与原始像素素材均在当前仓库。新构建不读取旁边的 regular worktree 或 work 下历史 stage；旧目录和安装包保留作历史回退。
 
 ```powershell
-npm run build:hd           # 高清重制版：Pi + DSH 两个包
 npm run build:animated     # 全动态版：Pi + DSH 两个包
-npm run build:all          # 两种版本 × 两个平台，四个包
-npm run build:pi           # 两个 Pi 精简包，仅省去 Web 高清位图
-npm run build:packages:dsh # 两个 DSH 完整资源包
+npm run build:all          # 当前分支配置的全部产品与平台；main 为上述两个包
+npm run build:pi           # Pi 精简包，省去 Web 高清位图
+npm run build:packages:dsh # DSH 完整高清资源包
 ```
 
-版本号统一配置在build/editions.json。共用源码默认使用高清重制逻辑。
-tools/build-editions.py在dist/staging内生成发行配置和客户端，不反向修改源码。
-安装包及逐项哈希报告输出至dist/releases；不会覆盖已存在的包。
-如同版本重新构建，请用`--out`指定另一个输出目录，或先调整edition版本号。
+版本号与默认 edition 配置在 `build/editions.json`；main 源码默认使用全动态逻辑。`tools/build-editions.py` 验证源码的默认 edition 与配置一致，在 `dist/staging` 内生成发行配置与客户端，不反向修改源码。edition 参数从当前分支配置读取。
 
-只准备隔离目录并执行两版本回归：
+安装包与逐项哈希报告输出到 `dist/releases`，不会覆盖已存在的包。如同版本重新构建，请用 `--out` 指定另一个输出目录。
+
+只准备隔离目录并执行当前分支回归：
 
 ```powershell
 python tools/build-editions.py --edition all --platform all --prepare-only --test
 ```
 
-测试使用本机安装的Pi runtime，需要固定测试基线时设置PI_TEST_MODULES。
+测试使用本机安装的 Pi runtime；需要固定测试基线时设置 `PI_TEST_MODULES`。归档构建后，运行 `python tools/audit-edition-bundles.py --edition full-animation` 核验两个平台的真实包与解包读取器。仅准备目录的测试不代表已完成归档审计或真实宿主视觉验收。
 
-普通高清版保留整张姿势图的原整体运动与开闭眼节拍；`approvedWholeFrames` 只禁止沿用旧局部区域变形，不再把整张图锁死。放大镜／搜索等已烘焙影片与全动态版不叠加这层运动。具体边界见 [旧动画核对](ordinary-motion-audit-20261022.md)。
+## 资源与兼容
 
-## 资源与安装边界
+main 的全动态包只含插画 indexed 与高清 WebP，不包含新版像素 indexed。像素在 Pi、DSH 均在动作选择前绕过全动态路径。
 
-高清重制包不含完整动画catalog和资源。全动态包只含插画indexed与高清WebP，去掉新版像素indexed。
-像素在Pi、DSH均在动作选择前绕过全动态路径；暂停、切换、旧动作逻辑保持独立。
-开闭眼保留修复、DSH静态标题、无输入框组件、生气校色进入共用源码。
+原像素来自 v2.4.0：100×100 原画、16 个基础表情、戳碰补丁，以及 15 帧／4800ms 像素标题。文件出处与 SHA-256 在 `build/legacy-pixel-provenance.json`。素材导出脚本不得生成新版像素衍生图或覆盖原始像素／像素标题。
 
-两种包使用同一个插件名；安装时选择一个，后装的会替换先前版本。
-构建不安装、不推送、不发布。真实宿主视觉验收仍需安装后进行。
+界面只展示插画、像素两种风格；`wumi`、`wumi-pixel`、`pixel`、`illustration` 等旧风格名称继续作为输入别名兼容。普通简单运动辅助代码保留给像素与明确的回退场景，不能据此把 main 重新宣称为旧资源发行版。
 
-素材导出脚本仅更新插画资源，不再生成新版像素衍生图或覆盖原始像素／像素标题。
+## 安装与升级
+
+main v2.5.0 提供 `pi-furry-partner-full-animation-2.5.0-pi-core.tgz` 与 `pi-furry-partner-full-animation-2.5.0.tgz`。Pi 使用前者，DSH 使用后者；legacy v2.4.1 仅支持 Pi，使用 ZIP 解压后运行 `install.ps1`；其安装细节以分支说明为准。同一宿主仅安装一个版本。
+
+已安装 preview.6 时仍须下载 2.5.0 包重新安装：Pi 关闭后运行新包内 `install.ps1`，保留已有 2.x 配置与备份恢复基线；DSH 通过其插件命令安装新完整包。更新后重启对应宿主。发布 tag 不会自动更新本机安装。
+
+构建不安装、不推送、不发布；发布、本机安装与真实宿主验收分别记录。

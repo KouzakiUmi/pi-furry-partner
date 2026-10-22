@@ -1,4 +1,4 @@
-// Shipping policy: one source tree, build-time edition, one real legacy pixel bank.
+// Shipping policy: main is full-animation; legacy maintains the original 2.4 artwork.
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -9,7 +9,13 @@ import { loadEncodedSheet, loadAnimatedCatalog } from '../lib/index.js';
 const root = new URL('../', import.meta.url);
 const read = async path => JSON.parse(await readFile(new URL(path, root), 'utf8'));
 const provenance = await read('build/legacy-pixel-provenance.json');
-assert.ok(['hd-remaster','full-animation'].includes(BUILD_EDITION));
+const configuration = await read('build/editions.json');
+const packageMetadata = await read('package.json');
+assert.equal(configuration.defaultEdition, 'full-animation');
+assert.deepEqual(Object.keys(configuration.editions), ['full-animation']);
+assert.equal(BUILD_EDITION, configuration.defaultEdition);
+assert.equal(FULL_ANIMATION_EDITION, true);
+assert.equal(packageMetadata.version, configuration.editions[BUILD_EDITION].version);
 assert.deepEqual(STYLES,['umi','umi-pixel']);
 for (const alias of ['umi-pixel','pixel','wumi-pixel']) {
   assert.equal(normalizeStyle(alias),'umi-pixel');

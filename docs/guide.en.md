@@ -4,17 +4,17 @@ See [authored expressions](authored-expressions.md) for the nine new reactions s
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0) · [Changelog](../CHANGELOG.md)
 
-Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers HD remaster 2.4.5 and full-animation remake 2.5.0-preview.6: installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
+Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers full-animation 2.5.0 on `main`: installation, language, controls and independent settings. [Legacy 2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) is maintained separately with code improvements and the original v2.4.0 artwork. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
 ## Installation and updates
 
-The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. The full suite passes on both releases, and native Chinese UI and concise Pi documentation hints are enabled for both. Upstream also records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1. It does not establish a fresh acceptance of both current editions on NixOS. Configure Pi and your model provider before installing the extension.
+The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. The full suite passes on both releases, and native Chinese UI and concise Pi documentation hints are enabled for both. Upstream also records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1. It does not establish a fresh acceptance of the current full-animation release on NixOS. Configure Pi and your model provider before installing the extension.
 
-Choose [stable v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) or [full-animation preview v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6), then download its platform package. Pi uses `-pi-core.tgz`; DSH uses the full `.tgz` without that suffix. Install one edition per host. GitHub's **Source code** is shared source: run `npm run build:hd` or `npm run build:animated` before installing a generated platform package.
+Download a platform package from [full-animation v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0). Pi uses `-pi-core.tgz`; DSH uses the full `.tgz` without that suffix. Install one edition per host. For the original artwork, see [legacy v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Build **Source code** downloads with `npm run build:animated` before installing a generated platform package.
 
-For Pi, use `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` or `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz`. Extract the archive, enter its inner **`package` directory**, fully exit Pi, and run:
+For Pi, use `pi-furry-partner-full-animation-2.5.0-pi-core.tgz`. Extract the archive, enter its inner **`package` directory**, fully exit Pi, and run:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -30,12 +30,12 @@ Updates preserve existing 2.x companion preferences. The installer migrates only
 Use the full package in the terminal provided by DSH, for example:
 
 ```sh
-dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0.tgz"
 ```
 
-For stable, substitute `pi-furry-partner-hd-remaster-2.4.5.tgz`. Replace `desktop` if using another profile. The official command installs and registers the declared bundle; restart DSH after updating to load the new code. DSH does not use Pi's `install.ps1`. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).
+Replace `desktop` if using another profile. The official command installs and registers the declared bundle; restart DSH after updating to load the new code. DSH does not use Pi's `install.ps1`. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).
 
-Do not substitute the old Git-tag install command for the selected platform package. Shared source needs an edition build first. Existing Pi script installations should keep that update route, avoiding duplicate loading from an earlier package-manager source.
+Build the platform package before installing from source. Existing Pi script installations should keep that update route, avoiding duplicate loading from an earlier package-manager source. To upgrade preview.6, run the installer from the 2.5.0 package and restart Pi; publishing a release does not update an installed copy.
 
 
 ## Terminal requirements and high-resolution display

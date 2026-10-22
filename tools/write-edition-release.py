@@ -1,4 +1,4 @@
-"""Write a four-package local index using observed build/audit evidence only."""
+"""Write a configured-platform local index using observed build/audit evidence only."""
 from pathlib import Path
 from datetime import datetime, timezone
 import json
@@ -62,20 +62,20 @@ def collect_release(root=ROOT, out=OUT):
                                 'auditReport': str(out / 'edition-audit.json'),
                                 'scope': 'Build suite status comes from testsRun; package entry and runtime checks come from matching audit records. No website or external-platform test result is inferred.'},
                'installed': False, 'published': False, 'pushed': False, 'userAcceptance': False,
-               'history': 'Earlier packages remain historical; only the four matched builds listed here are current.'}
+               'history': 'Earlier packages remain historical; only the matched builds listed here are current.'}
     return summary
 
 
 def main():
     summary = collect_release()
     (OUT / 'release-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    lines = ['# 呜咪 · 同仓构建产物', '', '两种产品各提供 Pi 与 DSH 包；按产品和宿主选择一个安装。', '',
+    lines = ['# 呜咪 · 同仓构建产物', '', '当前分支提供 Pi 与 DSH 包；按宿主选择一个安装。', '',
              '| 产品 | 平台 | 资源 | 版本 | 安装包大小 |', '| --- | --- | --- | --- | ---: |']
     for package in summary['packages']:
         lines.append(f"| {package['label']} | {package['platform']} | {package['profile']} | {package['version']} | {package['archiveBytes']/1048576:.2f} MiB |")
     lines += ['', 'Pi 使用 pi-core 包；DSH 使用 full 包。完整包也保留 Pi 入口。',
               '构建命令与资源策略见仓库 docs/plugin-lines.md。',
-              '四个包分别完成实际归档条目回读与解包后的生产读取器验证；像素来源核验文件逐包列于 release-summary.json。',
+              '各包分别完成实际归档条目回读与解包后的生产读取器验证；像素来源核验文件逐包列于 release-summary.json。',
               '完整构建测试是否运行以各包 buildSuitesRecordedPassed 为准；此处不推断网站或额外平台的测试结果。',
               '未代为安装、推送或公开发布；旧包仅作历史记录。']
     (OUT / 'README.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')

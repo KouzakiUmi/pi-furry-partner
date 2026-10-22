@@ -2,6 +2,26 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.5.0 · 2026-10-23
+
+### 简体中文
+
+- 全动态版正式发布为 v2.5.0：main 源码默认启用完整插画动作，提供 Pi 精简包与 DSH 完整高清包。legacy 分支独立维护 v2.4.1，只优化代码并保留 v2.4.0 全部原资源；main 不再发行高清重制产品线。
+- 沿用 preview.6 已验收的 17 段角色动作与两段键盘过渡，动作和资源文件保持不变；后续动作与性能优化在正式发布后另行处理。
+- 保留 v2.4.0 原始 100px 像素素材、原简单帧与全部旧风格输入别名；公开风格补全只列出插画与像素两项。
+- 纳入 `/mascot` 子命令与参数的分层补全，支持大小写无关的前缀与中英文说明；Pi 1.3.0 提示词回归按显式支持集合核验，未知版本继续拒绝改写。
+- 构建配置、源码默认与包版本统一；构建器按配置识别 edition 并严格核对默认声明。发行 tag 精确对应全动态包，旧 v2.4.5 与 v2.5.0-preview.6 tag 保留历史。
+- 已安装 preview.6 的用户需使用 v2.5.0 对应平台包更新并重启宿主；Pi 更新保留已有 2.x 配置与备份恢复基线。
+
+### English
+
+- Release the full-animation edition as v2.5.0. Main enables complete illustration motion by default and provides Pi-core and DSH full-art packages. Legacy v2.4.1 is maintained on its own branch with code improvements and all original v2.4.0 artwork; main no longer ships the HD-remaster line.
+- Retain the 17 approved character clips and two keyboard transitions from preview.6. Motion and resource files are unchanged; further motion and performance work follows this release.
+- Preserve original 100px pixel artwork, simple frames and historical style aliases. Public style completion lists only illustration and pixel.
+- Include hierarchical `/mascot` command and argument completion, case-insensitive prefixes and localized descriptions. Pi 1.3.0 prompt tests use the explicit support allowlist; unknown versions still fail closed.
+- Align build configuration, source defaults and package versions. The builder resolves configured editions and verifies the default declaration; release tags select the exact platform packages. Historical v2.4.5 and v2.5.0-preview.6 tags are retained.
+- Upgrade an installed preview.6 using the v2.5.0 platform package and restart the host. Pi updates preserve existing 2.x preferences and the backup/recovery baseline.
+
 ## 未发布
 
 ### 简体中文

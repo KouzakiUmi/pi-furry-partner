@@ -1,4 +1,5 @@
 // Independent product and integration suites; no model requests are made.
+await import("./legacy-resources.mjs");
 await import("./activity.mjs");
 await import("./response-latency.mjs");
 await import("./footer.mjs");
@@ -20,6 +21,7 @@ await import("./regular-overlay.mjs");
 await import("./mouse-routing.mjs");
 await import("./native-prompt.mjs");
 await import("./command-chinese.mjs");
+await import("./mascot-autocomplete.mjs");
 await import("./ui-chinese.mjs");
 await import("./language-integration.mjs");
 await import("./prompt-ordering.mjs");

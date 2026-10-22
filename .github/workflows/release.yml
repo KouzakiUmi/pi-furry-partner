@@ -20,8 +20,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
       - name: Validate version and extract release notes
@@ -42,8 +42,10 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           archive="pi-furry-partner-${RELEASE_TAG}.zip"
-          git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" HEAD
+          git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" "$RELEASE_TAG"
           unzip -t "$archive"
+          unzip -q "$archive" -d work/release-archive-check
+          node work/release-archive-check/pi-furry-partner/tests/legacy-resources.mjs
           sha256sum "$archive" > "$archive.sha256"
       - name: Publish GitHub Release
         env:
@@ -53,6 +55,6 @@ jobs:
           gh release create "$RELEASE_TAG" \
             "pi-furry-partner-${RELEASE_TAG}.zip" \
             "pi-furry-partner-${RELEASE_TAG}.zip.sha256" \
-            --verify-tag --latest \
+            --verify-tag --latest=false \
             --title "pi-furry-partner ${RELEASE_TAG}" \
             --notes-file release-notes.md

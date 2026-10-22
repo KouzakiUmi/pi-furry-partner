@@ -10,12 +10,14 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release v2.4.0](https://img.shields.io/badge/release-v2.4.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0)
+[![Release v2.4.1](https://img.shields.io/badge/release-v2.4.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download v2.4.0**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download v2.4.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+
+This is **legacy / v2.4.1**, preserving v2.4.0 artwork, prompt templates and all four styles. The full-animation line starts at v2.5.0 on [main](https://github.com/KouzakiUmi/pi-furry-partner/tree/main).
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -89,13 +91,13 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 ## Installation
 
-Install and configure Pi first. The full automated baseline is **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. A supplementary production check was completed on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`): companion display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction worked normally. Pi 1.3 also has checks for editing, text selection, mouse input and image transport, but its full run stops at an explicitly 1.2.0-bound prompt fixture. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.
+Install and configure Pi first. Full automated coverage includes **Windows, Pi 1.2.0 / 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. Native Chinese UI and concise Pi documentation hints support only the explicitly reviewed 1.2.0 / 1.3.0 releases; unknown versions keep native behavior. The earlier supplementary production check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`) remains applicable. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.
 
 Choose one installation route to avoid loading the extension twice.
 
 ### Complete Windows installation
 
-Download `pi-furry-partner-v2.4.0.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0), extract it, close Pi, and open PowerShell in the extracted directory:
+Download `pi-furry-partner-v2.4.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1), extract it, close Pi, and open PowerShell in the extracted directory:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -109,7 +111,7 @@ If you used **pi-wink-companion**, run the new installer directly: it backs up a
 ### Pi package manager
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.0
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1
 ```
 
 This loads the extension and theme through the package manifest. It **does not run the PowerShell installer or configure Pi's four UI options**. Restart Pi, select `pi-furry-night` with `/theme`, and choose your interface mode in `/settings`. The Git tag pins your version; choose a newer release tag when updating. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
@@ -176,7 +178,7 @@ English mode uses Pi's native English interface. The `locale` preference is reta
 
 All three accept `status`. `/mascot off` hides the companion; the independent switches retain their settings and can be disabled separately.
 
-- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
+- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0 / 1.3.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
 - **Concise Pi documentation hints:** condenses only the precisely recognized documentation-hint section into Chinese or English for the next request, retaining documentation paths, complete-file reading and cross-reference requirements. Pi's identity, tool list and rules stay native. Custom `SYSTEM.md`, project `AGENTS.md`, skills and dynamic content added by later extensions remain live. Disabling it removes this documentation-section replacement. Shorter wording does not imply the same token reduction for every model.
 - **Character voice:** gentle, cute, lively and a little playful, while serious and steady where it matters. Separate Chinese and English templates follow your language choice. They adjust expression; technical accuracy, code and structured output take priority.
 
@@ -192,7 +194,7 @@ Animations, local language processing, read-only panels and previews do not make
 | Release changes | [Changelog](CHANGELOG.md) |
 | Bug reports and ideas | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0; additional Pi 1.3 interaction checks do not extend the native Chinese UI or prompt compatibility scope. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
+Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility, prompt boundaries and hierarchical command completion. Pi 1.2.0 / 1.3.0 run the full suite; installer checks use isolated directories. Original resource SHA-256 baselines come from v2.4.0 Git objects. Run `node tests/legacy-resources.mjs` to verify an extracted release archive as well. See [Contributing](CONTRIBUTING.md) for setup.
 
 The GitHub README is the project's main landing page. Optional standalone showcase source remains in `site/` and has not been published as a separate website.
 

@@ -2,6 +2,24 @@
 
 本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.4.1 · 2026-10-23
+
+### 简体中文
+
+- 发布 legacy 维护线，完整保留 v2.4.0 的原始素材、提示词及四种外观：`umi`、`umi-pixel`、`pixel`、`illustration`；后续全动态版本从 main 的 v2.5.0 开始。
+- 原生中文界面与文档提示精简增加经过明确版本守卫的 Pi 1.3.0 支持，保留 Pi 1.2.0 兼容；未知版本继续安全回退，并兼容两版 `/share` 命令描述。
+- 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #2](https://github.com/KouzakiUmi/pi-furry-partner/pull/2) 中贡献 `/mascot` 分级参数自动补全，包含原有四种外观及中英文说明。
+- CI 覆盖 Pi 1.2.0 / 1.3.0 与 PowerShell 安装回归，固定外部 Action 提交；legacy Release 保留源码 ZIP 和 SHA-256，且不设为仓库 latest。
+- 下载 `pi-furry-partner-v2.4.1.zip`，或使用 `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1`；升级后重启 Pi。
+
+### English
+
+- Released the legacy maintenance line with all v2.4.0 artwork, prompt templates and four styles preserved: `umi`, `umi-pixel`, `pixel`, and `illustration`. The full-animation line starts at v2.5.0 on main.
+- Added explicitly version-guarded Pi 1.3.0 support for native Chinese UI and concise documentation prompts while retaining Pi 1.2.0 compatibility. Unknown versions still fall back safely; both releases' `/share` descriptions are supported.
+- Thanks to [@srcres258](https://github.com/srcres258) for hierarchical `/mascot` argument completion in [PR #2](https://github.com/KouzakiUmi/pi-furry-partner/pull/2), including all four original styles and bilingual descriptions.
+- CI covers Pi 1.2.0 / 1.3.0 and PowerShell installer regression tests with external Actions pinned to commits. Legacy releases retain source ZIP and SHA-256 artifacts without becoming the repository's latest release.
+- Download `pi-furry-partner-v2.4.1.zip`, or use `pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1`. Restart Pi after upgrading.
+
 ## 2.4.0 · 2026-10-19
 
 ### 简体中文

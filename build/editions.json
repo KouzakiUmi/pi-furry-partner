@@ -8,12 +8,12 @@
   },
   "editions": {
     "hd-remaster": {
-      "version": "2.4.4",
+      "version": "2.4.5",
       "label": "原逻辑高清重制版",
       "fullAnimation": false
     },
     "full-animation": {
-      "version": "2.5.0-preview.5",
+      "version": "2.5.0-preview.6",
       "label": "全动态重做版",
       "fullAnimation": true
     }

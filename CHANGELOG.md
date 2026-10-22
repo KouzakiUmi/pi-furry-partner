@@ -4,6 +4,14 @@
 
 ## 未发布
 
+### 统一仓库构建 · 2.4.5 / 2.5.0-preview.6
+
+- 将普通高清重制版与全动态重做版合并到同一源码仓库，分别生成 Pi 终端与 DSH Web 安装包；通过构建配置区分功能与资源，不再依赖旁边的旧工作树或本机历史目录。
+- 普通高清版保留原版简单帧、标题循环和固定眼区眨眼，恢复符合该版本逻辑的整体位移与缩放；同步已验收的放大镜、埋头搜索斗篷颜色与透明边缘修复。
+- 全动态版包含 19 段已验收动作及键盘转场；Pi 包保留索引动画，DSH 包额外包含高清资源。两版共同使用原像素素材与旧动画，不包含重新生成的像素动作。
+- 保存已批准素材的来源、哈希与复现参数，验证可由干净仓库生成；旧风格名继续通过运行时别名兼容。
+- Consolidated both editions into one reproducible repository with separate Pi and DSH packages. The HD remaster preserves legacy animation behavior and approved cape corrections; the full-animation preview includes 19 approved clips. Both editions retain the original pixel artwork and compatibility aliases.
+
 ### 简体中文
 
 - 原生中文界面、Pi 文档提示精简与内置命令补全翻译把 Pi 1.3.0 纳入已验证支持范围；Pi 1.2.0 行为不变，其他版本仍保留 Pi 原生行为。
@@ -12,7 +20,7 @@
 - CI 分别安装 Pi 1.2.0 与 1.3.0 运行完整测试；中文界面、提示词与命令翻译的版本守卫改为显式白名单。
 - 测试不再把 1.2.0 写死在版本断言里，改用共享的支持版本集合；不受支持的补丁版本仍需显式兼容审计。
 - 精简中英文呜咪口吻模板的重复表述：合并关键内容与代码/JSON 规则，示例只保留一套并删掉与正文重复的短例；规则不减少，中文模板 19 行减到 17 行、英文 17 行减到 15 行。
-- 角色名统一为 Umi：口吻模板改为 `prompts/umi-persona.md`，素材目录与构建脚本改用 `assets/reactions/umi`、`assets/reactions/umi-pixel`，删除旧风格 ID 别名；旧配置在运行时回退默认风格，安装器仍会把旧保存值改写为规范 ID。英文口吻模板不再出现中文名“呜咪”。
+- 角色名统一为 Umi：口吻模板改为 `prompts/umi-persona.md`，插画素材使用 `assets/reactions/umi`，原像素素材保留在 `assets/reactions/pixel`；旧风格 ID 通过别名映射到对应素材。英文口吻模板不再出现中文名“呜咪”。
 
 ### English
 
@@ -22,7 +30,7 @@
 - CI now runs the full suite against both Pi 1.2.0 and 1.3.0; version guards use an explicit allowlist.
 - Test fixtures no longer hardcode 1.2.0; unsupported patch versions still require an explicit compatibility audit.
 - Trimmed duplicated wording in both Umi voice templates: merged the key-content and code/JSON rules, kept a single example set and removed short examples that repeated the body text. No rule was dropped; the Chinese template drops from 19 to 17 lines and the English one from 17 to 15.
-- Standardized the character name to Umi: the persona template is now `prompts/umi-persona.md`, asset directories and build scripts use `assets/reactions/umi` and `assets/reactions/umi-pixel`, and the former style-ID aliases are removed. Old saved values fall back to the default style at runtime while the installer still rewrites them to the canonical ID. The English persona template no longer contains the Chinese name.
+- Standardized the character name to Umi: the persona template is now `prompts/umi-persona.md`, illustration assets use `assets/reactions/umi`, and original pixel assets remain in `assets/reactions/pixel`. Compatibility aliases preserve the corresponding artwork for older style IDs. The English persona template no longer contains the Chinese name.
 
 ## 2.4.0 · 2026-10-19
 

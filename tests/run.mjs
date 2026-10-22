@@ -22,6 +22,7 @@ await import("./regular-overlay.mjs");
 await import("./mouse-routing.mjs");
 await import("./native-prompt.mjs");
 await import("./command-chinese.mjs");
+await import("./mascot-autocomplete.mjs");
 await import("./ui-chinese.mjs");
 await import("./language-integration.mjs");
 await import("./prompt-ordering.mjs");

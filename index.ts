@@ -22,6 +22,7 @@ import { createQuickActions } from "./lib/quick-actions.mjs";
 import { compactNativePromptSections, addPersonaSection } from "./lib/native-prompt.mjs";
 import { installChineseUi } from "./lib/ui-chinese.mjs";
 import { createChineseAutocompleteFactory } from "./lib/command-chinese.mjs";
+import { getMascotArgumentCompletions } from "./lib/mascot-autocomplete.mjs";
 import { STYLES, normalizeStyle, styleAssetDirectory } from "./lib/styles.mjs";
 import { withPokeFrame } from "./lib/poke.mjs";
 import { withWatchFrames } from "./lib/watch.mjs";
@@ -583,6 +584,7 @@ export default function (pi: ExtensionAPI) {
 
   pi.registerCommand("mascot", {
     description: mascotDescription(settings.language),
+    getArgumentCompletions: (argumentPrefix) => getMascotArgumentCompletions(argumentPrefix, settings.language),
     handler: async (args, ctx) => {
       if (ctx.mode !== "tui") { ctx.ui.notify(l("呜咪显示在 Pi 交互终端中。", "Umi appears in Pi's interactive terminal."), "info"); return; }
       const [command, value] = args.trim().toLowerCase().split(/\s+/);

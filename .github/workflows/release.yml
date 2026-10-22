@@ -44,6 +44,7 @@ jobs:
           archive="pi-furry-partner-${RELEASE_TAG}.zip"
           git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" "$RELEASE_TAG"
           unzip -t "$archive"
+          mkdir -p work/release-archive-check
           unzip -q "$archive" -d work/release-archive-check
           node work/release-archive-check/pi-furry-partner/tests/legacy-resources.mjs
           sha256sum "$archive" > "$archive.sha256"

@@ -412,12 +412,19 @@ try {
   await emit("tool_execution_start",{toolCallId:streamedWrite.id,toolName:streamedWrite.name,args:{path:"src/new.ts",content:"NEVER_ECHO_STREAMED_WRITE"}});
   assert.match(plain(currentEditor.render(160)).join(" "),/我写写呀/);
   await emit("tool_execution_end",{toolCallId:streamedWrite.id,isError:false});
+  for(const [name,bubble] of [["codemode","我写代码"],["bash","敲命令呀"],["ask_user","我问问呀"],["read","我读读呀"],["grep","我找找呀"],["web_search","我搜网页"],["tool_search","我找工具"],["mcp__jira__transition_issue","我准备呀"]]){
+    await emit("message_start",{message:{role:"assistant"}});
+    const call={type:"toolCall",id:`stream-${name}`,name,arguments:{private:"NEVER_ECHO_GENERIC_STREAM"}};
+    await emit("message_update",{message:{role:"assistant"},assistantMessageEvent:{type:"toolcall_start",contentIndex:0,partial:{role:"assistant",content:[call]}}});
+    streamedLines=plain(currentEditor.render(160)).join(" ");assert.ok(streamedLines.includes(bubble),name);assert.ok(!streamedLines.includes("NEVER_ECHO_GENERIC_STREAM"),name);assert.match(currentEditor.displaySheet.frames[0].id,/^work/);
+    await emit("message_end",{message:{role:"assistant",stopReason:"length"}});
+  }
   await emit("tool_execution_start",{toolCallId:"one",toolName:"read",args:{path:"src/main.ts",command:"NEVER_ECHO_SECRET"}});
   await emit("tool_execution_start",{toolCallId:"two",toolName:"bash",args:{command:"NEVER_ECHO_SECRET"}});
   assert.ok(!plain(currentEditor.render(160)).join(" ").includes("NEVER_ECHO_SECRET"));
   await emit("tool_execution_end",{toolCallId:"two",isError:false});await emit("tool_execution_end",{toolCallId:"one",isError:false});
   await emit("agent_before_settle",{outcome:"completed"});await emit("agent_settled",{aborted:false});
-  checks.push("Real registered stream events start edit/write typing before execution with distinct private-safe bubbles; parallel tools and token bursts retain one timer without secret payloads");
+  checks.push("Real registered stream events give every built-in/custom tool a private-safe typing pose and category bubble before execution; parallel tools and token bursts retain one timer without secret payloads");
 
   const phraseData = JSON.parse(await readFile(join(scratch,"assets/status-phrases.json"),"utf8"));
   currentEditor.setWorkingStatusIndicator({kind:"working",renderInBorder:()=>"Working",renderSpinnerInBorder:()=>"*"});

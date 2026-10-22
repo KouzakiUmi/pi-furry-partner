@@ -142,11 +142,38 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("tool_execution_end", { toolCallId: write.id, isError: false });
   state = activity.snapshot(); assert.equal(state.visualPhase, "editing"); assert.equal(state.bubble, "我写写呀");
 
-  const abandoned = { type: "toolCall", id: "abandoned", name: "write", arguments: {} };
+  const preparationCases = [
+    ["read", "我读读呀", "reading", "我瞧瞧"], ["bash", "敲命令呀", "running", "我看着呢"],
+    ["powershell", "敲命令呀", "running", "我看着呢"], ["grep", "我找找呀", "searching", "我翻翻看"],
+    ["find", "我找找呀", "searching", "我翻翻看"], ["ls", "我找找呀", "searching", "我翻翻看"],
+    ["codemode", "我写代码", "running", "我看着呢"], ["multi_tool_use.parallel", "我写代码", "running", "我看着呢"],
+    ["ask_user", "我问问呀", "waiting", "我等你呀"],
+    ["tool_search", "我找工具", "searching", "我翻翻看"], ["web_enable", "我找工具", "running", "我看着呢"],
+    ["web_search", "我搜网页", "searching", "我翻翻看"], ["source_check", "我搜网页", "searching", "我翻翻看"],
+    ["fetch_content", "我读读呀", "reading", "我瞧瞧"], ["get_search_content", "我读读呀", "reading", "我瞧瞧"],
+    ["mcp__jira__transition_issue", "我准备呀", "running", "我看着呢"],
+  ];
+  for (const [name, preparingBubble, executionPhase, executionBubble] of preparationCases) {
+    activity.handle("message_start", { message: { role: "assistant" } });
+    const call = { type: "toolCall", id: `stream-${name}`, name, arguments: { private: "NEVER_ECHO_GENERIC_CONTENT" } };
+    activity.handle("message_update", stream("toolcall_start", call)); state = activity.snapshot();
+    assert.equal(state.phase, "editing", `${name} must type while its arguments stream`);
+    assert.equal(state.visualPhase, "editing"); assert.match(state.face, /^work/); assert.equal(state.bubble, preparingBubble); assert.equal(state.toolCount, 1);
+    assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_GENERIC_CONTENT"));
+    activity.handle("message_update", stream("toolcall_delta", call, { delta: "private delta" }));
+    assert.equal(activity.snapshot().bubble, preparingBubble);
+    activity.handle("message_update", stream("toolcall_end", call, { toolCall: call }));
+    activity.handle("message_end", { message: { role: "assistant", stopReason: "toolUse" } });
+    activity.handle("tool_execution_start", { toolCallId: call.id, toolName: name, args: { private: "NEVER_ECHO_GENERIC_CONTENT" } });
+    state = activity.snapshot(); assert.equal(state.toolCount, 1); assert.equal(state.phase, executionPhase); assert.equal(state.bubble, executionBubble);
+    activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
+  }
+  activity.handle("message_start", { message: { role: "assistant" } });
+  const abandoned = { type: "toolCall", id: "abandoned", name: "custom_future_tool", arguments: {} };
   activity.handle("message_update", stream("toolcall_start", abandoned)); assert.equal(activity.snapshot().toolCount, 1);
   activity.handle("message_end", { message: { role: "assistant", stopReason: "length" } });
-  assert.equal(activity.snapshot().toolCount, 0); assert.equal(activity.snapshot().phase, "thinking");
-  checks.push("Edit/write typing starts at toolcall_start, survives argument deltas and hands off without a count gap; edit says 我改改呀, write says 我写写呀, streamed content stays private and abandoned calls clear");
+  assert.equal(activity.snapshot().toolCount, 0, "An abandoned custom call must not latch the typing pose");
+  checks.push("Every built-in, orchestration, question, web and arbitrary extension tool types with private-safe typing while arguments stream, then hands off to its real execution pose; category bubbles distinguish edit, write, code, command, question, read, local/web search, discovery and generic preparation");
 }
 
 {

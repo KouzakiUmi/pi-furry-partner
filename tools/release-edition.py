@@ -111,12 +111,12 @@ def main():
     assets.add_argument('--releases', type=Path, default=ROOT / 'dist/releases')
     args = parser.parse_args()
     if args.command == 'resolve':
-        print(json.dumps(prepare(ROOT, args.tag, args.output, args.github_output), ensure_ascii=False))
+        print(json.dumps(prepare(ROOT, args.tag, args.output, args.github_output), ensure_ascii=True))
     else:
         paths = release_assets(ROOT, read(args.plan), args.releases)
         target = args.plan.parent / 'release-assets.json'
         target.write_text(json.dumps(paths, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-        print(json.dumps({'edition': read(args.plan)['edition'], 'assets': paths}, ensure_ascii=False))
+        print(json.dumps({'edition': read(args.plan)['edition'], 'assets': paths}, ensure_ascii=True))
 
 
 if __name__ == '__main__':

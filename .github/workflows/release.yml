@@ -17,6 +17,8 @@ jobs:
   release:
     needs: verify
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: '1'
     permissions:
       contents: write
     defaults:

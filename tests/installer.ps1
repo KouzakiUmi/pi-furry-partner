@@ -50,7 +50,11 @@ Assert ($config.layout -eq 'editor' -and $config.style -eq 'umi' -and $config.na
 Assert ($config.language -ceq 'auto') 'fresh installation follows the system language by default'
 Assert ($config.persona -eq $false) 'fresh installation leaves the optional persona disabled'
 Assert ($config.chineseUI -eq $true -and $config.compactPrompt -eq $true) 'fresh installation enables independent native UI and compact Chinese prompt preferences'
-Assert (Test-Path -LiteralPath (Join-Path $agent 'extensions\pi-furry-partner\prompts\wumi-persona.md') -PathType Leaf) 'persona template is installed alongside the extension'
+foreach ($personaTemplate in @('umi-persona.md', 'umi-persona.en.md')) {
+    $installedTemplate = Join-Path $agent ('extensions\pi-furry-partner\prompts\' + $personaTemplate)
+    Assert (Test-Path -LiteralPath $installedTemplate -PathType Leaf) ($personaTemplate + ' is installed alongside the extension')
+    Assert ((Get-FileHash -LiteralPath $installedTemplate -Algorithm SHA256).Hash -ceq (Get-FileHash -LiteralPath (Join-Path $source ('prompts\' + $personaTemplate)) -Algorithm SHA256).Hash) ($personaTemplate + ' matches the source template exactly')
+}
 Assert (Test-Path -LiteralPath (Join-Path $agent 'extensions\pi-furry-partner\prompts\pi-system-zh.md') -PathType Leaf) 'native Chinese prompt template is installed separately from the persona template'
 foreach ($rightsFile in @('LICENSE', 'NOTICE', 'ASSET_LICENSE.md')) {
     if (Test-Path -LiteralPath (Join-Path $source $rightsFile)) {

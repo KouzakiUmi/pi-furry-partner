@@ -91,6 +91,11 @@ checks.push("Conversational resources avoid backend narration and premature comp
 const voice = { labels: {}, bubbles: {}, phrases: {} };
 replaceActivityCopy(voice, copy, phrases);
 let time = 2000;
+const writingActivity = createActivity({ ...voice, now: () => time, random: () => .25 });
+writingActivity.start({ wake: false }); writingActivity.handle("agent_start");
+writingActivity.handle("tool_execution_start", { toolCallId: "write-copy", toolName: "write", args: { path: "src/new.ts" } });
+assert.equal(writingActivity.snapshot().bubble, copy.bubbles.writing);
+assert.equal(localizeSnapshot(writingActivity.snapshot(), "en").bubble, englishCopy.bubbles.writing);
 const activity = createActivity({ ...voice, now: () => time, random: () => .25 });
 activity.start({ wake: false }); activity.handle("agent_start");
 activity.handle("tool_execution_start", { toolCallId: "keep", toolName: "bash" });

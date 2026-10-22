@@ -37,7 +37,7 @@ jobs:
         shell: pwsh
         run: |
           $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.2/node_modules'
-          python tools/build-editions.py --edition all --prepare-only --test
+          python tools/build-editions.py --edition all --platform all --prepare-only --test
       - name: Run runtime and integration suites (Pi 1.3.0)
         shell: pwsh
         run: |

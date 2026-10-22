@@ -1,6 +1,6 @@
 # 项目工作约束
 
-涉及 Umi 设定图、素材、角色漫画或 PV 制作时，先读 work/pv-adventure-20261021/AGENTS.md 与 PRODUCTION-SPEC.md，再读对应 STATUS.json 和 review.json。
+涉及 Umi 设定图、素材、角色漫画或 PV 制作时，先读 docs/production/AGENTS.md 与 PRODUCTION-SPEC.md，再读对应的状态和评审记录。已批准插件素材的可复现来源保存在 Hi-Res/production 与 assets/animated/provenance；work 中的生成会话只作为本机历史，不是必需输入。
 
 用户要求持续两路子智能体实际看图复核、按原二维设定与色卡核验、不把阴影当固有色、整张重生、分批交用户评审。不要只依赖聊天摘要或历史生成提示词。最近纠正：尾巴必须保留原白/浅灰/深灰分区，删除误加的蓝灰阴影色块；曾尝试的统一灰尾巴方案错误，已撤回。
 

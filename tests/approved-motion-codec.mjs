@@ -72,11 +72,30 @@ assert.throws(() => decodeApprovedMotionNodeResource(bomb));
 const abort = new AbortController(); abort.abort();
 await assert.rejects(decodeApprovedMotionResource(gz, { signal: abort.signal }), { name: 'AbortError' });
 
-const binaryPlayer = createApprovedMotionPlayer({ catalog, loadIndexed: async path => decodeApprovedMotionResource(gzipSync(encode(data[path]))) });
-for (const phase of ['idle', 'thinking', 'waiting', 'running']) {
-  const selection = binaryPlayer.sample({ phase });
-  for (let i = 0; i < 20 && !binaryPlayer.indexedFrame(selection); i++) await new Promise(resolve => setImmediate(resolve));
-  assert.ok(binaryPlayer.indexedFrame(selection)); assert.ok(binaryPlayer.stats().clips <= 2);
+let notifyReady;
+const binaryPlayer = createApprovedMotionPlayer({ catalog,
+  loadIndexed: async path => decodeApprovedMotionResource(gzipSync(encode(data[path]))),
+  onReady: () => notifyReady?.() });
+try {
+  for (const phase of ['idle', 'thinking', 'waiting', 'running']) {
+    const selection = binaryPlayer.sample({ phase });
+    let timeout;
+    try {
+      // Stream decompression may outlive many event-loop turns on a busy host.
+      // Wait for the production readiness notification, not a fixed spin count.
+      await new Promise((resolve, reject) => {
+        timeout = setTimeout(() => reject(new Error(
+          `${phase}: indexed resource did not become ready: ${JSON.stringify(binaryPlayer.stats())}`)), 5000);
+        notifyReady = resolve;
+        assert.equal(binaryPlayer.indexedFrame(selection), null, 'Cold resource uses the loading fallback');
+      });
+    } finally {
+      clearTimeout(timeout);
+      notifyReady = undefined;
+    }
+    assert.ok(binaryPlayer.indexedFrame(selection)); assert.ok(binaryPlayer.stats().clips <= 2);
+  }
+} finally {
+  binaryPlayer.dispose();
 }
-binaryPlayer.dispose();
 console.log('Exact indexed codec: u8/u16le, offsets, malformed bounds/UTF8/indices/transparency/clocks, gzip CRC/bomb/abort, legacy JSON and two-clip playback passed.');

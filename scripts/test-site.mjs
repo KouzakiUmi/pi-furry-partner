@@ -5,10 +5,7 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { styleAssetDirectory } from "../lib/styles.mjs";
-import { withWatchFrames } from "../lib/watch.mjs";
-import { withSearchFrames } from "../lib/search.mjs";
-import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
-import { withPokeFrame } from "../lib/poke.mjs";
+import { loadEncodedSheet } from "../lib/index.js";
 import vm from "node:vm";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -35,22 +32,38 @@ check("Keyboard accessible named controls and visible focus", () => { assert.mat
 check("Relative local URLs work under repository subpath", () => { for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) { if (!/^(?:https?:|#)/.test(url)) assert.ok(url.startsWith("./"), url); } assert.doesNotMatch(html, /(?:src|href)="\//); });
 check("All build hashes match", () => { assert.equal(manifest.version, pkg.version); assert.equal(manifest.characterName, "Umi"); assert.match(html, />UMI <span>/); assert.doesNotMatch(html, /\bWUMI\b|\bWumi\b/); });
 for (const [file, expected] of Object.entries(manifest.hashes)) assert.equal(createHash("sha256").update(await readFile(join(out, file))).digest("hex"), expected);
-for (const file of ["activity", "motion", "poke", "listen"]) assert.equal(await readFile(join(out, "runtime", `${file}.js`), "utf8"), (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replaceAll('"./poke.mjs"', '"./poke.js"').replaceAll('"./listen.mjs"', '"./listen.js"'));
+for (const file of ["activity", "motion", "poke", "listen", "gestures", "expressions"]) {
+  const source = await readFile(join(out, "runtime", `${file}.js`), "utf8");
+  assert.equal(source, (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replace(/\.mjs(["'])/g, '.js$1'));
+  for (const [, dependency] of source.matchAll(/from\s+["'](\.\/[^"']+)["']/g)) {
+    assert.ok(dependency.endsWith('.js'), `${file}: portable dependency extension`);
+    await access(join(out, 'runtime', dependency));
+  }
+}
+const [siteActivity, siteMotion] = await Promise.all([import('../dist/runtime/activity.js'), import('../dist/runtime/motion.js')]);
+assert.equal(typeof siteActivity.createActivity, 'function');
+assert.equal(typeof siteMotion.createMotionPlayer, 'function');
 assert.match(await readFile(join(out, "runtime/activity.js"), "utf8"), /from "\.\/poke\.js"/);
 await access(join(out, "runtime/poke.js"));
 await access(join(out, "runtime/listen.js"));
 for (const [style, data] of Object.entries(sheets)) {
   const original = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "reaction-sheet.json"), "utf8"));
-  assert.equal(original.frames.length, 21);
+  const runtime = loadEncodedSheet(style);
+  assert.deepEqual(data, JSON.parse(JSON.stringify(runtime)), `${style}: complete production sheet including metadata and encoded pixel bytes`);
   for (let i = 0; i < original.frames.length; i++) assert.deepEqual([...Buffer.from(data.frames[i].pixels, "base64")], original.frames[i].pixels);
-  const patch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "poke-patch.json"), "utf8"));
-  const watch = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "watch-frames.json"), "utf8"));
-  const listen = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "listen-frames.json"), "utf8"));
-  let runtime = withListenFrames(withWatchFrames(withPokeFrame(original, patch), watch), listen),searchCount=0;
-  try{const search=JSON.parse(await readFile(join(root,"assets/reactions",styleAssetDirectory(style),"search-frames.json"),"utf8"));runtime=withSearchFrames(runtime,search);searchCount=search.frames.length;}
-  catch(error){if(error.code!=="ENOENT")throw error;}
-  assert.equal(data.frames.length, original.frames.length + 1 + watch.frames.length + listen.frames.length+searchCount); assert.deepEqual(data.motion, runtime.motion); assert.deepEqual(data.ids, runtime.ids);
-  for (const { id } of runtime.frames.slice(original.frames.length)) assert.deepEqual([...Buffer.from(data.frames[data.ids[id]].pixels, "base64")], runtime.frames[runtime.ids[id]].pixels);
+  assert.equal(data.pixelsEncoding, 'u8');
+  for (const frame of data.frames) {
+    const pixels = Buffer.from(frame.pixels, 'base64');
+    assert.equal(pixels.length, data.width * data.height);
+    assert.ok(pixels.every(index => index < data.palette.length));
+  }
+  if (style === 'umi-pixel') {
+    assert.equal(styleAssetDirectory(style), 'pixel');
+    assert.equal(original.frames.length, 16);
+    assert.equal(data.width, 100); assert.equal(data.height, 100);
+    assert.equal(data.frames.length, 17, 'Original pixel frames plus the existing poke patch');
+    for (const key of ['watch', 'listen', 'searchVideo', 'gestureVideos', 'approvedWholeFrames']) assert.equal(data.motion?.[key], undefined, `Old pixel has no new ${key} action bank`);
+  }
 }
 checks.push("Original frames and every authored interaction frame exactly match plugin", "Shared runtime files match plugin with only portable dependency URLs");
 const runtimeImports = [...app.matchAll(/import\("(\.\/runtime\/[^\"]+)"\)/g)];

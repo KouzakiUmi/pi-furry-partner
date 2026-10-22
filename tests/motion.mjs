@@ -5,9 +5,14 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { renderDock } from "../lib/editor-layout.mjs";
+import { styleAssetDirectory } from "../lib/styles.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const checks = [];
+// Retired deformation rigs are compatibility fixtures, not production styles.
+const reactionPath = (style) => style === "wumi" || style === "wumi-pixel"
+  ? join(root, "tests/fixtures/legacy-action-packs", style, "reaction-sheet.json")
+  : join(root, "assets/reactions", styleAssetDirectory(style), "reaction-sheet.json");
 const synthetic = () => {
   const palette = [[0, 0, 0], [255, 0, 0], [0, 0, 255], [191, 0, 64], [128, 0, 128], [64, 0, 191]];
   const frame = (id, color) => ({ id, pixels: Array.from({ length: 24 * 24 }, (_, i) => {
@@ -72,7 +77,7 @@ const alphaComponent = (pixels, width, height, transparent, seed) => {
 
 {
   for (const style of ["wumi", "wumi-pixel"]) {
-    const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+    const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
     const before = JSON.stringify(sheet), shapes = ["talk-closed", "talk-small", "talk-medium", "talk-wide"];
     const mouthChanges = [];
     for (let i = 0; i < sheet.width * sheet.height; i++) {
@@ -95,7 +100,7 @@ const alphaComponent = (pixels, width, height, transparent, seed) => {
 }
 
 {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions/wumi/reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath("wumi"), "utf8"));
   const { player, set } = make(), samples = [];
   player.frame(sheet, sheet.ids.rest, { phase: "dozing" });
   for (let ms = 0; ms <= 600; ms += 50) {
@@ -262,7 +267,7 @@ const alphaComponent = (pixels, width, height, transparent, seed) => {
 const assetResults = [], actionResults = [];
 for (const style of ["wumi", "pixel", "illustration", "wumi-pixel"]) {
   let sheet;
-  try { sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8")); }
+  try { sheet = JSON.parse(await readFile(reactionPath(style), "utf8")); }
   catch (error) { if (style === "wumi-pixel" && error.code === "ENOENT") continue; throw error; }
   const test = make(), { player } = test;
   const palette = sheet.palette;
@@ -282,7 +287,7 @@ for (const style of ["wumi", "pixel", "illustration", "wumi-pixel"]) {
 checks.push("All available reaction styles retain fixed dimensions, valid original-palette indexes and a maximum of 64 cached frames through repeated pose changes");
 
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   for (const id of ["search", "error", "happy", "happy-blink", "work", "work-blink","wait","wait-blink"]) assert.ok(sheet.ids[id] !== undefined, `${style} needs its final ${id} asset`);
   assert.ok(sheet.motion?.tail?.normalized && sheet.motion?.wave?.normalized);
   const metrics = { style, tailAlphaChanges: 0, waveAlphaChanges: 0, earAlphaChanges: 0, typingPixelChanges: 0, errorEyeChanges: [] };
@@ -349,7 +354,7 @@ for (const style of ["wumi", "wumi-pixel"]) {
 checks.push("Final wumi and wumi-pixel assets visibly change tail and raised-paw alpha silhouettes, keep tail motion out of the document pile, move real typing paws and supply distinct XX eye pixels");
 
 {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions/wumi/reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath("wumi"), "utf8"));
   const withoutEars = { ...sheet, motion: { ears: false } };
   const first = make(), second = make();
   first.player.frame(sheet, sheet.ids.think, { phase: "thinking" });
@@ -372,7 +377,7 @@ checks.push("Final wumi and wumi-pixel assets visibly change tail and raised-paw
 
 const earFlickResults = [];
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   const control = { ...sheet, motion: { ...sheet.motion, ears: false } };
   const first = make(), second = make(), silhouettes = new Set();
   let leftPeak = 0, rightPeak = 0, activeSamples = 0;
@@ -415,7 +420,7 @@ for (const style of ["wumi", "wumi-pixel"]) {
 checks.push("Both ears visibly flick through several outline-changing beats on 240px and 80px styles, return to their normal contour, and remain still on rest/waking-rest/dozing poses");
 
 {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions/wumi/reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath("wumi"), "utf8"));
   const withoutPaws = { ...sheet, motion: { paws: false } };
   for (const phase of ["running", "editing"]) {
     const first = make(), second = make();
@@ -513,7 +518,7 @@ const tailWaveResults = [];
 }
 
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   const tail = sheet.motion.tail;
   const { player, set } = make({ maxFrames: 7 });
   const source = sheet.frames[sheet.ids.search].pixels, silhouettes = new Set();
@@ -539,7 +544,7 @@ checks.push("Real wumi and 80px wumi-pixel search animations have at least twelv
 
 const flexibleRootResults = [];
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   const tail = sheet.motion.tail;
   assert.equal(tail.rootPinned, false); assert.equal(tail.rootFlexible, true);
   const tailOnlySheet = { ...sheet, motion: { ...sheet.motion, papers: false, searchHead: false } };
@@ -584,7 +589,7 @@ checks.push("Real tail roots flex through several pixel states while an opaque b
 
 const paperFlutterResults = [];
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   const papers = paperRegions(sheet), source = Array.from(sheet.frames[sheet.ids.search].pixels);
   assert.ok(papers.length >= 2 && papers.length <= 3, `${style} animates just two or three top loose pages`);
   assert.equal(new Set(papers.map((region) => region.phaseOffset)).size, papers.length, `${style} loose pages have staggered phases`);
@@ -659,7 +664,7 @@ checks.push("Only two or three loose top pages flutter through multiple states o
 
 const searchHeadResults = [];
 for (const style of ["wumi", "wumi-pixel"]) {
-  const sheet = JSON.parse(await readFile(join(root, "assets/reactions", style, "reaction-sheet.json"), "utf8"));
+  const sheet = JSON.parse(await readFile(reactionPath(style), "utf8"));
   const regions = searchHeadRegions(sheet), occlusion = (sheet.motion.searchOcclusion ?? []).map((region) => scaledPolygon(sheet, region));
   assert.ok(regions.some((region) => region.id === "hood") && regions.some((region) => region.id === "neck-scarf"), `${style} has independent hood and neck/scarf layers`);
   assert.ok(occlusion.length > 0, `${style} retains foreground paper occlusion for the buried head`);
@@ -802,7 +807,7 @@ checks.push("Searching/compacting share the same 2400ms articulated head cycle w
 }
 
 const sourceHashes = {};
-for (const file of ["lib/motion.mjs", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json"])
+for (const file of ["lib/motion.mjs", "tests/fixtures/legacy-action-packs/wumi/reaction-sheet.json", "tests/fixtures/legacy-action-packs/wumi-pixel/reaction-sheet.json"])
   sourceHashes[file] = createHash("sha256").update(await readFile(join(root, file))).digest("hex");
 const report = { generatedAt: new Date().toISOString(), runtime: "pure JavaScript indexed-pixel motion; no graphical window or model requests", checks, assetResults, actionResults, earFlickResults, tailWaveResults, flexibleRootResults, paperFlutterResults, searchHeadResults, sourceHashes, passed: checks.length };
 await writeFile(join(root, "tests/motion-validation.json"), JSON.stringify(report, null, 2) + "\n");

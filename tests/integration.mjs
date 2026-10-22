@@ -132,12 +132,17 @@ function detachHostUI() {
 }
 
 try {
-  for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
+  // This suite pins the original reaction/frame integration, including its
+  // fallback when a full-animation pack is absent. Complete motion routing and
+  // actual resources have separate approved-motion suites in the full build.
+  for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), {
+    recursive: true, filter: source => source !== join(root, 'assets', 'animated') });
   await writeFile(join(scratch, "config.json"), JSON.stringify({ language:"zh-CN", layout:"editor", style:"wumi", renderer:"auto", info:"compact", enabled:true, animation:true, dockSize:"auto" }));
   themeAPI.setThemeJsonValidator(validateThemeJson); themeAPI.initTheme("dark", false);
   theme = themeAPI.loadThemeFromPath(join(root, "themes/pi-furry-night.json"), "truecolor");
   editorTheme = themeAPI.getEditorTheme();
   process.env.WT_SESSION = "offline-test-windows-terminal"; delete process.env.TMUX; delete process.env.PI_WINK_RENDER;
+  api.setCapabilities({images:null,trueColor:true,hyperlinks:true});
   Date.now = () => time;
   const result = await loadExtensions([join(scratch, "index.ts")], scratch);
   assert.deepEqual(result.errors, []); assert.equal(result.extensions.length, 1);
@@ -230,15 +235,18 @@ try {
   await command("poke"); assert.equal(jobs.size, 1); currentEditor.render(100);
   assert.equal(currentEditor.displaySheet.frames[0].id, "poke");
   const pokeFirst = currentEditor.displaySheet.frames[0].cacheKey;
+  const pokePixels = Array.from(currentEditor.displaySheet.frames[0].pixels);
   tick(); tick(); currentEditor.render(100);
-  assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, pokeFirst);
+  assert.equal(currentEditor.displaySheet.frames[0].cacheKey, pokeFirst,
+    "The registered whole-frame HD poke retains its body/support instead of applying the legacy deformation rig");
+  assert.deepEqual(Array.from(currentEditor.displaySheet.frames[0].pixels), pokePixels);
   while (jobs.size) { tick(); currentEditor.render(100); }
   assert.match(currentEditor.displaySheet.frames[0].id, /^think/);
   assert.equal(currentEditor.getText(), "keep my poke draft🙂"); assert.equal(submits.length, beforePokeSubmits);
   assert.equal(await readFile(join(scratch, "config.json"), "utf8"), beforePokeConfig);
   await emit("agent_before_settle", { outcome: "completed" }); await emit("agent_settled", { aborted: false });
   currentEditor.setText(""); await command("play");
-  checks.push("Paused work→thinking changes immediately and stays correct across a tokenless gap; regular /mascot poke shakes a >w< face then restores the real static pose, stops its temporary timer and preserves draft/config/submission count");
+  checks.push("Paused work→thinking changes immediately and stays correct across a tokenless gap; regular /mascot poke holds its registered HD pose then restores the real static pose, stops its temporary timer and preserves draft/config/submission count");
 
   let menuNativeCalls = 0;
   currentEditor.actionHandlers.set("app.message.copy", () => { menuNativeCalls++; });
@@ -272,7 +280,7 @@ try {
   assert.deepEqual(await runBeforeAgent(),{result:undefined,systemPromptOptions:{customPrompt:originalPrompt,sections:{}}},"Persona must be off by default");
   await command("persona on");
   const personaPrompt=await runBeforeAgent();
-  const templatePath=join(scratch,"prompts/wumi-persona.md");
+  const templatePath=join(scratch,"prompts/umi-persona.md");
   const template=(await readFile(templatePath,"utf8")).trim();
   assert.ok(template.length>0);
   assert.equal(personaPrompt.result,undefined,"Persona must not return a whole-prompt override");
@@ -432,19 +440,26 @@ try {
   await command("demo off");await command("layout editor");currentEditor.setText("");
   checks.push("Default/all demo loops every animation without requests, extra timers, draft/submission or preference changes; whole-lap same-state motion restarts, paused/header modes give actionable hints, and off restores the actual pose");
   for (const style of ["umi", "umi-pixel"]) {
+    const originalPixel = style === "umi-pixel";
     await command(`style ${style}`);
     await command("demo running"); currentEditor.render(100); advanceDock();
-    assert.match(currentEditor.displaySheet.frames[0].id, /^watch/);
-    assert.equal(currentEditor.displaySheet.width, style === "umi-pixel" ? 80 : 240);
+    assert.match(currentEditor.displaySheet.frames[0].id, originalPixel ? /^work/ : /^watch/);
+    assert.equal(currentEditor.displaySheet.width, style === "umi-pixel" ? 100 : 240);
     assert.equal(currentEditor.displaySheet.frames.length, 1);
     const watchKey = currentEditor.displaySheet.frames[0].cacheKey;
-    advanceDock(12); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "The authored magnifier sequence must advance beyond its readable first cel");
+    advanceDock(12);
+    if (!originalPixel) assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "The authored magnifier sequence must advance beyond its readable first cel");
     for (const [phase, expectedId] of [["editing", /^work/], ["searching", /^search/], ["compacting", /^search/], ["error", /^error/], ["success", /^happy/]]) {
-      const before = currentEditor.displaySheet.frames[0].cacheKey;
       await command(`demo ${phase}`); currentEditor.render(100);
-      assert.equal(currentEditor.displaySheet.frames[0].cacheKey, before, "A phase change starts from the displayed frame instead of jumping to a new pose");
+      if (!originalPixel) assert.equal(currentEditor.motion.stats().transitioning, false,
+        "Complete registered HD poses switch without legacy frame blending");
+      if (!originalPixel) assert.equal(currentEditor.motion.stats().palettePairs, 0,
+        "HD state changes cannot synthesize mixed source colors");
       // Distinct work/watch tool poses now honor the 1200ms readable gesture.
-      advanceDock(phase === "editing" ? 30 : 5); assert.match(currentEditor.displaySheet.frames[0].id, expectedId);
+      advanceDock(phase === "editing" ? 30 : 5);
+      assert.match(currentEditor.displaySheet.frames[0].id,
+        originalPixel && ["searching", "compacting"].includes(phase) ? /^work/ : expectedId);
+      assert.equal(currentEditor.displaySheet.width, originalPixel ? 100 : 240);
       assert.ok(currentEditor.motion.stats().frames <= 64);
       for (const line of currentEditor.render(100)) assert.ok(visibleWidth(line) <= 100);
     }
@@ -458,7 +473,7 @@ try {
     await command("play"); currentEditor.render(100); assert.equal(jobs.size, 1);
   }
   await command("demo off"); await command("style umi"); currentEditor.render(100);
-  checks.push("Real umi and crisp umi-pixel docks render one-frame motion sheets through Sixel: magnifier scan, typing, buried searching/compacting, XX error and success transition from the displayed frame, stay bounded and pause completely");
+  checks.push("Real umi HD and original 100px pixel docks render through Sixel: HD magnifier/action poses avoid blending, original pixel retains work fallback for running/search, both stay bounded and pause completely");
 
   terminal.columns=100;terminal.rows=40;currentEditor.setText("");historyLength=120;
   renderer.renderNow();assert.ok(renderer.captureRenderState().previousViewportTop>0);
@@ -521,7 +536,8 @@ try {
   renderer.stop({preserveScreen:true});renderer=main;
   checks.push("Real fullscreen layout clips the actual dock to visible row stripes, and a narrow overlay suppresses Sixel until dismissed");
 
-  for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render auto","off","on"]){
+  api.setCapabilities({images:"kitty",trueColor:true,hyperlinks:true});
+  for(const args of ["pause","play","style pixel","style illustration","style wumi-pixel","style wumi","size small","size large","info native","info compact","layout header","style illustration","style pixel","layout editor","render blocks","render kitty","render auto","off","on"]){
     const outgoingEditor = currentEditor;
     await command(args);
     if (outgoingEditor !== currentEditor && outgoingEditor?.motion) {
@@ -534,9 +550,22 @@ try {
       assert.equal(jobs.size, timersBefore);
     }
     assert.ok(jobs.size<=1,`More than one timer after ${args}`);
-    currentEditor.render(100);currentHeader?.render(100);currentFooter?.render(100);
-    if(args==="off"){assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
+    const editorLines=currentEditor.render(100);currentHeader?.render(100);currentFooter?.render(100);
+    if(args==="render kitty") assert.ok(editorLines.some((line)=>line.includes("\x1b_Ga=T")),"Explicit Kitty mode must reach the extension's native image branch");
+    if(args==="off"){assert.ok(terminalWrites.join("").includes("\x1b_Ga=d,d=I,"),"Disposal must release Kitty image IDs");assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);assert.equal(currentFactory,undefined);}
   }
+  const kittyBeforeOverlay = currentEditor.render(100);
+  assert.ok(kittyBeforeOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows render before a popup opens");
+  const kittyOverlay = renderer.showOverlay({ render: () => ["popup body"], invalidate() {} }, { row: 2, col: 26, width: 20, nonCapturing: true });
+  const kittyDuringOverlay = currentEditor.render(100);
+  assert.ok(!kittyDuringOverlay.some((line) => line.includes("\x1b_G")), "An active popup replaces Kitty image rows with compositable block rows");
+  renderer.renderNow();
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("popup body")), "Pi composites popup text into the former Kitty rows");
+  assert.ok(!renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
+  kittyOverlay.hide(); renderer.renderNow();
+  const kittyAfterOverlay = currentEditor.render(100);
+  assert.ok(kittyAfterOverlay.some((line) => line.includes("\x1b_Ga=T")), "Kitty rows resume after the popup closes");
+  assert.ok(renderer.captureRenderState().previousLines.some((line) => line.includes("\x1b_G")));
   assert.ok(branchUnsubs>0);
   let foreignHeaderDisposals=0, foreignFooterDisposals=0;
   const foreignHeader={render:()=>["foreign header"],invalidate(){},dispose(){foreignHeaderDisposals++}};
@@ -561,8 +590,7 @@ try {
   assert.equal(jobs.size,0);hostDisposed=false;
   await emit("session_start",{reason:"reload"});assert.equal(jobs.size,1);currentEditor.render(100);
   await emit("session_shutdown",{reason:"quit"});assert.equal(jobs.size,0);assert.strictEqual(terminal.write,nativeWrite);detachHostUI();
-  checks.push("Repeated style/layout/size/info/render/off/on changes retain a single timer/hook; reload and quit dispose factories, branch callbacks and restore the original terminal write");
-  checks.push("Retired editors ignore late rendering, input, mouse and quick actions after replacement/shutdown; repeated disposal is harmless and stale UI contexts remain untouched");
+  checks.push("Repeated style/layout/size/info/render/off/on changes exercise the native Kitty branch, retain a single timer/hook and release image IDs on reload/quit");
 
   const report={testedAt:new Date(originalClock()).toISOString(),piVersion:version,modelRequests:0,passed:true,verification:"Real Pi extension loader, CustomEditor, Theme, Keybindings and main/fullscreen rendering with fake terminal/clock; no model session or credentials",checks};
   await writeFile(join(root,"tests/integration-validation.json"),JSON.stringify(report,null,2)+"\n");

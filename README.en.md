@@ -1,3 +1,5 @@
+> Single repository, shared sources: `npm run build:hd`, `npm run build:animated`, or `npm run build:all`. Both editions share the original pixel artwork; regenerated pixel motions are removed. See [build guide](docs/plugin-lines.md).
+
 <div align="center">
 
 [**简体中文**](README.md) | **English**
@@ -11,7 +13,7 @@
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
 [![Release v2.3.3](https://img.shields.io/badge/release-v2.3.3-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3)
-[![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
+[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
@@ -51,6 +53,14 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 ## Meet Umi
 
+[Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the shared Pi/DSH catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority; DSH head pats can bring out his happy paws.
+
+This batch of [H3 expression derivatives has been withdrawn](docs/h3-expression-videos.md). Both hosts currently use authored-pose fallbacks, while source videos and historical reviews remain preserved. Replacement artwork takes proportions and colors from the original idle/happy poses and must be confirmed before new continuous motion is generated. DSH keeps its fixed pose-family scale and ground anchors for consistent search/organizing transitions.
+
+After the user reported color pollution, production removed the material RGB mapping and vertical stretch. New artwork uses uniform full-canvas resizing, preserving its authored colors and proportions. Withdrawal records override historical acceptance, and packing/Hi-Res rebuilding refuse the withdrawn derivatives.
+
+DSH uses an [independent waving title image](docs/dsh-branding.md) with a static fallback, including reduced-motion mode. It does not follow the desktop pet's activity. The composer status button has been removed; the floating pet keeps its interactions and typing listener.
+
 <table>
 <tr>
 <td align="center" width="50%">
@@ -89,9 +99,11 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 ## Installation
 
-**High-resolution portraits require a Sixel-capable terminal.** On Windows, use **Windows Terminal 1.22 or newer** (Settings → About). Sixel support is built in and normally needs no extra switch. The plugin defaults to `render auto`, selecting Sixel in Windows Terminal outside tmux and character blocks elsewhere. Images are encoded by the plugin; no libsixel, chafa or image conversion tool is needed. See [terminal requirements and high-resolution display](docs/guide.en.md#terminal-requirements-and-high-resolution-display).
+**High-resolution portraits support Kitty Graphics Protocol or Sixel.** With `render auto`, Pi's detected Kitty image capability takes priority, followed by Sixel in Windows Terminal outside tmux, then character blocks. You can also select `/mascot render kitty`, `sixel` or `blocks`. On Windows, use **Windows Terminal 1.22 or newer** (Settings → About). Images are encoded by the plugin; no libsixel, chafa or image conversion tool is needed. See [terminal requirements and high-resolution display](docs/guide.en.md#terminal-requirements-and-high-resolution-display).
 
-Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**, with additional Pi 1.3 checks for editing, text selection, mouse input and image transport. The native Chinese UI patch and concise Pi documentation hints currently support only 1.2.0; other versions keep Pi's original behavior. Other operating systems have not been tested. Images use Sixel or true-color half-block characters; terminal support affects visual quality.
+Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**; the full suite passes on both releases, and the native Chinese UI patch and concise Pi documentation hints are enabled for both. Other versions keep Pi's original behavior. Upstream also records a native check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1**, covering portrait display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction. That historical check does not establish a fresh validation of both current build editions on NixOS. Terminal support affects visual quality.
+
+Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
 Choose one installation route to avoid loading the extension twice.
 
@@ -135,7 +147,7 @@ Use `/mascot` to inspect your settings. Size, layout, rendering and demo command
 
 `/mascot demo` or `/mascot demo all` starts a repeating tour lasting a little over a minute: listening, thinking, speaking, working and a playful poke, with complete magnifier and search loops and time to doze and wake again. It makes no model requests and preserves settings and your draft. `demo off` or a real task ends the tour. Use `/mascot demo thinking` or `/mascot demo running` to focus on one pose.
 
-The character name and style commands now consistently use **Umi / `umi`**. Legacy `wumi` and `wumi-pixel` commands remain accepted as aliases; new style saves use `umi` and `umi-pixel`.
+The character name and style commands consistently use **Umi / `umi`**. Style IDs accept only the canonical spellings such as `umi` and `umi-pixel`; the former style IDs are removed, an old saved value falls back to the default style at runtime, and the installer rewrites it to the canonical ID.
 
 `umi-pixel` preserves the illustrated character's design, face and poses at **80 × 80**. Local line protection keeps fine mouth strokes from disappearing during sampling, with a light color cleanup around those strokes and no character redesign.
 
@@ -178,7 +190,7 @@ English mode uses Pi's native English interface. The `locale` preference is reta
 
 All three accept `status`. `/mascot off` hides the companion; the independent switches retain their settings and can be disabled separately.
 
-- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
+- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0 and 1.3.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
 - **Concise Pi documentation hints:** condenses only the precisely recognized documentation-hint section into Chinese or English for the next request, retaining documentation paths, complete-file reading and cross-reference requirements. Pi's identity, tool list and rules stay native. Custom `SYSTEM.md`, project `AGENTS.md`, skills and dynamic content added by later extensions remain live. Disabling it removes this documentation-section replacement. Shorter wording does not imply the same token reduction for every model.
 - **Character voice:** gentle, cute, lively and a little playful, while serious and steady where it matters. Separate Chinese and English templates follow your language choice. They adjust expression; technical accuracy, code and structured output take priority.
 
@@ -194,7 +206,7 @@ Animations, local language processing, read-only panels and previews do not make
 | Release changes | [Changelog](CHANGELOG.md) |
 | Bug reports and ideas | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-Tests cover activity timing, editor layout, mouse routing, Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0; additional Pi 1.3 interaction checks do not extend the native Chinese UI or prompt compatibility scope. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
+Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0 and 1.3.0, and CI runs both releases. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
 
 The GitHub README is the project's main landing page. Optional standalone showcase source remains in `site/` and has not been published as a separate website.
 

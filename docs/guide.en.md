@@ -1,5 +1,7 @@
 # pi-furry-partner · User guide
 
+See [authored expressions](authored-expressions.md) for the nine new reactions shared with DSH. Use `/mascot action all` for the 17-item tour or an expression ID such as `/mascot action shy` for a single reaction.
+
 [**简体中文**](guide.zh-CN.md) | **English**
 
 [Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [Changelog](../CHANGELOG.md)
@@ -8,7 +10,7 @@ Umi is an animated companion for the interactive Pi Coding Agent terminal. This 
 
 ## Installation and updates
 
-The fully tested environment is **Windows, Pi 1.2.0, Windows PowerShell 5.1 and PowerShell 7**. Pi 1.3 has additional interaction regression checks; native Chinese UI and concise Pi documentation hints remain limited to 1.2.0. Other operating systems have not been tested. Configure Pi and your model provider before installing the extension.
+The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. The full suite passes on both releases, and native Chinese UI and concise Pi documentation hints are enabled for both. Upstream also records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1. It does not establish a fresh acceptance of both current editions on NixOS. Configure Pi and your model provider before installing the extension.
 
 Choose one route:
 
@@ -26,20 +28,20 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.
 
-Updates preserve existing 2.x companion preferences. The installer migrates only legacy `wumi` / `wumi-pixel` style values to `umi` / `umi-pixel`; other configuration content is preserved. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
+Updates preserve existing 2.x companion preferences. The installer migrates only legacy style values to their canonical IDs; other configuration content is preserved. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
 
 The package-manager route does not configure those four Pi UI settings or migrate old script installations. Restart Pi, then select the theme with `/theme` and interface mode with `/settings`. Keep using the same installation route for updates, or uninstall the previous copy before switching. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
 
 ## Terminal requirements and high-resolution display
 
-High-resolution portraits use **Sixel**, which requires terminal support. Character-block mode still supports the plugin and animation. On Windows, use **Windows Terminal 1.22 or newer**; check Settings → About and update through Microsoft Store. Microsoft's [1.22 announcement](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/) describes built-in Sixel support, which normally requires no extra setting. PowerShell is the shell; updating PowerShell alone does not add graphics support to an old terminal.
+High-resolution portraits support **Kitty Graphics Protocol and Sixel**, each requiring terminal support. Character-block mode still supports the plugin and animation. On Windows, use **Windows Terminal 1.22 or newer**; check Settings → About and update through Microsoft Store. Microsoft's [1.22 announcement](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/) describes built-in Sixel support, which normally requires no extra setting. PowerShell is the shell; updating PowerShell alone does not add graphics support to an old terminal.
 
-1. Launch Pi in Windows Terminal. The default `renderer: "auto"` selects Sixel when `WT_SESSION` is set and `TMUX` is absent, otherwise character blocks. This is an environment heuristic, not a capability or terminal-version probe. Upgrades preserve existing renderer preferences.
+1. Launch Pi in your terminal. The default `renderer: "auto"` prefers the Kitty image capability detected by Pi, then selects Sixel when `WT_SESSION` is set and `TMUX` is absent, otherwise character blocks. The Sixel fallback is an environment heuristic, not a terminal-version probe. Upgrades preserve renderer preferences.
 2. Run `/mascot` to inspect the selected renderer, then `/mascot demo` to check actual display. Stop with `/mascot demo off`.
-3. Use `/mascot render auto` to restore automatic selection after manually choosing blocks. In another confirmed Sixel-capable terminal, use `/mascot render sixel`. This selects plugin output; it cannot add protocol support to a terminal.
+3. Use `/mascot render auto` to restore automatic selection after manually choosing blocks. Use `/mascot render kitty` or `/mascot render sixel` when the terminal supports that protocol. This selects plugin output; it cannot add protocol support to a terminal.
 4. For missing, garbled or misplaced portraits, update the terminal and retry directly in local Windows Terminal without tmux, SSH or an embedded terminal. Use `/mascot render blocks` for a usable fallback while investigating the terminal and forwarding path.
 
-The plugin encodes Sixel itself; libsixel, chafa and ffmpeg are not required. The installer does not edit Windows Terminal settings, install/update the terminal or set persistent environment variables. No separate graphics-enabling script is needed. Other platforms and terminals still require real-world verification.
+The plugin encodes Kitty PNG and Sixel itself; libsixel, chafa and ffmpeg are not required. The installer does not edit Windows Terminal settings, install/update the terminal or set persistent environment variables. No separate graphics-enabling script is needed. Upstream records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1 (`TERM=xterm-kitty`): display, animation, renderer switching and ordinary interaction worked. Thanks to [@srcres258](https://github.com/srcres258) for the implementation and validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1).
 
 ## Language
 
@@ -74,7 +76,7 @@ The startup wake-up lasts about five seconds. Waiting for your answer produces a
 
 Short editing/running reactions remain visible for about 1.2 seconds, with a buffer before returning to thinking. The real status text updates immediately. Narrow or short terminals collapse the large portrait to preserve editing space. The `Motion: On` / `Motion: Off` control shows the current state. Turning it off pauses looping motion while static poses still update with agent activity; an intentional poke still plays its short reaction. Pi keeps working.
 
-The canonical style IDs are `umi` and `umi-pixel`, matching the English character name **Umi**. Older `wumi` and `wumi-pixel` commands and saved configurations remain accepted as compatibility aliases; new style saves use the canonical IDs. Internal asset paths remain stable.
+The canonical style IDs are `umi` and `umi-pixel`, matching the English character name **Umi**. The former style IDs are no longer accepted: an old saved configuration falls back to the default style at runtime, and the installer rewrites it to the canonical ID. Asset directory names match the canonical IDs.
 
 `umi-pixel` keeps the illustrated character's proportions, features and poses at 80 × 80. Local protection preserves fine mouth strokes that a sampling point could otherwise miss, with a gentle color adjustment around the lines. The magnifier, listening pose and other reactions retain the same character design.
 
@@ -111,7 +113,7 @@ Use `/mascot` for current settings. The command values remain the same in both l
 | `/mascot pause` / `play` | Disable or enable looping motion; static activity poses keep updating |
 | `/mascot on` / `off` | Show or hide the companion |
 | `/mascot size auto` / `small` / `compact` / `normal` / `large` | Choose a size within terminal limits |
-| `/mascot render auto` / `sixel` / `blocks` | Select graphics transport |
+| `/mascot render auto` / `kitty` / `sixel` / `blocks` | Select graphics transport |
 | `/mascot info compact` / `native` | Compact or native footer |
 | `/mascot locale on` / `off` / `status` | Native Chinese UI preference |
 | `/mascot prompt on` / `off` / `status` | Concise bilingual Pi documentation-hint preference |
@@ -130,15 +132,15 @@ Single-state demos also include `idle`, `reading`, `editing`, `running`, `search
 
 `locale` and `prompt` default to enabled; `persona` defaults to disabled. `/mascot off` hides the companion and restores native visual elements, while the three text preferences keep their own settings.
 
-The native Chinese compatibility layer strictly targets known **Pi 1.2.0** structures and fixed labels, including 24 built-in command descriptions. Dynamic text, tool output, identifiers and stored values remain intact. Unknown versions or structures retain the original behavior. Pi's installed files are not rewritten.
+The native Chinese compatibility layer strictly targets known **Pi 1.2.0 and 1.3.0** structures and fixed labels, including 24 built-in command descriptions. Dynamic text, tool output, identifiers and stored values remain intact. Unknown versions or structures retain the original behavior. Pi's installed files are not rewritten.
 
 The prompt option condenses only the precisely recognized native Pi documentation-hint section, using Chinese or English according to the resolved language. Documentation paths, complete-file reading and cross-reference requirements remain. Pi's identity preamble, tool list and rules stay native, so later extensions can still add tools, snippets and guidelines dynamically. Custom `SYSTEM.md`, forced prompts, custom documentation sections, project `AGENTS.md`, skills and other dynamic context remain unchanged. Disabling the option removes the documentation-section replacement from the next request. It never forces a whole rendered system prompt. Concise wording does not guarantee a fixed token reduction.
 
-The persona is gentle, cute, lively and playful, but serious about important work. Technical accuracy, code and structured output take priority. Chinese uses `prompts/wumi-persona.md`; English uses `prompts/umi-persona.en.md`. They share the same independent persona switch. The template is added as its own `umi_persona` section, preserving subsequent extension contributions. Ordinary progress, explanations, debugging and delivery also use natural Umi phrasing and expressive sounds such as Hm, Mmm, Eep, Hehe and a small awoo, without a fixed quota or repetitive catchphrase while accurate technical work remains the priority. Template edits affect the next request; historical messages are not rewritten.
+The persona is gentle, cute, lively and playful, but serious about important work. Technical accuracy, code and structured output take priority. Chinese uses `prompts/umi-persona.md`; English uses `prompts/umi-persona.en.md`. They share the same independent persona switch. The template is added as its own `umi_persona` section, preserving subsequent extension contributions. Ordinary progress, explanations, debugging and delivery also use natural Umi phrasing and expressive sounds such as Hm, Mmm, Eep, Hehe and a small awoo, without a fixed quota or repetitive catchphrase while accurate technical work remains the priority. Template edits affect the next request; historical messages are not rewritten.
 
 ## Rendering and troubleshooting
 
-Sixel requires terminal support. `auto` prefers Sixel in Windows Terminal and uses true-color half-blocks in other environments. Force `/mascot render blocks` if images are missing or the terminal shows protocol text. Font, DPI and terminal dimensions affect the result.
+Kitty and Sixel require terminal support. `auto` prefers Pi's detected Kitty image capability, then Sixel in Windows Terminal, then true-color half-blocks. Force `/mascot render blocks` if images are missing or the terminal shows protocol text. Font, DPI and terminal dimensions affect the result.
 
 For missing portraits, first check `/mascot on`, available terminal space, and whether another extension already owns the editor. The extension preserves another custom editor; use the header layout or review that extension combination. In regular mode, controls are keyboard hints by design.
 
@@ -156,6 +158,6 @@ Local animation, language processing, read-only panels and demos make no additio
 
 The preview PNGs/GIFs are offline compositions exported from production state and animation code. They are not captures of a native terminal window. `preview.html` is a local demonstration; it does not change the real Pi session. Optional showcase source in `site/` is retained and has not been published as a separate website.
 
-Run `npm test` from the project directory. The full suite passes with actual Pi 1.2.0 modules. Pi 1.3 additionally passes interaction checks for activity, listening, response waiting, real extension integration, Sixel and mouse routing, including multi-row SGR selection and input after release. Its full run stops at an explicitly 1.2.0-bound native-prompt fixture, so this is not a claim that the full 1.3 suite passes. Native Chinese UI and concise documentation hints remain guarded to 1.2.0, and CI still pins that version. See [Contributing](../CONTRIBUTING.md) for setup, isolated installer checks and preview builds. The tested scope does not cover every terminal, font, window size or extension combination.
+Run `npm test` from the project directory. The full suite passes with actual Pi 1.2.0 and 1.3.0 modules, including activity, listening, response waiting, real extension integration, Kitty, Sixel and mouse routing, multi-row SGR selection and input after release. Native Chinese UI and concise documentation hints are enabled for both guarded releases, and CI runs both. See [Contributing](../CONTRIBUTING.md) for setup, isolated installer checks and preview builds. The tested scope does not cover every terminal, font, window size or extension combination.
 
 Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, photographs, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).

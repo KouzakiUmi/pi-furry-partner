@@ -10,7 +10,9 @@ import { samplePixels } from "../lib/renderer.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
 import { withListenFrames } from "../lib/listen.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const read = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
+const read = async (path) => JSON.parse(await readFile(join(root,
+  path.replace(/^assets\/reactions\/(wumi(?:-pixel)?)\//, "tests/fixtures/legacy-action-packs/$1/")
+    .replace(/^assets\/reactions\/illustration\//, "assets/reactions/umi/")), "utf8"));
 const zh = { copy: await read("assets/status-copy.json"), phrases: await read("assets/status-phrases.json") };
 const en = { copy: await read("assets/status-copy.en.json"), phrases: await read("assets/status-phrases.en.json") };
 const checks = [];
@@ -59,8 +61,24 @@ clock += POKE_DURATION_MS; assert.equal(activity.snapshot().face, "rest"); asser
 checks.push("Poke lasts exactly 1100ms; random idle/busy/waiting copy and strength differ, language changes live, tool/message events and original agent/waiting clocks continue through it");
 
 for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
-  const sheet = await read(`assets/reactions/${style}/reaction-sheet.json`);
-  const patch = await read(`assets/reactions/${style}/poke-patch.json`);
+  const current = await read(`assets/reactions/${style}/reaction-sheet.json`);
+  const currentPatch = await read(`assets/reactions/${style}/poke-patch.json`);
+  if (current.ids.poke !== undefined) {
+    const before = JSON.stringify(current);
+    assert.equal(current.frames[current.ids.poke].id, "poke");
+    assert.equal(current.frames[current.ids.poke].pixels.length, current.width * current.height);
+    assert.strictEqual(withPokeFrame(current, currentPatch), current,
+      `${style}: a complete authored poke takes precedence over a legacy face patch`);
+    assert.strictEqual(withPokeFrame(current, { ...currentPatch, pixels: [[-1, 1]] }), current);
+    assert.equal(JSON.stringify(current), before);
+  }
+  // Sparse-patch deformation assertions describe legacy artwork, not the
+  // registered complete HD poses checked above. Keep that compatibility path
+  // covered with frozen source fixtures instead of altering approved pixels.
+  const sheet = current.ids.poke === undefined ? current
+    : await read(`tests/fixtures/legacy-eyelids/${style}.json`);
+  const patch = current.ids.poke === undefined ? currentPatch
+    : await read(`tests/fixtures/legacy-eyelids/${style}-poke.json`);
   const before = JSON.stringify(sheet), extended = withPokeFrame(sheet, patch);
   assert.notEqual(extended, sheet); assert.equal(extended.frames.length, sheet.frames.length + 1);
   assert.strictEqual(extended.palette, sheet.palette); assert.equal(extended.ids.poke, sheet.frames.length);

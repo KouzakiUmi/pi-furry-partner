@@ -5,11 +5,13 @@
 ## 先了解项目边界
 
 - 项目名是 `pi-furry-partner`，发布主题是 `pi-furry-night`；`/mascot` 命令保留兼容。
-- 当前实际验证目标是 Windows、Pi **1.2.0**、PowerShell 5.1 / 7。其他平台的改进欢迎提交，请附上实际验证环境。
-- Pi 1.2.0 的完整测试通过；Pi 1.3 另通过实际编辑器集成、活动、倾听、响应计时、Sixel 与鼠标回归。1.3 的完整运行会在显式 1.2.0 提示词 fixture 处停止，不能写成“1.3 全套通过”。原生中文与文档提示精简仍严格守卫 1.2.0；CI 当前也固定安装 1.2.0。
+- 当前实际验证目标是 Windows、Pi **1.2.0 与 1.3.0**、PowerShell 5.1 / 7。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）的历史实机验证：角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互正常。该记录不代表本轮双构建已在 NixOS 重新验收；其他平台改动请附实际环境。
+- Pi 1.2.0 与 1.3.0 的完整测试均通过，CI 分别安装这两个版本运行。原生中文与文档提示精简按显式版本白名单启用；其他版本保留 Pi 原生行为。
 - 角色显示、界面中文、Pi 文档提示精简、角色口吻分别控制；`language` 支持默认的 `auto` 系统语言检测，也可明确选择简体中文或英文。功能修改应保留这些偏好的独立性，切换语言不应重置任务、草稿或中文补丁开关。
 - 原生界面兼容层不修改 Pi 安装文件；未知版本或结构应回退原行为。用户正文、工具输出、路径和内部保存值不进入普通翻译表。
 - 代码和文档是 Apache-2.0；呜咪角色及相关图像、动画是保留全部权利的素材。具体范围见 [ASSET_LICENSE.md](ASSET_LICENSE.md)。提交通用渲染代码不代表取得角色素材的再利用许可。
+
+Kitty Graphics Protocol 由 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献，并提供 Pi 1.3 / NixOS 验证。修改图像传输时保留 `tests/kitty.mjs` 的视口重传、独立放置宽度和释放检查，以及 `tests/integration.mjs` 的弹层回退与恢复验证。外部 Actions 固定到上游已记录的提交 SHA；更新时保留版本注释及当前双构建测试步骤。
 
 ## 远程发布
 
@@ -17,12 +19,12 @@
 
 ## 本地环境
 
-需要 Git 和 Node.js。完整测试使用 Pi 1.2.0 的真实模块，Node 版本也需要满足 Pi 的要求（该版本要求 Node **22.19.0 或以上**）。PowerShell 安装测试在 Windows 下运行。
+需要 Git 和 Node.js。完整测试使用 Pi 1.2.0 / 1.3.0 的真实模块，Node 版本也需要满足 Pi 的要求（该版本要求 Node **22.19.0 或以上**）。PowerShell 安装测试在 Windows 下运行。
 
 ```sh
 git clone https://github.com/KouzakiUmi/pi-furry-partner.git
 cd pi-furry-partner
-npm install --no-save --package-lock=false @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
+npm install --no-save --package-lock=false @earendil-works/pi-coding-agent@1.3.0 @earendil-works/pi-tui@1.3.0
 npm test
 ```
 
@@ -107,7 +109,7 @@ python -m http.server 8000 --directory dist
 描述实际操作、期望结果和观察到的结果，并尽量附上：
 
 - Pi、操作系统、终端与 PowerShell 版本。
-- `regular` / `fullscreen` 模式、窗口行列数、Sixel / blocks 渲染方式。
+- `regular` / `fullscreen` 模式、窗口行列数、Kitty / Sixel / blocks 渲染方式。
 - 使用的安装路线、扩展版本、是否还保留旧名插件或其它自定义编辑器。
 - 可复现的最短步骤，以及已去除私人内容的截图或错误信息。
 

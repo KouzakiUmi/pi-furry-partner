@@ -1,3 +1,5 @@
+> 单仓库构建：`npm run build:hd` / `npm run build:animated` / `npm run build:all`。两种构建共用原始像素素材；新版像素动画已移除。详见 [构建说明](docs/plugin-lines.md)。
+
 <div align="center">
 
 **简体中文** | [**English**](README.en.md)
@@ -11,7 +13,7 @@
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
 [![Release v2.3.3](https://img.shields.io/badge/release-v2.3.3-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3)
-[![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
+[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
@@ -51,6 +53,14 @@
 
 ## 先看看呜咪
 
+新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 与 DSH 共用 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先，DSH 摸摸也会收到开心举爪的回应。
+
+这批[H3 表情派生已撤回](docs/h3-expression-videos.md)，两端目前使用关键图回退，原视频和历史审核完整保留。新原画以原待机与完成姿态为比例、配色基准，静态确认后再制作连续动作。DSH 的搜索、整理与普通姿势仍使用固定显示标定，避免换动作时忽大忽小。
+
+用户指出固定校色产生颜色污染，生产流程已移除 RGB 材质映射和纵向拉伸：新图只等比缩放完整画布，保留原画颜色与比例。撤回记录优先于历史“通过”记录，打包与高清重建会阻止旧校准素材重新接入。
+
+DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠状态切换；加载失败或启用减少动态效果时显示原静态图。输入框里的状态按钮已移除，浮动桌宠继续互动和倾听输入。
+
 <table>
 <tr>
 <td align="center" width="50%">
@@ -89,9 +99,11 @@
 
 ## 安装
 
-**高清头像需要支持 Sixel 的终端。** Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）；它已内置 Sixel 支持，通常无需额外开启开关。插件默认 `render auto`，在 Windows Terminal 且未经过 tmux 时自动选择 Sixel；其他环境默认使用字符块。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
+**高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
 
-需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0、Windows PowerShell 5.1 / PowerShell 7**，另在 Pi 1.3 验证了输入、拖选、鼠标和图像传输等交互。原生中文界面与 Pi 文档提示精简目前仅支持 1.2.0，其他版本保留 Pi 原有行为。其他平台暂未完成实机验证。图片使用 Sixel 或真彩色半块字符；终端支持会影响清晰度。
+需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮双构建已在该环境重新验收。终端支持会影响清晰度。
+
+感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关代码和回归测试继续保留在共用源码中。
 
 两种安装方式选一种，避免把同一插件加载两次。
 
@@ -135,7 +147,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 
 `/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
-角色英文名和风格命令统一使用 **Umi / `umi`**。旧命令 `wumi`、`wumi-pixel` 仍可作为兼容别名，新保存的风格使用 `umi`、`umi-pixel`。
+角色英文名和风格命令统一使用 **Umi / `umi`**。风格 ID 只接受 `umi`、`umi-pixel` 等规范写法；旧版风格 ID 已移除，旧安装保存的值在运行时回退到默认风格，安装脚本会把它改写为规范 ID。
 
 `umi-pixel` 保留角色版的造型、五官和动作，以 **80 × 80** 显示。嘴线等细节采用局部保线处理，减少细笔画在缩小采样中丢失；线条颜色轻微整理，不重新设计角色。
 
@@ -178,7 +190,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 
 三者都支持 `status`。`/mascot off` 关闭界面角色；这些开关各自保留，需要分别关闭。
 
-- **界面中文**：中文模式下，兼容 Pi **1.2.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
+- **界面中文**：中文模式下，兼容 Pi **1.2.0 / 1.3.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
 - **Pi 文档提示精简**：下一轮请求中，仅将精确识别的 Pi 文档提示章节改成简洁中文或英文，保留文档路径、完整阅读和交叉引用要求。身份说明、工具清单与规则保持原生；自定义 `SYSTEM.md`、项目 `AGENTS.md`、技能和后续扩展加入的动态内容继续沿用。关闭后不替换该文档章节。表达更短不代表所有模型的 token 都按相同比例减少。
 - **角色口吻**：温柔、可爱、活泼，带一点俏皮；关键事情认真稳重。中英文各有独立模板，随当前语言选用；只调整表达，技术准确性、代码和结构化输出优先。
 
@@ -194,7 +206,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 的完整测试已通过；Pi 1.3 另做了交互回归，未据此扩大原生中文或提示词兼容范围。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 与 1.3.0 的完整测试均已通过，CI 分别用这两个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
 
 ## 许可与致谢
 

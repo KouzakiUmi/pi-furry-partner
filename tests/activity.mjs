@@ -355,6 +355,31 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   checks.push("Phrase selection is deterministic and stable for 6.5s from each effective phase transition, including late tools and prompt overrides");
 }
 
+{
+  const { activity, advance } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  const stream = (type, toolCall, extra = {}) => ({ assistantMessageEvent: { type, contentIndex: 0, partial: { role: "assistant", content: [toolCall] }, ...extra } });
+  const call = { type: "toolCall", id: "stream-write", name: "functions.write", arguments: { content: "NEVER_ECHO_STREAMED_CONTENT" } };
+  activity.handle("message_update", stream("toolcall_start", call));
+  let state = activity.snapshot();
+  assert.equal(state.phase, "editing"); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolObject, "");
+  assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_STREAMED_CONTENT"));
+  activity.handle("message_end", { message: { role: "assistant", stopReason: "toolUse" } });
+  activity.handle("tool_execution_start", { toolCallId: call.id, toolName: call.name, args: { path: "src/new.ts", content: "NEVER_ECHO_STREAMED_CONTENT" } });
+  state = activity.snapshot(); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolObject, "src/new.ts");
+  activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
+  assert.equal(advance(1200).visualPhase, "thinking");
+  for (const [name, bubble] of [["bash", "敲命令呀"], ["web_search", "我搜网页"], ["tool_search", "我找工具"], ["mcp__custom__call", "我准备呀"]]) {
+    activity.handle("message_start", { message: { role: "assistant" } });
+    const pending = { type: "toolCall", id: name, name, arguments: { private: "NEVER_ECHO_GENERIC_CONTENT" } };
+    activity.handle("message_update", stream("toolcall_start", pending));
+    state = activity.snapshot(); assert.equal(state.bubble, bubble); assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_GENERIC_CONTENT"));
+    activity.handle("message_end", { message: { role: "assistant", stopReason: "length" } });
+    assert.equal(activity.snapshot().toolCount, 0);
+  }
+  checks.push("Streamed tool calls use private-safe preparation poses and localized category bubbles, then hand off without retaining payloads");
+}
+
 const report = { testedAt: new Date().toISOString(), modelRequests: 0, passed: true, verification: "Product activity controller with deterministic injected clock and randomness", checks };
 await writeFile(join(root, "tests/activity-validation.json"), JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));

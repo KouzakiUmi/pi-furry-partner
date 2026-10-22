@@ -4,7 +4,7 @@ See [authored expressions](authored-expressions.md) for the nine new reactions s
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.4.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [Changelog](../CHANGELOG.md)
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
@@ -14,7 +14,7 @@ The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShel
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.3.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-v2.3.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell

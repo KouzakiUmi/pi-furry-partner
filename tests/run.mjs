@@ -27,7 +27,6 @@ await import("./language-integration.mjs");
 await import("./prompt-ordering.mjs");
 await import("./language.mjs");
 await import("./dsh-scene-title.mjs");
-await import("./header-timeline.mjs");
 await import("./build-editions.mjs");
 
 const { FULL_ANIMATION_EDITION } = await import('../lib/build-profile.mjs');

@@ -4,7 +4,7 @@
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.3.3](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.4.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [架构说明](architecture.md)
 
 本指南针对 **pi-furry-partner 2.3.3**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
@@ -34,7 +34,7 @@
 
 完整验证环境是 Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7；两个版本的完整测试均已通过，界面中文与 Pi 文档提示精简对两者同样启用。上游另有 NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1 的历史实机记录，覆盖显示、动画、渲染切换和日常交互；本轮双构建没有据此自动取得该平台验收。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.3.3) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1

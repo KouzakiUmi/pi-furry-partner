@@ -12,12 +12,13 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release v2.4.0](https://img.shields.io/badge/release-v2.4.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0)
+[![Release v2.4.5](https://img.shields.io/badge/release-v2.4.5-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5)
+[![Full-animation preview v2.5.0-preview.6](https://img.shields.io/badge/preview-v2.5.0--preview.6-c4b5e6?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download v2.4.0**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download stable v2.4.5**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [Full-animation preview v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -55,9 +56,9 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the shared Pi/DSH catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority; DSH head pats can bring out his happy paws.
 
-This batch of [H3 expression derivatives has been withdrawn](docs/h3-expression-videos.md). Both hosts currently use authored-pose fallbacks, while source videos and historical reviews remain preserved. Replacement artwork takes proportions and colors from the original idle/happy poses and must be confirmed before new continuous motion is generated. DSH keeps its fixed pose-family scale and ground anchors for consistent search/organizing transitions.
+Two editions are available: **HD remaster v2.4.5** retains the original simple frame animations, title loop and remastered illustration; **full-animation remake v2.5.0-preview.6** provides 19 complete clips for the illustration style (17 character clips and two keyboard transitions). Pi and DSH share the same repository and behavior, with the edition selected at build time.
 
-After the user reported color pollution, production removed the material RGB mapping and vertical stretch. New artwork uses uniform full-canvas resizing, preserving its authored colors and proportions. Withdrawal records override historical acceptance, and packing/Hi-Res rebuilding refuse the withdrawn derivatives.
+Both editions retain the original **100 × 100** pixel artwork and its simple frames; neither enables regenerated pixel derivatives. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the current editions and approved sources.
 
 DSH uses an [independent waving title image](docs/dsh-branding.md) with a static fallback, including reduced-motion mode. It does not follow the desktop pet's activity. The composer status button has been removed; the floating pet keeps its interactions and typing listener.
 
@@ -105,30 +106,37 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0 and 1.3.
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-Choose one installation route to avoid loading the extension twice.
+Choose an edition, then its platform package: [stable v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) or [full-animation preview v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6). Install only one edition per host.
 
-### Complete Windows installation
+| Platform | HD remaster | Full-animation remake |
+| --- | --- | --- |
+| Pi terminal | `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz` |
+| DSH desktop | `pi-furry-partner-hd-remaster-2.4.5.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6.tgz` |
 
-Download `pi-furry-partner-v2.3.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0), extract it, close Pi, and open PowerShell in the extracted directory:
+GitHub's automatic **Source code** downloads contain shared source, not an edition-specific installation package. Developers must first run `npm run build:hd` or `npm run build:animated`, then install the resulting platform package.
+
+### Pi terminal installation
+
+Download the selected `-pi-core.tgz`, extract it, and enter the inner **`package` directory** containing `install.ps1`. Close Pi and run PowerShell there:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 pi
 ```
 
-The script installs the extension to `~/.pi/agent/extensions/pi-furry-partner/` and installs the `pi-furry-night` theme. It selects the theme, compact startup header and collapsed changelog, and uses `fullscreen` only when the TUI mode is unset. Existing mode choices and companion preferences survive updates. Model/provider settings, tools and unrelated packages are preserved. The execution-policy option applies only to this process.
+The script installs the extension to `~/.pi/agent/extensions/pi-furry-partner/` and the `pi-furry-night` theme. A fresh installation selects the theme, compact startup header and collapsed changelog, and uses `fullscreen` only when the mode is unset. Updates preserve existing mode, companion, model/provider and unrelated package settings. The execution-policy option applies only to this process.
 
-If you used **pi-wink-companion**, run the new installer directly: it backs up and migrates the old installation, preserves your configuration, and archives the old extension directory to avoid duplicate loading. Fully exit and restart Pi afterwards. See [backup and recovery details](docs/guide.en.md#installation-and-updates).
+Existing **pi-wink-companion** users can run the new script to back up and migrate the old installation. Keep one loading source, avoiding duplication with an earlier Pi package-manager installation. Fully exit and restart Pi afterwards; see [backup and recovery details](docs/guide.en.md#installation-and-updates).
 
-### Pi package manager
+### DSH desktop installation
+
+Download the full `.tgz` without `-pi-core` and run the official plugin command in the terminal provided by DSH, for example:
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
 ```
 
-This loads the extension and theme through the package manifest. It **does not run the PowerShell installer or configure Pi's four UI options**. Restart Pi, select `pi-furry-night` with `/theme`, and choose your interface mode in `/settings`. The Git tag pins your version; choose a newer release tag when updating. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
-
-If you already installed with the script, keep that route for updates, or uninstall that copy before switching to the package manager.
+For stable, substitute `pi-furry-partner-hd-remaster-2.4.5.tgz`. The command registers the package's declared bundle; restart DSH after an update to load the new code. Replace `desktop` if using another profile. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).
 
 ## Getting comfortable
 
@@ -147,9 +155,9 @@ Use `/mascot` to inspect your settings. Size, layout, rendering and demo command
 
 `/mascot demo` or `/mascot demo all` starts a repeating tour lasting a little over a minute: listening, thinking, speaking, working and a playful poke, with complete magnifier and search loops and time to doze and wake again. It makes no model requests and preserves settings and your draft. `demo off` or a real task ends the tour. Use `/mascot demo thinking` or `/mascot demo running` to focus on one pose.
 
-The character name and style commands consistently use **Umi / `umi`**. Style IDs accept only the canonical spellings such as `umi` and `umi-pixel`; the former style IDs are removed, an old saved value falls back to the default style at runtime, and the installer rewrites it to the canonical ID.
+The character name is **Umi**; the interface exposes only `umi` and `umi-pixel`. The former `wumi`, `wumi-pixel`, `illustration` and `pixel` IDs remain compatibility aliases.
 
-`umi-pixel` preserves the illustrated character's design, face and poses at **80 × 80**. Local line protection keeps fine mouth strokes from disappearing during sampling, with a light color cleanup around those strokes and no character redesign.
+`umi-pixel` uses the original **100 × 100** pixel artwork and simple frames in both editions; it is not a downsampled replacement of the new illustration.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
 

@@ -4,33 +4,39 @@ See [authored expressions](authored-expressions.md) for the nine new reactions s
 
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.4.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [Changelog](../CHANGELOG.md)
 
-Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
+Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers HD remaster 2.4.5 and full-animation remake 2.5.0-preview.6: installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
 ## Installation and updates
 
 The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. The full suite passes on both releases, and native Chinese UI and concise Pi documentation hints are enabled for both. Upstream also records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1. It does not establish a fresh acceptance of both current editions on NixOS. Configure Pi and your model provider before installing the extension.
 
-Choose one route:
+Choose [stable v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) or [full-animation preview v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6), then download its platform package. Pi uses `-pi-core.tgz`; DSH uses the full `.tgz` without that suffix. Install one edition per host. GitHub's **Source code** is shared source: run `npm run build:hd` or `npm run build:animated` before installing a generated platform package.
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.3.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0), fully exit Pi, and run the following from the extracted project directory.
-- **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
+For Pi, use `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` or `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz`. Extract the archive, enter its inner **`package` directory**, fully exit Pi, and run:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 pi
 ```
 
-```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
-```
-
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.
 
 Updates preserve existing 2.x companion preferences. The installer migrates only legacy style values to their canonical IDs; other configuration content is preserved. The installer can back up and migrate the former `pi-wink-companion` installation, then archive the old extension directory to prevent duplicate loading. Fully exit and restart Pi after an installation or migration.
 
-The package-manager route does not configure those four Pi UI settings or migrate old script installations. Restart Pi, then select the theme with `/theme` and interface mode with `/settings`. Keep using the same installation route for updates, or uninstall the previous copy before switching. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).
+### DSH desktop installation
+
+Use the full package in the terminal provided by DSH, for example:
+
+```sh
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
+```
+
+For stable, substitute `pi-furry-partner-hd-remaster-2.4.5.tgz`. Replace `desktop` if using another profile. The official command installs and registers the declared bundle; restart DSH after updating to load the new code. DSH does not use Pi's `install.ps1`. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).
+
+Do not substitute the old Git-tag install command for the selected platform package. Shared source needs an edition build first. Existing Pi script installations should keep that update route, avoiding duplicate loading from an earlier package-manager source.
+
 
 ## Terminal requirements and high-resolution display
 

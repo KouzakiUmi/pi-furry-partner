@@ -12,12 +12,13 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.4.0](https://img.shields.io/badge/release-v2.4.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0)
+[![Release v2.4.5](https://img.shields.io/badge/release-v2.4.5-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5)
+[![全动态预览 v2.5.0-preview.6](https://img.shields.io/badge/preview-v2.5.0--preview.6-c4b5e6?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 v2.4.0**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载稳定版 v2.4.5**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [全动态预览 v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -55,9 +56,9 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 与 DSH 共用 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先，DSH 摸摸也会收到开心举爪的回应。
 
-这批[H3 表情派生已撤回](docs/h3-expression-videos.md)，两端目前使用关键图回退，原视频和历史审核完整保留。新原画以原待机与完成姿态为比例、配色基准，静态确认后再制作连续动作。DSH 的搜索、整理与普通姿势仍使用固定显示标定，避免换动作时忽大忽小。
+当前提供两条产品线：**原逻辑高清重制版 v2.4.5** 保留原有简单帧动画、标题循环与高清插画；**全动态重做版 v2.5.0-preview.6** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡）。两端共用同一仓库和动作逻辑，按所选产品线构建。
 
-用户指出固定校色产生颜色污染，生产流程已移除 RGB 材质映射和纵向拉伸：新图只等比缩放完整画布，保留原画颜色与比例。撤回记录优先于历史“通过”记录，打包与高清重建会阻止旧校准素材重新接入。
+两条产品线都只保留原始 **100 × 100** 像素画与旧简单帧，不启用插画缩小生成的新版像素动画。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
 DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠状态切换；加载失败或启用减少动态效果时显示原静态图。输入框里的状态按钮已移除，浮动桌宠继续互动和倾听输入。
 
@@ -105,30 +106,37 @@ DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠�
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关代码和回归测试继续保留在共用源码中。
 
-两种安装方式选一种，避免把同一插件加载两次。
+先选产品线，再选平台包：稳定版见 [v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5)，全动态预览见 [v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6)。同一宿主只安装其中一版。
 
-### Windows 完整安装
+| 平台 | 原逻辑高清重制版 | 全动态重做版 |
+| --- | --- | --- |
+| Pi 终端 | `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz` |
+| DSH 桌面 | `pi-furry-partner-hd-remaster-2.4.5.tgz` | `pi-furry-partner-full-animation-2.5.0-preview.6.tgz` |
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) 下载 `pi-furry-partner-v2.3.3.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+GitHub 自动提供的 **Source code** 是两版共用源码，不是已选择产品线的安装包。开发者使用它时，需先运行 `npm run build:hd` 或 `npm run build:animated`，再安装生成的对应平台包。
+
+### Pi 终端安装
+
+下载所选 `-pi-core.tgz`，解压后进入内层 **`package` 目录**（含 `install.ps1`）。关闭 Pi，在该目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 pi
 ```
 
-脚本把扩展安装到 `~/.pi/agent/extensions/pi-furry-partner/`，并安装 `pi-furry-night` 主题。安装会设置配套主题、简短启动标题和折叠更新日志；界面模式尚未设置时使用 `fullscreen`，已有模式和更新时的角色偏好保留。模型、provider、工具配置和其他包继续沿用原设置。执行策略参数只作用于本次进程。
+脚本将扩展安装到 `~/.pi/agent/extensions/pi-furry-partner/`，并安装 `pi-furry-night` 主题。首次安装设置配套主题、简短启动标题和折叠更新日志；界面模式未设置时使用 `fullscreen`。更新保留已有模式、角色偏好、模型、provider 和其他包设置。执行策略参数只作用于本次进程。
 
-旧名 **pi-wink-companion** 的用户可直接运行新版安装脚本：它会备份并迁移旧安装，保留配置，归档旧目录以避免重复加载。安装后完整退出并重新启动 Pi。详细的备份、迁移与恢复规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
+旧名 **pi-wink-companion** 用户可直接运行新版脚本，备份并迁移旧安装。只保留一种加载来源，避免与此前的 Pi 包管理器安装重复加载。安装后完整退出并重启 Pi；详细规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
 
-### 使用 Pi 包管理器
+### DSH 桌面安装
+
+下载所选不带 `-pi-core` 的完整 `.tgz`，在 DSH 提供的终端中运行官方插件命令，例如：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
 ```
 
-这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
-
-已有脚本安装的用户，继续使用脚本路线更新；需要改用包管理器时，先按指南卸载脚本安装，避免双份扩展。
+稳定版把文件名替换为 `pi-furry-partner-hd-remaster-2.4.5.tgz`。命令会注册包声明的 bundle；更新后重启 DSH 以加载新代码。使用其他 profile 时替换 `desktop`。详见[官方插件安装说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
 
 ## 开始相处
 
@@ -147,9 +155,9 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
 
 `/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
-角色英文名和风格命令统一使用 **Umi / `umi`**。风格 ID 只接受 `umi`、`umi-pixel` 等规范写法；旧版风格 ID 已移除，旧安装保存的值在运行时回退到默认风格，安装脚本会把它改写为规范 ID。
+角色英文名为 **Umi**；界面只展示 `umi`、`umi-pixel` 两种风格。旧版 `wumi`、`wumi-pixel`、`illustration`、`pixel` 仍作为兼容别名解析。
 
-`umi-pixel` 保留角色版的造型、五官和动作，以 **80 × 80** 显示。嘴线等细节采用局部保线处理，减少细笔画在缩小采样中丢失；线条颜色轻微整理，不重新设计角色。
+`umi-pixel` 使用原始 **100 × 100** 像素画与旧简单帧；两条产品线均不把新插画缩小成像素替代品。
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
 

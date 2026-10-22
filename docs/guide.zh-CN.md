@@ -4,9 +4,9 @@
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.4.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载稳定版 v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) · [架构说明](architecture.md)
 
-本指南针对 **pi-furry-partner 2.3.3**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+本指南适用于 **原逻辑高清重制版 2.4.5** 与 **全动态重做版 2.5.0-preview.6**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
 角色英文名为 **Umi**，风格命令统一为 `umi`、`umi-pixel`。风格 ID 只接受规范写法；旧版风格 ID 已移除，旧配置在运行时回退到默认风格，安装脚本会改写保存值。`umi-persona.md` 文件名与素材目录名和公开 ID 一致。
 
@@ -34,7 +34,9 @@
 
 完整验证环境是 Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7；两个版本的完整测试均已通过，界面中文与 Pi 文档提示精简对两者同样启用。上游另有 NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1 的历史实机记录，覆盖显示、动画、渲染切换和日常交互；本轮双构建没有据此自动取得该平台验收。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.0) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [稳定版 v2.4.5](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.5) 或[全动态预览 v2.5.0-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0-preview.6) 选择产品线。Pi 下载带 `-pi-core.tgz` 的包，DSH 下载不带该后缀的完整 `.tgz`；每个宿主只安装一版。GitHub 的 **Source code** 是共享源码，需先用 `npm run build:hd` 或 `npm run build:animated` 选择产品线构建。
+
+Pi 包示例为 `pi-furry-partner-hd-remaster-2.4.5-pi-core.tgz` 或 `pi-furry-partner-full-animation-2.5.0-preview.6-pi-core.tgz`。解压后进入内层 **`package` 目录**，关闭 Pi，在含 `install.ps1` 的该目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -77,17 +79,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 
 已有 `pi-wink-companion` 脚本安装时，直接运行新版 `install.ps1`。脚本会保存旧扩展、旧主题和安装记录，迁移到 `extensions/pi-furry-partner/` 与 `themes/pi-furry-night.json`，归档旧扩展目录，避免两份同时自动加载。2.x 的 `config.json` 仅精准迁移旧风格 ID，其余字节保留，原有界面模式和首次安装前的恢复基线也继续沿用。迁移后完整退出并重启 Pi；不要同时手动复制旧目录回来。
 
-### Pi 原生包管理器
+### DSH 桌面安装
 
-也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
+DSH 使用完整包，例如：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.3.3
+dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0-preview.6.tgz"
 ```
 
-该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。
+稳定版文件名为 `pi-furry-partner-hd-remaster-2.4.5.tgz`。在 DSH 提供的终端中运行，使用其他 profile 时替换 `desktop`。官方命令会安装并注册包声明的 bundle；更新后重启 DSH 加载新代码。DSH 不使用 Pi 的 `install.ps1`。详见[官方 CLI 说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
 
-每次选择一个安装来源。已有脚本安装的用户优先继续脚本路线；改用包管理器前先卸载旧脚本安装，避免双份扩展。原生包管理器安装的包也应通过 Pi 的包管理流程移除，不使用本项目的脚本卸载。
+不要直接用旧 Git tag 安装命令代替所选平台包；共享源码需要先选择 edition 构建。已有 Pi 脚本安装继续使用脚本更新，避免与此前的包管理器来源重复加载。
 
 ## 中英文切换
 

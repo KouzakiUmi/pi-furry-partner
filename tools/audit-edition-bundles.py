@@ -1,5 +1,6 @@
 """Audit all edition/platform tarballs and unpack each into an isolated runtime."""
 from pathlib import Path, PurePosixPath
+import argparse
 import hashlib
 import json
 import subprocess
@@ -32,10 +33,14 @@ def verify_runtime(root, package):
     return evidence
 
 
-def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime):
+def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
     configuration = read(root / 'build/editions.json')
     builds = read(out / 'built-editions.json')['builds']
-    expected = {(edition, platform) for edition in configuration['editions']
+    if edition is not None:
+        assert edition in configuration['editions'], 'Unknown edition filter'
+        builds = [build for build in builds if build['edition'] == edition]
+    editions = [edition] if edition is not None else configuration['editions']
+    expected = {(edition, platform) for edition in editions
                 for platform in configuration['platforms']}
     keys = [(build['edition'], build['platform']) for build in builds]
     assert len(keys) == len(set(keys)) and set(keys) == expected, 'Require each edition/platform exactly once'
@@ -119,8 +124,12 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime):
 
 
 def main():
-    results = audit_builds()
-    (OUT / 'edition-audit.json').write_text(json.dumps(results, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--edition', choices=['hd-remaster', 'full-animation'], help='Audit both platforms of only this edition; default requires all four combinations')
+    args = parser.parse_args()
+    results = audit_builds(edition=args.edition)
+    filename = f'edition-audit-{args.edition}.json' if args.edition else 'edition-audit.json'
+    (OUT / filename).write_text(json.dumps(results, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(results, ensure_ascii=False))
 
 

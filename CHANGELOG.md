@@ -4,14 +4,6 @@
 
 ## 未发布
 
-### 统一仓库构建 · 2.4.5 / 2.5.0-preview.6
-
-- 将普通高清重制版与全动态重做版合并到同一源码仓库，分别生成 Pi 终端与 DSH Web 安装包；通过构建配置区分功能与资源，不再依赖旁边的旧工作树或本机历史目录。
-- 普通高清版保留原版简单帧、标题循环和固定眼区眨眼，恢复符合该版本逻辑的整体位移与缩放；同步已验收的放大镜、埋头搜索斗篷颜色与透明边缘修复。
-- 全动态版包含 19 段已验收动作及键盘转场；Pi 包保留索引动画，DSH 包额外包含高清资源。两版共同使用原像素素材与旧动画，不包含重新生成的像素动作。
-- 保存已批准素材的来源、哈希与复现参数，验证可由干净仓库生成；旧风格名继续通过运行时别名兼容。
-- Consolidated both editions into one reproducible repository with separate Pi and DSH packages. The HD remaster preserves legacy animation behavior and approved cape corrections; the full-animation preview includes 19 approved clips. Both editions retain the original pixel artwork and compatibility aliases.
-
 ### 简体中文
 
 - 原生中文界面、Pi 文档提示精简与内置命令补全翻译把 Pi 1.3.0 纳入已验证支持范围；Pi 1.2.0 行为不变，其他版本仍保留 Pi 原生行为。
@@ -31,6 +23,44 @@
 - Test fixtures no longer hardcode 1.2.0; unsupported patch versions still require an explicit compatibility audit.
 - Trimmed duplicated wording in both Umi voice templates: merged the key-content and code/JSON rules, kept a single example set and removed short examples that repeated the body text. No rule was dropped; the Chinese template drops from 19 to 17 lines and the English one from 17 to 15.
 - Standardized the character name to Umi: the persona template is now `prompts/umi-persona.md`, illustration assets use `assets/reactions/umi`, and original pixel assets remain in `assets/reactions/pixel`. Compatibility aliases preserve the corresponding artwork for older style IDs. The English persona template no longer contains the Chinese name.
+
+## 2.5.0-preview.6 · 全动态预发布
+
+### 简体中文
+
+- 全动态版与原逻辑高清版统一由一个仓库构建，保留 Pi 和 DSH 的宿主入口；本版本按预发布提供，不替代稳定版。
+- 插画使用 17 项完整动作和两段 400ms 键盘进出过渡；动作选择保留真实工作状态、说话与用户交互的优先级。
+- 完整动画仅用于插画。两种产品共用原始 100px 像素素材与原简单动作，移除重制像素动画；历史风格 ID 保留对应别名。
+- 索引动画使用保持调色板、像素索引、透明项和时钟不变的 gzip 二进制载荷；保留旧 JSON 读取兼容。高清帧缓存增加失活释放、有界预取和内存预算。
+- 分别提供 Pi 的 `pi-core` 包与 DSH 的完整高清包，以及各自的 SHA-256 和逐文件验证报告。包选择与发行标记不依赖共享 `package.json` 的单一版本号。
+- 保留上游 Kitty Graphics Protocol 支持、标题动画与稳定眨眼修复；旧局部耳爪变形未重新启用。
+
+### English
+
+- Build the full-animation and HD-remaster editions from one repository, retaining both Pi and DSH entry points. This is a prerelease and does not replace the stable edition.
+- Illustration uses 17 complete motion clips plus two 400ms keyboard transitions, with real work state, speech and explicit interaction priorities preserved.
+- Complete animation is illustration-only. Both editions retain the original 100px pixel artwork and simple motion; regenerated pixel animations are removed and historical style aliases remain supported.
+- Indexed animation uses gzip binary transport without changing palettes, indices, transparency or clocks; legacy JSON remains readable. Native frame caching releases inactive resources and bounds prefetch and memory.
+- Provide separate Pi-core and DSH full-art packages, with SHA-256 checksums and per-file verification reports. Edition tags are resolved from the build configuration.
+- Retain upstream Kitty support, the header timeline and stable eyelids. Legacy local ear/paw deformation has not been re-enabled.
+
+## 2.4.5 · 原逻辑高清稳定版
+
+### 简体中文
+
+- 原逻辑高清版与全动态版共用仓库源码，通过发行配置明确区分；普通版不会加载全动态 catalog 或误选完整动画序列。
+- 修复高清静态素材标记把简单动作一并禁用的问题：恢复普通版安全的整体微动，继续保护新图免受旧局部耳爪 mask 变形；已有完整影片不叠加第二套动作。
+- 保留稳定眼区眨眼、原有标题循环及已核准的 grumpy 配色来源修复，保留用户配置与原始像素素材。纳入已验收的放大镜与埋头搜索斗篷去绿噪、透明边缘修复，保护主体轮廓、尾巴、透镜和纸张。
+- 合并上游 Kitty 渲染、弹层回退、窗口变化重传和释放修复；感谢 [@srcres258](https://github.com/srcres258) 的 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1)。
+- 分别提供 Pi-core 和 DSH 完整高清包，并随包提供 SHA-256 与逐文件验证报告。旧局部耳爪变形未重新启用。
+
+### English
+
+- Share repository sources with the full-animation edition while keeping explicit edition boundaries. HD-remaster does not load the full-animation catalog or select its complete motion sequences.
+- Restore safe whole-image micro-motion that had been suppressed by the remastered static-frame flag. Legacy local ear/paw masks remain disabled for the new artwork, and baked movies do not receive duplicate motion.
+- Preserve stable eyelids, the original header timeline, the approved grumpy color-source correction, user preferences and original pixel artwork. Include the accepted cape green-spill and transparent-edge cleanup for the magnifier and buried-search sequences, protecting the subject silhouette, tail, lens and papers.
+- Merge upstream Kitty rendering, overlay fallback, viewport upload refresh and cleanup fixes. Thanks to [@srcres258](https://github.com/srcres258) for [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1).
+- Provide Pi-core and DSH full-art packages with SHA-256 checksums and per-file reports. Legacy local ear/paw deformation has not been re-enabled.
 
 ## 2.4.0 · 2026-10-19
 

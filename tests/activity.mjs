@@ -368,7 +368,9 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("tool_execution_start", { toolCallId: call.id, toolName: call.name, args: { path: "src/new.ts", content: "NEVER_ECHO_STREAMED_CONTENT" } });
   state = activity.snapshot(); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolObject, "src/new.ts");
   activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
-  assert.equal(advance(1200).visualPhase, "thinking");
+  // main deliberately retains the completed work visual during its finite
+  // state-gap window; this must not alter the underlying task facts.
+  assert.equal(advance(1200).visualPhase, "editing");
   for (const [name, bubble] of [["bash", "敲命令呀"], ["web_search", "我搜网页"], ["tool_search", "我找工具"], ["mcp__custom__call", "我准备呀"]]) {
     activity.handle("message_start", { message: { role: "assistant" } });
     const pending = { type: "toolCall", id: name, name, arguments: { private: "NEVER_ECHO_GENERIC_CONTENT" } };

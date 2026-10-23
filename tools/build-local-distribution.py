@@ -4,6 +4,7 @@ import gzip
 import hashlib
 import io
 import json
+import re
 import subprocess
 import tarfile
 from datetime import datetime, timezone
@@ -30,6 +31,11 @@ def main():
     args.out.mkdir(parents=True, exist_ok=True)
     package = json.loads((source / 'package.json').read_text(encoding='utf-8'))
     assert package['name'] == 'pi-furry-partner'
+    platform = 'pi' if args.profile == 'pi-core' else 'dsh'
+    configuration = json.loads((source / 'build/editions.json').read_text(encoding='utf-8'))
+    prefix = configuration['platforms'][platform].get('artifactPrefix', f'{platform}-furry-partner')
+    assert re.fullmatch(r'[a-z0-9][a-z0-9.-]*', prefix) and prefix.startswith(platform + '-'), 'Platform-specific safe artifact prefix required'
+    filename = f'{prefix}-{args.track}-{args.version}' + ('-pi-core' if args.profile == 'pi-core' else '') + '.tgz'
     listing = subprocess.run(['npm.cmd', 'pack', '--dry-run', '--json', '--ignore-scripts'], cwd=source,
                              capture_output=True, text=True, encoding='utf-8', check=True)
     candidates = json.loads(listing.stdout)[0]['files']
@@ -43,8 +49,10 @@ def main():
         assert not {'.git', 'node_modules'}.intersection(relative.parts)
         alias = name.startswith(('assets/reactions/wumi/', 'assets/reactions/wumi-pixel/'))
         hd = name.startswith(('assets/hires/', 'assets/animated/hires/'))
-        if alias or (args.profile == 'pi-core' and hd):
-            excluded.append({'path': name, 'bytes': row['size'], 'reason': 'canonical style alias' if alias else 'Pi uses indexed artwork'})
+        generation_media = name.startswith('assets/animated/provenance/motion-polish/') and relative.suffix.lower() in {'.mp4', '.png', '.jpg', '.jpeg', '.webp', '.gif'}
+        if alias or generation_media or (args.profile == 'pi-core' and hd):
+            reason = 'canonical style alias' if alias else 'generation-only source/reference media; runtime frames and approval records retained' if generation_media else 'Pi uses indexed artwork'
+            excluded.append({'path': name, 'bytes': row['size'], 'reason': reason})
             continue
         path = (source / relative).resolve(strict=True)
         assert path.is_relative_to(source)
@@ -53,7 +61,8 @@ def main():
     package.update(version=args.version)
     capability = {
         'track': args.track, 'resourceProfile': args.profile,
-        'targetPlatform': 'pi' if args.profile == 'pi-core' else 'dsh',
+        'targetPlatform': platform, 'artifactPrefix': prefix,
+        'releaseLine': configuration.get('releaseLine', 'main'),
         'hdArtIncluded': args.profile == 'full', 'indexedArtIncluded': True,
         'sourceVersion': source_version,
         'description': 'Ordinary behavior with remastered artwork' if args.track == 'hd-remaster' else '19 approved whole-frame motion clips with keyboard chain',
@@ -70,6 +79,7 @@ def main():
     label = '原逻辑高清重制版' if args.track == 'hd-remaster' else '全动态重做版'
     intro = f'> 本地完整构建：**{label} {args.version}**。'
     intro += ' Pi 终端精简资源包，不含 DSH 高清位图；动作、索引像素和时间轴完整保留。' if args.profile == 'pi-core' else ' Pi / DSH 完整离线资源包。'
+    intro += f' 下载附件以 {prefix}- 为前缀，按宿主区分。'
     intro += ' 安装前请保存并退出对应宿主；本包尚未代为安装或公开发布。\n\n'
     for readme in ['README.md', 'README.en.md']:
         content = (source / readme).read_text(encoding='utf-8')
@@ -83,15 +93,16 @@ def main():
         overrides[readme] = (header + content + '\n').encode('utf-8')
     local_guide = f'''# 呜咪 · {label} {args.version}
 
-本包资源类型：{args.profile}。两条产品线独立；每条仍只展示插画／像素两种画风。
-选择一个产品线安装即可，两者使用同一个插件名，后安装的会替换前一个。
+本包目标宿主：{platform.upper()}；资源类型：{args.profile}；发布线路：{configuration.get('releaseLine', 'main')}。
+Pi下载以pi-开头的包，DSH下载以dsh-开头的包。每个宿主只安装一个包，保留插画／像素两种画风。
+main为2.5起的全动态线路；旧资源维护版在legacy分支，使用独立legacy-v2.4.x标签。
 
 ## DSH
 
 DSH请选择full完整包。保存工作并退出DSH后，在包所在目录执行：
 
 ```powershell
-dsh plugin --profile desktop add "./pi-furry-partner-{args.track}-{args.version}.tgz"
+dsh plugin --profile desktop add "./dsh-furry-partner-{args.track}-{args.version}.tgz"
 ```
 
 该语法依本机DSH 0.2.1-rc.2的组合包发布文档核对。此构建没有代你执行安装。
@@ -105,7 +116,7 @@ Pi可使用pi-core精简资源包，所有终端动作和时间轴完整保留�
 
 ## 资源与验证
 
-原逻辑高清重制版保留原版的简单帧动画、标题循环及稳定眼区眨眼。
+Legacy分支保留原版资源与简单帧；本main全动态包不混装为另一条高清重制线路。
 全动态重做版包含17段完整角色动作和两段400ms键盘过渡；说话保留独立口型。
 全动态版索引载荷为精确无损字节编码；不降低原图分辨率、帧率或改变颜色、Alpha。
 完整离线包保留高清与旧回退资源。安装包旁的report.json记录每个文件SHA-256及全包回读验证。
@@ -117,7 +128,6 @@ Pi可使用pi-core精简资源包，所有终端动作和时间轴完整保留�
             files[name] = source / name
     if 'LICENSE' not in files:
         files['LICENSE'] = source / 'LICENSE'
-    filename = f'pi-furry-partner-{args.track}-{args.version}' + ('-pi-core' if args.profile == 'pi-core' else '') + '.tgz'
     output = args.out / filename
     assert not output.exists(), 'Preserve earlier bundles; choose a new output directory/version.'
     report = {'createdUtc': datetime.now(timezone.utc).isoformat(), 'source': str(source), 'capabilities': capability,

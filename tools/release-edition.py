@@ -14,21 +14,26 @@ def read(path):
 
 def release_target(root, tag):
     configuration = read(root / 'build/editions.json')
+    line = configuration.get('releaseLine', 'main')
+    assert line in ('main', 'legacy'), 'Explicit supported release line required'
+    tag_prefix = 'legacy-v' if line == 'legacy' else 'v'
     matches = [(edition, spec) for edition, spec in configuration['editions'].items()
-               if tag == 'v' + spec['version']]
-    assert len(matches) == 1, 'Tag must match exactly one version in build/editions.json'
+               if tag == tag_prefix + spec['version']]
+    assert len(matches) == 1, 'Tag must match its release line and exactly one configured version'
     edition, spec = matches[0]
     version = spec['version']
     assert re.fullmatch(r'\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?', version)
+    major, minor = map(int, version.split('-', 1)[0].split('+', 1)[0].split('.')[:2])
+    assert ((major, minor) == (2, 4)) if line == 'legacy' else ((major, minor) >= (2, 5)), 'Legacy is2.4.x; Main starts2.5'
     prerelease = '-' in version.split('+', 1)[0]
     changelog = (root / 'CHANGELOG.md').read_text(encoding='utf-8')
     sections = re.split(r'^## ', changelog, flags=re.MULTILINE)
     notes = [section.split('\n', 1)[1].strip() for section in sections
              if re.match(re.escape(version) + r'\s+·[^\n]*\n', section)]
     assert len(notes) == 1 and notes[0], 'A nonempty exact-version changelog section is required'
-    return {'tag': tag, 'edition': edition, 'version': version, 'prerelease': prerelease,
-            'latest': 'false' if prerelease else 'true',
-            'title': f"pi-furry-partner {tag} · {spec['label']}"}, notes[0]
+    return {'tag': tag, 'edition': edition, 'version': version, 'releaseLine': line, 'prerelease': prerelease,
+            'latest': 'false' if prerelease or line == 'legacy' else 'true',
+            'title': f"Umi · {'Legacy' if line == 'legacy' else 'Main'} {tag} · {spec['label']} · Pi / DSH"}, notes[0]
 
 
 def prepare(root, tag, output, github_output=None):
@@ -76,7 +81,9 @@ def release_assets(root, plan, releases):
         report_file = Path(build['report']).resolve()
         report = read(report_file)
         suffix = '-pi-core' if profile == 'pi-core' else ''
-        assert archive.name == f'pi-furry-partner-{edition}-{version}{suffix}.tgz'
+        prefix = platforms[platform].get('artifactPrefix', f'{platform}-furry-partner')
+        assert prefix.startswith(platform + '-') and re.fullmatch(r'[a-z0-9][a-z0-9.-]*', prefix)
+        assert archive.name == f'{prefix}-{edition}-{version}{suffix}.tgz'
         assert archive.parent == releases.resolve() and report_file.parent == releases.resolve()
         assert build['version'] == audit['version'] == version
         assert build['profile'] == audit['profile'] == profile

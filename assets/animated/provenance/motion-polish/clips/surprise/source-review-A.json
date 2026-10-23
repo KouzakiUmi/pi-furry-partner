@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "surprise",
+  "version": "key-purple-batch08-v3",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "readyForAlphaReview": true,
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "8ecfd772f4473b159cde5778eaf4c76ad9fcb2fc5035cf63156f684be8e75ebf",
+  "referenceSha256": "4a0363335e087bad063176d743e55582afc2cf9ee9b684eaa436b029e8bb60d7",
+  "registeredReferenceSha256": "d8edf65fdc745ec4d82c6a96e504c7566479b8090e883fe367648df94a48c53d",
+  "promptSha256": "f4be52511531d0d845519c74ba2f6328f1f3c9f6a39e25baf12a39bdadbdd4c7",
+  "decode": {
+    "frameCount": 107,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "fps": 24,
+    "reviewedOverviewCadenceSeconds": 0.25
+  },
+  "actuallyViewed": [
+    "reference.png",
+    "early-check/overview.jpg",
+    "early-check/00007.png",
+    "early-check/00031.png",
+    "early-check/00073.png",
+    "early-check/00097.png"
+  ],
+  "materialFindings": [
+    "White fur bright masses and existing cool lavender shallow shadows remain distinguishable; no obvious new broad pink/purple replacement of bright white found in selected native stills. This does not assert RGB identity or universal palette correctness.",
+    "Gray paw areas remain low-saturation warm gray with readable white forearm division; blue scarf and cool blue-gray hood/cape light/dark planes remain readable without obvious new green/purple flooding in selected stills.",
+    "Folded-ear X stitches, hood white zigzag/dots, separate gray bean brows, eye contours/star colors and short light claws remain readable in sampled native images."
+  ],
+  "symbolFinding": "Original pair of yellow rays remains readable as2 at raw00031/00073/00097. It becomes weak/absent around early blink/turn, includingraw00007. No new third ray or clearly different symbol found in selected stills/overview; pose-dependent weakness/occlusion is disclosed for native-speed user review rather than imposing pixel-identical symbol visibility eachframe.",
+  "additionalMaterialFinding": "White forearm/face bright masses remain white with shallow cool lavender shading comparable in kind to input, gray palms remain low-saturation gray, scarf remains blue/white, hood/cape retain cool blue-gray dark/mid planes. No blocking new source material hue replacement identified in selected stills. Ear X/hood zigzag/dots/bean brows remain recognizable, with expected pose and blink changes.",
+  "decision": "Permit alpha/output review only. Stablepurple background in inspectedoverview/native stills; no repeated v2 blue/green background excursion observed. Selected source stills show no major new material/symbol defect requiring hold. After technical edge gate, native-speed blink/turn amplitude and symbol flicker/readability may be shown to user for explicit aesthetic judgment; no user approval or installation inferred.",
+  "staticEvidenceBoundary": "Actually viewed same-background reference,0.25-second overview and listed native-resolution PNG samples only. No real-time playback viewed, no full107frame pixel or anatomy certification. Blink/turn pose changes and yellow-symbol visibility require user native-speed judgment. No recoloring, no alpha/helper tuning performed.",
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "Umi-surprise-H3-source.mp4",
+      "sha256": "8ecfd772f4473b159cde5778eaf4c76ad9fcb2fc5035cf63156f684be8e75ebf"
+    },
+    {
+      "path": "reference.png",
+      "sha256": "4a0363335e087bad063176d743e55582afc2cf9ee9b684eaa436b029e8bb60d7"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "d8edf65fdc745ec4d82c6a96e504c7566479b8090e883fe367648df94a48c53d"
+    },
+    {
+      "path": "prompt.txt",
+      "sha256": "f4be52511531d0d845519c74ba2f6328f1f3c9f6a39e25baf12a39bdadbdd4c7"
+    },
+    {
+      "path": "motion-contract.json",
+      "sha256": "56ea009f549586782d5d7e8eff50019d9dd1d8a93b75c25fa2c282d0b0886c13"
+    },
+    {
+      "path": "spec.json",
+      "sha256": "ba48fb870d34b6a5901c1616dfac363601feeaea05b72696f0a2f14553be2971"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "320a177fc942163049dfe4005c7bb4e81b9e4c6a88397dd9e47d52a54253f1c0"
+    },
+    {
+      "path": "early-check/00007.png",
+      "sha256": "02996950560e02a9e847a5e732ef672441d66711236a798bf8e8a729e31b3032"
+    },
+    {
+      "path": "early-check/00031.png",
+      "sha256": "3875de75b14b55514b00ac5da36cf16e8e8d4b30aa39891604b8352c8847c9b8"
+    },
+    {
+      "path": "early-check/00073.png",
+      "sha256": "04a493ba0c6f821790c9eeb5f02f85892b3a7edd71638bf5ea8b7bcd12a7f405"
+    },
+    {
+      "path": "early-check/00097.png",
+      "sha256": "ec0bdc4de04f2217dc326769b3868e3c0a2e2452255ef9e3aa11477e52388f61"
+    }
+  ]
+}

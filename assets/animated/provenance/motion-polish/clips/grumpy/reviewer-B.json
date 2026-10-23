@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\grumpy\\key-purple-batch06-v1",
+  "sourceVideo": "Umi-grumpy-H3-source.mp4",
+  "sourceSha256": "95e4b4bc455d8f278eb1fb41c9a3e75c6de421bfa91f8bd793f64b6ebff98238",
+  "decision": "ALLOW_ALPHA_CANDIDATE_PENDING_ORIGINAL_SPEED_USER_REVIEW",
+  "sourceStructureAndSemanticGate": true,
+  "hardFailures": [],
+  "reviewScope": {
+    "actualImagesViewed": [
+      "registered-reference.png",
+      "spec.json",
+      "early-check/overview.jpg",
+      "early-check/00001.png",
+      "early-check/00019.png",
+      "early-check/00067.png",
+      "early-check/00107.png"
+    ],
+    "overviewIntervalSeconds": 0.25,
+    "nativeSourceOriginalFramesViewed": [
+      0,
+      18,
+      66,
+      106
+    ],
+    "sourceVideoPlayed": false,
+    "allFramesInspected": false
+  },
+  "registration": {
+    "outputCanvas": [
+      640,
+      640
+    ],
+    "pivot": [
+      320,
+      608
+    ],
+    "worldPaintRect": {
+      "x": 0,
+      "y": 0,
+      "width": 640,
+      "height": 640
+    },
+    "sourceToReference": {
+      "size": [
+        456,
+        608
+      ],
+      "offset": [
+        92,
+        21
+      ],
+      "canvas": [
+        640,
+        640
+      ],
+      "scale": 0.4198895027624309
+    }
+  },
+  "observations": [
+    "Both rounded closed gray fists remain on the waist/hip region in the overview and inspected originals. Thick white forearms and bent elbows support the chest/shoulder emphasis; no open palm, forward punch, fist wave or independently performed arm gesture was observed.",
+    "The small closed animal pout and compact gray bean brows remain legible. The face retains a compact muzzle/width; no definite inflated cheek pouches or frog-face deformation was observed.",
+    "Overview samples show a larger chest/shoulder and cloth change around 0.5-0.75s, recovery around 1.0s, a later closed-eye/sideward-attention change around 2.75-3.25s, then return. These are sampled pose distributions, not measured continuous accent durations.",
+    "The single cape remains attached/draped as one layer, although its side edges spread conspicuously during the early emphasis. Seated lower boundary stays grounded; no obvious whole-character rescaling was observed.",
+    "First and final sampled source poses are visually close. This does not establish motion continuity, direction, breathing phase or seamless looping."
+  ],
+  "risks": [
+    "Early cape side spread and scarf follow-through are visibly broader than the static anchor. Disclose this amplitude to the user rather than labeling the result a proven compact 0.2-0.4s accent.",
+    "Closed-eye and later quiet poses require original-speed assessment to distinguish a brief blink/thought from sleepy or prolonged settling.",
+    "Closed fists naturally hide digits. Do not invent/count extra claws or pads during alpha repair."
+  ],
+  "evidence": [
+    {
+      "path": "registered-reference.png",
+      "sha256": "e88a7401a0e7fc7a418365d8b528b2fa3e1ea928003b58b35b443aff14ff62d7"
+    },
+    {
+      "path": "spec.json",
+      "sha256": "41acef57962d5be4c435b08b41d0f8a8141f85ac631eeb73fb8509d60ab8d90f"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "d5442526a7c3eacb8e584674c4fd74eae6b83ab1dfd362b5ca7abe8545d39169"
+    },
+    {
+      "path": "early-check/00001.png",
+      "sha256": "613b2e35a283bd533ae8a7283636865b7a48d3382137487cc708fb684c8f3127"
+    },
+    {
+      "path": "early-check/00019.png",
+      "sha256": "5096ea594489a1c85af2578075c31108536cb98ddbe1fe5a5688cf8fa517c600"
+    },
+    {
+      "path": "early-check/00067.png",
+      "sha256": "0531e00f8c9fe837e9f1bde92266b8bed6cc45d55cfd36dfefdf96bdacdf4737"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "25766633dfeab9b9f48b22066f86066e4dabf5ef28797f7919b220a662ef74e4"
+    }
+  ],
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "alphaAcceptance": false,
+  "userAccepted": false,
+  "limits": "Independent B review of actual source overview and selected native-size stills only. No claim of original-speed rhythm, continuous motion, all-frame anatomy, alpha quality or loop acceptance. No asset/helper/runtime/package changes.",
+  "processedSamples": {
+    "directory": "processed-edge-v2",
+    "manifest": {
+      "path": "processed-edge-v2/manifest.json",
+      "sha256": "5986fd57ad58debdcbaa4e3968ede6df861dbed9752afef1423d6bc79433e34b"
+    },
+    "samples": [
+      {
+        "frameIndex": 0,
+        "actualViewed": [
+          "black",
+          "white"
+        ],
+        "files": [
+          {
+            "path": "processed-edge-v2/black/000.png",
+            "sha256": "fa81d848c3a9c906aaa61cbc7b2c45db79f931e882abd505dcc500cf7ad2fc35"
+          },
+          {
+            "path": "processed-edge-v2/white/000.png",
+            "sha256": "08f593417ef85fb13cd810e431f99de1d5829d8141b304c3a8e0097309276194"
+          },
+          {
+            "path": "processed-edge-v2/rgba/000.png",
+            "sha256": "2168a26b0491850c1ef2a5af63bd70bef85c5b187de97e310fb2bf256ddad68b"
+          }
+        ]
+      },
+      {
+        "frameIndex": 53,
+        "actualViewed": [
+          "black",
+          "white"
+        ],
+        "files": [
+          {
+            "path": "processed-edge-v2/black/053.png",
+            "sha256": "06fc445098a3e7206c38143a647792b591c861fc5ac2c16f7df702f34a18f1a7"
+          },
+          {
+            "path": "processed-edge-v2/white/053.png",
+            "sha256": "502c63f6d7357d886c29b9d44d73019e1c828b8d616d4460c4d56d225de61e00"
+          },
+          {
+            "path": "processed-edge-v2/rgba/053.png",
+            "sha256": "af4d35e27deae10065314162c1b12dd39511bec78ed4fc3970b7315465f1f3c8"
+          }
+        ]
+      },
+      {
+        "frameIndex": 106,
+        "actualViewed": [
+          "black",
+          "white"
+        ],
+        "files": [
+          {
+            "path": "processed-edge-v2/black/106.png",
+            "sha256": "d9921ed7f79b273836e21500fbe82b7216100bcd3e6529f6e98e7c624592e650"
+          },
+          {
+            "path": "processed-edge-v2/white/106.png",
+            "sha256": "1c453ca88608f68fc60288939dc51ed36fa4d47a163e9ca074debf06c774c901"
+          },
+          {
+            "path": "processed-edge-v2/rgba/106.png",
+            "sha256": "a02f0e9743b547f06dcb4a8a8a0041e4e61c0b7d33278b40360b7517651ce729"
+          }
+        ]
+      }
+    ],
+    "observations": [
+      "In actual native-size black and white PNG samples 000/053/106, both complete closed gray fists retain the waist/hip contact and full thick white forearms. No obvious alpha cut through a wrist, lost gray-white boundary or open-palm invention was observed.",
+      "The compact closed pout/mouth line, nose, gray bean eyebrows and eye stars remain complete and readable. Face width and grounded seated lower boundary are coherent in the sampled fixed 640 canvas.",
+      "Small jagged/fine residual fringe remains visible around some outer white forearm tufts against white. This is not a clean-edge guarantee; no conspicuous missing body or broad foreground alpha hole was observed in the samples."
+    ],
+    "sampleStructureHardFailures": []
+  },
+  "outputAcceptanceScope": {
+    "decision": "SAMPLED_STRUCTURE_AND_KEY_LINES_NO_HARD_FAILURE",
+    "actualViewedCount": 6,
+    "losslessPreviews": [
+      "black",
+      "white"
+    ],
+    "frameIndices": [
+      0,
+      53,
+      106
+    ],
+    "allFramesReviewed": false,
+    "technicalAllFrameCheckBy": "root",
+    "alphaFullAcceptance": false,
+    "originalSpeedPlaybackReviewed": false,
+    "dynamicAcceptance": false,
+    "loopAcceptance": false,
+    "limit": "Only sampled lossless processed structural/line preservation. Original source observations and decisions remain unchanged. Residual fine edge quality and continuous motion are not certified."
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "model": "MiniMax-H3",
+  "action": "joy",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\emotion-joy.png",
+  "sourceSha256": "f8f9a7533d3e9e45d56a6e5d90e4f173b025cb76e827a676f77c2fe1df066a55",
+  "referenceSha256": "7661b289f0a0378238c7d3e7c3d83fa4ca056c349eebc174aa7ff07ce6a07e75",
+  "promptSha256": "ce37f87097bc54860c7c5676e91b17052b86a53cddc5c36b996be3bc405b1fa4",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Light brisk chuckle with weighted release and smaller after-laugh",
+    "primaryMotion": "Umi cannot help a short, bright chuckle. A brief gathering of breath becomes a light, quick lift and open release through the chest, shoulders, cheeks and happy smile; he lands the feeling with real seated weight, lets a smaller after-chuckle follow, then enjoys a short contented beat before recovering the original smiling pose. The main chuckle has a clear lively accent and the after-chuckle is lighter, with uneven natural spacing. Complete the small upward/downward movements promptly at normal everyday speed; let the brief pauses breathe rather than dragging a slow oscillation through the whole shot. His rounded paws and bent elbows comfortably support and accommodate the laughing chest; the head, neck and shoulders overlap as one performance, not separately queued gestures. The seated root stays grounded. The scarf ends, folded ear and single cape hem respond a fraction later to the same energy and settle; they do not flap independently. Preserve the reference upward-curved closed smiling eyelids as two distinct dark lines and the gray bean eyebrows separately above them; preserve the small animal smile and existing tiny fang. No extra teeth, balloon cheeks, full-body scaling, clapping or jumping. Recover the supplied smile and compatible body phase naturally for the forward loop, without a long frozen ending.\n\nKeep the main laugh impulse and its landing short and decisive, each small movement around0.2–0.4seconds, with a lighter after-chuckle and a readable contented living beat. Pauses and moving accents have different spacing. The complete seated body carries the feeling. Keep the cape hanging under its own weight, no wind-like side flare or horizontally streaming scarf; only brief small trailing cloth settling motivated by the laugh.",
+    "supportChain": "Seated root grounds torso; chest, shoulders, elbow support, head and full paw volumes articulate as one motivated performance.",
+    "gazeHead": "Happy eyelids, cheek lift and smile share the main laugh accent.",
+    "secondaryMotion": "Folded ear and scarf lag the primary impulse, single-layer cape remains weighted.",
+    "anchors": "Original registered reference copied without pixel edits, fixed896 canvas, original pivot; no per-frame fitting.",
+    "timingLayers": "Short anticipation, quick main laugh accent, weighted landing, smaller after-laugh, brief contented pause.",
+    "loopBoundary": "Same actual approved static reference as first/last; compatible pose, speed/direction and breathing phase; full returned source timeline preserved.",
+    "reviewOrder": "Fresh source native acting/loop and material colors versus same-key reference; A source patterns and black/white lossless edges, B support/paw/scale and pose extremes; no inherited approval from gray source.",
+    "propInteraction": "none"
+  },
+  "sameFirstAndLastFrame": true,
+  "sourceToReference": {
+    "size": [
+      456,
+      608
+    ],
+    "offset": [
+      220,
+      120
+    ],
+    "canvas": [
+      896,
+      896
+    ],
+    "scale": 0.4198895027624309
+  },
+  "outputCanvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    704
+  ],
+  "keyColor": "#A020C0",
+  "alphaPreparation": "min255 round(a*255/250); original RGB unchanged before uniform resize",
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "User accepted purple wait A and purple rest v2, says 可以，按这个方向继续. Continue joy/think from approved acting direction with frozen purple alpha/edge method. All fresh sources require A/B and native-speed user review. No formal replacement/installation.",
+  "method": "purple",
+  "registeredReferenceSha256": "93ae0c64968b09c08619a4182b6de2344f0b8132b02f1f537ef232587ff2467c",
+  "backgroundMethod": "saturated violet-purple",
+  "previousActingDirection": {
+    "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\joy\\background-gray-v3",
+    "approvalSha256": "a10b116475951a956b50556d61cce78279a0e1f9801a9389bff0ce764fa68569",
+    "scope": "Prior acting direction only; fresh source requires new review."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "sourceSha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "reviewEvidence": {
+    "source-review-A.json": "c13b49d09c33c007d399754513d86e550978f759da9b99ddf9bab14db5177d1b",
+    "source-review-B.json": "8ffe6748cd053bc1760537481f1d124bbde407365b98069293f15acbc16baab0"
+  },
+  "scope": "Two actual source reviewers; processing allowed, not native-speed/user/alpha approval. No896 fixed face trimap; any new opaque core requires independent review, exclude glass."
+}

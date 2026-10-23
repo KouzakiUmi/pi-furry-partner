@@ -1,4 +1,6 @@
-> `main` ships full-animation v2.5.0. Run `npm run build:animated` for Pi and DSH packages. The [legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) maintains v2.4.1 with the original v2.4.0 artwork. See the [build guide](docs/plugin-lines.md).
+> Main currently previews2.5.1-preview.1; stable2.5.0 remains available. The new Legacy tag is legacy-v2.4.2.
+
+> `main` ships full-animation v2.5.1-preview.1. Run `npm run build:animated` for Pi and DSH packages. The [legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) maintains v2.4.2 with the original v2.4.0 artwork. See the [build guide](docs/plugin-lines.md).
 
 <div align="center">
 
@@ -12,12 +14,12 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release v2.5.0](https://img.shields.io/badge/release-v2.5.0-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0)
+[![Release v2.5.1-preview.1](https://img.shields.io/badge/release-v2.5.1-preview.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download full-animation v2.5.0**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0) · [Original-art legacy v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download full-animation v2.5.1-preview.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1) · [Original-art legacy v2.4.2](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -55,7 +57,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the shared Pi/DSH catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority; DSH head pats can bring out his happy paws.
 
-The **full-animation remake v2.5.0** on `main` provides 19 complete illustration clips (17 character clips and two keyboard transitions), shared by Pi and DSH. **Legacy v2.4.1** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **full-animation remake v2.5.1-preview.1** on `main` provides 19 complete illustration clips (17 character clips and two keyboard transitions), shared by Pi and DSH. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 The full-animation edition retains the original **100 × 100** pixel artwork and its simple frames; it excludes regenerated pixel derivatives. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
@@ -105,12 +107,12 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0 and 1.3.
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-Choose a platform package from [full-animation v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0). For the original v2.4.0 artwork and simple frames, follow the separate [legacy v2.4.1 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Install one edition per host.
+Choose a platform package from [full-animation v2.5.1-preview.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1). For the original v2.4.0 artwork and simple frames, follow the separate [legacy v2.4.2 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Install one edition per host.
 
-| Platform | Full-animation v2.5.0 |
+| Platform | Full-animation v2.5.1-preview.1 |
 | --- | --- |
-| Pi terminal | `pi-furry-partner-full-animation-2.5.0-pi-core.tgz` |
-| DSH desktop | `pi-furry-partner-full-animation-2.5.0.tgz` |
+| Pi terminal | `pi-furry-partner-full-animation-2.5.1-preview.1-pi-core.tgz` |
+| DSH desktop | `dsh-furry-partner-full-animation-2.5.1-preview.1.tgz` |
 
 GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. Main no longer builds the HD-remaster product line.
 
@@ -132,7 +134,7 @@ Existing **pi-wink-companion** users can run the new script to back up and migra
 Download the full `.tgz` without `-pi-core` and run the official plugin command in the terminal provided by DSH, for example:
 
 ```sh
-dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0.tgz"
+dsh plugin --profile desktop add "./dsh-furry-partner-full-animation-2.5.1-preview.1.tgz"
 ```
 
 The command registers the package's declared bundle; restart DSH after an update to load the new code. Replace `desktop` if using another profile. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).

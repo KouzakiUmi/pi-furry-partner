@@ -73,7 +73,8 @@ def main():
             if not args.prepare_only:
                 run([sys.executable,str(ROOT/'tools/build-local-distribution.py'),'--source',str(stage),
                      '--out',str(args.out.resolve()),'--track',edition,'--profile',profile,'--version',spec['version']],ROOT)
-                stem=f'pi-furry-partner-{edition}-{spec["version"]}'+('-pi-core' if profile=='pi-core' else '')
+                prefix=platforms[platform].get('artifactPrefix',f'{platform}-furry-partner')
+                stem=f'{prefix}-{edition}-{spec["version"]}'+('-pi-core' if profile=='pi-core' else '')
                 row['report']=str(args.out.resolve()/f'{stem}.report.json')
                 report=read(Path(row['report']))
                 row.update({k:report[k] for k in ['archive','archiveBytes','archiveSha256','allArchiveEntriesVerified']})

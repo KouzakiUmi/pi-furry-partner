@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-10-22T21:58:27.297372+00:00",
+  "reviewDate": "2026-10-23",
+  "userText": "可以，继续下一批",
+  "reviewUrl": "http://127.0.0.1:49737/",
+  "approvedJob": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2",
+  "approvedProcessedVariant": "processed-edge-v2",
+  "status": "USER_APPROVED_NATIVE_LISTEN_ACTING_LOOP_AND_CURRENT_EDGE_PRESENTATION_NOT_INSTALLED",
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "replacementDeferred": true,
+  "deploymentAllowed": false,
+  "scope": [
+    "This listenv2 native timing/rhythm, amplitude, loop and current edge presentation approved as displayed.",
+    "The quieter latter half, previously disclosed as a review risk, is accepted by the user for this exact clip.",
+    "Proceed next shy+grumpy pilots through fresh source/edge/A/B/user review."
+  ],
+  "knownResiduals": "Fine dark/purple rim and sparse hair-tip/forearm/lower-paw edge grains remain disclosed; no zero-defect or lossless-separation claim.",
+  "knownActingDifferences": "V2 keeps the ear-side paw posture after v1 was held for an outward wave. Source samples show a small supported closed-eye response around1.25–1.75s, recovery near2s, and quieter similar poses after2.25s. Presence versus over-static holds, normal-speed amplitude and loop require fresh user review; no inherited gray approval.",
+  "limits": [
+    "Only this exact listenv2 source and processed display are approved; listenv1 and future generations are not approved.",
+    "New shy/grumpy sources require fresh review and do not inherit this or prior-source approval.",
+    "No formal-resource replacement or installation performed or inferred."
+  ],
+  "nativeTimeline": {
+    "sourceFrames": 107,
+    "fps": 24,
+    "periodMs": 4458,
+    "fullForwardNativeSource": true
+  },
+  "paintRect": {
+    "height": 896,
+    "width": 896,
+    "x": -128,
+    "y": -96
+  },
+  "worldAnchor": [
+    320,
+    608
+  ],
+  "evidence": {
+    "Umi-listen-H3-source.mp4": "2ed65e2e06b3a90c13e955d27cd8ce8fde791dde624954ddf5908b9bbf63f354",
+    "registered-reference.png": "f15ad476059c4c1d3426fef7e0821c860c0f0dc5027fe46d6dfaa0d067ff48ed",
+    "reference.png": "9615fc5ba87c659d7820a687e9e4f40ec71a1619666d9e8681f509313510854f",
+    "prompt.txt": "f4b05cd7b573177cffb6a4919d1b7ee733bbe1df348a908dc7f6f639ceb6f30e",
+    "spec.json": "51fd18d16507bbed3637e76bca4629528e61586175c0ff23475db6c039030d17",
+    "motion-contract.json": "73974aa1a05e1a7eae52fb9bf6b69d57a894fc57e4eae2e924570afca77152a6",
+    "source-review-A.json": "8d653c2b8d61bfdc4383c3f1499be0fd56e58eaddc1ea51b53df305ca70cb11b",
+    "reviewer-A.json": "634a5f7ccb254dd37c81f02f26e509702747a105a8ea5c60667aaf2b5e0a08fa",
+    "reviewer-B.json": "3dedb4f4d0dcccf281b080b021e7859ccf01e5a8597bf22d61894d24be9c0f4a",
+    "processed-edge-v2/manifest.json": "6284d2967e6cfaa948f05e2e65486c9ba9ab54c6e1770f7a7aec7a26b60124a0",
+    "processed-edge-v2/report.json": "bc87e19e95515991a9eb14230bf3f8df49c9e63287abe50e6e3447e9f9b3c0dc",
+    "processed-edge-v2/world-black.mp4": "e8353b708e40b2f2c39c5464a7e0ee95b9aaa259afa4e454af6be7e4d66e7532",
+    "processed-edge-v2/world-gray.mp4": "e812704097467f32036d4665619aced1cde47e48ead37c04aced04815c7c9a35",
+    "processed-edge-v2/world-white.mp4": "c7886a94dbbad0efee00dc704a5d58153214663a8ca0ffdbb690429bff59557e",
+    "review.json": "161a6ac1d6a6eb6fe7876492bf3eaa995e3ba21c0365a0e4205cea9bfcfbe90d"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b"
+  },
+  "displayBinding": {
+    "reviewRecord": "work/motion-polish-20261023/purple-listen-review.json",
+    "reviewRecordSha256": "8e5172a132d3a7ae4c5e0af4857919238e291c6f9b46a8aa471e8cb2a125fa81",
+    "page": "work/motion-polish-20261023/preview/purple-listen.html",
+    "pageSha256": "7bff89b801b51152a678b0ffd05169b0a59fa03c027befe7a811b55c9fa2637c"
+  },
+  "verifiedAllDisplayedEvidenceHashesMatch": true
+}

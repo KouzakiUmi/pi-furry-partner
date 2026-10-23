@@ -5,13 +5,14 @@ colored, thin, and interior coverage. No production videos/assets are needed.
 """
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 import numpy as np
 from PIL import Image
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from build_watch_matte import extract_matte,decontaminate_dark_contour_edges,resize_soft
+from build_watch_matte import extract_matte,decontaminate_dark_contour_edges,resize_soft,remove_distant_low_alpha_noise
 
 
 def fixture():
@@ -23,6 +24,21 @@ def fixture():
 
 
 class WatchMatteTests(unittest.TestCase):
+    def test_action_staging_accepts_the_restored_opt_in_signature(self):
+        from process_approved_h3_actions import process_one
+        with tempfile.TemporaryDirectory(prefix='watch-matte-staging-') as directory:
+            root=Path(directory)
+            for name in ['native','rgba','webp','black','gray','white']:
+                (root/name).mkdir()
+            source=np.zeros((24,24,3),dtype=np.uint8);source[:,:,1]=247
+            source[7:17,7:17]=[22,20,30];source[7:17,6]=[63,139,59]
+            image=root/'source.png';Image.fromarray(source).save(image)
+            record=process_one((image,root,1,1,24,1,0,0))
+            self.assertTrue(record['detail']['edgeColorDecontamination']['alphaExactlyUnchanged'])
+            self.assertTrue(record['detail']['edgeColorDecontamination']['opaqueRgbExactlyUnchanged'])
+            self.assertEqual(Image.open(root/'rgba'/'001.png').size,(640,640))
+            self.assertTrue((root/'webp'/'001.webp').is_file())
+
     def test_default_keeps_original_inverse_compositing(self):
         source=np.zeros((24,24,3),dtype=np.uint8);source[:,:,1]=247
         source[7:17,7:17]=[30,40,65]
@@ -102,6 +118,59 @@ class WatchMatteTests(unittest.TestCase):
     def test_resize_keeps_alpha_identical_for_opt_in_and_legacy_rgb(self):
         old=fixture();new,_=decontaminate_dark_contour_edges(old)
         np.testing.assert_array_equal(resize_soft(old,(23,23))[:,:,3],resize_soft(new,(23,23))[:,:,3])
+
+
+class DistantLowAlphaTests(unittest.TestCase):
+    def test_only_far_sub128_alpha_is_removed_and_rgb_is_exact(self):
+        old=np.zeros((32,32,4),dtype=np.uint8)
+        old[:,:,:3]=[34,81,126]
+        old[14:18,14:18,3]=255
+        old[4,4,3]=127
+        old[7,7,3]=1
+        old[9,9,3]=0
+        new,report=remove_distant_low_alpha_noise(old)
+        self.assertEqual(report['removedDistantLowAlphaPixels'],2)
+        self.assertEqual(new[4,4,3],0)
+        self.assertEqual(new[7,7,3],0)
+        np.testing.assert_array_equal(new[:,:,:3],old[:,:,:3])
+        np.testing.assert_array_equal(new[old[:,:,3]>=128],old[old[:,:,3]>=128])
+        self.assertTrue(report['allRgbExactlyUnchanged'])
+        self.assertTrue(report['opaqueRgbaIdentical'])
+        self.assertTrue(report['supportedAlphaIdentical'])
+        self.assertTrue(report['retainedRgbaIdentical'])
+        self.assertEqual(old[4,4,3],127,"The input must not be mutated")
+
+    def test_128_is_support_and_square_radius_four_preserves_soft_edge(self):
+        old=np.zeros((24,24,4),dtype=np.uint8)
+        old[12,12]=[180,190,200,128]
+        old[8,8]=[90,100,110,1]  # 9x9 MaxFilter includes the diagonal.
+        old[12,8]=[90,100,110,127]
+        old[12,7]=[90,100,110,127]  # Five pixels away is outside support.
+        new,report=remove_distant_low_alpha_noise(old)
+        np.testing.assert_array_equal(new[8,8],old[8,8])
+        np.testing.assert_array_equal(new[12,8],old[12,8])
+        np.testing.assert_array_equal(new[12,12],old[12,12])
+        self.assertEqual(new[12,7,3],0)
+        self.assertEqual(report['removedDistantLowAlphaPixels'],1)
+
+    def test_no_support_and_no_soft_alpha_are_well_defined(self):
+        old=np.full((16,16,4),[8,16,32,127],dtype=np.uint8)
+        new,report=remove_distant_low_alpha_noise(old)
+        self.assertEqual(report['removedDistantLowAlphaPixels'],256)
+        self.assertFalse(new[:,:,3].any())
+        opaque=old.copy();opaque[:,:,3]=255
+        retained,report=remove_distant_low_alpha_noise(opaque)
+        np.testing.assert_array_equal(retained,opaque)
+        self.assertEqual(report['removedDistantLowAlphaPixels'],0)
+
+    def test_cleanup_is_idempotent_and_rejects_unquantized_float_input(self):
+        old=np.zeros((16,16,4),dtype=np.uint8);old[4,4]=[255,128,0,12]
+        first,_=remove_distant_low_alpha_noise(old)
+        second,report=remove_distant_low_alpha_noise(first)
+        np.testing.assert_array_equal(first,second)
+        self.assertEqual(report['removedDistantLowAlphaPixels'],0)
+        with self.assertRaisesRegex(ValueError,'uint8'):
+            remove_distant_low_alpha_noise(old.astype(float)/255)
 
 
 if __name__=='__main__':unittest.main()

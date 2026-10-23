@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "idle",
+  "version": "key-purple-batch10-v1",
+  "status": "REVIEWED_OPAQUE_UNDERLYING_FACE_CORE_CONDITIONAL_RESTORE_SUPPORTED",
+  "reviewedOpaqueCore": [
+    225,
+    280,
+    420,
+    375
+  ],
+  "sourceCanvas": [
+    640,
+    640
+  ],
+  "actualViewedFiles": [
+    "work/motion-polish-20261023/batch10-idle-source-core-review.jpg"
+  ],
+  "actualViewedSourceFramesInProof": [
+    0,
+    24,
+    42,
+    66,
+    81,
+    106
+  ],
+  "sourceVideoSha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "proofSha256": "687a17bbe313807ce9131b440e2b66b18763a6fc1b897632c5fc3f3d94653a3c",
+  "visualFinding": "Six newly reviewed idle poses put rectangle entirely inside solid eye/face/nose/mouth foreground, including side-look and lowered eyelids; no actual key background or external symbol identified in this core.",
+  "rootReportedComplete107SourceMinimumKeyDifferenceBytes": 53,
+  "rootNumericPreflightIndependentlyRecomputedByA": false,
+  "conditionalRestorationSupported": true,
+  "allowedOperation": "Only erroneous interior alpha within this source-specific core may be restored using the SAME frame and SAME resize sourceRGB/alpha255, after asserting ext8-connected exterior/coreboundary/reliablealpha>=252 are unchanged or refusing operation on protection conflict. No artistic recolor, geometry change or broader alpha fill.",
+  "glassRestriction": "No whole-lens fill, no glass cutout and no extension into any lens region revealing true background. This underlying-face decision is not permission to flatten glass reflections or modify reliable opaque RGB.",
+  "limits": "Actual six-pose proof visual review plus separately attributed complete107frame numerical precondition. Not inherited896 ROI, old-source authorization or full-video art approval. Outputtarget black-white/alpha samples still require review after processing.",
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "Umi-idle-H3-source.mp4",
+      "sha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62"
+    },
+    {
+      "path": "reference.png",
+      "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/batch10-idle-source-core-review.jpg",
+      "sha256": "687a17bbe313807ce9131b440e2b66b18763a6fc1b897632c5fc3f3d94653a3c"
+    }
+  ]
+}

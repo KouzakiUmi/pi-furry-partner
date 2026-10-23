@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "rest",
+  "version": "key-purple-rest-v2",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "e4eb5e2272ab793d420438c9849a7668702b74fb9a10e3e274c37259a7b207c4",
+  "expectedSourceHashMatches": true,
+  "actualReview": "Actually viewed same-job reference, freshly created0.25-second source overview.jpg and native raw025/073/107; applicable color/material direction compared with approved clean rest reference and original design card.",
+  "sourceFinding": "No blocking new purple tint or material/pattern error observed. Cool-shadow white forearms and gray paws, blue-gray hood/cape, folded-ear X stitches, hood zigzag/dots, scarf white stripes/cross and short claws remain readable. Two dark closed-eye curves remain separate below gray bean brows in inspected samples; no open eye observed.",
+  "actingObservationForUser": "A cape/scarf opening remains visible near3.0s; record as native-speed amplitude/acting judgment pending, not a source-color defect or dynamic approval. No B structural analysis repeated.",
+  "processingScope": "Continue frozen purple key/alpha/soft-edge processing; black/white edge review pending. V1 cloth-flare hold remains separate; no v1 edge processing requested.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "01ab1ecabd19e532ab32e9d34afa15d0b59a9627fb0a05f41c68b61602ece79a"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "118eba2c38aee34f7ba60abfbb600ff4b2db7e5dc524d49b49e5d523eec5365a"
+    },
+    {
+      "path": "early-check/00025.png",
+      "sha256": "9831112f0cd2ae21d531483386f591659641b3022abcd4872ec0c2e73c920c56"
+    },
+    {
+      "path": "early-check/00073.png",
+      "sha256": "7d8b421b65f4374b9e4a332ca79beaf23a5c85271195d5b4199184d6fbda9342"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "ff210bcab5f9e92359f51e142f8b33200136f31b6b1e9bfbbcd55dc1269d5a90"
+    }
+  ]
+}

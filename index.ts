@@ -129,6 +129,8 @@ export default function (pi: ExtensionAPI) {
 
   let tui: any;
   let timer: ReturnType<typeof setTimeout> | undefined;
+  let timerDueAt = Infinity;
+  let approvedFrameDueAt = Infinity;
   let suspended = true;
   let lastSnapshot: ReturnType<typeof activity.snapshot> | undefined;
   let header: ReturnType<typeof createHeader> | undefined;
@@ -186,18 +188,30 @@ export default function (pi: ExtensionAPI) {
   function stopTimer() {
     if (timer !== undefined) clearTimeout(timer);
     timer = undefined;
+    timerDueAt = approvedFrameDueAt = Infinity;
   }
   function visible() { return tui && (settings.layout === "editor" || !tui.hasOverlay()); }
   function redraw() { if (!suspended) tui?.requestRender(); }
-  function armTimer() {
+  function armTimer(renderedDeadline = false) {
     // Token events must not continually postpone the animation deadline.
     if (!settings.animation && !activity.isPoked() && !responseLatency.isWaiting()) { stopTimer(); return; }
-    if (timer !== undefined || suspended || !settings.enabled || !tui) return;
+    if (suspended || !settings.enabled || !tui) return;
     if (settings.layout === "header" && !header) return;
     const delay = !settings.animation && !activity.isPoked() ? 1000 : settings.layout === "header"
       ? Math.max(60, titleSheets().native.frames[headerFrame].durationMs) : 50;
+    const now = Date.now();
+    const dueAt = !visible() ? now + 800 : settings.animation && settings.layout === 'editor' && Number.isFinite(approvedFrameDueAt)
+      ? Math.max(now + 1, approvedFrameDueAt) : now + delay;
+    // Events can bring a deadline forward, never postpone it. A completed
+    // render replaces the provisional timer with its actual frame boundary.
+    if (timer !== undefined) {
+      if (renderedDeadline ? timerDueAt === dueAt : timerDueAt <= dueAt) return;
+      clearTimeout(timer);
+    }
+    timerDueAt = dueAt;
     timer = setTimeout(() => {
       timer = undefined;
+      timerDueAt = approvedFrameDueAt = Infinity;
       if (suspended) return;
       if (visible() && (settings.layout !== "header" || headerCanAnimate(tui))) {
         if (settings.layout === "header" && settings.animation) {
@@ -208,7 +222,7 @@ export default function (pi: ExtensionAPI) {
         redraw();
       }
       armTimer();
-    }, visible() ? delay : 800);
+    }, Math.max(1, Math.ceil(dueAt - now)));
     timer.unref?.();
   }
 
@@ -371,7 +385,9 @@ export default function (pi: ExtensionAPI) {
             motionPhase === this.demoMotionPhase) this.motion.reset();
         this.demoMotionEpoch = current.demoEpoch; this.demoMotionPhase = motionPhase;
         const stateVideo = stateExpressionVideo(current, reactionCatalog());
-        const approved = this.approvedMotion.sample(current, { style: settings.style, animate: settings.animation, enabled: settings.enabled });
+        const motionSampleAt = Date.now();
+        const approved = this.approvedMotion.sample(current, { style: settings.style, animate: settings.animation, enabled: settings.enabled, time: motionSampleAt });
+        let nextApprovedFrameMs = Infinity;
         const approvedStyle = approvedMotionStyle(settings.style) && approvedCatalog;
         const sheet = reactionSheet(approved || approvedStyle && !settings.animation ? '' : current.gesture?.id || stateVideo?.id);
         const visualGesture = current.gesture || (stateVideo && sheet.motion?.gestureVideos?.[stateVideo.id] ? stateVideo : null);
@@ -384,6 +400,7 @@ export default function (pi: ExtensionAPI) {
             if (approvedStyle && !settings.animation && !poked) return approvedMotionStaticFrame(base, index, motionOptions);
             const visual = this.approvedMotion.indexedFrame(approved, settings.style) || (approvedMotionKeyboardClip(approved?.clipId)
               ? approvedMotionStaticFrame(base, base.ids['idle-open'] ?? 0, { phase: 'idle' }) : this.motion.frame(base, index, motionOptions));
+            if (approved && visual.approvedMotion === approved) nextApprovedFrameMs = visual.nextInMs;
             return poked ? approvedMotionPokeFrame(visual, current.reactionElapsedMs, current.reactionStrength) : visual;
           } }, animate: settings.animation,
           renderAvatar: (frame: any) => {
@@ -396,6 +413,10 @@ export default function (pi: ExtensionAPI) {
         this.geometry = joinEditor({ width, nativeLines: framedLines, dockLines, geometry, snapshot: current, theme: ctx.ui.theme, visibleWidth, truncateToWidth, editorInset: frame.inset, nativeRenderWidth });
         if (toolbarIndex >= 0) this.toolbarRow = this.geometry.offsetY + toolbarIndex;
         this.avatarBounds = geometry.collapsed || tui?.mode !== "fullscreen" ? undefined : { x: geometry.imageOffset, y: DOCK_CAPTION_ROWS, width: geometry.columns, height: geometry.rows };
+        if (activeEditor === this && settings.layout === 'editor') {
+          approvedFrameDueAt = Number.isFinite(nextApprovedFrameMs) ? motionSampleAt + Math.ceil(nextApprovedFrameMs) : Infinity;
+          armTimer(Number.isFinite(approvedFrameDueAt));
+        }
         return this.geometry.lines;
       }
       handleInput(data: string) {

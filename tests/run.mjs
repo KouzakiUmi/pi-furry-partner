@@ -35,5 +35,5 @@ if (FULL_ANIMATION_EDITION) {
   for (const name of ['approved-motion', 'approved-motion-pi', 'approved-motion-dsh',
     'approved-motion-poke', 'animated-host', 'approved-motion-pack',
     'approved-motion-hd-delay', 'approved-motion-codec', 'approved-motion-binary-pack',
-    'approved-motion-lifecycle']) await import(`./${name}.mjs`);
+    'approved-motion-lifecycle', 'approved-motion-timing', 'approved-motion-dsh-timing']) await import(`./${name}.mjs`);
 }

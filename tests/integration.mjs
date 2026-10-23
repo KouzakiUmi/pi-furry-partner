@@ -506,7 +506,10 @@ try {
   const englishRows = plain(currentEditor.render(160)).join("\n");
   assert.ok(englishRows.includes("bash"), "The active tool must remain attached across the language switch");
   assert.ok(!/[\u3400-\u9fff]/u.test(englishRows), "English editor should contain no untranslated companion labels, phrases, bubbles or keyboard hints");
-  const englishFooter = plain(currentFooter.render(160)).join("\n");
+  // This assertion checks language preservation, so allow the generated test
+  // directory to fit even when the suite runs inside a nested build stage.
+  // Narrow-width truncation is covered separately by the footer layout suite.
+  const englishFooter = plain(currentFooter.render(Math.max(160, visibleWidth(scratch) + 80))).join("\n");
   assert.ok(englishFooter.includes("test/中文"), "Language must not rewrite the user's branch name");
   assert.ok(!/[\u3400-\u9fff]/u.test(englishFooter.replace("test/中文", "")));
   assert.equal(jobs.size, 1);

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "grumpy",
+  "version": "key-purple-batch06-v1",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "95e4b4bc455d8f278eb1fb41c9a3e75c6de421bfa91f8bd793f64b6ebff98238",
+  "referenceSha256": "f30021cb2be2aefd090200a2052b5c37c3655ecd1cb9f4fff2efe41c93fafc61",
+  "registeredReferenceSha256": "e88a7401a0e7fc7a418365d8b528b2fa3e1ea928003b58b35b443aff14ff62d7",
+  "registeredReferenceSize": [
+    640,
+    640
+  ],
+  "decode": {
+    "method": "ffmpeg -fps_mode passthrough -start_number1 to early-check/%05d.png",
+    "frameCount": 107,
+    "fps": 24,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "durationSeconds": 4.458333,
+    "sampling": "overview every6 native frames plus final106 =0.25s cadence"
+  },
+  "actualReview": "Actually viewed this job reference, new0.25s overview, and native raw00019.png,00067.png,00073.png. Original design/card direction used only for applicable material identity; no old1280 grumpy reference substitution.",
+  "sourceFinding": "No blocking broad green/purple tint in subject shadows or definite material/pattern error observed. White forearms and gray paws keep intended division; separate gray bean brows/eye lines, folded-ear X stitches, blue-gray hood/cape and original scarf/hood white pattern remain readable. Natural cool fur shading and blush are not treated as background contamination.",
+  "staticEvidenceBoundary": "Representative native frames and sampled contact overview only. Not full-frame dynamic color/alpha/acting acceptance; no normal-speed playback viewed. Fresh source cannot inherit earlier approvals.",
+  "processingScope": "No alpha processing, frozen key-color/material prior left unchanged. Output black/white edge review pending.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "f30021cb2be2aefd090200a2052b5c37c3655ecd1cb9f4fff2efe41c93fafc61"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "e88a7401a0e7fc7a418365d8b528b2fa3e1ea928003b58b35b443aff14ff62d7"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "d5442526a7c3eacb8e584674c4fd74eae6b83ab1dfd362b5ca7abe8545d39169"
+    },
+    {
+      "path": "early-check/00019.png",
+      "sha256": "5096ea594489a1c85af2578075c31108536cb98ddbe1fe5a5688cf8fa517c600"
+    },
+    {
+      "path": "early-check/00067.png",
+      "sha256": "0531e00f8c9fe837e9f1bde92266b8bed6cc45d55cfd36dfefdf96bdacdf4737"
+    },
+    {
+      "path": "early-check/00073.png",
+      "sha256": "8f039abac3766742285b35ac19555908f401d6b158fb761cc1674779230d11f4"
+    }
+  ],
+  "referenceSignalException": {
+    "countAbove46": 13,
+    "nativeRegisteredCanvas": [
+      640,
+      640
+    ],
+    "bboxInclusiveXY": [
+      306,
+      353,
+      324,
+      360
+    ],
+    "classification": "All13 are original red puckered-X mouth line pixels, confirmed by actual magnified crop; not clothing and not new source tint.",
+    "maximumSample": {
+      "xy": [
+        306,
+        355
+      ],
+      "rgba": [
+        246,
+        0,
+        53,
+        255
+      ],
+      "purpleSignalBytes": 53
+    },
+    "outputProtectionNote": "Check corresponding mouth detail is not made transparent by fixed signal guard; no global material-prior tuning inferred.",
+    "proof": "work/motion-polish-20261023/batch06-grumpy-reference-signal-A/points.json"
+  }
+}

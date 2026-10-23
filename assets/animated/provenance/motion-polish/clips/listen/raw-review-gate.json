@@ -1,0 +1,13 @@
+{
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "reviewer": "root",
+  "sourceSha256": "2ed65e2e06b3a90c13e955d27cd8ce8fde791dde624954ddf5908b9bbf63f354",
+  "actualViewed": [
+    "early-check/overview.jpg",
+    "early-check/00025.png",
+    "early-check/00037.png",
+    "early-check/00061.png"
+  ],
+  "findings": "Ear-side cupped paw held in place rather than v1 independent outward wave. Visible middle closed-eye/head/chest response; outside that interval quiet holds need user native-speed presence/rhythm review. A source color/pattern and B gesture/paw/support samples reported no mandatory source rejection. No dynamic acceptance from stills.",
+  "humanAccepted": false
+}

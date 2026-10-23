@@ -1,0 +1,86 @@
+{
+  "status": "USER_ACCEPTED_NEW_PROUD",
+  "humanAccepted": true,
+  "readyForUserReview": false,
+  "runtimeInstalled": false,
+  "job": "Hi-Res/sources/h3-motion-polish-20261023/proud/key-purple-batch09-v1",
+  "processedVariant": "processed-detail-v3",
+  "nativeFrames": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "fullNativeForwardTime": true,
+  "worldPaintRect": {
+    "x": -128,
+    "y": -96,
+    "width": 896,
+    "height": 896
+  },
+  "worldAnchor": [
+    320,
+    608
+  ],
+  "evidence": {
+    "spec.json": "f433c023bd1e05e664401831a1dff2bdd4b7a361cb7d3069b99880b6241513d1",
+    "prompt.txt": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9",
+    "reference.png": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105",
+    "registered-reference.png": "3b70d261a2f2fc60afc94e342c63a8a41e6184c5408a1a379f89b87c66537bb7",
+    "Umi-proud-H3-source.mp4": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1",
+    "source-review-A.json": "db36a6a5677415ab80d35ac389ee0062e30e14c71a65a20944008a0b0df43d92",
+    "source-review-B.json": "2789e8e714da4a0f6a7a1be607717fbf17339011912a302cf5ec5ea7b762a91a",
+    "raw-review-gate.json": "c8e2d99becf8d393f5d1a379f167cc53daf520ddcff6a4404d0a87158e131312",
+    "source-core-preflight.json": "304c301f7ecb74c9fe8272e24232bc2a7008d5ae8241f4666e7eb73c9c4d3070",
+    "processed-detail-v3/manifest.json": "a920180fa087a0599ef8fb2628d7b3fcd523d90a0f8d3de323070004a971ad5a",
+    "processed-detail-v3/report.json": "789f2ddd1f72b5b4363d3b697058fa83b61e08b7b59749ed054e6f4c2cb5b8c1",
+    "middle-expression-rgba.png": "2d18260f5708c639699a315f96317e2741406527714317ef45bb5beb513cbeaa",
+    "middle-expression-purple.png": "72ad41013283d9391c1e0f781ad6ef9f4d128176cbb50dc07facddc9ae98bdd4",
+    "output-review-A.json": "db421d04e6990eda189b9749d6c9d1f4d19ed341c808f70982c86accc8f1bceb",
+    "output-review-B.json": "8cf7b490fd8890dedd3c87c49a552028726fe1ab6d30d1ffc750c05a1c5bc4cd",
+    "processed-detail-v3/world-black.mp4": "c9e526f9c9c273ddb141be86bd42bbcf14727f472a0d130df7e2b2390043da4a",
+    "processed-detail-v3/world-gray.mp4": "a9e2d1d46362a9e20f2e38722de80a1af9fc9474cc820e54c147350c46b83024",
+    "processed-detail-v3/world-white.mp4": "43770e0526137ca916a16f21f566f925f7a0bab3f4cf8140aa3c195b9e6b3726"
+  },
+  "technicalReport": {
+    "status": "AWAITING_ACTUAL_OUTPUT_A_B_AND_USER",
+    "humanAccepted": false,
+    "runtimeInstalled": false,
+    "frameCount": 107,
+    "periodMs": 4458,
+    "sourceTimelineUnchanged": true,
+    "registrationUnchanged": true,
+    "externalSoftRgbaAllFramesExactlyUnchanged": true,
+    "reliable252RgbaAllFramesExactlyUnchanged": true,
+    "outsideDetailRepairAllFramesExactlyUnchanged": true,
+    "changedAlphaInteriorPixels": 6431,
+    "minimumAllFramesSourceCoreVsKeyMarginBytes": 40.0,
+    "allCoreBoundaryRgbaUnchanged": true,
+    "knownLimits": "Per-source reviewed fixed foreground trimap; does not approve source colors, output exterior grain or native acting. External symbol soft edges unchanged."
+  },
+  "alphaDiagnostic": {
+    "action": "proud",
+    "job": "key-purple-batch09-v1",
+    "variant": "processed-detail-v3",
+    "frames": 107,
+    "redCoralFeatureSamples": 278987,
+    "sampledMinAlpha": 0,
+    "belowAlpha200": 6600,
+    "worst": {
+      "frame": 1,
+      "pixels": 97,
+      "bbox": [
+        229,
+        336,
+        289,
+        425
+      ]
+    },
+    "faceBelowAlpha200": 0,
+    "worstFace": null,
+    "scope": "Read-only full-frame source-color/alpha diagnostic, not art or ground-truth alpha approval; requires actual worst-frame and black/white inspection. External soft edges of colored symbols may correctly have partial alpha; do not fill from this flag alone."
+  },
+  "knownLimits": [
+    "Fine dark/purple exterior contour and sparse fur/scarf edge grain remain possible.",
+    "Actual source stills and output checks do not approve native playback rhythm, amplitude or loop.",
+    "Original closed-mouth opening/ending, middle-only single canine smile; natural native cadence and amplitude await user review."
+  ],
+  "userApprovalSha256": "439e977ce32a0f3d1d517556bf723bfa5257dcd4e4cd7e77d87e3c2ca37e10cc"
+}

@@ -1,6 +1,26 @@
 # 更新记录
 
-本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
+Main采用 `v` 前缀，Legacy采用独立 `legacy-v` 前缀的发布tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
+
+## 2.5.1-preview.1 · 2026-10-23
+
+### 简体中文
+
+- 发布全动态动作打磨预览：19段主动作采用12条新片与7条已认可原片，保持原速、完整动作周期与已批准的键盘进出场组合。
+- 等待与倾听恢复眼星等实心脸内的误透明；等待保留独立静止问号。保持640世界锚点与各动作paintRect，不按每帧透明边界缩放。
+- Pi按真实帧时间调度，DSH按高清帧边界调度，增加有界预取、延迟回退及恢复；修复小数毫秒循环边界偶尔选到前一帧的问题。
+- DSH附件改为dsh-furry-partner-前缀，Pi使用pi-furry-partner-前缀；内部插件标识与配置兼容。Legacy使用独立legacy-v2.4.x标签与明确标题，不占用Latest。
+- 原始像素、标题、独立说话口型与保留动作保持。八项旧辅助手势尚无新的连续素材，继续保留既有回退。
+- 两端完整自动化回归、来源/像素校验、真实归档逐项回读与解包读取器验证通过；本版本按预发布提供，实际宿主安装观感与性能仍需验证。
+
+### English
+
+- Preview the motion polish using twelve newly approved clips and seven retained clips across nineteen main actions, preserving native timing and the accepted keyboard chain.
+- Restore opaque face details in waiting/listening and keep the waiting question mark stationary. Preserve the640px world, anchors and per-clip paint rectangles without per-frame fitting.
+- Schedule Pi and DSH at authored frame deadlines with bounded HD lookahead, delayed-frame fallback and recovery. Fix fractional loop boundaries selecting the previous frame.
+- Name DSH downloads with dsh-furry-partner- and Pi downloads with pi-furry-partner-. Keep plugin identity/configuration compatible. Legacy uses a separate legacy-v2.4.x tag line and never becomes Latest.
+- Preserve original pixel artwork, titles, independent speech mouths and retained actions. Eight auxiliary legacy gestures still use their existing fallback.
+- Both host suites, source/pixel checks, archive entry readback and unpacked production readers passed. This is a prerelease; installed-host visual/performance validation remains pending.
 
 ## 2.5.0 · 2026-10-23
 

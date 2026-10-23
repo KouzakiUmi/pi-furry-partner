@@ -109,6 +109,75 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
 
 {
   const { activity, advance } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  const stream = (type, toolCall, extra = {}) => ({ assistantMessageEvent: {
+    type, contentIndex: 0, partial: { role: "assistant", content: [toolCall] }, ...extra,
+  } });
+  const edit = { type: "toolCall", id: "stream-edit", name: "edit", arguments: { edits: "NEVER_ECHO_STREAMED_CONTENT" } };
+  activity.handle("message_update", stream("toolcall_start", edit));
+  let state = activity.snapshot();
+  assert.equal(state.phase, "editing"); assert.equal(state.visualPhase, "editing"); assert.match(state.face, /^work/);
+  assert.equal(state.bubble, "我改改呀"); assert.equal(state.toolName, "edit"); assert.equal(state.toolCount, 1); assert.equal(state.toolObject, "");
+  assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_STREAMED_CONTENT"));
+  activity.handle("message_update", stream("toolcall_delta", edit, { delta: "more private content" }));
+  assert.equal(activity.snapshot().bubble, "我改改呀", "Argument deltas must keep the early edit animation");
+  activity.handle("message_update", stream("toolcall_end", edit, { toolCall: edit }));
+  activity.handle("message_end", { message: { role: "assistant", stopReason: "toolUse" } });
+  assert.equal(activity.snapshot().phase, "editing", "The completed assistant message must retain its pending edit until execution starts");
+  activity.handle("tool_execution_start", { toolCallId: edit.id, toolName: edit.name, args: { path: "src/edit.ts", edits: [] } });
+  state = activity.snapshot(); assert.equal(state.toolCount, 1); assert.equal(state.bubble, "我改改呀"); assert.equal(state.toolObject, "src/edit.ts");
+  activity.handle("tool_execution_end", { toolCallId: edit.id, isError: false });
+  state = activity.snapshot(); assert.equal(state.phase, "thinking"); assert.equal(state.visualPhase, "editing"); assert.equal(state.bubble, "我改改呀");
+  assert.equal(advance(1200).visualPhase, "thinking");
+
+  activity.handle("message_start", { message: { role: "assistant" } });
+  const write = { type: "toolCall", id: "stream-write", name: "functions.write", arguments: { content: "NEVER_ECHO_WRITE_CONTENT" } };
+  activity.handle("message_update", stream("toolcall_start", write));
+  state = activity.snapshot(); assert.equal(state.phase, "editing"); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolCount, 1);
+  activity.handle("message_update", stream("toolcall_delta", write, { delta: "private write delta" }));
+  assert.equal(activity.snapshot().bubble, "我写写呀");
+  activity.handle("message_update", stream("toolcall_end", write, { toolCall: write }));
+  activity.handle("tool_execution_start", { toolCallId: write.id, toolName: write.name, args: { path: "src/new.ts", content: "NEVER_ECHO_WRITE_CONTENT" } });
+  state = activity.snapshot(); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolCount, 1); assert.equal(state.toolObject, "src/new.ts");
+  activity.handle("tool_execution_end", { toolCallId: write.id, isError: false });
+  state = activity.snapshot(); assert.equal(state.visualPhase, "editing"); assert.equal(state.bubble, "我写写呀");
+
+  const preparationCases = [
+    ["read", "我读读呀", "reading", "我瞧瞧"], ["bash", "敲命令呀", "running", "我看着呢"],
+    ["powershell", "敲命令呀", "running", "我看着呢"], ["grep", "我找找呀", "searching", "我翻翻看"],
+    ["find", "我找找呀", "searching", "我翻翻看"], ["ls", "我找找呀", "searching", "我翻翻看"],
+    ["codemode", "我写代码", "running", "我看着呢"], ["multi_tool_use.parallel", "我写代码", "running", "我看着呢"],
+    ["ask_user", "我问问呀", "waiting", "我等你呀"],
+    ["tool_search", "我找工具", "searching", "我翻翻看"], ["web_enable", "我找工具", "running", "我看着呢"],
+    ["web_search", "我搜网页", "searching", "我翻翻看"], ["source_check", "我搜网页", "searching", "我翻翻看"],
+    ["fetch_content", "我读读呀", "reading", "我瞧瞧"], ["get_search_content", "我读读呀", "reading", "我瞧瞧"],
+    ["mcp__jira__transition_issue", "我准备呀", "running", "我看着呢"],
+  ];
+  for (const [name, preparingBubble, executionPhase, executionBubble] of preparationCases) {
+    activity.handle("message_start", { message: { role: "assistant" } });
+    const call = { type: "toolCall", id: `stream-${name}`, name, arguments: { private: "NEVER_ECHO_GENERIC_CONTENT" } };
+    activity.handle("message_update", stream("toolcall_start", call)); state = activity.snapshot();
+    assert.equal(state.phase, "editing", `${name} must type while its arguments stream`);
+    assert.equal(state.visualPhase, "editing"); assert.match(state.face, /^work/); assert.equal(state.bubble, preparingBubble); assert.equal(state.toolCount, 1);
+    assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_GENERIC_CONTENT"));
+    activity.handle("message_update", stream("toolcall_delta", call, { delta: "private delta" }));
+    assert.equal(activity.snapshot().bubble, preparingBubble);
+    activity.handle("message_update", stream("toolcall_end", call, { toolCall: call }));
+    activity.handle("message_end", { message: { role: "assistant", stopReason: "toolUse" } });
+    activity.handle("tool_execution_start", { toolCallId: call.id, toolName: name, args: { private: "NEVER_ECHO_GENERIC_CONTENT" } });
+    state = activity.snapshot(); assert.equal(state.toolCount, 1); assert.equal(state.phase, executionPhase); assert.equal(state.bubble, executionBubble);
+    activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
+  }
+  activity.handle("message_start", { message: { role: "assistant" } });
+  const abandoned = { type: "toolCall", id: "abandoned", name: "custom_future_tool", arguments: {} };
+  activity.handle("message_update", stream("toolcall_start", abandoned)); assert.equal(activity.snapshot().toolCount, 1);
+  activity.handle("message_end", { message: { role: "assistant", stopReason: "length" } });
+  assert.equal(activity.snapshot().toolCount, 0, "An abandoned custom call must not latch the typing pose");
+  checks.push("Every built-in, orchestration, question, web and arbitrary extension tool types with private-safe typing while arguments stream, then hands off to its real execution pose; category bubbles distinguish edit, write, code, command, question, read, local/web search, discovery and generic preparation");
+}
+
+{
+  const { activity, advance } = make();
   activity.start({ wake: false }); activity.setDemo("speaking");
   const rank = { "talk-closed": 0, "talk-small": 1, "talk-medium": 2, "talk-wide": 3 };
   let previous = activity.snapshot().face, held = 0;

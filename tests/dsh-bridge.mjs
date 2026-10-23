@@ -60,7 +60,28 @@ bridge.syncConversationState({
 assert.equal(activity.snapshot().phase, "thinking");
 assert.equal(responseLatency.snapshot().kind, "first-text");
 
-// 4. Running tool calls map to reading, searching, editing, running
+// 4. A partial tool call types before its real runningCalls entry arrives.
+nowMs += 300;
+bridge.syncConversationState({
+  sessionId: "sess-1",
+  status: "tool_calling",
+  partial: { blocks: [{ type: "tool_use", id: "stream-read", name: "read_file", input: '{"path":"NEVER_ECHO_STREAMED_CONTENT"}', status: "running" }] },
+});
+assert.equal(activity.snapshot().phase, "editing");
+assert.equal(activity.snapshot().bubble, "我读读呀");
+assert.equal(activity.snapshot().toolName, "read_file");
+assert.equal(activity.snapshot().toolObject, "");
+assert.ok(!JSON.stringify(activity.snapshot()).includes("NEVER_ECHO_STREAMED_CONTENT"));
+bridge.syncConversationState({
+  sessionId: "sess-1",
+  status: "tool_calling",
+  partial: { blocks: [{ type: "tool_use", id: "stream-read", name: "read_file", input: '{"path":"NEVER_ECHO_STREAMED_CONTENT"}', status: "running" }] },
+  runningCalls: { "stream-read": { id: "stream-read", name: "read_file", input: '{"file_path":"src/components/App.tsx"}', status: "running" } },
+});
+assert.equal(activity.snapshot().phase, "reading");
+assert.equal(activity.snapshot().toolObject, "components/App.tsx");
+
+// 5. Running tool calls map to reading, searching, editing, running
 nowMs += 300;
 assert.deepEqual(extractToolArgs('{"file_path":"src/components/App.tsx"}'), { file_path: "src/components/App.tsx" });
 assert.deepEqual(extractToolArgs('{"path":"lib/index.js", "unclosed": '), { path: "lib/index.js" });
@@ -98,7 +119,7 @@ bridge.syncConversationState({
 });
 assert.equal(activity.snapshot().phase, "editing");
 
-// 5. Pending interaction (ask_question / permission approval) enters waiting (awaitingUser)
+// 6. Pending interaction (ask_question / permission approval) enters waiting (awaitingUser)
 nowMs += 300;
 bridge.syncConversationState({
   sessionId: "sess-1",
@@ -121,7 +142,7 @@ bridge.syncConversationState({
 assert.equal(activity.snapshot().phase, "speaking");
 assert.match(activity.snapshot().face, /^talk-/);
 
-// 6. Compaction events
+// 7. Compaction events
 nowMs += 200;
 bridge.handleSessionEvent({ sessionId: "sess-1", type: "compaction/start" });
 assert.equal(activity.snapshot().phase, "compacting");
@@ -129,7 +150,7 @@ nowMs += 200;
 bridge.handleSessionEvent({ sessionId: "sess-1", type: "compaction/end" });
 assert.equal(activity.snapshot().phase, "thinking");
 
-// 7. Turn end outcomes: complete -> success, error -> error, interrupted -> cancelled
+// 8. Turn end outcomes: complete -> success, error -> error, interrupted -> cancelled
 nowMs += 200;
 bridge.handleSessionEvent({
   sessionId: "sess-1",
@@ -161,7 +182,7 @@ bridge.handleSessionEvent({
 });
 assert.equal(activity.snapshot().phase, "cancelled");
 
-// 8. Switching active session syncs cleanly
+// 9. Switching active session syncs cleanly
 bridge.syncConversationState({
   sessionId: "sess-2",
   status: "idle",

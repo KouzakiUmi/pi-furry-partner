@@ -65,7 +65,11 @@ for (const bubble of ["唔？", "我醒啦", "你来啦", "唔！", "z", "z · z
   assert.ok(terminalWidth(localized.bubble) <= 10, `${bubble}: waking and dozing bubbles must keep English paw clearance`);
   assert.ok(!cjk.test(localized.bubble));
 }
-checks.push("All English resource bubbles, including poke/listening extras, and hardcoded waking/dozing translations fit ten real terminal cells");
+for (const [key, bubble] of Object.entries({
+  preparing_code: "我写代码", preparing_command: "敲命令呀", preparing_question: "我问问呀", preparing_read: "我读读呀",
+  preparing_search: "我找找呀", preparing_web: "我搜网页", preparing_tools: "我找工具", preparing_tool: "我准备呀",
+})) assert.equal(localizeSnapshot({ bubble, phrase: "" }, "en").bubble, englishCopy.bubbles[key]);
+checks.push("All English resource bubbles, including streamed tool preparation, poke/listening extras and hardcoded waking/dozing translations fit ten real terminal cells");
 for (const vocabulary of [copy, englishCopy, phrases, englishPhrases]) {
   const text = JSON.stringify(vocabulary);
   assert.doesNotMatch(text, /模型|回包|首个输出|服务端|请求|\b(?:model|token|server|agent|request)\b|first output|answer text/i,
@@ -91,6 +95,11 @@ checks.push("Conversational resources avoid backend narration and premature comp
 const voice = { labels: {}, bubbles: {}, phrases: {} };
 replaceActivityCopy(voice, copy, phrases);
 let time = 2000;
+const writingActivity = createActivity({ ...voice, now: () => time, random: () => .25 });
+writingActivity.start({ wake: false }); writingActivity.handle("agent_start");
+writingActivity.handle("tool_execution_start", { toolCallId: "write-copy", toolName: "write", args: { path: "src/new.ts" } });
+assert.equal(writingActivity.snapshot().bubble, copy.bubbles.writing);
+assert.equal(localizeSnapshot(writingActivity.snapshot(), "en").bubble, englishCopy.bubbles.writing);
 const activity = createActivity({ ...voice, now: () => time, random: () => .25 });
 activity.start({ wake: false }); activity.handle("agent_start");
 activity.handle("tool_execution_start", { toolCallId: "keep", toolName: "bash" });

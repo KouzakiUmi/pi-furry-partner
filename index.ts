@@ -317,10 +317,14 @@ export default function (pi: ExtensionAPI) {
           () => this.displaySheet || reactionSheet(), () => settings.style, (rect: any) => this.overlayVisibility.allows(rect), process.env, visibleWidth, () => terminalCursor(editorTui));
         this.kittyTransport = createKittyTransport({ getCellDimensions,
           getSheet: () => this.displaySheet || reactionSheet(), getStyle: () => settings.style,
-          getViewport: () => [editorTui.terminal.columns, editorTui.terminal.rows], isAllowed: () => !editorTui.hasOverlay(),
+          getViewport: () => [editorTui.terminal.columns, editorTui.terminal.rows],
+          isAllowed: (rect: any) => this.overlayVisibility.allows(rect),
+          getOverlayVersion: () => this.overlayVisibility.version(),
+          createOverlayMarker: (options: any) => this.transport?.createOverlayMarker(options),
           renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
           deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
-            ? (imageId: number) => editorTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
+            ? (imageId: number) => editorTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined,
+          deleteImageSequence: (tuiUI as any).deleteKittyImage });
         activeEditor = this;
         armTimer();
       }
@@ -505,13 +509,18 @@ export default function (pi: ExtensionAPI) {
       const sheets = titleSheets();
       ctx.ui.setHeader((headerTui) => {
         tui = headerTui;
+        const overlayVisibility = createOverlayVisibility(headerTui);
         const transport = createSixelTransport(headerTui.terminal, getCellDimensions, () => sheets.native,
-          () => settings.headerStyle, () => !headerTui.hasOverlay(), process.env, visibleWidth, () => terminalCursor(headerTui));
+          () => settings.headerStyle, (rect: any) => overlayVisibility.allows(rect), process.env, visibleWidth, () => terminalCursor(headerTui));
         const kittyTransport = createKittyTransport({ getCellDimensions, getSheet: () => sheets.native,
-          getStyle: () => settings.headerStyle, getViewport: () => [headerTui.terminal.columns, headerTui.terminal.rows], isAllowed: () => !headerTui.hasOverlay(),
+          getStyle: () => settings.headerStyle, getViewport: () => [headerTui.terminal.columns, headerTui.terminal.rows],
+          isAllowed: (rect: any) => overlayVisibility.allows(rect),
+          getOverlayVersion: () => overlayVisibility.version(),
+          createOverlayMarker: (options: any) => transport.createOverlayMarker(options),
           renderImage: (tuiUI as any).renderImage, allocateImageId: (tuiUI as any).allocateImageId,
           deleteImage: typeof (tuiUI as any).deleteKittyImage === "function"
-            ? (imageId: number) => headerTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined });
+            ? (imageId: number) => headerTui.terminal.write((tuiUI as any).deleteKittyImage(imageId)) : undefined,
+          deleteImageSequence: (tuiUI as any).deleteKittyImage });
         headerTransport = transport;
         const component = createHeader({
           sheet: sheets.fallback,
@@ -536,7 +545,7 @@ export default function (pi: ExtensionAPI) {
           },
           invalidate: () => component.invalidate(),
           dispose() {
-            transport.dispose(); kittyTransport.dispose();
+            overlayVisibility.dispose(); transport.dispose(); kittyTransport.dispose();
             if (header === component) header = undefined;
             if (headerOwner === titleOwner) { ownsHeader = false; headerOwner = undefined; stopTimer(); }
           },

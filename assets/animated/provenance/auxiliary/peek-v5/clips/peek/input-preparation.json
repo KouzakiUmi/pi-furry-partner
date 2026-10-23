@@ -1,0 +1,29 @@
+{
+  "primaryMethod": "Byte-copy original approved idle640 RGBA and purple reference; no identity/registration changes.",
+  "secondarySource": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\auxiliary-keypose-v5\\peek.png",
+  "secondarySourceSha256": "8ea2dd1642bf416278aea99ea8cb56447faba00649a37b263ca5f52ef4d44758",
+  "secondaryGenerationEvidence": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\auxiliary-keypose-v5\\generation.json",
+  "secondaryGenerationEvidenceSha256": "febb3eff67bb3aa565819e62bed516db366db4ddff1b52205e97b5d153fcc495",
+  "secondaryTransform": {
+    "sourceCanvas": [
+      1254,
+      1254
+    ],
+    "outputCanvas": [
+      640,
+      640
+    ],
+    "scale": 0.5103668261562998,
+    "offset": [
+      0,
+      0
+    ],
+    "method": "Single whole-canvas premultiplied Lanczos resize, ordinary purple composite only",
+    "perFrameFit": false,
+    "bodyPartCollage": false
+  },
+  "secondaryRgbaSha256": "fb0e0b096dc2f78b274837448d2b7acd0489c0bb493577c9897ff1ea1c16af18",
+  "secondaryReferenceSha256": "7dfcc1594018b5cd67671908e5a2b3322ca28e1fcca60e24c56b143d3c9e78a6",
+  "secondaryScope": "UPPER-BODY forward lean + slight head tilt only; not paw size/placement, lower-body proportions, identity or boundary authority",
+  "requestTemplate": "Exact batch09proud/wavev2 two role=reference_image API shape, no invented middle role."
+}

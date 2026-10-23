@@ -92,6 +92,8 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   assert.deepEqual([...dots].sort(), ["·", "··", "···"]);
   activity.handle("message_update", update("thinking_end"));
   activity.handle("message_update", update("text_start"));
+  assert.equal(activity.snapshot().phase, "thinking", "Empty text block is a placeholder, not speech");
+  activity.handle("message_update", update("text_delta", { delta: "x" }));
   assert.equal(activity.snapshot().phase, "speaking");
   const mouths = new Set();
   for (let i = 0; i < 20; i++) { mouths.add(activity.snapshot().face); advance(40); }
@@ -175,7 +177,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("tool_execution_start",{toolCallId:"fast",toolName:"apply_patch",args:{patch:"NEVER_ECHO_SECRET"}});
   activity.handle("tool_execution_end",{toolCallId:"fast",isError:false});
   const fast=activity.snapshot();assert.equal(fast.phase,"thinking");assert.equal(fast.toolCount,0);assert.equal(fast.visualPhase,"editing");assert.match(fast.face,/^work/);
-  assert.equal(advance(1199).visualPhase,"editing");assert.equal(advance(1).visualPhase,"thinking");
+  assert.equal(advance(1999).visualPhase,"editing");assert.equal(advance(1).visualPhase,"thinking");
   activity.handle("tool_execution_start",{toolCallId:"fast-run",toolName:"bash",args:{command:"NEVER_ECHO_SECRET"}});
   activity.handle("tool_execution_end",{toolCallId:"fast-run",isError:false});assert.equal(activity.snapshot().visualPhase,"running");
   activity.handle("message_update",update("text_delta",{delta:"immediate text"}));
@@ -185,7 +187,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   assert.equal(activity.snapshot().phase,"searching");assert.equal(activity.snapshot().visualPhase,"searching");
   activity.handle("agent_before_settle",{outcome:"error"});activity.handle("agent_settled",{aborted:false});assert.equal(activity.snapshot().phase,"error");assert.equal(activity.snapshot().visualPhase,"error");
   assert.ok(!JSON.stringify(activity.snapshot()).includes("NEVER_ECHO_SECRET"));
-  checks.push("Tools that start/end between renders still show typing for 1200ms while real phase/tool metadata update immediately; speech, waiting, searching and final error bypass the visual hold");
+  checks.push("Tools that start/end between renders wait up to 2000ms after completion while real phase/tool metadata update immediately; speech, waiting, searching and final error bypass the visual hold");
 }
 
 {
@@ -316,7 +318,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
 
 {
   const {activity,advance}=make();activity.start({wake:false});activity.handle("agent_start");
-  activity.handle("message_update",update("text_delta"));activity.snapshot();advance(500);activity.setDemo("all");advance(600);
+  activity.handle("message_update",update("text_delta",{delta:"x"}));activity.snapshot();advance(500);activity.setDemo("all");advance(600);
   activity.setDemo("off");const silent=activity.snapshot();assert.equal(silent.phase,"speaking");assert.equal(silent.face,"talk-closed","Selecting a demo must not refresh the real speech token timeout");
   assert.equal(silent.elapsedMs,1100);assert.equal(silent.phaseElapsedMs,1100);
   activity.handle("tool_execution_start",{toolCallId:"real",toolName:"bash",args:{command:"PRIVATE_COMMAND"}});activity.snapshot();

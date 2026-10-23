@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2",
+  "sourceVideo": "Umi-sad-H3-source.mp4",
+  "sourceSha256": "8e78d8331488f81c65ae287e64f839500285b251493d8249568c2b27481836ba",
+  "decision": "ALLOW_ALPHA_CANDIDATE_PENDING_ORIGINAL_SPEED_USER_REVIEW",
+  "sourceStructureAndSemanticGate": true,
+  "hardFailures": [],
+  "registration": {
+    "outputCanvas": [
+      896,
+      896
+    ],
+    "pivot": [
+      448,
+      704
+    ],
+    "worldPaintRect": {
+      "x": -128,
+      "y": -96,
+      "width": 896,
+      "height": 896
+    },
+    "sourceToReference": {
+      "size": [
+        456,
+        608
+      ],
+      "offset": [
+        220,
+        109
+      ],
+      "canvas": [
+        896,
+        896
+      ],
+      "scale": 0.4198895027624309
+    }
+  },
+  "reference": {
+    "path": "registered-reference.png",
+    "sha256": "c3e0c6821eb156d3fc017aca7ba50b598bf583085411062eb74c61700f0da8aa",
+    "sameExactReferenceAsActuallyViewedV1": true
+  },
+  "reviewScope": {
+    "actualNativeFramesViewed": [
+      0,
+      42,
+      54,
+      72,
+      106
+    ],
+    "overviewIntervalSeconds": 0.25,
+    "sourceVideoPlayed": false,
+    "allFramesInspected": false
+  },
+  "evidence": [
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "7b188af74bc36be72e8f352461a8373241b12a8ce6205519b9168af0c470383e"
+    },
+    {
+      "path": "early-check/00001.png",
+      "sha256": "cc5cb5b587d82f9531bc8f8782a04cc36a963d4af72750b01886b5c544fd1cd2"
+    },
+    {
+      "path": "early-check/00043.png",
+      "sha256": "9d3d23185eaef817ca75eae3e08fe2a68e8318dfbecf0fc71aa73476062ab9fd"
+    },
+    {
+      "path": "early-check/00055.png",
+      "sha256": "f763692edf225edadd1f0431d9fcb35a02719e703df37e09a082823fe247348a"
+    },
+    {
+      "path": "early-check/00073.png",
+      "sha256": "8035ffdbaf7b09352b8f487900f472db0b1c86fe62b3a669d3c9f8cf93908ffe"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "b125a69a1deee2daddd67407095aa1864ab2226d19854af0bd43fe8a5f3cb338"
+    }
+  ],
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "alphaAcceptance": false,
+  "userAccepted": false,
+  "observations": [
+    "In actual overview and native000/042/054/072/106, the small mouth stays downward/uncertain rather than the v1 upturned smile. Inner gray bean brows and watery eyes retain unresolved sadness. Closed-eye072 retains separate dark lines and gray brows; a still closure alone is not evidence of sleepiness.",
+    "Both compact gray curled paw bodies rise toward the chin WITH inward chest/head/shoulder accommodation around1.75-3.0s sampled poses. Three front curled digits/nail marks and rounded side/root fullness remain compatible with a naturally hidden fourth thumb; no flat three-finger hand, palm showcase or independent wrist demonstration was observed.",
+    "Thick white forearms, gray-white fur boundaries, face width, folded ear and seated lower edge remain coherent in sampled originals; the cape remains one attached layer. Return samples approach the supplied reference.",
+    "This resolves the repeated smile issue in the inspected evidence. No second same-defect source failure is asserted; no automatic v3 iteration is recommended."
+  ],
+  "risks": [
+    "The gathered/chin-high paw pose is a larger body/paw accommodation than v1. The cape sides spread conspicuously around2.0-3.0s while the seated base stays fixed; disclose amplitude rather than call it a proven tiny accent.",
+    "The pause, eye closures and intended brief normal-speed catch/release still need actual original-speed user review; sampled contact poses cannot certify every frame or natural tempo."
+  ],
+  "limits": "Independent actual B overview and selected native-size still review. Structural/semantic source gate is separate from continuous original-speed rhythm, all-frame anatomy, alpha processing, loop continuity and user approval. No formal source/art/runtime/package change."
+}

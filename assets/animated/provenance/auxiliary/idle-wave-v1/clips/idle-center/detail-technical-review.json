@@ -1,0 +1,40 @@
+{
+  "status": "COMPLETE107_TECHNICAL_GUARDS_PASS_A_B_USER_EDGE_REVIEW_PENDING",
+  "sourceVideoSha256": "27c154d0136450939f12d3f53687b6ed7695988ef290401d7dad779f27f0bbbf",
+  "manifestSha256": "ff6fe9ef68cc1e9bb4f022f44eef75272fd96d24f3b7e2513d04c9299d772662",
+  "helperSha256": "95e48181f58003d762c286dc3021c123132c00e198ee4fecca6db2687cf12b18",
+  "sourceAlphaGateSha256": "6e0e136f1a0dd8b2d268ce0ef8b3170cee95b5c6d2ef3a54516bcc1ac148c7c5",
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "canvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "perFrameFit": false,
+  "sourceTimelineExactlyUnchanged": true,
+  "reproducedFinalRgbaAll107": true,
+  "pngWebpAllRgbaExactlyEqual": true,
+  "external8RgbaAll107ExactlyUnchanged": true,
+  "coreBoundaryAll107ExactlyUnchanged": true,
+  "reliable252RgbaAll107ExactlyUnchanged": true,
+  "outsideRepairAll107ExactlyUnchanged": true,
+  "sourceKeyFalseCoreRefused": true,
+  "redCoralSamples": 21407,
+  "samplesBelowAlpha200": 0,
+  "minimumRedCoralAlpha": 252,
+  "restoredInteriorPixels": 527,
+  "reviewedSourceSpecificCore": [
+    248,
+    280,
+    400,
+    355
+  ],
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false,
+  "outputReviewScope": "No dynamic or artistic acceptance implied by these complete-frame technical assertions."
+}

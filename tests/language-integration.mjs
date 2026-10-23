@@ -104,7 +104,7 @@ try {
   for (const name of ["status-phrases.json", "status-copy.json", "status-phrases.en.json", "status-copy.en.json", "ui-zh-CN.json"]) await cp(join(root, "assets", name), join(scratch, "assets", name));
   await writeFile(join(scratch, "config.json"), JSON.stringify({ language: "zh-CN", enabled: false, animation: false, chineseUI: true, compactPrompt: true, persona: false }));
   let instance = await instantiate({ fresh: true });
-  const persona = (await readFile(join(scratch, "prompts/wumi-persona.md"), "utf8")).trim();
+  const persona = (await readFile(join(scratch, "prompts/umi-persona.md"), "utf8")).trim();
   assert.ok(persona && localized !== original);
   for (const compact of [false, true]) for (const personaOn of [false, true]) {
     await instance.command(`prompt ${compact ? "on" : "off"}`);
@@ -130,7 +130,7 @@ try {
   }
   checks.push("Custom SYSTEM.md, native-looking custom SYSTEM text and earlier extension forceSystemPrompt (including empty) stay exact; only the independent persona switch appends its own template");
 
-  for (const missing of ["wumi-persona.md"]) {
+  for (const missing of ["umi-persona.md"]) {
     const path = join(scratch, "prompts", missing); await rename(path, path + ".saved");
     try {
       await instance.command("prompt on"); await instance.command("persona on");

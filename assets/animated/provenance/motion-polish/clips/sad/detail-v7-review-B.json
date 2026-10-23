@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2",
+  "output": "processed-detail-v7",
+  "sourceSha256": "8e78d8331488f81c65ae287e64f839500285b251493d8249568c2b27481836ba",
+  "manifestSha256": "706f6eb77359aad0f730b62e798019dfd021626e6409f3f3ed3ba1a8e557e4fb",
+  "helper": {
+    "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-reviewed-face-core.py",
+    "sha256": "855aa279f28299acae745a13bf61bc6392e37dfb8b690018fe0c21e4ca64905c",
+    "actuallyRead": true
+  },
+  "decision": "REVIEWED_FIXED_CORE_REPAIR_AND_SAMPLED_STRUCTURE_ACCEPTABLE_PENDING_ROOT_GLOBAL_CHECKS_AND_USER_PLAYBACK",
+  "hardFailures": [],
+  "methodScope": {
+    "fixedOpaqueCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "basis": "Actual independently viewed source core overlays across000/012/042/054/084/106 plus full-size042/054. The declared rectangle lies in opaque face/hair/inner hood foreground for the reviewed pose range, not true contour/paw gap/off-body water.",
+    "rule": "Only prior alpha<252 within fixed core becomes native same-registration RGB and alpha255; helper refuses eight-connected external unknown pixels, modifications on rectangle boundary and key-colored source core. No moving ROI, tracking, per-frame fit, color-threshold tuning or source repaint.",
+    "limit": "This reviewed fixed-front sad-v2 clip only. Color distance from background is a refusal guard, not standalone proof of opacity. Do not reuse rectangle on arbitrary poses/clips."
+  },
+  "actualVisualReview": {
+    "fullNativeBlackWhiteFrames": [
+      0,
+      53,
+      106
+    ],
+    "enlargedPriorV5VsV7BlackWhiteAlphaFrame": 84,
+    "proof": {
+      "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch07-sad-detail-v7-B.png",
+      "sha256": "33db8ba2dc0c912e6b08ec08b5f6d46b98051b051cc2ac89764f56d281fe8ff5"
+    },
+    "observations": [
+      "Actual084 enlarged black/white/alpha shows both known left and right eye-star alpha holes removed. Native orange/red star tips and blue iris remain complete rather than visibly punched through or enlarged into a different shape.",
+      "000/053/106 retain complete separately readable curled gray paw masses, central short ivory nail marks and narrow dividing region. Hidden fourth-thumb anatomy remains occluded, with plausible rounded root/side volume; no claim of directly seeing hidden toes.",
+      "Full thick white forearms, gray-white pointed fur boundaries, face width, distinct gray bean brows/eye lines, sad mouth, folded ear, one attached cape layer and seated lower edge show no newly visible structure loss in these samples.",
+      "Paw/support and outer cloth areas are outside the repair rectangle and independently pixel-unchanged in sampled checks. The larger source huddle/cape spread still requires original-speed user amplitude review."
+    ],
+    "sourceVideoPlayed": false,
+    "allFramesVisuallyReviewed": false
+  },
+  "independentSampleInvariants": [
+    {
+      "frame": 0,
+      "changedPixels": 179,
+      "exactlyReviewedSub252CoreMask": true,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideCoreExactlyUnchanged": true,
+      "coreBoundaryExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    },
+    {
+      "frame": 53,
+      "changedPixels": 110,
+      "exactlyReviewedSub252CoreMask": true,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideCoreExactlyUnchanged": true,
+      "coreBoundaryExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    },
+    {
+      "frame": 84,
+      "changedPixels": 169,
+      "exactlyReviewedSub252CoreMask": true,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideCoreExactlyUnchanged": true,
+      "coreBoundaryExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true,
+      "strongRedEyeRoiPixelsBelow200": 0,
+      "strongRedEyeRoiMinimumAlpha": 253,
+      "knownLeftHoleAlpha": 255,
+      "knownRightHoleAlpha": 255
+    },
+    {
+      "frame": 106,
+      "changedPixels": 167,
+      "exactlyReviewedSub252CoreMask": true,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideCoreExactlyUnchanged": true,
+      "coreBoundaryExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "processed-detail-v7\\rgba\\000.png",
+      "sha256": "ec4da7864dbf8c4b75c20dcd3c2ada909b948b0d5b4e0f2ec8021fa3195131eb",
+      "actualViewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v7\\black\\000.png",
+      "sha256": "76877f01a638d9f910e4f020630385cb2569c7992b3bb82fbcf68f04f93f311b",
+      "actualViewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v7\\white\\000.png",
+      "sha256": "31557b96c38c60620228c6e12b82308495abb7d12b0e194f07adf079339571fe",
+      "actualViewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v7\\rgba\\053.png",
+      "sha256": "9903d15f021c584f1c02fbfa7896b5c4c85cf858d42fc7e98d03bb1480afbd5e",
+      "actualViewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v7\\black\\053.png",
+      "sha256": "db651cb230e3518a7b76bf214974fbec7b3a976e52f2346b59343908f8c9386f",
+      "actualViewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v7\\white\\053.png",
+      "sha256": "4191fbcc09637542284641d2a7dcc4412b56345054a5f03f2e9e2882e5c3aba4",
+      "actualViewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v7\\rgba\\084.png",
+      "sha256": "6a51f440fd9511eede17b5af007fff708f9390ada52121d906f2eba08b2bb9af",
+      "actualViewScope": "enlarged eye ROI black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v7\\black\\084.png",
+      "sha256": "dadde6d03bae63f2f74eab5480c45fe0ddbff2d34a171c99bc56682847e9b2bd",
+      "actualViewScope": "enlarged eye ROI black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v7\\white\\084.png",
+      "sha256": "368b262d66a5db2697783adffadbbbb0a655754f3971222acb3065ffcaeee34f",
+      "actualViewScope": "enlarged eye ROI black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v7\\rgba\\106.png",
+      "sha256": "ccbd5816125362d30902159790193332bb14d6e2bca3a03fe33753c349189d76",
+      "actualViewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v7\\black\\106.png",
+      "sha256": "35438ad93129201efcc1c43b187efb9fc13edc774412cc06f60c64b273708f96",
+      "actualViewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v7\\white\\106.png",
+      "sha256": "53ff622b6c77b43180a8f5d787b32d7a2ebc5932f4e9dfdb9daba3bca5fcf6e5",
+      "actualViewScope": "full native-size black/white"
+    }
+  ],
+  "priorHoldsPreserved": [
+    {
+      "path": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2\\detail-review-B.json",
+      "sha256": "65aff469299e94ef8fdd5c0feda0ca013144b9693eed06389b28ed7cb8c0a82d"
+    },
+    {
+      "path": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2\\detail-v5-review-B.json",
+      "sha256": "9c66b0288a49a521f060ac63d3d21a15d9ec1204a1f1e05fa93a307553687035"
+    }
+  ],
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "fullAlphaAcceptance": false,
+  "userAccepted": false,
+  "sourceAndOriginalBReviewUnchanged": true,
+  "rootOwnsGlobalChecks": [
+    "all107 red feature alpha",
+    "all107 opaque core precondition",
+    "all107 external8 and fixed-core boundary invariants",
+    "time and registration invariants"
+  ]
+}

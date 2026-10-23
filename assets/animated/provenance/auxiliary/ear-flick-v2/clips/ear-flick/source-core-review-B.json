@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      245,
+      275,
+      405,
+      335
+    ],
+    "scope": "This ear-v2 source only; six actual poses show underlying opaque eyes/face/forehead, no key background or paw gaps."
+  },
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "proofSha256": "26c25fdf94db18e91f151926aabb9e63d96d8efca34b9e2b860430272fa6f073",
+  "preflightSha256": "d693df633bf32a1ee82e32452ddfa60275d1fac86bed69e7073cbc425515ad78",
+  "helperSha256": "b3ad6b587f7b753e5461bf410c5f0e4a7666eabbbd1873c0b8ac47a912172b3b",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "26c25fdf94db18e91f151926aabb9e63d96d8efca34b9e2b860430272fa6f073"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "b51bb987e9190fd0d5f87c7aae4bd6601c3ac45bfb411c88c24f7194179a3b7c"
+    }
+  ],
+  "findings": [
+    "036星尖灰alpha点位于实心眼内，为内区误透明；六姿新框覆盖眼/面毛实心前景，不触真实轮廓、掌隙或紫底。",
+    "只准315个框内sub252同帧同resize nativeRGB/255恢复，全部107 source-key min66；外8/框边/reliable252/框外RGBA保持。"
+  ],
+  "humanAcceptedOutput": false,
+  "readyForRuntimeIntegration": false,
+  "limits": [
+    "不修外边细彩点，不改变掌/耳表演；不能由此认可原速自然性或循环。"
+  ]
+}

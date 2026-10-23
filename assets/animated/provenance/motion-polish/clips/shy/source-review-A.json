@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "shy",
+  "version": "key-purple-batch06-v1",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "539df9a022243c9b1b96d5e29426f2f3310267acc140d98a75d760fec330269a",
+  "referenceSha256": "08e2ff5a3aba38d32a36edbaf7b154af162436854b95671eddd4dd7e5732aac6",
+  "registeredReferenceSha256": "0605970d3ff62046aa3abd70dc76e0dfb355c751377200701bbeba726d553821",
+  "registeredReferenceSize": [
+    896,
+    896
+  ],
+  "decode": {
+    "method": "ffmpeg -fps_mode passthrough -start_number1 to early-check/%05d.png",
+    "frameCount": 107,
+    "fps": 24,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "durationSeconds": 4.458333,
+    "sampling": "overview every6 native frames plus final106 =0.25s cadence"
+  },
+  "actualReview": "Actually viewed this job reference, new0.25s overview, and native raw00025.png,00073.png. Original design/card direction used only for applicable material identity; no old1280 grumpy reference substitution.",
+  "sourceFinding": "No blocking broad green/purple tint in subject shadows or definite material/pattern error observed. White forearms and gray paws keep intended division; separate gray bean brows/eye lines, folded-ear X stitches, blue-gray hood/cape and original scarf/hood white pattern remain readable. Natural cool fur shading and blush are not treated as background contamination.",
+  "staticEvidenceBoundary": "Representative native frames and sampled contact overview only. Not full-frame dynamic color/alpha/acting acceptance; no normal-speed playback viewed. Fresh source cannot inherit earlier approvals.",
+  "processingScope": "No alpha processing, frozen key-color/material prior left unchanged. Output black/white edge review pending.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "08e2ff5a3aba38d32a36edbaf7b154af162436854b95671eddd4dd7e5732aac6"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "0605970d3ff62046aa3abd70dc76e0dfb355c751377200701bbeba726d553821"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "2448c0df95ed76d457ff128fbd4a95ecb72d6d13d45e0608cc3a38cfde0c7209"
+    },
+    {
+      "path": "early-check/00025.png",
+      "sha256": "90c21163f69bc3b30e03f6697db956305d4f220b489bb0766426e1a121dd23ff"
+    },
+    {
+      "path": "early-check/00073.png",
+      "sha256": "ae7df4ed0cca0b79e3a1d3bdafbe153f6cc516dab9171ebeff49d2e5dad0057d"
+    }
+  ]
+}

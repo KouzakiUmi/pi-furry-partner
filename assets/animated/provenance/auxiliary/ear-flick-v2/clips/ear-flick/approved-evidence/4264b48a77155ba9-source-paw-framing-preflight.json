@@ -1,0 +1,1329 @@
+{
+  "status": "ALL107_NATIVE_FRAMING_PASS_FIXED_PAW_CONTACTS_REQUIRE_ACTUAL_REVIEW",
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "nativeFrames": 107,
+  "nativeFps": 24,
+  "outputCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "fixedPawRoi": [
+    130,
+    480,
+    515,
+    615
+  ],
+  "minimumNativeMargin": 38,
+  "maxRoiMadFromFirstByte": 15.738348565015231,
+  "method": "Native107 sampled exactly once, fixed whole-canvas640 resize then constant ROI; no per-frame fit/tracking/retiming/painting. Plain ROI RGB MAD is diagnostic and cannot identify or approve paw motion. Actual all107 contact review is required.",
+  "sheets": [
+    {
+      "file": "early-check/paw-contact-01.jpg",
+      "sha256": "2a1cda93cdf1fc18895863160a34c42c282fe71c29955671df25712dbfbe5e35"
+    },
+    {
+      "file": "early-check/paw-contact-02.jpg",
+      "sha256": "5d878501be301c4f296d6158cdeb5226b14e7fdc1e4ab1d4d21e898db223dcdb"
+    },
+    {
+      "file": "early-check/paw-contact-03.jpg",
+      "sha256": "e3ba946324cabb29d952ffe5ecdcb23ca11db65939f7537835f5030704213eaa"
+    },
+    {
+      "file": "early-check/paw-contact-04.jpg",
+      "sha256": "34787b9db68664ba5d6104f0f8517ec6a4a6716f490116006adc89b2e72bd64c"
+    }
+  ],
+  "frames": [
+    {
+      "sourceFrame": 0,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 0.0,
+      "fixedNativeSha256": "8e6145e918c9709cdd8d2773c98334a55c6e1ef6f9f063993e99f712260bdc1a"
+    },
+    {
+      "sourceFrame": 1,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 0.6919929453262786,
+      "fixedNativeSha256": "cdb84ff3d433c094f2d16723d92c0592150edd5306c338769eb657b0b2404488"
+    },
+    {
+      "sourceFrame": 2,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 0.7862690396023729,
+      "fixedNativeSha256": "9da0af274f71f089d6a095617b9f9ff17a9cc9f2f06eb9a82220443c39729f17"
+    },
+    {
+      "sourceFrame": 3,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 0.8001090267756934,
+      "fixedNativeSha256": "16bfc852cd85e8e6ac3952bf14256eeb36a75f10a5076f24bc969d2d8a6a7110"
+    },
+    {
+      "sourceFrame": 4,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 0.8153342953342954,
+      "fixedNativeSha256": "8fab8733c769470395f9d351563878fcff07243db1226e650124c315093503c1"
+    },
+    {
+      "sourceFrame": 5,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 1.0536091069424403,
+      "fixedNativeSha256": "0c466d3727dbdd39ba6e092167913176a8c949b62630af4938865031917e23fc"
+    },
+    {
+      "sourceFrame": 6,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 1.1876735610068943,
+      "fixedNativeSha256": "d6be80dc716f77976d3d072ca12a98b7166d0308fe7243a1fb3b0eb1a25bb114"
+    },
+    {
+      "sourceFrame": 7,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 1.295513868847202,
+      "fixedNativeSha256": "49c09196dd245f99288867068ec9d739ba86880243365266163672c9ecffb475"
+    },
+    {
+      "sourceFrame": 8,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 1.5348597081930415,
+      "fixedNativeSha256": "0016fe785b06c10560f2509867d8511db3dea76a7eeca20da79012f95536e338"
+    },
+    {
+      "sourceFrame": 9,
+      "nativeBounds": [
+        116,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.717190957190957,
+      "fixedNativeSha256": "0255c45e7065e5ce1658a4eae31c8665134ef5b90148389059bae02ba09d5d1c"
+    },
+    {
+      "sourceFrame": 10,
+      "nativeBounds": [
+        116,
+        72,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.511874298540965,
+      "fixedNativeSha256": "49fb82216074efe5347405f45e7ffcba02c6ea1e2307e779998f44f3d79fac39"
+    },
+    {
+      "sourceFrame": 11,
+      "nativeBounds": [
+        116,
+        72,
+        658,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.699150232483566,
+      "fixedNativeSha256": "0c98c9085de47f2ee9c47afdf1127671eca191da08f6a178aee93408698e12b8"
+    },
+    {
+      "sourceFrame": 12,
+      "nativeBounds": [
+        116,
+        73,
+        658,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.044829244829245,
+      "fixedNativeSha256": "d8721b7c70aea210fbc2d62374895306f1aefa026303fbafd4950f688b1ba8a1"
+    },
+    {
+      "sourceFrame": 13,
+      "nativeBounds": [
+        115,
+        74,
+        658,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.413525733525734,
+      "fixedNativeSha256": "fd55a00d613aa58c178fb1806608c5e3184e3771f49377bf95e60c0733156b7a"
+    },
+    {
+      "sourceFrame": 14,
+      "nativeBounds": [
+        115,
+        76,
+        659,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 10.01509700176367,
+      "fixedNativeSha256": "5dbef816374fe4ca05314bd8211578917607220559783cc35c08699c733931ea"
+    },
+    {
+      "sourceFrame": 15,
+      "nativeBounds": [
+        114,
+        76,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 10.847728074394741,
+      "fixedNativeSha256": "39c869a66f35dd840900b87913d4f80417804b86b79ec1950d1564e034724e6c"
+    },
+    {
+      "sourceFrame": 16,
+      "nativeBounds": [
+        114,
+        77,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 12.048388648388649,
+      "fixedNativeSha256": "1fd8fff30e82fc61dc7471d3f8dafcc22639f668ca6ddc3021ec66fc5715fe2e"
+    },
+    {
+      "sourceFrame": 17,
+      "nativeBounds": [
+        114,
+        78,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 13.012525252525252,
+      "fixedNativeSha256": "b9115685ad786c93a7fea8b13004ba4f96b6b17f22d5453bcb1b7bf1fc16b91a"
+    },
+    {
+      "sourceFrame": 18,
+      "nativeBounds": [
+        114,
+        79,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 13.850889850889851,
+      "fixedNativeSha256": "06acf1ff954ba1a604b1e226b9e4b2478def7e8bc41311776174bbe522a9769e"
+    },
+    {
+      "sourceFrame": 19,
+      "nativeBounds": [
+        114,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 14.469090909090909,
+      "fixedNativeSha256": "f85998f5c1982abde77652691fe523a239f0ac28d0a2964394393bf74c072bcf"
+    },
+    {
+      "sourceFrame": 20,
+      "nativeBounds": [
+        114,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 14.89305114638448,
+      "fixedNativeSha256": "e3a0eaa4a16ea51b4de3755f70c98aacf51d32a96a44cdf5fe7e816e4f069b2e"
+    },
+    {
+      "sourceFrame": 21,
+      "nativeBounds": [
+        114,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.186378066378067,
+      "fixedNativeSha256": "fbb26bca817767e39a88fe1c4e16bf737510d6e5c0515860fa9221ee18bac027"
+    },
+    {
+      "sourceFrame": 22,
+      "nativeBounds": [
+        113,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.612352092352092,
+      "fixedNativeSha256": "69590aa5859a0047044e2444805b1ce13e90202de7e860fe68cdee5f3851982a"
+    },
+    {
+      "sourceFrame": 23,
+      "nativeBounds": [
+        113,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.694834054834056,
+      "fixedNativeSha256": "cbe82822adeae8914ce324b31d3d3c6efefa653c80f8189537004adc2d0d528e"
+    },
+    {
+      "sourceFrame": 24,
+      "nativeBounds": [
+        113,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.738348565015231,
+      "fixedNativeSha256": "4c4e5fa129f4ca46ccf674fe6ddab9905d31d8c09f450e0d625a1c9b9719f64a"
+    },
+    {
+      "sourceFrame": 25,
+      "nativeBounds": [
+        113,
+        80,
+        660,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.715856982523649,
+      "fixedNativeSha256": "21ca33d3f44c42c6c1b1f43051b5c9959842a38d99d92d3e5072ad9adb9fbd4a"
+    },
+    {
+      "sourceFrame": 26,
+      "nativeBounds": [
+        113,
+        80,
+        659,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 15.298047138047139,
+      "fixedNativeSha256": "692ae21a83bbefc8fab5ed3d5b34aa4d296d20320140fdfff4181af4a5378681"
+    },
+    {
+      "sourceFrame": 27,
+      "nativeBounds": [
+        114,
+        80,
+        658,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 14.94280583613917,
+      "fixedNativeSha256": "d6e28c2a9813654d45c6313fc67c7561fecede9f267383578fc53cdc2e911f1b"
+    },
+    {
+      "sourceFrame": 28,
+      "nativeBounds": [
+        114,
+        79,
+        658,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 14.576758056758056,
+      "fixedNativeSha256": "82dc31cdbd2dee88230538dfe713b7b8a833d2b9f6d32266735b79a96ed2731b"
+    },
+    {
+      "sourceFrame": 29,
+      "nativeBounds": [
+        114,
+        78,
+        657,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 13.998191438191439,
+      "fixedNativeSha256": "3c6708d47e71698b64f47c02986cfd6be4b7feaed20091749c322d9e9b7474bf"
+    },
+    {
+      "sourceFrame": 30,
+      "nativeBounds": [
+        114,
+        77,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 12.874035594035593,
+      "fixedNativeSha256": "463cca47494c390c72243acd2307ffe2ae98691df5eeae12396e83cb7c7dca01"
+    },
+    {
+      "sourceFrame": 31,
+      "nativeBounds": [
+        114,
+        76,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 12.27996151996152,
+      "fixedNativeSha256": "d73779d0e41d12df75b10ff0cc8e6527fa675bdcab30594f1c18c5ae40bea5da"
+    },
+    {
+      "sourceFrame": 32,
+      "nativeBounds": [
+        114,
+        76,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 11.653487253487253,
+      "fixedNativeSha256": "53f8fd629c65e028c9c0ebaa821f94df04c12ad9665d0f6e24b26f20c7b66681"
+    },
+    {
+      "sourceFrame": 33,
+      "nativeBounds": [
+        114,
+        74,
+        655,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 10.93008177008177,
+      "fixedNativeSha256": "7f562d63172eb9cf0caa0042bff5c809b9d6553b4c66a561ac42b4e5574882ac"
+    },
+    {
+      "sourceFrame": 34,
+      "nativeBounds": [
+        114,
+        73,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 9.526413339746673,
+      "fixedNativeSha256": "434931b8eaeb17274730654451a96191b74a18fe4dff1c5dcd4f990b6f5c2d26"
+    },
+    {
+      "sourceFrame": 35,
+      "nativeBounds": [
+        115,
+        71,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.708443161776495,
+      "fixedNativeSha256": "c15642ef49f2dcdb7d5fb3e5d1fa6f9bafb281ba1cb1fbfe622324fb29793d7a"
+    },
+    {
+      "sourceFrame": 36,
+      "nativeBounds": [
+        116,
+        70,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.895289401956068,
+      "fixedNativeSha256": "0947b2ceca9d19ad8072df1b3fb502dae7ec857b571094bfc7dab8e4c1116b78"
+    },
+    {
+      "sourceFrame": 37,
+      "nativeBounds": [
+        116,
+        68,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.076581689915023,
+      "fixedNativeSha256": "7789d45259133f9890d6df8fbe05659f1cdec55b8ea9ef6623836dbb87b7a952"
+    },
+    {
+      "sourceFrame": 38,
+      "nativeBounds": [
+        116,
+        64,
+        652,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.70677569344236,
+      "fixedNativeSha256": "2f6f4388571e67a912c328eccad895ef7c770d68275f199af7bd2a5b0dbe0a4e"
+    },
+    {
+      "sourceFrame": 39,
+      "nativeBounds": [
+        116,
+        62,
+        652,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.74608305274972,
+      "fixedNativeSha256": "d717291e01e1dd2fc4740cf73090940a339c2db057da89077df95d64b381cade"
+    },
+    {
+      "sourceFrame": 40,
+      "nativeBounds": [
+        116,
+        61,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.078056758056758,
+      "fixedNativeSha256": "cdd6d4cfa8a9feb5ba0b7b6f2dc63dc4786db9e875d2df7cbee0492df305f106"
+    },
+    {
+      "sourceFrame": 41,
+      "nativeBounds": [
+        116,
+        59,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.359647266313933,
+      "fixedNativeSha256": "25ea00a0b4e4017cf0a4822b0efb68604849a2f3afed151417ab5405396a1fa7"
+    },
+    {
+      "sourceFrame": 42,
+      "nativeBounds": [
+        116,
+        56,
+        653,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.7549527016193682,
+      "fixedNativeSha256": "2c3d6c6455e0c7f8628ac508bbb92951381ebb74ee7e9bdb19106a2cfe5cd109"
+    },
+    {
+      "sourceFrame": 43,
+      "nativeBounds": [
+        116,
+        54,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.1386692320025653,
+      "fixedNativeSha256": "49ccc9c8a50b21e6f5e267aa8ec53df4f4bbfbe4acf38eb85b5e536dba9aafc8"
+    },
+    {
+      "sourceFrame": 44,
+      "nativeBounds": [
+        117,
+        52,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.688003848003848,
+      "fixedNativeSha256": "17f8f7f3fde5c8d8eb987467df70bb53dc381e52a51cb78d7e8f2d2290b89fa4"
+    },
+    {
+      "sourceFrame": 45,
+      "nativeBounds": [
+        117,
+        51,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.181786115119449,
+      "fixedNativeSha256": "5c78ae76d182d78fb09aeb5148673485e59a2a528ea4cd8be15878f15d63d4ae"
+    },
+    {
+      "sourceFrame": 46,
+      "nativeBounds": [
+        117,
+        50,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.915696649029982,
+      "fixedNativeSha256": "0fe7da4207a524b1b8473034482aa761a63477624d281e0cda5fc39ebf740148"
+    },
+    {
+      "sourceFrame": 47,
+      "nativeBounds": [
+        117,
+        48,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.416180856180856,
+      "fixedNativeSha256": "8c3b36a9d21c034033b10753343122ce72744ddfdf0179cba60b4e14adf4be8b"
+    },
+    {
+      "sourceFrame": 48,
+      "nativeBounds": [
+        118,
+        48,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.78617925284592,
+      "fixedNativeSha256": "53af9e94427aca2608e2153f0cb033ccffef35086921ab0a4edf9c8a2e3b0490"
+    },
+    {
+      "sourceFrame": 49,
+      "nativeBounds": [
+        118,
+        46,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.1684207150873815,
+      "fixedNativeSha256": "078d0a0f20a3d17763617d15887510148847c65278a39ebb9b1c0162ba0db29e"
+    },
+    {
+      "sourceFrame": 50,
+      "nativeBounds": [
+        118,
+        45,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.607772967772968,
+      "fixedNativeSha256": "8b7e78b371b53995d476a2c7e1c90d87b92fa11484e5982fb7568318f165ee2a"
+    },
+    {
+      "sourceFrame": 51,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.906198492865159,
+      "fixedNativeSha256": "806f192dbf55ce7c22066d4f7fe00c1990c841a126919d8f4c1c47c4d4e02f34"
+    },
+    {
+      "sourceFrame": 52,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.467378547378547,
+      "fixedNativeSha256": "ede6db47b51d31e57cb42e22f4aca59c738398e387ff32bf6a4795a1e3e71e32"
+    },
+    {
+      "sourceFrame": 53,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.878710918710919,
+      "fixedNativeSha256": "0998a3fe49b364c3d81bb8087571a0161d579491b359e50081c637daba173898"
+    },
+    {
+      "sourceFrame": 54,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.173205066538399,
+      "fixedNativeSha256": "e284e38d4b327738d82f4e786c0ad990465c4af785a834227f85cafbcd8d4565"
+    },
+    {
+      "sourceFrame": 55,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.45979797979798,
+      "fixedNativeSha256": "6e15b59cc2f672f3650e1c5658e0ded141566b3946de3ff8af29776acfb401fb"
+    },
+    {
+      "sourceFrame": 56,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.735077761744428,
+      "fixedNativeSha256": "e2bde6ad631d5bf54ff8bb97620d5b6af44b87272449b846e14d29c1b9ecca38"
+    },
+    {
+      "sourceFrame": 57,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.749546256212923,
+      "fixedNativeSha256": "39f88854fa87c5fcac37873410f3f68a3190e6bf4c6e6de723f649582aa400b2"
+    },
+    {
+      "sourceFrame": 58,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.759275292608626,
+      "fixedNativeSha256": "f0a63c05d105e33e24c9b4069e12cdc38bd739546472792ec6f225e867e49cde"
+    },
+    {
+      "sourceFrame": 59,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.74334455667789,
+      "fixedNativeSha256": "e6fed4d55991b8a53095d4a90101cc2b2718f2338f633c40e027d01ff20e8f6d"
+    },
+    {
+      "sourceFrame": 60,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.731370851370851,
+      "fixedNativeSha256": "6f81832a799399e89c728513215812dce815df9872d73cfce29dc8069f4f54b4"
+    },
+    {
+      "sourceFrame": 61,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.688548981882315,
+      "fixedNativeSha256": "0e4e1038c8ab8486cf0e16a805ba0977452be0b2429fb1c23d0d7912af20c550"
+    },
+    {
+      "sourceFrame": 62,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.651941638608305,
+      "fixedNativeSha256": "2cd7edc4c8b96d58016cf5dc46b1586365278c85d8ed8b1e88b137b327eb9d17"
+    },
+    {
+      "sourceFrame": 63,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.579310565977233,
+      "fixedNativeSha256": "97aa7f528347e12a3b78ae4a57a742835f09f66ec827077d80d9d90e86d6a545"
+    },
+    {
+      "sourceFrame": 64,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.463184223184223,
+      "fixedNativeSha256": "65b3ca9bef8f7e85405fa0f39c9ea92537875c9d6add82661170c618a59c4b5d"
+    },
+    {
+      "sourceFrame": 65,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.25210838544172,
+      "fixedNativeSha256": "4f49aef1ca7742a5829196ca4e330ffb280fd46b42eb38019ecb80dcd316937b"
+    },
+    {
+      "sourceFrame": 66,
+      "nativeBounds": [
+        118,
+        42,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 8.034227994227994,
+      "fixedNativeSha256": "46bae8a9a23f2cd88b0311837b4ed2b7e2e272e9bc2569ecef91cdd0f4c63634"
+    },
+    {
+      "sourceFrame": 67,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.800679814013147,
+      "fixedNativeSha256": "c632ca50ab72742a7aa9ae5b08f05a2cd89b4ea40e01bdc7d85686db3d546728"
+    },
+    {
+      "sourceFrame": 68,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 7.257187750521084,
+      "fixedNativeSha256": "03e228af9897d3b0364386f9f937b9b10164a4da45f1bba7b8134eb5231ecc95"
+    },
+    {
+      "sourceFrame": 69,
+      "nativeBounds": [
+        118,
+        44,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.801289081289081,
+      "fixedNativeSha256": "7610d8ef0b7384831706da5679c19e5a0018d63f5f97662ecd80386faf4928af"
+    },
+    {
+      "sourceFrame": 70,
+      "nativeBounds": [
+        118,
+        46,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.447105980439313,
+      "fixedNativeSha256": "2ba3378a05c70959a5f852719eb5712fdef5cf1e52e973ee2a38d4878f87a41b"
+    },
+    {
+      "sourceFrame": 71,
+      "nativeBounds": [
+        118,
+        46,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 6.172627865961199,
+      "fixedNativeSha256": "f6916ed7334ad8ab1321abc789c9140883467c9bbbc14abe2a11eed578ef2e5f"
+    },
+    {
+      "sourceFrame": 72,
+      "nativeBounds": [
+        118,
+        48,
+        654,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.921468654801988,
+      "fixedNativeSha256": "1477e7c87d8c3453fada85a6cb0a9a68fd4b75eeabc841e3ffa3081c3bf9bc11"
+    },
+    {
+      "sourceFrame": 73,
+      "nativeBounds": [
+        118,
+        48,
+        655,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 5.309539842873177,
+      "fixedNativeSha256": "900472bd3f0189161e250eaaaadfc85be0961f65d7c144aa1744efb2939b858b"
+    },
+    {
+      "sourceFrame": 74,
+      "nativeBounds": [
+        118,
+        50,
+        655,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.961218534551868,
+      "fixedNativeSha256": "deda405632c56cd15033e235214ada7a9e9c94c2370893ad90b4483d38d7173f"
+    },
+    {
+      "sourceFrame": 75,
+      "nativeBounds": [
+        118,
+        50,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.6154625621292285,
+      "fixedNativeSha256": "e032a6fdc2e359f7af677339388ff04b818ceccbb692a896b9acaccebd0cb6ba"
+    },
+    {
+      "sourceFrame": 76,
+      "nativeBounds": [
+        118,
+        52,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 4.308205868205868,
+      "fixedNativeSha256": "ce1715409bd182dd506e107f2e7ac35703120cacc516efd487ec0c672f7b62b8"
+    },
+    {
+      "sourceFrame": 77,
+      "nativeBounds": [
+        117,
+        52,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.908443161776495,
+      "fixedNativeSha256": "eb5d678165115f00f064e806770148a79d55a91d4920a17fdc164057b150f20a"
+    },
+    {
+      "sourceFrame": 78,
+      "nativeBounds": [
+        117,
+        54,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.6233189033189035,
+      "fixedNativeSha256": "9dd92c7066b71137c8a2635d3ec1c18f243c653d0e4747f346a5d9614a12e85f"
+    },
+    {
+      "sourceFrame": 79,
+      "nativeBounds": [
+        117,
+        55,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.3913355780022445,
+      "fixedNativeSha256": "07e1a062cc71173f50c371a27f542274a11893af8e0214e4d1ea0cf697669d9c"
+    },
+    {
+      "sourceFrame": 80,
+      "nativeBounds": [
+        117,
+        56,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 3.1720506653839986,
+      "fixedNativeSha256": "1450aa00ba48e432314c2169ab2c50116b0452071ed38951c7f3bf75ac89ce8f"
+    },
+    {
+      "sourceFrame": 81,
+      "nativeBounds": [
+        117,
+        58,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.9696007696007696,
+      "fixedNativeSha256": "273d980a4bbfc89f53bb2d401d90d8df37979a24543e6ddeeda4302cd9473cba"
+    },
+    {
+      "sourceFrame": 82,
+      "nativeBounds": [
+        117,
+        60,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.861093474426808,
+      "fixedNativeSha256": "4f1b3f53eb2de88d999d36273254659ee700adc5ff727c524c58c5300eaacd1b"
+    },
+    {
+      "sourceFrame": 83,
+      "nativeBounds": [
+        117,
+        60,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.7729998396665065,
+      "fixedNativeSha256": "55e8a483257f5da0d8969ef92f75ddf95fc7f9ffea91b8cb473eb0671b505477"
+    },
+    {
+      "sourceFrame": 84,
+      "nativeBounds": [
+        117,
+        62,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6885297418630754,
+      "fixedNativeSha256": "3173fff19f2697b32d4fbbfa199ef2966d33abb77e15a9fc67db1f4ef472da32"
+    },
+    {
+      "sourceFrame": 85,
+      "nativeBounds": [
+        117,
+        64,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.555523488856822,
+      "fixedNativeSha256": "b9459e824e46cb3e8829f16de78a607c18aad1c45df01e9e33bee81e64ed537f"
+    },
+    {
+      "sourceFrame": 86,
+      "nativeBounds": [
+        117,
+        64,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.5588071188071186,
+      "fixedNativeSha256": "04eea75e1ec0cc650fa1f502bec6776ae6e1f309c1132bf76687ac986a8230b9"
+    },
+    {
+      "sourceFrame": 87,
+      "nativeBounds": [
+        117,
+        66,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.5424466891133557,
+      "fixedNativeSha256": "8ab940053551c4670ad3b752ba16eea0ec5008322c2930b5179fe044286e9dfc"
+    },
+    {
+      "sourceFrame": 88,
+      "nativeBounds": [
+        117,
+        67,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.560846560846561,
+      "fixedNativeSha256": "946a3de78f63bba194b2946a1c18e87534af0068505979a6e0d0d4cd1654a90a"
+    },
+    {
+      "sourceFrame": 89,
+      "nativeBounds": [
+        117,
+        68,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.537835497835498,
+      "fixedNativeSha256": "570254f9acec786e24f0e5facd107a6c0dce422cc669e70813f33f1f884be2ec"
+    },
+    {
+      "sourceFrame": 90,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6031489498156164,
+      "fixedNativeSha256": "5058cc20ccee768a92439c2d237a38f17e5d58343e3a990cf5aebeca53889ad9"
+    },
+    {
+      "sourceFrame": 91,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.592977392977393,
+      "fixedNativeSha256": "6c3584de7564a75f74c9cc57cbd34090356f35ee58f9cb48137b14c6e0c277a6"
+    },
+    {
+      "sourceFrame": 92,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.607477954144621,
+      "fixedNativeSha256": "e134ab31ac1069d404397eb83566a6c94bdbb88defe92932ec6e17330b9c3559"
+    },
+    {
+      "sourceFrame": 93,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.5988455988455987,
+      "fixedNativeSha256": "afc68510abf71e8364ebc3c817311a97c9b0686e177d35aba9f0c51819b567d2"
+    },
+    {
+      "sourceFrame": 94,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6090877024210357,
+      "fixedNativeSha256": "d2c0cb30b363e87e600be3a41f3d5aaf3c72df143a305c2d41ca5d5fd6c37775"
+    },
+    {
+      "sourceFrame": 95,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.599102132435466,
+      "fixedNativeSha256": "57fae294de2e715fe3746c19a29b6478736a7367b97a3c6988241b404154668a"
+    },
+    {
+      "sourceFrame": 96,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6253583453583453,
+      "fixedNativeSha256": "81f9a8ff79e88fc1c1a70b3fdb8b8d3cb459f0c8012154baed63ede9ff316a00"
+    },
+    {
+      "sourceFrame": 97,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.614141414141414,
+      "fixedNativeSha256": "1c3503729c0b70ddd306a8ea0dd99217889b4a9b76aae6449d58bbf6f21fb922"
+    },
+    {
+      "sourceFrame": 98,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.623934583934584,
+      "fixedNativeSha256": "350a081c62bad02af3bb5e80cef815f856ab9a3180a3b29f11cb60001d777b8b"
+    },
+    {
+      "sourceFrame": 99,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6306557639890973,
+      "fixedNativeSha256": "d4f77558da7a1abe094beb0d36c1b95055bb05702e599f5f0b56d181e241e249"
+    },
+    {
+      "sourceFrame": 100,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6389482122815457,
+      "fixedNativeSha256": "e5de3867213edb4dc9b420aa02381a2afefa8f4af7c8188b6e083e01c4e02527"
+    },
+    {
+      "sourceFrame": 101,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.615731922398589,
+      "fixedNativeSha256": "83cf9e88ddf689563159e6f38b46def478891e366616b919a2e2baee8f5345e7"
+    },
+    {
+      "sourceFrame": 102,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.5776623376623378,
+      "fixedNativeSha256": "67c6eda325c77a41c8b4ea553ebd5628d76f651f2a143212f495af3ea181e896"
+    },
+    {
+      "sourceFrame": 103,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.5877441077441077,
+      "fixedNativeSha256": "246c3ffd62d41fa3a743a736d384ea743fe68cd36fff4da8b155793de96eae66"
+    },
+    {
+      "sourceFrame": 104,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6071316337983004,
+      "fixedNativeSha256": "3cc6e7aa52ce8d6fab9fa80dc1b1ba4a7ffa706ab493273e3b5f970988c496ca"
+    },
+    {
+      "sourceFrame": 105,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.602135642135642,
+      "fixedNativeSha256": "cec22d42d5c257591a3f3122c857fdc11c5eb433adcc28fbc10deb327a9bd90e"
+    },
+    {
+      "sourceFrame": 106,
+      "nativeBounds": [
+        117,
+        70,
+        656,
+        730
+      ],
+      "minimumNativeMargin": 38,
+      "fixedPawRoiMadFromFirstByte": 2.6077986211319546,
+      "fixedNativeSha256": "1816dbcf53dd35beedeec97853ae4ff447bb40e940f58276e619c88040ee5a2b"
+    }
+  ],
+  "humanAccepted": false,
+  "alphaProcessingStarted": false
+}

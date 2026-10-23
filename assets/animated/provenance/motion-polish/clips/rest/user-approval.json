@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-10-22T21:28:22.570592+00:00",
+  "reviewDate": "2026-10-23",
+  "userText": "可以，按这个方向继续",
+  "reviewUrl": "http://127.0.0.1:51677/",
+  "approvedJob": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2",
+  "approvedProcessedVariant": "processed-edge-v2",
+  "status": "USER_APPROVED_NATIVE_ACTING_LOOP_AND_CURRENT_EDGE_PRESENTATION_NOT_INSTALLED",
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "replacementDeferred": true,
+  "deploymentAllowed": false,
+  "scope": [
+    "This restv2 native timing/rhythm, amplitude and loop approved as displayed.",
+    "Continue the current purple key/trimap/soft-edge presentation and acting direction.",
+    "Next joy/think purple-source remakes may proceed to new review, not inherited acceptance."
+  ],
+  "knownResiduals": "Fine purple/dark rim and sparse granular lower-edge pixels remain disclosed; no zero-defect or lossless-separation claim.",
+  "limits": [
+    "Approval binds only this exact reviewed restv2 source/processing; restv1 and future generations are not approved.",
+    "New purple joy/think sources require fresh source art, processed-edge and user native-speed review; earlier gray-source acting acceptance does not approve new sources.",
+    "No formal-resource replacement or installation performed or inferred."
+  ],
+  "nativeTimeline": {
+    "sourceFrames": 107,
+    "fps": 24,
+    "periodMs": 4458,
+    "fullForwardNativeSource": true
+  },
+  "evidence": {
+    "Umi-rest-H3-source.mp4": "e4eb5e2272ab793d420438c9849a7668702b74fb9a10e3e274c37259a7b207c4",
+    "registered-reference.png": "fa514d125440123f16fa6a92bc3eaa87aa17a3d3f4b31e498886fe50521968b8",
+    "reference.png": "01ab1ecabd19e532ab32e9d34afa15d0b59a9627fb0a05f41c68b61602ece79a",
+    "prompt.txt": "fcc50bc1864350b2b7c928e14fbe48d8fbc3cb63e46acd4795960a89ee78f331",
+    "spec.json": "9686ad4f68633184d79010249d9199ab0b09d693fc2d983abe5fd239da1fab26",
+    "motion-contract.json": "68b6f84055561e10acfa54bf8c323c4eb81e968f9224f904e6fb71db95e911d8",
+    "source-review-A.json": "0ad1ca9adc96f95120d0b949c2b32d926a6105d6ebc02acb6513b47c6502ed25",
+    "reviewer-A.json": "17a0ce70908b15de64babd511eedcd53c404fb93db00742ccdbe35ae6da14193",
+    "reviewer-B.json": "3dbaa16286423b13d4e0f571087306b846e971e84cd50df517a7c96ffd834741",
+    "processed-edge-v2/manifest.json": "3f31dbb6ea5f242d1da9641adf50a30adbde89b4df6728260129b6d916de3bfc",
+    "processed-edge-v2/report.json": "a02ec117f64b5b7cb7ad27ffdac1c0f3a4d65c4bf51f0db7949207beb877852b",
+    "review.json": "afd57753565831ae40bef90cec8df4595760d8606144ddb4c63e17d1cf970869",
+    "processed-edge-v2/world-black.mp4": "1e030bf7131062092d462f17fac69d508016d583267222080adcc8f89d8511a6",
+    "processed-edge-v2/world-gray.mp4": "dbdc3c3991f36a9c466a9cd59f1b897d3c9ca2a0613766d73463969a1b9cfda3",
+    "processed-edge-v2/world-white.mp4": "dfaa3e3057a75665150a3cb1d05371405f60092c5d184d7270230eb6a024d1e0"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b"
+  },
+  "displayBinding": {
+    "reviewRecord": "work/motion-polish-20261023/purple-rest-review.json",
+    "reviewRecordSha256": "92d74813d73ddb0f826cf860b33d089cd5f90b8f58fcd17f7144aeb40497f8e8",
+    "page": "work/motion-polish-20261023/preview/purple-rest.html",
+    "pageSha256": "b28f5edc865d3296dcca8bb43ac3093c86b7288cd1f03d264bcace43c8d9bd97"
+  },
+  "verifiedAllDisplayedEvidenceHashesMatch": true
+}

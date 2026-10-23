@@ -12,3 +12,13 @@
 *.png binary
 *.gif binary
 *.zip binary
+*.webp binary
+*.uix.gz binary
+# Approval/codec hashes bind exact file bytes, including line endings.
+assets/**/*.json -text whitespace=cr-at-eol
+Hi-Res/**/*.json -text whitespace=cr-at-eol
+build/legacy-pixel-provenance.json -text whitespace=cr-at-eol
+tests/fixtures/** -text whitespace=cr-at-eol
+
+# Frozen approval inputs bind original bytes, including CRLF and trailing spaces.
+assets/animated/provenance/** -text -whitespace

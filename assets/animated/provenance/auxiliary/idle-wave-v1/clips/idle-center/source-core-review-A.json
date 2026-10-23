@@ -1,0 +1,37 @@
+{
+  "reviewer": "A",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": [
+    248,
+    280,
+    400,
+    355
+  ],
+  "sourceVideoSha256": "27c154d0136450939f12d3f53687b6ed7695988ef290401d7dad779f27f0bbbf",
+  "sourceCorePreflightSha256": "b84ad6eb005918236eca3f43b6e9b0715b3790574eb6aa3922fe7ad12d46a487",
+  "proofSha256": "12525ae4dbcbc576b96c7515e00d05ab5ca04405cbf817866ab838be3ace9ff8",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "12525ae4dbcbc576b96c7515e00d05ab5ca04405cbf817866ab838be3ace9ff8"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "bcc9cd291a5efee7d2cd5ebe676c55262526afffe3331fca61f3cc0d7fa7fbfd"
+    }
+  ],
+  "findings": [
+    "Actual alpha/source proof confirms enclosed eye-star color features were wrongly made transparent, not an external soft contour.",
+    "This exact rectangle is solid face/eye/forehead foreground in the six current-source poses inspected, including the source-specific blink/extreme direction and first/last. No true background in the box observed.",
+    "The central eye/white-face box remains over solid foreground through the blink and small head response."
+  ],
+  "guardsRequired": [
+    "all107 source-key separation>24bytes",
+    "refuse external8 connectivity",
+    "refuse repair on rectangle boundary",
+    "preserve reliable252RGBA and all outside-repair pixels"
+  ],
+  "scope": "Only this source at the reviewed640 registration, alpha<252 inside this core restored to same-fixed-resize nativeRGB/255. Not a generic hole-fill or old idle/nod box.",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

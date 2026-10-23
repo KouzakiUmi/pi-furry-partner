@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "proud",
+  "version": "key-purple-batch09-v1",
+  "outputVariant": "processed-detail-v3",
+  "status": "SAMPLED_OUTPUT_READY_FOR_USER_REVIEW_WITH_FINE_EDGE_LIMITS",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1",
+  "referenceSha256": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105",
+  "promptSha256": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9",
+  "outputManifestSha256": "a920180fa087a0599ef8fb2628d7b3fcd523d90a0f8d3de323070004a971ad5a",
+  "actuallyViewed": [
+    "processed-detail-v3/black/000.png",
+    "processed-detail-v3/white/000.png",
+    "processed-detail-v3/black/054.png",
+    "processed-detail-v3/white/054.png",
+    "processed-detail-v3/black/106.png",
+    "processed-detail-v3/white/106.png",
+    "early-check/00001.png",
+    "early-check/00055.png",
+    "early-check/00107.png"
+  ],
+  "findings": [
+    "000/106 retain closed smirk;054 retains readable red smiling mouth and single small white fang. Eye-star points remain continuous in these black/white samples; no obvious face-core hole, color seam or rectangular repair boundary found against corresponding raw stills.",
+    "Two gold stars remain recognizable with soft orange outer perimeters. Exterior gold-star partial alpha is not an interior eye defect and is not authorized for opaque fill.",
+    "White fur bright/shadow masses, gray paw/white arm division, blue scarf/white pattern and blue-gray hood/cape remain recognizable relative to raw source. No new broad white rim or isolated bright white island identified in these samples.",
+    "Fine dark/purple contour rims and grain at white-fur tips, low claw edge and scarf edges remain visible, particularly on white. No zero-defect claim."
+  ],
+  "technicalEvidenceBoundary": "Root reports complete107frame face-core strongred lowalpha count0; remaining lowalpha gold-star samples are exterior softedges. A visually reviewed only listed source/output stills and did not independently recompute full-frame diagnostic.",
+  "userReviewScope": "Ready means inspected output may be shown for explicit native-speed user judgment of acting amplitude/timing/loop and smile appeal. No playback viewed by A; no approval inheritance or installation.",
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "Umi-proud-H3-source.mp4",
+      "sha256": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1"
+    },
+    {
+      "path": "reference.png",
+      "sha256": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105"
+    },
+    {
+      "path": "middle-expression-purple.png",
+      "sha256": "72ad41013283d9391c1e0f781ad6ef9f4d128176cbb50dc07facddc9ae98bdd4"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "3b70d261a2f2fc60afc94e342c63a8a41e6184c5408a1a379f89b87c66537bb7"
+    },
+    {
+      "path": "prompt.txt",
+      "sha256": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9"
+    },
+    {
+      "path": "motion-contract.json",
+      "sha256": "0a0745585b6989d7f2eb767fd21e26036a10bcb3f6ef24a20f290445ca398a5f"
+    },
+    {
+      "path": "source-review-A.json",
+      "sha256": "db36a6a5677415ab80d35ac389ee0062e30e14c71a65a20944008a0b0df43d92"
+    },
+    {
+      "path": "processed-detail-v3/manifest.json",
+      "sha256": "a920180fa087a0599ef8fb2628d7b3fcd523d90a0f8d3de323070004a971ad5a"
+    },
+    {
+      "path": "processed-detail-v3/report.json",
+      "sha256": "789f2ddd1f72b5b4363d3b697058fa83b61e08b7b59749ed054e6f4c2cb5b8c1"
+    },
+    {
+      "path": "processed-detail-v3/black/000.png",
+      "sha256": "2c33b2aaa2daf18c782d1a9c3303777bc86f86077397759cb6207ffdac39fd37"
+    },
+    {
+      "path": "processed-detail-v3/white/000.png",
+      "sha256": "d76399a65182e911d48e0f26e89a14f1920c9b63484c1236e7c282ba546b3e6b"
+    },
+    {
+      "path": "processed-detail-v3/black/054.png",
+      "sha256": "9a1c3397c17a36e809b70dcd4dd355e204c7dbb8f1982344c720ea6abd797e9e"
+    },
+    {
+      "path": "processed-detail-v3/white/054.png",
+      "sha256": "9877b2026d9332161e3482276e9871cf9f4176fc4b9fb569f347152f46825151"
+    },
+    {
+      "path": "processed-detail-v3/black/106.png",
+      "sha256": "770941dee01bca59764fa7928370c4d69d31d6db3a5a568284d9cd83ef1a6718"
+    },
+    {
+      "path": "processed-detail-v3/white/106.png",
+      "sha256": "05ea521f97343f93a5871f466e49ca6ad08e68ab4415f01f7c731782745516a1"
+    },
+    {
+      "path": "early-check/00001.png",
+      "sha256": "ff948f25360bfab6302f0456d172394f9b5163447367feb3c86f591eb75e38f5"
+    },
+    {
+      "path": "early-check/00055.png",
+      "sha256": "cfe24e9020099eba371c0aa55206be4da6472f85d9ed034790d37e8b6669bb55"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "3584a2605f08f8d4cadeddc2d780b74058d0fb2ed4b0832f535c3414e8619970"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/restore-reviewed-face-core.py",
+      "sha256": "855aa279f28299acae745a13bf61bc6392e37dfb8b690018fe0c21e4ca64905c"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/batch09-proud-source-core-review.jpg",
+      "sha256": "94896e18046ed324e0725715d4a5c9c4dcb55e12188b02aa82e5369fd345f88f"
+    }
+  ]
+}

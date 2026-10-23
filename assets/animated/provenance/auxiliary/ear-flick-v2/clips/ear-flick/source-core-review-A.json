@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "action": "ear-flick",
+  "version": 2,
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": [
+    245,
+    275,
+    405,
+    335
+  ],
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "edgeManifestSha256": "3c603ea6bce36978b67020d0f4ba012324155204a4aed32754ac518a99d21cf5",
+  "preflightSha256": "d693df633bf32a1ee82e32452ddfa60275d1fac86bed69e7073cbc425515ad78",
+  "helperSha256": "b3ad6b587f7b753e5461bf410c5f0e4a7666eabbbd1873c0b8ac47a912172b3b",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "26c25fdf94db18e91f151926aabb9e63d96d8efca34b9e2b860430272fa6f073"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "b51bb987e9190fd0d5f87c7aae4bd6601c3ac45bfb411c88c24f7194179a3b7c"
+    }
+  ],
+  "findings": [
+    "Actual six poses000/024/036/054/078/106 place this v2-only rectangle on solid face/eyes/forelock. No purple background, external object, hand gap or transparent opening is visible inside the reviewed core.",
+    "Actual036 old source/black/white/alpha proof confirms the sampled eye-star low-alpha point is internal opaque-eye detail, not an external soft edge."
+  ],
+  "conditionalAuthorization": [
+    "Only this exact v2 source/core may recover enclosed sub252 using same-frame same-fixed-resize nativeRGB and alpha255; not recolor, outline growth or source change.",
+    "All107 source/key margin, ext8, coreboundary, reliable>=252 and outside-repair protections must remain strict. Peripheral soft edges and rejected v1 history remain untouched."
+  ],
+  "preflightEvidence": {
+    "frames": 107,
+    "minimumSourceKeyMargin": 66.0,
+    "potentialRestoredPixels": 315,
+    "all107External8Protected": true,
+    "all107CoreBoundaryProtected": true,
+    "all107Reliable252Protected": true,
+    "all107OutsideRepairProtected": true
+  },
+  "limitations": [
+    "Actual visual scope is the two listed static proofs; full107 numerical protection is independently hashed preflight evidence.",
+    "Fresh source-specific approval only, not inherited from ear v1. Final black/white alpha/material gate and native-speed human acceptance remain pending."
+  ],
+  "humanAcceptedSource": false,
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

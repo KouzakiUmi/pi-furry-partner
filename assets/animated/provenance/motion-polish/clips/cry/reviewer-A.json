@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "cry",
+  "version": "key-purple-batch07-v1",
+  "processedVariant": "processed-edge-v2",
+  "status": "WARN_USER_REVIEW_FINE_EDGE_WATER_SAMPLES_READABLE",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "3a68acc5981c1415de297ed824618a160306c57cdd6d41f7937d22a4f6471fda",
+  "processedManifestSha256": "f74b6918884af0fa051cf0888f0ba3077bc543637f94f1daa449b4b3555e65d9",
+  "actualReview": "Actually viewed native000/053/106 lossless black+white PNGs; native039 black locator; water-detail crops036/039/042/045 source aligned to896 plus black/white/alpha. This is sampled static evidence only.",
+  "sampleFinding": "Pale-blue tear run/bead shapes and white water highlights remain readable against black/white and source crops. Red mouth/tiny upper fangs where visible show no conspicuous false-alpha hole in inspected stills. Closed-eye lines/separate gray brows, white forearm/gray paws, short claws, folded-ear X stitches and scarf white patterns remain readable. No conspicuous broad white halo or bright island observed.",
+  "waterEvidenceBoundary": "Selected frames show changing/separated water shape over scarf/chest but do not certify natural-speed gravity, temporal continuity or loop. Independent B/root source-disposition evidence is separate from A static review.",
+  "edgeDisclosure": "Fine purple/dark rim and sparse grain/jagged hair-tip pixels remain, especially screen-left wiping forearm and lower paw contour on white. Not lossless/zero-defect separation.",
+  "processingScope": "A applies no redguard/interior repair and does not fill or solidify external water. Frozen pipeline/helper unchanged; cryv2 remains alternate comparison, not automatically selected.",
+  "approvalLimit": "ReadyForUserReview means inspected samples may be presented, not full-sequence/native-speed or user acceptance. Fresh user review required.",
+  "evidence": [
+    {
+      "path": "processed-edge-v2/black/000.png",
+      "sha256": "04b1c2e4df46e722c043f36c99aeb1e2a54f610a99322dadb57203091b860277"
+    },
+    {
+      "path": "processed-edge-v2/white/000.png",
+      "sha256": "09865c24ad87eb6ceb50d8e57a270b9576d68f4e3050049a33fe39741ce3828c"
+    },
+    {
+      "path": "processed-edge-v2/black/053.png",
+      "sha256": "d15ac2aec45010b13fab097d1afed3e0063fe2763cac2ad8eb9c6354fce5d8d2"
+    },
+    {
+      "path": "processed-edge-v2/white/053.png",
+      "sha256": "f64306a717cf715e2ec364539c9134145c57953a71c98e335449b732df94723b"
+    },
+    {
+      "path": "processed-edge-v2/black/106.png",
+      "sha256": "375cb2c22b95f22b1da8d5430eb9f70356d5b966fe650e916c948ea921175429"
+    },
+    {
+      "path": "processed-edge-v2/white/106.png",
+      "sha256": "eca713997c7781f50d0c68fe3240afe103709c5efd0c87e29ca4b5f53f6dbb96"
+    },
+    {
+      "path": "processed-edge-v2/black/036.png",
+      "sha256": "464c064d681e2ba4171c63df53f8bdafdebfbaa63f2600db1997c15a0c53f95d"
+    },
+    {
+      "path": "processed-edge-v2/white/036.png",
+      "sha256": "d2f2f18ddfee86589c9d390ab392e78486f4057a760b7b68b8151bf9d3086a7b"
+    },
+    {
+      "path": "processed-edge-v2/rgba/036.png",
+      "sha256": "23e3a6fe25a5c1e4dd65b75b9c2bb42fd69321151b5b0fa6bf729d0d753e5224"
+    },
+    {
+      "path": "early-check/00037.png",
+      "sha256": "ea63020436be43c4bb34b656cdb795280d21ad2ee5d8e962a14287657022cd4e"
+    },
+    {
+      "path": "processed-edge-v2/black/039.png",
+      "sha256": "93f708f9e25a8847d5ebd4afcac9e6fc2f3baa46244db4f3a3121d7ca9b20a4d"
+    },
+    {
+      "path": "processed-edge-v2/white/039.png",
+      "sha256": "e766e8d50c5fe5bcc1351b5ca065c746c2c5f63ed398307cccb59b8bb7983aa5"
+    },
+    {
+      "path": "processed-edge-v2/rgba/039.png",
+      "sha256": "57d52ea54533996a84ac4ab5f2a79ebac1cd209e376e0b88cf83a8345a218919"
+    },
+    {
+      "path": "early-check/00040.png",
+      "sha256": "05442594a8daa54ed6c5a6523acd6edc00ac68948ffc97264f66122043561de8"
+    },
+    {
+      "path": "processed-edge-v2/black/042.png",
+      "sha256": "bd9d29d318344e39af699a4fb5179917db2f6dc83b06e6e33dba440f82febccc"
+    },
+    {
+      "path": "processed-edge-v2/white/042.png",
+      "sha256": "7e545e3b61daa6eb1b787a5e7f65d080fa38bff6c71886fb113e190c2061151d"
+    },
+    {
+      "path": "processed-edge-v2/rgba/042.png",
+      "sha256": "8167ffcf90e16aae766c9d74caf0990dcd4c492304ab7707fae6e82fef7932b3"
+    },
+    {
+      "path": "early-check/00043.png",
+      "sha256": "4e477fbba397d553891d84356979014d69a06894d7c9fbe92fe6b91ab65e1717"
+    },
+    {
+      "path": "processed-edge-v2/black/045.png",
+      "sha256": "3c569db4bba1ac4684bc72dc7f2e67ec009ee291c092e5bab2323b4091f9a2fa"
+    },
+    {
+      "path": "processed-edge-v2/white/045.png",
+      "sha256": "e1800d0d46848c9444c5f95118a7dbf4af0d897721c23643161dccf120e05fa3"
+    },
+    {
+      "path": "processed-edge-v2/rgba/045.png",
+      "sha256": "1814c8889762e32aaa8540d0ce489507325693d6cede477f01ade1a359948c5d"
+    },
+    {
+      "path": "early-check/00046.png",
+      "sha256": "da60259ac34a83e920ab39f990f4fd82d99b465f1fb26dc83a519ca1232f7741"
+    }
+  ],
+  "waterDetailProof": {
+    "path": "work/motion-polish-20261023/batch07-water-detail-A/cry-v1-036-045-water.png",
+    "sha256": "8987e192debcb536016846fc997d82d093480a4f31e40b3f3792cd8cc4dfd069"
+  },
+  "processedReportSha256": "5c6af6376960193f8b3b100d8e313afb350755299d23758d4d7330236edc5f0e"
+}

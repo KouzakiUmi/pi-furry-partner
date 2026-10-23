@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "intent": "Front-facing relaxed living idle",
+  "primaryMotion": "Umi is relaxed and present with his friend directly in front of him. Keep the original supported front-facing seated pose as his home. He enjoys one unhurried but alert little breath, notices his friend's face with a prompt small refocusing of the blue eyes, gives one quick complete natural blink and lets a tiny friendly smile reach his cheeks. The focus change and eyelid response happen at normal everyday speed with a clear short accent, around0.2–0.35seconds, then a comfortable living hold and soft recovery. His gaze stays mainly toward his friend in FRONT, not repeatedly scanning to the left or right. The eyes, eyelids, separate gray bean eyebrows, head, neck, chest and relaxed shoulders share that same simple feeling, with a subtle supported accommodation in the elbows. Do not mechanically wiggle each part in turn. Breathing is a slight real chest response, never scale-pulsing the entire drawing. Avoid identical periodic blinking or metronomic body sways. Recover the supplied original open-eyed front pose naturally, with compatible relaxed breathing phase for the next forward cycle; no frozen ending or reset.",
+  "supportChain": "Original paired grounded compact paws and thick white forearms support a small connected chest/shoulder/head response; lower seated root remains still.",
+  "gazeHead": "Mostly front-facing eye contact and prompt blink, no directional scanning",
+  "secondaryMotion": "Very small motivated folded-ear/scarf-tip settling; single heavy lower cape remains down.",
+  "anchors": "Exact approved original idle2D640 inputs, bytecopy only, pivot320608, paintRect00640640; no per-frame fitting.",
+  "timingLayers": "Normal-speed short accent0.2–0.35seconds contrasted with a comfortable engaged hold and soft recovery, not mechanical periodic micro-wiggle.",
+  "loopBoundary": "Same approved front idle input supplied first and last, compatible pose/breath phase, complete forward returned timeline retained without reverse/timewarp/freeze.",
+  "reviewOrder": "Independent A materials/patterns and B structure/support on actual returned source; frozen transparency then native-speed final user review before random-idle catalog integration.",
+  "propInteraction": "none"
+}

@@ -1,4 +1,4 @@
-name: Build and publish release
+name: Build and publish Main release
 
 on:
   push:
@@ -16,43 +16,50 @@ jobs:
     uses: ./.github/workflows/ci.yml
   release:
     needs: verify
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: '1'
     permissions:
       contents: write
+    defaults:
+      run:
+        shell: pwsh
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
-      - name: Validate version and extract release notes
+      - name: Resolve tag to edition and release notes
+        id: target
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          node --input-type=module <<'NODE'
-          import { readFileSync, writeFileSync } from 'node:fs';
-          const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
-          if (process.env.RELEASE_TAG !== `v${version}`) throw new Error('Tag must match package version');
-          const changelog = readFileSync('CHANGELOG.md', 'utf8');
-          const section = changelog.split(/^## /m).find(text => text.startsWith(`${version} · `));
-          if (!section) throw new Error('Missing changelog section');
-          writeFileSync('release-notes.md', section.slice(section.indexOf('\n') + 1).trim() + '\n');
-          NODE
-      - name: Package tracked source and checksum
+          python tools/release-edition.py resolve --tag $env:RELEASE_TAG --github-output $env:GITHUB_OUTPUT
+          if ($LASTEXITCODE -ne 0) { throw 'Release tag or notes validation failed' }
+      - name: Build both platforms for the selected edition
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          EDITION: ${{ steps.target.outputs.edition }}
         run: |
-          archive="pi-furry-partner-${RELEASE_TAG}.zip"
-          git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" HEAD
-          unzip -t "$archive"
-          sha256sum "$archive" > "$archive.sha256"
-      - name: Publish GitHub Release
+          python tools/build-editions.py --edition $env:EDITION --platform all
+          if ($LASTEXITCODE -ne 0) { throw 'Edition build failed' }
+      - name: Reverify archives and packaged runtime
+        env:
+          EDITION: ${{ steps.target.outputs.edition }}
+        run: |
+          python tools/audit-edition-bundles.py --edition $env:EDITION
+          if ($LASTEXITCODE -ne 0) { throw 'Archive or runtime audit failed' }
+          python tools/release-edition.py assets --plan dist/release/release-plan.json
+          if ($LASTEXITCODE -ne 0) { throw 'Release asset validation failed' }
+      - name: Publish only the selected edition
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.ref_name }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          gh release create "$RELEASE_TAG" \
-            "pi-furry-partner-${RELEASE_TAG}.zip" \
-            "pi-furry-partner-${RELEASE_TAG}.zip.sha256" \
-            --verify-tag --latest \
-            --title "pi-furry-partner ${RELEASE_TAG}" \
-            --notes-file release-notes.md
+          $plan = Get-Content -LiteralPath dist/release/release-plan.json -Raw | ConvertFrom-Json
+          $assets = @(Get-Content -LiteralPath dist/release/release-assets.json -Raw | ConvertFrom-Json)
+          $ghArgs = @('release', 'create', $plan.tag, '--verify-tag', '--title', $plan.title,
+            '--notes-file', $plan.notesFile, "--latest=$($plan.latest)")
+          if ($plan.prerelease) { $ghArgs += '--prerelease' }
+          $ghArgs += $assets
+          & gh @ghArgs
+          if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation/upload failed; existing releases are not overwritten' }

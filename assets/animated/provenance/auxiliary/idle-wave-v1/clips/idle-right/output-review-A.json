@@ -1,0 +1,16 @@
+{
+  "reviewer": "A",
+  "status": "HOLD_INTERIOR_EYE_STAR_ALPHA",
+  "readyForUserReview": false,
+  "sourceVideoSha256": "db6b775c964c4d309833b55153291671b31cbbe5ccc8d2cd138d8529205e21b2",
+  "manifestSha256": "f911cb7a277d8fb7f3a9d6557ac37c4c40b36beedfc1308713714e861d3a72cb",
+  "actualViewedFiles": [
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "9b96336342c9b21b28049252eb916f6a93434798d68db10c49c06172e0e6e671"
+    }
+  ],
+  "finding": "True enclosed eye-star alpha mistake confirmed against aligned original RGB; final output must fix this scoped technical error before user transparency review.",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

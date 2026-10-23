@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "listen",
+  "version": "key-purple-batch05-v2",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING_B_GESTURE_GATE_PENDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "2ed65e2e06b3a90c13e955d27cd8ce8fde791dde624954ddf5908b9bbf63f354",
+  "expectedSourceHashMatches": true,
+  "actualReview": "Actually viewed same-background reference, newly made0.25-second overview, native raw025/037(closed eyes)/061/107.",
+  "sourceFinding": "No blocking source purple tint or pattern error observed. White forearms/gray paws and pink pads retain intended material distinction; blue-gray hood/cape, folded-ear X stitches, scarf stripes/cross, eye stars and short claws remain readable. Closed-eye double curves remain separate from upper gray bean brows in raw037.",
+  "actingObservationForUser": "Raised paw stays beside ear in inspected overview samples without v1 conspicuous outward gesture. Sample observation only; normal-speed subtle listening intent/rhythm and loop are not approved.",
+  "processingScope": "Await B gesture gate before processing. No alpha run, algorithm research or parameter tuning by A; v1 remains held for gesture semantics.",
+  "approvalLimit": "Fresh purple source does not inherit old approved source acceptance. Black/white processed-edge review and user native-speed review still required after B gate.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "9615fc5ba87c659d7820a687e9e4f40ec71a1619666d9e8681f509313510854f"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "5c07b18298f5d43059daba7abd2bd5b4657634c7ef0715e902085998be367e20"
+    },
+    {
+      "path": "early-check/00025.png",
+      "sha256": "fdb29815c136479f1694da9b082a9c65f631677c5849458350a39245ee6251ac"
+    },
+    {
+      "path": "early-check/00037.png",
+      "sha256": "9f622e5a4c098f0c7a433c555d820977f0cf45d019285a7098e67391cf7f6b8f"
+    },
+    {
+      "path": "early-check/00061.png",
+      "sha256": "4a72eee570355a35b6929f96fdb2ece85e2b286745929be5907dec604936f77f"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "e81c6ef9eb8846b92c81ce01046aca99a942a45d866dd883514fc744fdd2323c"
+    }
+  ]
+}

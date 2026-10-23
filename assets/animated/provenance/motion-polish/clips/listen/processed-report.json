@@ -1,0 +1,17 @@
+{
+  "status": "AWAITING_ACTUAL_OUTPUT_A_B_AND_USER",
+  "humanAccepted": false,
+  "sourceActingHumanApprovalRetained": true,
+  "runtimeInstalled": false,
+  "frameCount": 107,
+  "periodMs": 4458,
+  "sourceTimelineUnchanged": true,
+  "registrationUnchanged": true,
+  "externalSoftRgbaAllFramesExactlyUnchanged": true,
+  "reliable252RgbaAllFramesExactlyUnchanged": true,
+  "outsideRepairAllFramesExactlyUnchanged": true,
+  "allCoreBoundaryRgbaUnchanged": true,
+  "changedAlphaInteriorPixels": 2987,
+  "minimumAllFramesSourceCoreVsKeyMarginBytes": 52.0,
+  "knownLimits": "Same approved source acting; only technical interior alpha changed. Fine exterior rim/grain unchanged and still disclosed."
+}

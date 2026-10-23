@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "humanAcceptedOutput": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "sourceVideoSha256": "bf9eb4946d413f1335a7123b7c08b8c2a9118bac546999a585c4dbac6097e9d4",
+  "finalManifestSha256": "db71b64cb187a387af4534c72492915b4f38b62215ee9665c4b1c00966992e69",
+  "helperSha256": "b8bc7df0e93162890d6b911ccfd5bbeb6c7fd0a94881daae721d4d534ba9dac4",
+  "technicalReviewSha256": "e5bc5892833a9a633ab5b44dc8a357081c2f8dd0bb8bf47ccf05884d4b1e4027",
+  "sourceReviewASha256": "cfb3e1bc3a2aff9d8682d72701a2b4fafab70aade8f7af645dfeefdc4ea0aab0",
+  "sourceCoreReviewASha256": "0e39e017c8b14d53f315f88702be30d7afadc2b93c6802e01b01e808f9c02f06",
+  "sourceCoreReviewBSha256": "bff0d52665bf83c9d300d14fa7341414a43fd098eac51975aba5fdcd0e9241a3",
+  "sourceCorePreflightSha256": "e1c2e674592fc90ff3fe1c0030264fef0bc13ef3fc2a3f4c32d00ed51671af07",
+  "actualViewedFiles": [
+    {
+      "file": "processed-detail-v1/black/000.png",
+      "sha256": "04c76c8803d0bad817e6e7d796a7248de8979aee92d80a1b72dccd579dd81d15"
+    },
+    {
+      "file": "processed-detail-v1/white/000.png",
+      "sha256": "c68a6676f2ff9d05ca30d33c592c6feac8c879b62676c967da177eab512998ff"
+    },
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "0fe685876a3ac7259dc186127f711758b36de8e8751552fa21efaa67a986a921"
+    },
+    {
+      "file": "processed-detail-v1/white/042.png",
+      "sha256": "1a3af0478ac8111abaf6ea031fa417f3f3450f8b27ce1c638c3ca136225cf12a"
+    },
+    {
+      "file": "processed-detail-v1/black/106.png",
+      "sha256": "76e755ab5e05fa0b0d2b527f16d8bb996dacbe7f708b17ed9009a4730ddb899f"
+    },
+    {
+      "file": "detail-edge-bottom-000-A.png",
+      "sha256": "3cefe1946595b92b013239cd6b9cbfb149f845052bcb62bc4d6aa04ac1a7b029"
+    }
+  ],
+  "findings": [
+    "Actual000 black/white plus native/old-edge/final/alpha enlarged eye proof: the sampled star-tip interior hole is restored, with no visible rectangular face repair seam. Eye stars, dark eyeliner and separate gray bean brows remain readable.",
+    "Actual042 white and106 black retain white face/arms, gray paws, blue scarf with white stripes/cross, blue-gray hood/cape shading and folded-ear X / hood border white patterns. No new broad material-color substitution or obvious wide white halo appears in these samples.",
+    "The listed samples show no obvious new interior white island, paw/fur/claw or pattern loss from the face-only restore. Paw support and forward-lean structure remain independent B scope, not certified by this material gate."
+  ],
+  "knownLimitations": [
+    "Fine dark-purple contour fringe and small colored green/yellow edge grains remain around hood/cape and paw/fur bottom; black000 and4x bottom proof do not justify claiming no colored points. These existing soft-edge residues are disclosed, not recolored/filled or treated as pristine output.",
+    "The source is somewhat softer than the clean static reference. This sampled check is not an assertion of exact static RGB or every-frame artifact-free edges.",
+    "Only the listed lossless static files were actually viewed. Native-speed forward-lean impression, side rotation, peak hold, amplitude and looping remain the user review gate; prior peek versions are not accepted by this report."
+  ],
+  "technicalEvidenceBoundary": "Full107 reproduction/WebP/time/guard assertions and1811 repaired interior pixels are supplied by the separately hashed technical report. Minimum red/coral alpha252 is preserved; not every reliable face pixel is claimed alpha255.",
+  "outputAcceptanceScope": "Only sampled final material/pattern and technical-alpha readiness for native-speed user review. Formal24/catalog/runtime/installation/release untouched."
+}

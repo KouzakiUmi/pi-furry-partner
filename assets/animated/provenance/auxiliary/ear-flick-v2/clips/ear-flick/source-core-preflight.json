@@ -1,0 +1,1633 @@
+{
+  "status": "PREFLIGHT_PASS_REQUIRES_ACTUAL_A_B_BEFORE_RESTORE",
+  "core": [
+    245,
+    275,
+    405,
+    335
+  ],
+  "canvas": [
+    640,
+    640
+  ],
+  "frames": 107,
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "edgeManifestSha256": "3c603ea6bce36978b67020d0f4ba012324155204a4aed32754ac518a99d21cf5",
+  "proofFile": "source-core-proof.jpg",
+  "proofSha256": "26c25fdf94db18e91f151926aabb9e63d96d8efca34b9e2b860430272fa6f073",
+  "guardHelperSha256": "b3ad6b587f7b753e5461bf410c5f0e4a7666eabbbd1873c0b8ac47a912172b3b",
+  "coreChosenFromThisActionFlags": "This fresh ear-v2 source has31 enclosed eye-region sub252 components union[261,291,386,319], including18 red/coral samples below200. New box[245,275,405,335] chosen from this source; no v1 approval inherited.",
+  "minimumSourceKeyMargin": 66.0,
+  "potentialRestoredPixels": 315,
+  "all107External8Protected": true,
+  "all107CoreBoundaryProtected": true,
+  "all107Reliable252Protected": true,
+  "all107OutsideRepairProtected": true,
+  "framesEvidence": [
+    {
+      "frame": 0,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 1,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 2,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 3,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 4,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 5,
+      "restoredInteriorPixels": 11,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 6,
+      "restoredInteriorPixels": 11,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 7,
+      "restoredInteriorPixels": 11,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 8,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 9,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 10,
+      "restoredInteriorPixels": 12,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 11,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 12,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 13,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 14,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 15,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 75.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 16,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 75.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 17,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 76.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 18,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 66.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 19,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 20,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 21,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 22,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 23,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 24,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 25,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 26,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 27,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 28,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 29,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 30,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 31,
+      "restoredInteriorPixels": 8,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 32,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 33,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 34,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 35,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 69.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 36,
+      "restoredInteriorPixels": 8,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 37,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 38,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 68.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 39,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 40,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 41,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 42,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 69.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 43,
+      "restoredInteriorPixels": 13,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 44,
+      "restoredInteriorPixels": 12,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 70.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 45,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 46,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 47,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 48,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 49,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 50,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 51,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 52,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 53,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 54,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 55,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 56,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 57,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 68.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 58,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 68.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 59,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 68.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 60,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 69.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 61,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 66.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 62,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 68.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 63,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 64,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 65,
+      "restoredInteriorPixels": 8,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 66,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 67,
+      "restoredInteriorPixels": 10,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 68,
+      "restoredInteriorPixels": 11,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 75.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 69,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 70,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 71.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 71,
+      "restoredInteriorPixels": 28,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 75.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 72,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 73,
+      "restoredInteriorPixels": 9,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 74,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 75,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 76,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 75.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 77,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 78,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 79,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 80,
+      "restoredInteriorPixels": 14,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 69.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 81,
+      "restoredInteriorPixels": 13,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 82,
+      "restoredInteriorPixels": 6,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 83,
+      "restoredInteriorPixels": 5,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 84,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 85,
+      "restoredInteriorPixels": 11,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 86,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 87,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 88,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 89,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 90,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 91,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 92,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 72.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 93,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 74.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 94,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 95,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 96,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 97,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 98,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 99,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 100,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 101,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 102,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 103,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 104,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 105,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    },
+    {
+      "frame": 106,
+      "restoredInteriorPixels": 0,
+      "external8ConnectedRgbaExactlyUnchanged": true,
+      "reliable252RgbaExactlyUnchanged": true,
+      "outsideRepairExactlyUnchanged": true,
+      "fixedCoreBoundaryRgbaUnchanged": true,
+      "sourceCoreVsKeyMarginBytes": 73.0,
+      "reviewedCore": [
+        245,
+        275,
+        405,
+        335
+      ]
+    }
+  ]
+}

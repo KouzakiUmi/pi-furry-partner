@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "proud",
+  "version": "key-purple-batch09-v1",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "readyForAlphaReview": true,
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1",
+  "referenceSha256": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105",
+  "registeredReferenceSha256": "3b70d261a2f2fc60afc94e342c63a8a41e6184c5408a1a379f89b87c66537bb7",
+  "promptSha256": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9",
+  "decode": {
+    "frameCount": 107,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "fps": 24,
+    "reviewedOverviewCadenceSeconds": 0.25
+  },
+  "actuallyViewed": [
+    "reference.png",
+    "middle-expression-purple.png",
+    "early-check/overview.jpg",
+    "early-check/00043.png",
+    "early-check/00107.png"
+  ],
+  "actuallyViewedRepositoryProof": "work/motion-polish-20261023/batch09-proud-source-core-review.jpg",
+  "materialFindings": [
+    "White bright fur and existing shallow cool/lavender shadows, warm low-saturation gray paws with white-arm boundary, blue scarf/white patterns, blue-gray hood/cape dark andmidplanes remain recognizable relative to same-background input. No clear new blocking whole-material color replacement observed in sampled stills. This is not an exact RGB identity assertion.",
+    "Folded-ear X stitches, hood zigzag/dots, gray bean brows and short light claws remain readable in sampled native stills."
+  ],
+  "actionSpecific": "Closed-smile supplied boundary, middle-expression-purple small-fanged open smile and final closed smile remain distinct roles in overview/native00043/00107; no replacement of boundary with intermediate expression observed in reviewed stills. Two yellow stars remain identifiable. Native-speed acting/loop fidelity and supported posture remain separate B/user gates.",
+  "fixedFaceCoreReview": {
+    "fixedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "actuallyViewedPoses": [
+      0,
+      12,
+      42,
+      54,
+      84,
+      106
+    ],
+    "visualConclusion": "In this new source the displayed six poses put core entirely within solid forehead fur/eyes/face/mouth/chin-neck foreground; no actual key background or external star/heart symbol observed inside.",
+    "rootReportedAll107SourceMinimumKeyDifferenceBytes": 40,
+    "rootNumericEvidenceNotIndependentlyRecomputed": true,
+    "conditionalInternalAlphaRestorationSupported": true,
+    "conditions": "Only if this source is selected, and output tests verify coreborder/8connected exterior/reliable opaque remain protected, same-nativeRGB/255 may restore erroneous interior alpha. No source artistic recolor, outer silhouette or external-symbol fill. This is an independent review of this new source, not inherited sad/batch08 authorization."
+  },
+  "staticEvidenceBoundary": "Actually viewed listed same-background reference/native stills and overview plus six-pose source core board. No realtime playback viewed; no full107frame color/anatomy/alpha certification. No user approval inherited.",
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "Umi-proud-H3-source.mp4",
+      "sha256": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1"
+    },
+    {
+      "path": "reference.png",
+      "sha256": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "3b70d261a2f2fc60afc94e342c63a8a41e6184c5408a1a379f89b87c66537bb7"
+    },
+    {
+      "path": "prompt.txt",
+      "sha256": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9"
+    },
+    {
+      "path": "motion-contract.json",
+      "sha256": "0a0745585b6989d7f2eb767fd21e26036a10bcb3f6ef24a20f290445ca398a5f"
+    },
+    {
+      "path": "spec.json",
+      "sha256": "f433c023bd1e05e664401831a1dff2bdd4b7a361cb7d3069b99880b6241513d1"
+    },
+    {
+      "path": "middle-expression-purple.png",
+      "sha256": "72ad41013283d9391c1e0f781ad6ef9f4d128176cbb50dc07facddc9ae98bdd4"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "27cf1db9216b50582877e8f121b2cfd2d01780e63f4c2a4e9607783b6d1f365c"
+    },
+    {
+      "path": "early-check/00043.png",
+      "sha256": "8579920ae54d3e7d136013283e2beea846395dcaea81a4cc69438b043c85395f"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "3584a2605f08f8d4cadeddc2d780b74058d0fb2ed4b0832f535c3414e8619970"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/batch09-proud-source-core-review.jpg",
+      "sha256": "94896e18046ed324e0725715d4a5c9c4dcb55e12188b02aa82e5369fd345f88f"
+    }
+  ]
+}

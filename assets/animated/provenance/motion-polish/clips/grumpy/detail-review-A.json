@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "recordedAtUtc": "2026-10-22T22:14:53.368404+00:00",
+  "action": "grumpy",
+  "version": "key-purple-batch06-v1",
+  "processedVariant": "processed-detail-v4",
+  "status": "TARGETED_FALSE_ALPHA_REPAIRED_SAMPLE_READY_FOR_USER_REVIEW_WITH_EDGE_LIMITS",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "95e4b4bc455d8f278eb1fb41c9a3e75c6de421bfa91f8bd793f64b6ebff98238",
+  "actualReview": "Actually viewed target source-aligned/black/white/alpha magnified proof and v4 native000/053/106 black+white six stills. No dynamic playback claim or full-frame visual acceptance.",
+  "targetedFinding": "Grumpy086 red-X mouth lower-right line is continuous again on black and white; previous alpha hole no longer visible in magnified alpha. Local appearance matches raw source.",
+  "otherSampleFindings": "No conspicuous new white island, wide halo, paw/arm hole or pattern erosion observed in v4 native000/053/106 samples. Shy center short-claw tips remain natural solid details; gray-paw/white-arm borders, brows/eye lines, folded-ear X stitches, white scarf patterns and blue-gray hood/cape remain readable.",
+  "visualBlockingFindingsInInspectedV4Samples": [],
+  "knownLimits": "Existing very fine purple/dark exterior rim and sparse contour/hair-tip grain remain. This is an inferred technical matte correction, not ground-truth alpha or zero-defect proof. Targeted stills cannot certify every-frame red-feature protection, dynamic edge stability, acting rhythm or loop.",
+  "previousFailurePreserved": {
+    "file": "reviewer-A.json",
+    "status": "HOLD_INTERIOR_RED_FEATURE_ALPHA",
+    "sha256": "e8a465bd99c7001fc714a312d38cca966e57f5ec3524db77f57aec40e91f56fc",
+    "note": "Previous processed-edge-v2 HOLD remains unchanged as history; v3 failed/narrow trial not approved by this record."
+  },
+  "processingScript": {
+    "path": "work/motion-polish-20261023/restore-small-interior-red-details.py",
+    "sha256": "3e84373d11c445069f6b016e7f3a36e2a5195aad15f770dacfdb5cad7abb1c0c",
+    "scopeReportedByImplementation": "Only small enclosed sub252alpha components with original native red evidence restored; no A tuning or source/frozen-helper edits. Technical invariants require root checks, not inferred from these stills."
+  },
+  "evidence": [
+    {
+      "path": "processed-detail-v4/black/000.png",
+      "sha256": "fa81d848c3a9c906aaa61cbc7b2c45db79f931e882abd505dcc500cf7ad2fc35"
+    },
+    {
+      "path": "processed-detail-v4/white/000.png",
+      "sha256": "08f593417ef85fb13cd810e431f99de1d5829d8141b304c3a8e0097309276194"
+    },
+    {
+      "path": "processed-detail-v4/black/053.png",
+      "sha256": "06fc445098a3e7206c38143a647792b591c861fc5ac2c16f7df702f34a18f1a7"
+    },
+    {
+      "path": "processed-detail-v4/white/053.png",
+      "sha256": "502c63f6d7357d886c29b9d44d73019e1c828b8d616d4460c4d56d225de61e00"
+    },
+    {
+      "path": "processed-detail-v4/black/106.png",
+      "sha256": "d9921ed7f79b273836e21500fbe82b7216100bcd3e6529f6e98e7c624592e650"
+    },
+    {
+      "path": "processed-detail-v4/white/106.png",
+      "sha256": "1c453ca88608f68fc60288939dc51ed36fa4d47a163e9ca074debf06c774c901"
+    },
+    {
+      "path": "processed-detail-v4/black/086.png",
+      "sha256": "98aaf706bdf0741e4229eae96317017c418c7620eeea60b98a5151a242bd6e75"
+    },
+    {
+      "path": "processed-detail-v4/white/086.png",
+      "sha256": "1aae6074c815a089d946e526564165b6f7e160d47997c98f2d6b5dbad6c115bd"
+    },
+    {
+      "path": "processed-detail-v4/rgba/086.png",
+      "sha256": "b69c84a3dbe1a8df097eaa5eedb977f0a162c482121f1439923fd031bdc708cd"
+    },
+    {
+      "path": "early-check/00087.png",
+      "sha256": "0373f1f229c89cd8c03f7aaca96c859ec76e94a20c8b7d591a07db4a6cc6133b"
+    }
+  ],
+  "detailProof": {
+    "path": "work/motion-polish-20261023/batch06-edge-detail-A/grumpy-086-detail-v4.png",
+    "sha256": "18322d646314d6a802cdeb1b2dc52b639efe10638643356f90884314c7982f0f"
+  },
+  "processedBindings": {
+    "manifest.json": "03a1a01835cbd928de370670690bac71dbaa958af8edc5a9ee93cf52c5f549ba",
+    "report.json": "31ac6d1a58b1768e3807abc7c9c97263bceb7f42db4d116032efc956bc18c044",
+    "per-frame-detail-report.json": "68a6f0668693f60b442efd6f893a779e0f8cad81b5968e48cb1a0e66a39a0fcc"
+  }
+}

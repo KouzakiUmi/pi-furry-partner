@@ -29,12 +29,13 @@ try {
   for (const name of ["index.ts", "lib", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
   await mkdir(join(scratch, "assets"));
   for (const name of ["status-copy.json", "status-phrases.json", "status-copy.en.json", "status-phrases.en.json", "ui-zh-CN.json"]) await cp(join(root, "assets", name), join(scratch, "assets", name));
-  assert.deepEqual(STYLES, ["umi", "umi-pixel", "pixel", "illustration"]);
+  assert.deepEqual(STYLES, ["umi"]);
   assert.equal(JSON.parse(await readFile(join(root, "config.json"), "utf8")).style, "umi");
   for (const style of STYLES) {
     const sheet = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory(style), "reaction-sheet.json"), "utf8"));
     assert.ok(sheet.frames.length > 1);
-    if (style.startsWith("umi")) assert.equal(sheet.width, style === "umi-pixel" ? 80 : 240);
+    assert.equal(sheet.width, 240);
+
   }
   for (const input of [undefined, null, {}, "../wumi", "constructor", "__proto__", "toString", "unknown"]) {
     assert.equal(normalizeStyle(input), undefined);
@@ -42,12 +43,13 @@ try {
   }
   checks.push("Every canonical public style resolves to real unchanged assets; unsupported IDs cannot become asset paths");
 
-  for (const [legacy, canonical] of [["wumi", "umi"], ["wumi-pixel", "umi-pixel"]]) {
+  for (const [legacy, canonical] of [["wumi", "umi"], ["wumi-pixel", "umi"], ["umi-pixel", "umi"], ["pixel", "umi"], ["illustration", "umi"]]) {
     let command = await load({ style: legacy });
     await command("");
     assert.ok(notices.at(-1).message.includes(` · ${canonical} · `));
-    assert.ok(notices.at(-1).message.includes("style umi|umi-pixel|pixel|illustration"));
+    assert.ok(notices.at(-1).message.includes("style umi"));
     assert.ok(!notices.at(-1).message.includes("wumi"));
+    assert.ok(!notices.at(-1).message.includes("style umi|umi-pixel"));
     await command("pause");
     assert.equal((await saved()).style, canonical, "A loaded old config is saved under its canonical ID");
     for (const value of [legacy, canonical, legacy.toUpperCase()]) {
@@ -63,7 +65,7 @@ try {
     for (const value of [legacy, canonical]) {
       await command(`style ${value}`);
       assert.equal(await readFile(join(scratch, "config.json"), "utf8"), before);
-      assert.ok(notices.at(-1).message.includes("/mascot layout editor"), "The layout restriction must keep its actionable editor-layout command");
+      assert.equal((await saved()).headerStyle, "illustration", "All historical style inputs retain the only illustrated header");
     }
   }
   const command = await load({});

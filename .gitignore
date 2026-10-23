@@ -1,6 +1,6 @@
 node_modules/
-work/
-dist/
+/work/
+/dist/
 __pycache__/
 *.py[cod]
 *.log
@@ -17,3 +17,12 @@ assets/poses/*.previous.png
 assets/poses/*.before-*.png
 .DS_Store
 Thumbs.db
+*.tgz
+
+# Keep reviewed production references in Git; large generation sessions stay
+# locally available for history and are not build inputs.
+/Hi-Res/sources/*
+!/Hi-Res/sources/character-design-reference-20261021/
+!/Hi-Res/sources/expression-keyframes-20261018/
+/Hi-Res/animations-640/
+/.anchor-review.png

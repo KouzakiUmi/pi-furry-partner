@@ -1,0 +1,61 @@
+{
+  "action": "wave",
+  "model": "MiniMax-H3",
+  "mode": "Ref2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\idle-open.png",
+  "sourceSha256": "759ef974e7ac320463d04188432f17559c58484e34530e2111d2e0b6f7566927",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "c0d720a43debf7d2b536644baaf485c34341adfc8fb20b4bae1b16659a2642bc",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Friendly compact-paw greeting via two scoped actual references, neutral idle boundaries",
+    "primaryMotion": "Create a short friendly seated greeting by the SAME Umi from IMAGE1. IMAGE1 is the authority for identity, material colors, original face width, closed tiny smile, clothing, neutral opening and neutral ending. IMAGE2 is a secondary reference ONLY for the compact raised animal paw: its four short rounded toe lobes and four small pink toe beans around one broad lobed central pink pad, tiny ivory nails, full gray palm, short wrist and thick white furry forearm. Do not copy IMAGE2's mouth, teeth, head proportions, shading or overall pose into the opening and ending. Do not copy the failed long narrow waving palm or omit its side toe. This is a full compact rounded wolf paw, not a human hand or a row of fingers.\n\nBegin in IMAGE1's original supported open-eyed neutral sit. Looking warmly at his friend, Umi comfortably lifts the VIEWER-LEFT paw beside his cheek with a bent elbow. The SAME full rounded paw turns its pad toward his friend and makes two small easy greeting arcs, wrist and elbow sharing the movement. Keep all four SHORT round toe volumes grouped naturally in the original uneven curved arrangement, the palm short and broad rather than lengthening the gray wrist into a straight column. The white forearm-to-gray paw pointed boundary stays in its original anatomical place. Preserve the paw's volume while turning; do not separately flex, count or demonstrate the digits. His gaze, small friendly cheek response, head, chest and shoulder take part together as a single greeting. A brief natural blink is fine; reopen the original blue star eyes. The opposite full gray paw remains planted and supports the seated weight. After the little greeting, lower the raised paw back to IMAGE1's original support, gaze and tiny closed smile.\n\nUse ordinary everyday speed: a short comfortable lift, two quick small differently weighted greeting arcs separated by a little living pause, then an easy weighted return. Do not spread each tiny arc across the entire four seconds or use a metronomic sway. The lower seated root and BOTH narrow lower cape corners stay resting in IMAGE1's original DOWNWARD positions throughout the shot. They are heavy cloth resting against the seated base; the raised arm does not lift or fan out the lower cape. No horizontal long points, broad triangular side panels, wing spread, second hem or wrist cape flap. Only a tiny scarf-tip and folded-ear after-settle follows the supported greeting. Keep the original whole-body scale, face width, support line and fixed camera. Return naturally to IMAGE1's neutral pose with compatible breathing for a forward loop, without held ending, snap, reverse or copied endpoint freeze. The background is EXACTLY the same flat unlit #A020C0 throughout, with no hue/scene change or colored reflection on white fur, gray paws, scarf or blue-gray cape. No new symbols, fingers, teeth or extra limbs.",
+    "supportChain": "Opposite broad gray paw remains planted; viewer-left thick white forearm/bent elbow carries full compact round gray palm; chest/shoulder share support.",
+    "gazeHead": "Friendly eye contact, small cheek response and quick natural blink share the raised-paw greeting; separate gray bean brows remain.",
+    "secondaryMotion": "Very short folded-ear/scarf-tip after-settle follows each head/chest accent; heavy single cape remains down.",
+    "anchors": "Both references use existing original2D640 canonical runtime registration and uniform456x608 source size with saved offsets; output640/pivot320608/worldRect00640640, no adaptive fitting.",
+    "timingLayers": "Short ordinary-speed lift, two small differentiated greeting arcs with living pause, weighted return; no slow whole-shot drift.",
+    "loopBoundary": "Ref2VA text intent to begin/end at IMAGE1 neutral supported pose; API references do not enforce pixel-identical endpoints, actual returned boundaries require review.",
+    "reviewOrder": "Independent A material/pattern source and B compact four-toe/palm/white-arm/support/cape source gate; if sound use frozen alpha/edge, final native-speed transparent output to user before integration.",
+    "propInteraction": "none"
+  },
+  "outputCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "worldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "keyColor": "#A020C0",
+  "sameFirstAndLastFrame": false,
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "Root explicitly authorizes exactly one fresh v2 using changed actual two-reference Ref2VA method; stop this route if same paw/cape defects recur. No formal assets/nod integration/install/publish.",
+  "inputSourceJob": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
+  "inputUserApprovalSha256": "64f675c8ac1caf8ca4655dcbc1a062ab68f127dc929612c7adb9d9d371525fd0",
+  "references": [
+    {
+      "file": "reference.png",
+      "role": "reference_image",
+      "purpose": "Primary idle identity/materials/registration and requested neutral opening/ending",
+      "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+    },
+    {
+      "file": "middle-paw-purple.png",
+      "role": "reference_image",
+      "purpose": "Secondary intermediate compact raised four-toe paw/pads/white-arm structure ONLY, not full appearance or boundary",
+      "sha256": "6df2ff71f1dcb8afe28d974d2bd8620f2954819b33cd4b309c3ca0e84e3d0f3f"
+    }
+  ],
+  "boundaryPolicy": "IMAGE1 neutral at both ends is a prompt intent, not enforced first/last-frame API roles. Actual source review required."
+}

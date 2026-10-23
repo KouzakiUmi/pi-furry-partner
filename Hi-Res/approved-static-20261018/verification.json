@@ -1,0 +1,27 @@
+{
+  "status": "PASSED_READ_ONLY_HANDOFF_VERIFICATION",
+  "reviewers": [
+    "fresh_acceptance_review (GPT-6.1 Sol high)",
+    "fresh_workflow_review (GPT-6.1 Sol high)"
+  ],
+  "logicalStates": 40,
+  "pngFiles": 40,
+  "uniqueImageHashes": 39,
+  "allNativeSizes": [
+    1086,
+    1448
+  ],
+  "allMode": "RGBA",
+  "sourceAndCopiesByteIdentical": true,
+  "allApprovalBindingsVerified": true,
+  "relativeSourceAndApprovalPathsResolved": true,
+  "rejectedSourcesExcluded": true,
+  "sharedPair": [
+    "talk-blink",
+    "talk-medium-blink"
+  ],
+  "newGenerations": 0,
+  "runtimeWritten": false,
+  "h3Resumed": false,
+  "continuityApproved": false
+}

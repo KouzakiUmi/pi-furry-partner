@@ -1,0 +1,1821 @@
+[
+  {
+    "frame": 0,
+    "restoredInteriorPixels": 71,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 67.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "f4577f1fa37b5debc7b4dd7ab7317092428c1444b2941eafb1b27a0deaf8ef82",
+    "priorSha256": "0bceea36c5c5c0d06ab37b3295bab154cda727d64a76d89e4b73e9643da686c5"
+  },
+  {
+    "frame": 1,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "adad25a71e030a2846ef7b871dc30c40660c47d8650f8cdd025e83aab060ac61",
+    "priorSha256": "1bec08bdfb8e726b905f7e28709270fb9cf002725c11144762d239880239d8e5"
+  },
+  {
+    "frame": 2,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "bcde6215c0330e9c9747e5eeecc18ecbd9404228857213d9e9dbf315772e4cfe",
+    "priorSha256": "b079f5a763af501c4181c6baf3db732ee7351b881fd9a8404142d90c85412da5"
+  },
+  {
+    "frame": 3,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "19c00dfc0044763d2d0d8f8183d1ec2571565233d61986321a30fd9882cc66bb",
+    "priorSha256": "c183687208e087b87b1e1f6a0c5e34048f795317c88302f66bbd80ae71feb651"
+  },
+  {
+    "frame": 4,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "1469d5fbf283b69bb17741139a331c6ec8601b4e28dfb9f890da4ddc1f649fec",
+    "priorSha256": "b399e67dd6c58a98837e427f37e9836fa226705edc09337cf4dce3bb5bfc525e"
+  },
+  {
+    "frame": 5,
+    "restoredInteriorPixels": 26,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "539383a59440b3aa9c8625ea0884cbdd61548464957d2c81d0873e0e191986e8",
+    "priorSha256": "f34a1ee56b610c854ddd28a0f3eeb266a93bca6b1b1166897a832b027fb76f58"
+  },
+  {
+    "frame": 6,
+    "restoredInteriorPixels": 26,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "4a85dac7b8257c012afac3fdf26f3bf4d7685ad7218e9578ccaa9b2974b9f6e2",
+    "priorSha256": "04920664004f41dfbc5f19d96ae794332cf3af8293016c141a7df3bcba573eda"
+  },
+  {
+    "frame": 7,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "c9edd1a9c8599a74818f1b8e5f8bb28b81e2ca82516564cb8c0247b13e17a0f3",
+    "priorSha256": "76ae166d40d39d734367fa8cdbbaa9e3ce074c9e3ff065ed44b9cd411e93a57e"
+  },
+  {
+    "frame": 8,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d27ba52ca357b1d6f72e387bf1efe734cf881deb661b1623e9533aec253543e2",
+    "priorSha256": "ae7f74b6d3e8b7fb5bb3c4c51eeb9deb04a2b2306b0732f8b73b408772bc4452"
+  },
+  {
+    "frame": 9,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a0f192e22bf990b6f3179abbad04cd96677d1b49f0304e978a590952c3feb62e",
+    "priorSha256": "23e98424c559c80c6c7ea18cf3503476abde8476bae48655569384195269f0e3"
+  },
+  {
+    "frame": 10,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "f129ad329cd4781addcbf1721beaf14d4ebd5d0f3af99f624cde17d29dd198c4",
+    "priorSha256": "de023ab506787e836de0f4fada9e42e083b45e786459d8b0a21ed4a9bc83a7d9"
+  },
+  {
+    "frame": 11,
+    "restoredInteriorPixels": 67,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "79be5bd2bb93bd3479cb782b00cd622d9186338f03726138eb08a0240d60a556",
+    "priorSha256": "de1f81f80f57b2884c72e86bc292c00adc5d7a6e6f74e189b1821162033f9075"
+  },
+  {
+    "frame": 12,
+    "restoredInteriorPixels": 67,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "db9a17710adff9b5a960022da30301b378801ca6d5bd27980afa5c852a1d49ec",
+    "priorSha256": "64a6cbbe24d3f293793ce23eee9fd2554cb6ad6c2b93af410cc89824575d00cd"
+  },
+  {
+    "frame": 13,
+    "restoredInteriorPixels": 45,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "5ea64802923ab4cd4b62477298648d14d02d1b63d5a7f3331ba5bf73e888858c",
+    "priorSha256": "d14e7165289716d25d215a25c13dea79852ecd87ff16685ac5f6e48adc401f53"
+  },
+  {
+    "frame": 14,
+    "restoredInteriorPixels": 45,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "f310872f510d136d7959a02baae06fbed99e35a0cac8b5295a18c549453e5a56",
+    "priorSha256": "a96fc1bded03488a24c666d658e3794a7e911a363ad66b4d9f2a128c459f7b17"
+  },
+  {
+    "frame": 15,
+    "restoredInteriorPixels": 45,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "b084978390545ddf3eebddcabd90d572b3ceaf2f409605d8188d8028aa7e69fa",
+    "priorSha256": "a3a5da6e33a11c2080ed1d803fdcc99ed7e76f33f04ed51e019108a2c9473721"
+  },
+  {
+    "frame": 16,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d952e80ec1a70a5f5e1569470f31a8411c32020a8a98a6eb4cb97531127a466d",
+    "priorSha256": "570b882222e9e65b8cbf205f9830a149b6009f079982487b894ad2a4fc62395a"
+  },
+  {
+    "frame": 17,
+    "restoredInteriorPixels": 25,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "67318efc3d957f8538934b6a50a810e1b9885162e82e2450cf392c579d9ad926",
+    "priorSha256": "1c29c188c4bc1d165f3f721b737af1dee0029466311f20295d1b3699f294c30a"
+  },
+  {
+    "frame": 18,
+    "restoredInteriorPixels": 50,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "0eaf69056ec8cd4160548b7843fd56595ac29d7c393c82e3215a4a6cf9393803",
+    "priorSha256": "733afa67f8b19494f9947216881548151e867e4c158095e70e00d588a5b741d7"
+  },
+  {
+    "frame": 19,
+    "restoredInteriorPixels": 73,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ad582157c3fb08230c56559a422c4f789d9afa7c9622923275b2aefb5cccf781",
+    "priorSha256": "c54c46bebdf28f778cc01e5b3e295f72f7ea78bc3958d9e7e29a86c0e16d521e"
+  },
+  {
+    "frame": 20,
+    "restoredInteriorPixels": 73,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "39364e7fb5d9811224aac9c0448a5a79363fd0f33e2a9aea8a5543cf8bd21d7f",
+    "priorSha256": "0238ca792ad88969d1526853ca008c5b25e85bba329f7578bc0b8de6997f75f5"
+  },
+  {
+    "frame": 21,
+    "restoredInteriorPixels": 72,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d27a105cf73f8b690c553f4441791079efed956b2a0b4f4b0901c88e853e88dc",
+    "priorSha256": "5deb5f0cc4a3882b6554df3ec1e6c149c6fad5bb3d902cebdc7549d893a1e78a"
+  },
+  {
+    "frame": 22,
+    "restoredInteriorPixels": 72,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ab22c742a33a88a60bdcf93595ccc8c1dabdf065ff2a951e2ef4c058d40ee80b",
+    "priorSha256": "d9b61a0627089308f68abc60b7bd35055a759d342d41e2f035a9fd82530db468"
+  },
+  {
+    "frame": 23,
+    "restoredInteriorPixels": 72,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "e597cce5687047ca56cae88a429ce66dbe2c562874a5f7f5b7072f392dad7bdc",
+    "priorSha256": "91e6026dd9f94c92bd0db72b1595625ce7af653b0dbf9428e6d4fa50612dff9c"
+  },
+  {
+    "frame": 24,
+    "restoredInteriorPixels": 48,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "481d729e18ea8f0dd664571adf1d5477df8f2097deb2df45e70486e77b486168",
+    "priorSha256": "eb4616fe964aedc273264308008adb33728629933723341850f5d3e30248195b"
+  },
+  {
+    "frame": 25,
+    "restoredInteriorPixels": 48,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "e5f0f3c7532e73aed1f043380d9504bedf0aefd1ef17f5b541ea930625f8a3f4",
+    "priorSha256": "268d08bcf142ca527e9be505f1764e9ebadd25fd6a803f91224c719f39d7ac12"
+  },
+  {
+    "frame": 26,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "84de64aaf3130c4e875bada02893553629dcd83eb5924962926d483b3ce1014f",
+    "priorSha256": "1ace3f6c7e5fc7eae2c94d8d06184f9613093403b9417d98bc4c46e513780a76"
+  },
+  {
+    "frame": 27,
+    "restoredInteriorPixels": 46,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "cbfdba48e922b40bce2c6ff97030771c0c1e66706fa1d68cc4f72cc9785d8a7b",
+    "priorSha256": "1507bfeee906a4ff1d625d399c9bb9fc11a73b3c42c41de698d233821ad44065"
+  },
+  {
+    "frame": 28,
+    "restoredInteriorPixels": 47,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a851c7b7afd1bc0903005a096391cbf8306e5e85c9a4f34d02c96fbd987ceec1",
+    "priorSha256": "e719c178cdb210bcf6c1f6feec70dee08ce000001c853b5adc91b7be816af4de"
+  },
+  {
+    "frame": 29,
+    "restoredInteriorPixels": 47,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "6b493328e9104d1a15c1cda4d8c0ea4c22479580f0ee26816364d4762e213d53",
+    "priorSha256": "5a01c842446489eda875da1e40563a4afbc9245af14c3e6977456fca38edded4"
+  },
+  {
+    "frame": 30,
+    "restoredInteriorPixels": 61,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 61.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d5c02f412afc291754200bba14a6852190ca394a3f295a6d46c96b70088a716f",
+    "priorSha256": "47d6a7493936080a727ff634e5f7e8b9c0192bf8de4d29753df9cfe3e8fe1a7b"
+  },
+  {
+    "frame": 31,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 59.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "7169039431cba78827e8b078883d57c735bc9710edbd19d0aa29e40617e7d956",
+    "priorSha256": "7169039431cba78827e8b078883d57c735bc9710edbd19d0aa29e40617e7d956"
+  },
+  {
+    "frame": 32,
+    "restoredInteriorPixels": 29,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "1a06174f2fe6f4a5ab518336b38c9f667cbb9b0436fd5aaf4547fc47dda776ca",
+    "priorSha256": "90058faa6a19e0298158ae0e07bdfd0bdbcc1e7c567a8b4b69bf8d1e6edc5608"
+  },
+  {
+    "frame": 33,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d362c06a88847d81d701b604c0c149f1dce3769cc3a250fd911ae1c195eea677",
+    "priorSha256": "d362c06a88847d81d701b604c0c149f1dce3769cc3a250fd911ae1c195eea677"
+  },
+  {
+    "frame": 34,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ffbc74c9e03caf2b9d685822df682beadee8bf23b1403642828182cebfadf2d3",
+    "priorSha256": "ffbc74c9e03caf2b9d685822df682beadee8bf23b1403642828182cebfadf2d3"
+  },
+  {
+    "frame": 35,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "7d263a1a6cfcd95ecf406d92928dd17b29bb19d2ec3646ecab53b5dfb902fe96",
+    "priorSha256": "7d263a1a6cfcd95ecf406d92928dd17b29bb19d2ec3646ecab53b5dfb902fe96"
+  },
+  {
+    "frame": 36,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "94f92ae92ed8277f17d17f83005ffb4a30ce4c3dbef50b20168a1c855499527c",
+    "priorSha256": "94f92ae92ed8277f17d17f83005ffb4a30ce4c3dbef50b20168a1c855499527c"
+  },
+  {
+    "frame": 37,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "c08edf4d60e39b9feb3c95c14787057cb42c01ba51636c9027d403cd692307e5",
+    "priorSha256": "c08edf4d60e39b9feb3c95c14787057cb42c01ba51636c9027d403cd692307e5"
+  },
+  {
+    "frame": 38,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "7dca02553b1dfeda6585ed7a880e8a22083af40993cf12b189b912be321bdca3",
+    "priorSha256": "7dca02553b1dfeda6585ed7a880e8a22083af40993cf12b189b912be321bdca3"
+  },
+  {
+    "frame": 39,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 67.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "031f40a5201381e4f4efa26e58eeaecc83e37ed90b5d53f0d4474894b67fc0fd",
+    "priorSha256": "031f40a5201381e4f4efa26e58eeaecc83e37ed90b5d53f0d4474894b67fc0fd"
+  },
+  {
+    "frame": 40,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ba72a5e90c67fc7f80c653bf1dbbd2ed3b2b191be3ee64f816c8338ab805c10e",
+    "priorSha256": "ba72a5e90c67fc7f80c653bf1dbbd2ed3b2b191be3ee64f816c8338ab805c10e"
+  },
+  {
+    "frame": 41,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "cdd0648843c0ba4ec5caaf43e48a33637bc70f3bbe3062fc37a2f47732291745",
+    "priorSha256": "cdd0648843c0ba4ec5caaf43e48a33637bc70f3bbe3062fc37a2f47732291745"
+  },
+  {
+    "frame": 42,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "dd6d07df7458c5951cfb0f610e381ae41c21d4253af94e96f10211c7eafd6587",
+    "priorSha256": "dd6d07df7458c5951cfb0f610e381ae41c21d4253af94e96f10211c7eafd6587"
+  },
+  {
+    "frame": 43,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "5fcb94909e291a3042649678aa0747e6a717e9e62229c0c15edb2e92152bfc8d",
+    "priorSha256": "5fcb94909e291a3042649678aa0747e6a717e9e62229c0c15edb2e92152bfc8d"
+  },
+  {
+    "frame": 44,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "15440aa8b60ca960c2bde6734e7042287fbff0f74be5dac4cca04d26346672cf",
+    "priorSha256": "15440aa8b60ca960c2bde6734e7042287fbff0f74be5dac4cca04d26346672cf"
+  },
+  {
+    "frame": 45,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "712e1070ccaf3ef9cde5dea38f0738e2f85884300e8f27b758cf9cfeae1554e3",
+    "priorSha256": "712e1070ccaf3ef9cde5dea38f0738e2f85884300e8f27b758cf9cfeae1554e3"
+  },
+  {
+    "frame": 46,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a4feb6e3f31cff7f9ea25f6a9d62231163fb31e50cf1681faf9f573aed3f873b",
+    "priorSha256": "a4feb6e3f31cff7f9ea25f6a9d62231163fb31e50cf1681faf9f573aed3f873b"
+  },
+  {
+    "frame": 47,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 67.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "5156cbb79d85cf5169f5ef21c32b411e8196732a05c296acc4b36c63a4e58118",
+    "priorSha256": "5156cbb79d85cf5169f5ef21c32b411e8196732a05c296acc4b36c63a4e58118"
+  },
+  {
+    "frame": 48,
+    "restoredInteriorPixels": 87,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 52.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "fa69eddb0a8b9dd59d53125251ed89f5a8c36a70b2b9e6c3da1391ff1aee2d76",
+    "priorSha256": "9ceee8deb7325864c85f7d68b321ce1ebfa51d478d9a28092a3ec41332bc6759"
+  },
+  {
+    "frame": 49,
+    "restoredInteriorPixels": 66,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "05e8b6a3dc340cc58f0bab414b8c5346ecfdc5b28fa5fd6c42893d3f9924a835",
+    "priorSha256": "33fec4f34e309ece8b043c4b37d1cd608b49b1edf39104131373ec60f8a06078"
+  },
+  {
+    "frame": 50,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 61.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "e9493caa869568eca5d78a4c5471d1076556a0b5c2899fda6cc957ce2ddfc98c",
+    "priorSha256": "3806f61153940b6961be19f482c2e28b502b9f03a2f032ad2028617083f35d5d"
+  },
+  {
+    "frame": 51,
+    "restoredInteriorPixels": 144,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "73eccab557b24bfaa27b52ba8d260f5b5e21ad3f0cae207036b90285bf187d58",
+    "priorSha256": "2d98d59b9b5a0d469bb862937062aa94eb01bd4cb10024701cee28386f784715"
+  },
+  {
+    "frame": 52,
+    "restoredInteriorPixels": 67,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 67.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "8abf746aa6a83ea2f6982630e7a1b95451905513a951a2503a2f07d39a076105",
+    "priorSha256": "ada9aa3fb049ba9680ce2d122ea89b5cb81a3497c83dcdb44654fd11e57cfd90"
+  },
+  {
+    "frame": 53,
+    "restoredInteriorPixels": 54,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 60.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "5d96fd04de7b9c5aadac063dfa91d7ac0dc327f045ead26fca548d8cd60527c4",
+    "priorSha256": "418c27b62a08feb79ec0c7321d7bbc072d75b32dc0f0fd8845e8698fabf47315"
+  },
+  {
+    "frame": 54,
+    "restoredInteriorPixels": 79,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "fef946a8399138e1ca636de025be7f8ba0066e143d170465c95dc1fc70150251",
+    "priorSha256": "120ec8879c2f2c718c7557968e259845068058709cc7ef42c5e404ca8e302d32"
+  },
+  {
+    "frame": 55,
+    "restoredInteriorPixels": 64,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "0e0c62862b1093b259277fb1f8652b98f24843133a7de2c1676d3f1b2011c084",
+    "priorSha256": "94927885621e29d6a46ff74b0c19e36c64495e46261e304004b3364edf47f26d"
+  },
+  {
+    "frame": 56,
+    "restoredInteriorPixels": 54,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "0856649a64e2c6bb78a487538457e5f3c8adbd02e1f621b9e2d3bebf98a1fe1d",
+    "priorSha256": "b492889267cf6ec9658fedc7a6394903031f880b19c7d83521d5541886b58471"
+  },
+  {
+    "frame": 57,
+    "restoredInteriorPixels": 54,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "897e3b80d2eef7f4101db6e166ef8edde8bd063266824772828f737a4c40d6a2",
+    "priorSha256": "20e1f8a03b754925dd32bfee856562015a4ca53b2539778fdef291f767318fc5"
+  },
+  {
+    "frame": 58,
+    "restoredInteriorPixels": 54,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 61.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "894717520d2d55baf5618f73dc7e0a6fdb1316dec63a0eccf3034c0b194533c9",
+    "priorSha256": "5a1a57411394cf6d59ddab0f58845fe119e887bf66ce6016a9a195591c8056c3"
+  },
+  {
+    "frame": 59,
+    "restoredInteriorPixels": 54,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 61.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "81b24a783704a8e43112767759452bebed8e89c231daa0158dd5c8b50001185e",
+    "priorSha256": "7c2feec2093c5bd34243c9d16f7be1dc72de20181f044ce987ba49d6ac0b0f97"
+  },
+  {
+    "frame": 60,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "e71e225d6270b0e1c4395e2d306da05439e2288d105cf91c3eeb05d8dac7f3d1",
+    "priorSha256": "49ad9e666d62a75b69bb723fbbc7ee7ec58bad2f68f30b2c6061913281054a06"
+  },
+  {
+    "frame": 61,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "9baefdc3316ba2dfe348a27e53932def44bd680824329daea94f08559221a7b7",
+    "priorSha256": "4ae22e0752bb99b3a793b4546e3a3804b0e9602fefa2f07855bd260dcfc4c8a1"
+  },
+  {
+    "frame": 62,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "93592c95d00b2672b9ae5ace5de1bd6f8123056f27db5269a340dfb50ce26cae",
+    "priorSha256": "de4afd7a19a4efb58b34244316a5e290b845e61e82fcd24ea6adcdf76043a089"
+  },
+  {
+    "frame": 63,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d784083975787370be185c84673ee7e8a5752dc932a8e91d784f8afe39638a76",
+    "priorSha256": "f3541c465be7cd7a6107e97b69837ee7b2005a184a5004ad0f6540af4af7947e"
+  },
+  {
+    "frame": 64,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "600be09dd0e5fc41859d3dbe79710b8be0c88644052f08531585f8cd30b667f3",
+    "priorSha256": "aea39a0c39983a6f43e5382b40adf4c48f8d079345256bbdc895b10f05318fad"
+  },
+  {
+    "frame": 65,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "94829984509115d1b56ac0703c3a8bffc9900fa979c754f649b5506fbccf8fdc",
+    "priorSha256": "b635f73e70d86ac05a6ce592ac0cc0a81dcbb988880800040405672d75e48fd9"
+  },
+  {
+    "frame": 66,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "3e94514e49da0b3215b8a20a432666f9146fd06f0bb4fe4d3dff31c7c5b6b604",
+    "priorSha256": "d4bdb82176dcef8eb0f99d28ac17d5ab4efd87538723a463b1c38231cc611d59"
+  },
+  {
+    "frame": 67,
+    "restoredInteriorPixels": 53,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "cb54a2bed15b4e63d00c376e339824fc768e797e6f225bed04b5cd20898c6504",
+    "priorSha256": "64ab5f006b310fcbbae454374147744756e510f3ae2d15b5c43ade138401ee46"
+  },
+  {
+    "frame": 68,
+    "restoredInteriorPixels": 63,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "236d2416ea14eca9df836df53926d9df6f7f7a7d15409133607b3f204d33f183",
+    "priorSha256": "e6b93184a8b041b24ac198cbc51db9b84c37314fd49f486157148204a70bbb73"
+  },
+  {
+    "frame": 69,
+    "restoredInteriorPixels": 44,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 62.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "dfffdc403b59ae8794f9a44a0b6c7f425ac415a89a2bb6ce7ff8b0622986c465",
+    "priorSha256": "56be128cd4e7ba997626e23da585df82b5c55d04f34c45fe77244b26e7b4f13e"
+  },
+  {
+    "frame": 70,
+    "restoredInteriorPixels": 44,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 60.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "481da9eb08f67c438383a49330ce570d9f002700ddf0a6300d4a767cad73e118",
+    "priorSha256": "0e85a6fe61704e40a32c13990369f106633361326f940727c35b18543cb4a13c"
+  },
+  {
+    "frame": 71,
+    "restoredInteriorPixels": 44,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 61.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "6d727889585c8a548a12a416057daaeedb5dbe2aa4b47c29653ce90ebe8c8065",
+    "priorSha256": "a22eef1420bd81e222c069cadb8d16733b8a0a6ad4992fac77d104d3dde2e9f0"
+  },
+  {
+    "frame": 72,
+    "restoredInteriorPixels": 28,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "dfe38934d7d646f7d1fec42b81bec1144837933152858b392ab3c086be01af75",
+    "priorSha256": "8e5ad6004d1e7a52e3d06a60dd71cb9a05e26ca7e79f7d2d8d4941b2f123243c"
+  },
+  {
+    "frame": 73,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "dda371817f02da8946e50bd1a537858f90757be8ca80b021c0b0ad1d242dbf91",
+    "priorSha256": "dda371817f02da8946e50bd1a537858f90757be8ca80b021c0b0ad1d242dbf91"
+  },
+  {
+    "frame": 74,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 64.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "56705517cb2040d8245d036a50b190d84070668e3bd429859476376e0d80febd",
+    "priorSha256": "56705517cb2040d8245d036a50b190d84070668e3bd429859476376e0d80febd"
+  },
+  {
+    "frame": 75,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "41122d96f24563d1d7f0e633aa4214b6684a9252e8225acb60618a17680f32dc",
+    "priorSha256": "41122d96f24563d1d7f0e633aa4214b6684a9252e8225acb60618a17680f32dc"
+  },
+  {
+    "frame": 76,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 63.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "8b44e8324335df1e7000b617c72da92619d18850ce5c7ceb24d5ba093d7f98c0",
+    "priorSha256": "8b44e8324335df1e7000b617c72da92619d18850ce5c7ceb24d5ba093d7f98c0"
+  },
+  {
+    "frame": 77,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "367481d28e31c39f7a30d4ae798c90030e6f98cdf957bdcb4c64dd8ebd84cf12",
+    "priorSha256": "367481d28e31c39f7a30d4ae798c90030e6f98cdf957bdcb4c64dd8ebd84cf12"
+  },
+  {
+    "frame": 78,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "fa8ece6559641b3d36411e78000534df0e1bb5c69e36d64edfce306cf574ab52",
+    "priorSha256": "fa8ece6559641b3d36411e78000534df0e1bb5c69e36d64edfce306cf574ab52"
+  },
+  {
+    "frame": 79,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "8769a1e6a41aad1f7ec6dae234a775b9186a13fda5d5f369940f07a4981363b6",
+    "priorSha256": "8769a1e6a41aad1f7ec6dae234a775b9186a13fda5d5f369940f07a4981363b6"
+  },
+  {
+    "frame": 80,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "c688b13f9b509ba6685086ee403e8ef5e4e61b9d2d42c5f79f7f954b400a4d4c",
+    "priorSha256": "c688b13f9b509ba6685086ee403e8ef5e4e61b9d2d42c5f79f7f954b400a4d4c"
+  },
+  {
+    "frame": 81,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "c8053f31121f005af99e92fe1f40a209a307eb7a596a402eb191b95966387854",
+    "priorSha256": "c8053f31121f005af99e92fe1f40a209a307eb7a596a402eb191b95966387854"
+  },
+  {
+    "frame": 82,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "86df04f282ecbcf354757f14ddffcf48787d1efedec4039e03eb376b6556cef0",
+    "priorSha256": "86df04f282ecbcf354757f14ddffcf48787d1efedec4039e03eb376b6556cef0"
+  },
+  {
+    "frame": 83,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "7b4a5e33dc3dabb3f1de03794a61ef47c903f1e19f7a40d8ace2b1789e503116",
+    "priorSha256": "7b4a5e33dc3dabb3f1de03794a61ef47c903f1e19f7a40d8ace2b1789e503116"
+  },
+  {
+    "frame": 84,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "1370cc5124533161be1d03724bf0397e5c06c950cdbdda4ce9aa9c32b7d81871",
+    "priorSha256": "1370cc5124533161be1d03724bf0397e5c06c950cdbdda4ce9aa9c32b7d81871"
+  },
+  {
+    "frame": 85,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "d04f2ce01d42d2de92ec130d1ed870bdc525aab85684eefaa26b01897890d2ed",
+    "priorSha256": "d04f2ce01d42d2de92ec130d1ed870bdc525aab85684eefaa26b01897890d2ed"
+  },
+  {
+    "frame": 86,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "7e1477a28f8cc57550e3838f38714b9a3ad2c26255c29575f605d4ec6660789c",
+    "priorSha256": "7e1477a28f8cc57550e3838f38714b9a3ad2c26255c29575f605d4ec6660789c"
+  },
+  {
+    "frame": 87,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "39bc7b20e5d46c26073e433bcd15dbf8e6f155929d4e648a057c1f4a76a0e08c",
+    "priorSha256": "39bc7b20e5d46c26073e433bcd15dbf8e6f155929d4e648a057c1f4a76a0e08c"
+  },
+  {
+    "frame": 88,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a53f5ac0446eb1b1dae7e25384e5c04e8c97f145b86c7cf811dc36f05ad660e7",
+    "priorSha256": "a53f5ac0446eb1b1dae7e25384e5c04e8c97f145b86c7cf811dc36f05ad660e7"
+  },
+  {
+    "frame": 89,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "f88aa32f508b1ec714ba1010dd8ffadd1952366e11d999154d6ba3a39652f943",
+    "priorSha256": "f88aa32f508b1ec714ba1010dd8ffadd1952366e11d999154d6ba3a39652f943"
+  },
+  {
+    "frame": 90,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "6748882a3273d4200a0bc1da4e5b84327a871f79f2caa2eb333e121203e4bb1d",
+    "priorSha256": "6748882a3273d4200a0bc1da4e5b84327a871f79f2caa2eb333e121203e4bb1d"
+  },
+  {
+    "frame": 91,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a996829a9232ff459f68417c0af2191b62f1ec49f4aeba3097a7cc06e5ee9160",
+    "priorSha256": "a996829a9232ff459f68417c0af2191b62f1ec49f4aeba3097a7cc06e5ee9160"
+  },
+  {
+    "frame": 92,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ae9f1c61488e4ebbfc2b30e9978c21eb1408d48473a57e0b758ab2475a163cb3",
+    "priorSha256": "ae9f1c61488e4ebbfc2b30e9978c21eb1408d48473a57e0b758ab2475a163cb3"
+  },
+  {
+    "frame": 93,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "99f138014fe1b1fd7951c1a7099d9d83f701f2b828408f785081aec7e74ce980",
+    "priorSha256": "99f138014fe1b1fd7951c1a7099d9d83f701f2b828408f785081aec7e74ce980"
+  },
+  {
+    "frame": 94,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "4c1f5b270e50bc099e6c284cdbb7303ba171dba46d702b8ddb86c25d4aafa397",
+    "priorSha256": "4c1f5b270e50bc099e6c284cdbb7303ba171dba46d702b8ddb86c25d4aafa397"
+  },
+  {
+    "frame": 95,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "de90a7168768b7128793622a487954d157a98c63c9bb046c09ebc811b21c106f",
+    "priorSha256": "de90a7168768b7128793622a487954d157a98c63c9bb046c09ebc811b21c106f"
+  },
+  {
+    "frame": 96,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "6906b4299a8fb6acd0a7762d401c74847836412d70694f6cf74a2e3b23bb1646",
+    "priorSha256": "6906b4299a8fb6acd0a7762d401c74847836412d70694f6cf74a2e3b23bb1646"
+  },
+  {
+    "frame": 97,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "ef356a79038c94955ddb4ac4c47898183a25bf045c23e34c33f6c539fcee4f5f",
+    "priorSha256": "ef356a79038c94955ddb4ac4c47898183a25bf045c23e34c33f6c539fcee4f5f"
+  },
+  {
+    "frame": 98,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "20ad33959f298f52578cac41cb4cfa7a51e71a122c4a502a3eb4e6376f7e3953",
+    "priorSha256": "20ad33959f298f52578cac41cb4cfa7a51e71a122c4a502a3eb4e6376f7e3953"
+  },
+  {
+    "frame": 99,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "3e201e89812990783e2a0bd25b29ea99ef42d0e759c2d305703f52e1d29bb466",
+    "priorSha256": "3e201e89812990783e2a0bd25b29ea99ef42d0e759c2d305703f52e1d29bb466"
+  },
+  {
+    "frame": 100,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "84644f4654a85d9e36c194682f667cf64ec6b83e0956153a8bc0da86c623c903",
+    "priorSha256": "84644f4654a85d9e36c194682f667cf64ec6b83e0956153a8bc0da86c623c903"
+  },
+  {
+    "frame": 101,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "a4379cdc77038f841ff1363b70fc9859cecb58f4f2184877a9a96b4b31905963",
+    "priorSha256": "a4379cdc77038f841ff1363b70fc9859cecb58f4f2184877a9a96b4b31905963"
+  },
+  {
+    "frame": 102,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 65.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "f3651774cd3937b27117f633aa714d89988cfb2da5b517ea510d349c9a230778",
+    "priorSha256": "f3651774cd3937b27117f633aa714d89988cfb2da5b517ea510d349c9a230778"
+  },
+  {
+    "frame": 103,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "9448fd884132d2a6582947a5bfedca5a589536eb30655cb31b5e9a3015386e7c",
+    "priorSha256": "9448fd884132d2a6582947a5bfedca5a589536eb30655cb31b5e9a3015386e7c"
+  },
+  {
+    "frame": 104,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "bc5a0b64b36eb43519b74b12a5a470fb0e0cfce554a1300f9a371e1c054782ab",
+    "priorSha256": "bc5a0b64b36eb43519b74b12a5a470fb0e0cfce554a1300f9a371e1c054782ab"
+  },
+  {
+    "frame": 105,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "0fd9099d5e5e50a005ead58fa53ca595de9b3582f4697bc439f67ebe32e7cbb3",
+    "priorSha256": "0fd9099d5e5e50a005ead58fa53ca595de9b3582f4697bc439f67ebe32e7cbb3"
+  },
+  {
+    "frame": 106,
+    "restoredInteriorPixels": 0,
+    "external8ConnectedRgbaExactlyUnchanged": true,
+    "reliable252RgbaExactlyUnchanged": true,
+    "outsideRepairExactlyUnchanged": true,
+    "fixedCoreBoundaryRgbaUnchanged": true,
+    "sourceCoreVsKeyMarginBytes": 66.0,
+    "reviewedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "sha256": "46f7cf65c6c0b155e152e3c1ae58a4b5bddbe55fa3972a5df4f3d9cf20c51d08",
+    "priorSha256": "46f7cf65c6c0b155e152e3c1ae58a4b5bddbe55fa3972a5df4f3d9cf20c51d08"
+  }
+]

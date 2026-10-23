@@ -1,0 +1,62 @@
+{
+  "status": "USER_ACCEPTED_SHOWN_VIDEO_WITH_TOLERABLE_DEVIATIONS",
+  "readyForUserReview": false,
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "processedVariant": "processed-detail-v7",
+  "nativeFrames": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "fullNativeForwardTime": true,
+  "paintRect": {
+    "height": 896,
+    "width": 896,
+    "x": -128,
+    "y": -96
+  },
+  "worldAnchor": [
+    320,
+    608
+  ],
+  "evidence": {
+    "Umi-sad-H3-source.mp4": "8e78d8331488f81c65ae287e64f839500285b251493d8249568c2b27481836ba",
+    "detail-v7-review-A.json": "22a0b442b1f24cd7d37d9cb6dc1016df95afeed804fae822cba39740302c6644",
+    "detail-v7-review-B.json": "e812f6a760d53563c5a4769e4efadcab81aac3e2cd0233ccabd1cdacea43d223",
+    "input-review-A.json": "ea62f6bce04d93cfccb00fd651b5f84c0cae020cf23e71144580d771adf7b8e7",
+    "motion-contract.json": "d22b4efbb3408a6336ebd5fbb84682478e523840a41f645a7daddd7bdb0a253c",
+    "processed-detail-v7/manifest.json": "706f6eb77359aad0f730b62e798019dfd021626e6409f3f3ed3ba1a8e557e4fb",
+    "processed-detail-v7/report.json": "6293175e438c823063ce0261435b0b78f99f4a23b203bf52ef4ea3e0b71bc1c0",
+    "processed-detail-v7/world-black.mp4": "6fb9e9621e5fb673693a147082c7737ea9ba42467d1a4fa0b8084abef687e27a",
+    "processed-detail-v7/world-gray.mp4": "4366d7a2921d92a8b9568370b178db92c295029f66154d53340c4bf60b549031",
+    "processed-detail-v7/world-white.mp4": "c90c6b5537bfd47bafab93049e6ce8c72b2848b5eab83cf89d07891605e262b0",
+    "prompt.txt": "db68101dcb01ff5802cd606cbaa5298d1069f01833a15f3d2b1d27258abe1d39",
+    "reference.png": "c483020e2c66269ac112c2794e38dcddbd3a70c71f4c2c3ac89279c245ab3645",
+    "registered-reference.png": "c3e0c6821eb156d3fc017aca7ba50b598bf583085411062eb74c61700f0da8aa",
+    "reviewer-B.json": "0da360ef6696fc6d1a01085ebfa37b74e369fa16d6490e0dda844ed3e4b88ae0",
+    "source-review-A.json": "7241c5e5b1ae40eb6f49be22bce0250dc7b5a6af7a67cabd0ba8d9d636731bc8",
+    "spec.json": "47da540dfb0eb3d98ad6544c5a4858963644f27987a922c1f13db7f6c5ca6f1b"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b",
+    "restore-reviewed-face-core.py": "855aa279f28299acae745a13bf61bc6392e37dfb8b690018fe0c21e4ca64905c"
+  },
+  "knownEdgeLimits": "Fine dark/purple exterior rim and sparse contour grain remain possible; technical inferred separation, not ground-truth alpha or lossless guarantee. Exterior tear soft alpha and whole source timing unchanged; tear pools painted over the opaque face retain native RGB.",
+  "priorApprovalLimits": "Old unified sad and flowing crying sources retain their own approvals; no prior-source approval inherited by this fresh source.",
+  "technicalChecksDoNotApproveArt": true,
+  "nativeActingDifferences": "V2 retains a downturned sad mouth instead of the held v1 smile. Around1.75–3s both paws gather toward muzzle with head/chest huddle and conspicuous cape side spread; amplitude, living pause and recovery require native-speed user judgement.",
+  "userFeedback": {
+    "atUtc": "2026-10-23T06:55:40.204546+08:00",
+    "userText": [
+      "手越来越小了，而且有色差",
+      "手又变成了三指一样"
+    ],
+    "page": "http://127.0.0.1:54268/#sad",
+    "status": "USER_REJECTED_PAW_VOLUME_DIGIT_READ_AND_COLOR",
+    "humanAccepted": false,
+    "replacementAllowed": false,
+    "scope": "Sad explicitly visible; cry held pending same-issue comparison. Internal sampled QA did not catch user-perceived failures; no expansion or installation."
+  },
+  "userApprovalSha256": "858a83b151ebf3b98d72a4089126e12b7ac1fee06150d58b091d2fe800dabaf6",
+  "acceptedDeviationScope": "Retain the shown sad video. Stop static paw redesign. Existing paw-read/proportion and source color findings remain disclosed accepted deviations, not technically repaired or proven absent."
+}

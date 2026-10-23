@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "joy",
+  "version": "key-purple-batch04-v1",
+  "processedVariant": "processed-edge-v2",
+  "status": "WARN_USER_REVIEW_FINE_EDGE",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "28e12bc704d5092587058c3e1fd591a38cddd3f563b08a13b5881851bb80181b",
+  "actualReview": "Waited until all six lossless processed-edge-v2 PNGs000/053/106 black+white existed; then actually viewed each at native resolution. Separate source-review-A.json covers source color/pattern inspection; not repeated here.",
+  "finding": "No conspicuous bright scarf-gap island, wide white halo or large subject hole observed in inspected stills. White forearm fur points, gray paws, short claws/nails, separate gray brows and eye lines, folded-ear X stitches, hood white pattern and scarf white stripes/cross remain readable. Joy smile-eye and mouth details remain intact.",
+  "edgeDisclosure": "Fine purple/dark rim and some granular lower fur/paw-edge pixels remain; visible more on white around the lower contour. No zero-defect or every-frame dynamic-alpha claim.",
+  "dynamicUserReviewRequired": "Native-speed acting, hold/rhythm, amplitude, cape/scarf follow-through and loop continuity require fresh user review. Prior gray-source approval does not transfer to this new purple generation.",
+  "scope": "Only sampled edge/detail protection review. No algorithm/theory repetition or parameter changes. Catalog world crop/anchor verification handled independently by root, not claimed by this A inspection.",
+  "evidence": [
+    {
+      "path": "processed-edge-v2/black/000.png",
+      "sha256": "05d11e7f2e2c57fd485258e8dbd680696eac2e27bfb2f62be9eb29fed154e55d"
+    },
+    {
+      "path": "processed-edge-v2/white/000.png",
+      "sha256": "fc93fe70fa25567d428ca98d9ace69f1bc649b6b54ac1daba77140022e8b703d"
+    },
+    {
+      "path": "processed-edge-v2/black/053.png",
+      "sha256": "4ac667e49a236016bc2e71bf399c925a61a03ec7aadb59a80c8a53e37862bff4"
+    },
+    {
+      "path": "processed-edge-v2/white/053.png",
+      "sha256": "23c2c4eb2d08d48900fe88daed03bcc213f3bdeb9b282d5e417392dc80412ddb"
+    },
+    {
+      "path": "processed-edge-v2/black/106.png",
+      "sha256": "cbe6321b5b71571499360637e463fb039796b5874a59ea5849bcb89a7478edfb"
+    },
+    {
+      "path": "processed-edge-v2/white/106.png",
+      "sha256": "626e62f4937ce6719d84d445b10d9f2db0286ecd0fb58bb32808c26c3b32345f"
+    }
+  ],
+  "processedManifestSha256": "963d64bf0b0f0f125050b78eaf6e2bc3a3cbeb2ab994bd45959dd60a586c818a",
+  "processedReportSha256": "119148cfcd55319897c3ce04ac386ba1eceba30fcaa6f495515e3149fdced605"
+}

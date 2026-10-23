@@ -1,0 +1,143 @@
+{
+  "reviewer": "B",
+  "status": "READY_FOR_USER_TRANSPARENT_GATE_WITH_DISCLOSED_EDGE_LIMITS",
+  "sourceVideoSha256": "e72c5f0add9d42887c73c1eda85368caa549d23adc6f6441ae27bd1a68dd090b",
+  "manifestSha256": "ad7c57fd9730b182481153163b530214d5c26a4d3184272e66b847baf4610bb2",
+  "userSourceReviewSha256": "8c3f13e4f5f9e909bd4af9ee0f7712aeeecf3bc401ec0036a1ed4386faade07e",
+  "sourceCoreReviewBSha256": "2d2c073c29feba6a8c9a762b391b85bb3f807c28a8251a76fb447b2ca1e5d975",
+  "technicalReviewSha256": "d142b142f93f74fb4055251648e7df746dda71013b931c0ce69a265373dd0a46",
+  "proofIndexSha256": "513242a3990c645f4d32ba00863c383e1ddc36b1d90ebb95d7f4e1c6fecdc456",
+  "actualViewedFiles": [
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "cbab2fbbf8b94f938e662c67c4def1e05e934da585ee184b3ec6eca0527603ae"
+    },
+    {
+      "file": "processed-detail-v1/face-source-edge-proof.png",
+      "sha256": "cbe5cb5ba116537535a697526d7f687286bff94aea9f817713c543054a75cb0e"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-black-01.jpg",
+      "sha256": "84c10e84047477f4dc61d20c5fbfabdecfc9e090fc80d4a24c77765354bfa99d"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-black-02.jpg",
+      "sha256": "e64125532957cf1bb86becbe54075bdd3c70e4d050b5104cb566dff7a4b1bdf3"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-black-03.jpg",
+      "sha256": "b165d1520700effee39453c8e5f49cfda73d7004562e2489e66b0e08e667d302"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-black-04.jpg",
+      "sha256": "601287991ae6ea633147797294883867afdcd3306638d22c4f93866a04f61f2a"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-white-01.jpg",
+      "sha256": "37bbb6b4bf790ef4f1cf80e49ed4f64ac8560c9d5737250596020f1611c883c4"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-white-02.jpg",
+      "sha256": "d9ecbe419c7a56af281c21f668ef737aa991b2bb8bbe65188a0d30c3fa4d14e3"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-white-03.jpg",
+      "sha256": "7e4b623b56e14988760234097ae5ebc6637c4bb432767701b6e0a61962bdc355"
+    },
+    {
+      "file": "processed-detail-v1/full-contact-white-04.jpg",
+      "sha256": "42ab3101eaa3a134af482db8dec0dcae5e6291e62371f699f398f826d9b70bae"
+    },
+    {
+      "file": "processed-detail-v1/black/030.png",
+      "sha256": "92d21ed377d25d7e409cce9a3b9ec044022f1d7da74f362bd8fd10ce912b5341"
+    },
+    {
+      "file": "processed-detail-v1/white/054.png",
+      "sha256": "1d5a891dddf0fa42186708b0e51109f84639e0f14a96fe93261037c41765dc3a"
+    },
+    {
+      "file": "processed-detail-v1/gray/092.png",
+      "sha256": "9cc67efe621162aa0f8b4ae5a7f0703a8d57f76213b92f2383f4c2186ff3cfd3"
+    },
+    {
+      "file": "processed-detail-v1/white/106.png",
+      "sha256": "9f376460746701604cfd7707cca3cb0c6104b506d06eb40e34e302cebae3e415"
+    }
+  ],
+  "sourceComparison": "Fresh final face-source-edge proof directly compares aligned native source000/030/054/066/106 to black/gray/white/alpha. Final full107 black and white contacts actually inspected; previous edge full107 gray contacts and final gray092 native also inspected.",
+  "independentBChecks": {
+    "frames": 107,
+    "sourceSequence0to106": true,
+    "nativeTimestampWithinPoint001ms": true,
+    "allPngHashesMatch": true,
+    "allPngWebpDecodedRgbaExactlyEqual": true,
+    "allOutsideReviewedCoreExactlyUnchanged": true,
+    "allReliable252RgbaExactlyUnchanged": true,
+    "changedPixelsTotal": 1183,
+    "core": [
+      245,
+      280,
+      392,
+      352
+    ],
+    "canvas": [
+      640,
+      640
+    ],
+    "pivot": [
+      320,
+      608
+    ],
+    "worldPaintRect": [
+      0,
+      0,
+      640,
+      640
+    ],
+    "manifestPeriodMs": 4458,
+    "videos": [
+      {
+        "file": "world-black.mp4",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "24/1",
+        "duration": "4.458333",
+        "nb_frames": "107"
+      },
+      {
+        "file": "world-gray.mp4",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "24/1",
+        "duration": "4.458333",
+        "nb_frames": "107"
+      },
+      {
+        "file": "world-white.mp4",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "24/1",
+        "duration": "4.458333",
+        "nb_frames": "107"
+      }
+    ]
+  },
+  "findings": [
+    "Final eyeproof000/092 shows star tips recovered with matching sourceRGB on black and white; previous internal semitransparent gaps no longer visible in proof. Blue eyes, separate gray bean brows and squint dark lines remain distinct.",
+    "Full107 final black/white contact sequences retain native forward acting, paired supported short paws, original white forearm-to-gray palm boundary, folded/upright hood ears/X and single cape. No processing-created extra feet, limb loss, exterior crop or registration jump observed;106 returns front-facing/open eyes. User approved source acting and static-paw exception remain authoritative.",
+    "Fixed640 canvas, pivot320608 and sourceFrame0..106/timestamps are preserved. Final PNG/WebP decodedRGBA match independently across107. Only1183 pixels differ from edge and all differences stay within reviewed eyecore; reliable252 and outsidecore pixels are unchanged.",
+    "No broad opaque white/gray matte halo was apparent on normal black/white composites. Native030 black and054/106 white still show tiny dark-purple/gray specks along paw undersides/white fur tips and faint dark-purple hood/cape edging. These are disclosed residual edge limits, not claimed completely clean.",
+    "Body RGB remains source-specific with its natural shading. This transparent technical review does not certify cross-clip color consistency or exact palette calibration; the separately requested whole-pack colorpilot must be user-reviewed."
+  ],
+  "limitations": [
+    "Actual contact/native still review and timing verification, not claimed real-time video playback by B. Final transparent appeal/edge tolerance remains user gate.",
+    "Minor native line softness and source cape corner spread remain from the already accepted source; no new artistic shaping or paw redesign requested."
+  ],
+  "readyForUserTransparentReview": true,
+  "humanAcceptedSource": true,
+  "humanAcceptedTransparentOutput": false,
+  "readyForRuntimeIntegration": false,
+  "formalAssetsChanged": false,
+  "serverStarted": false
+}

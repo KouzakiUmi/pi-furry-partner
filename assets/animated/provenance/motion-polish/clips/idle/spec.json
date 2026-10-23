@@ -1,0 +1,44 @@
+{
+  "action": "idle",
+  "model": "MiniMax-H3",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\idle-open.png",
+  "sourceSha256": "759ef974e7ac320463d04188432f17559c58484e34530e2111d2e0b6f7566927",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "6f612fe2b1dea6ff01dd38206c73b0565db48d3e187b043a40906cf42aeb9cbc",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Quiet alert companion with quick natural attention and stable supported blink",
+    "primaryMotion": "Umi is comfortably sitting with his friend, quietly alert and available. A small interesting sound catches his attention: his eyes promptly refocus toward it and his head, neck, chest and relaxed shoulders accommodate that SAME small feeling together. He gives one quick complete natural blink, with continuous dark eyelid lines in the same sockets, then looks back with a tiny soft smile of recognition. Keep the expression restrained and companionable, not a performance of surprise or laughter. The little change of attention arrives promptly at normal everyday speed, roughly0.2–0.35seconds, followed by a brief living pause and a smaller soft recovery; do not spread a tiny turn over the entire four seconds. Gentle chest breathing, a little cheek life and a short scarf-tip/folded-ear after-settle belong to the same supported body. This is a quietly living alert companion, not a frozen sticker, metronomic sway, big rhythmic bounce or sleepy half-closed drift.\n\nBoth broad ROUND gray paws remain comfortably grounded side by side at the original support line. Their thick furry white forearms support the small chest response without the hands sliding, shrinking, opening or turning toward the camera. Preserve their original compact volume, four short rounded animal digits through correct overlap, tiny ivory claw tips, and original pointed white/gray fur border. Keep the original face width, head/body ratio, small gray bean brows SEPARATE above the eyelids, original blue star eyes and small animal mouth. The seated root, lower cape hem and ground contact stay steady; do not inflate/deflate or scale the whole character when blinking. The single heavy cape remains one downward draped layer. Recover the supplied open-eyed original sitting pose with compatible breathing and movement phase for a continuous forward loop, no frozen ending, reset or reversed motion.",
+    "supportChain": "Seated root grounds torso; chest, shoulders, elbow support, head and full paw volumes articulate as one motivated performance.",
+    "gazeHead": "Eyes, eyelids, muzzle, head/chest and supported arms share one small alert feeling",
+    "secondaryMotion": "Folded ear and scarf lag the primary impulse, single-layer cape remains weighted.",
+    "anchors": "Existing original2D static registration: uniform456x608 source canvas at saved offset in640x640; pivot320608, paintRect00640640, no per-frame fitting.",
+    "timingLayers": "Brisk ordinary-speed changes contrasted with short living thoughtful pauses",
+    "loopBoundary": "Same actual approved original static at both boundaries; full forward returned source preserved; compatible body/lens pose and breath phase, no held ending or reverse.",
+    "reviewOrder": "A actual source versus exact clean original2D material/patterns; B original grounded paw/face proportions, whole-body acting and magnifier optics; independent alpha/edge and glass review on three backgrounds, native-speed user gate.",
+    "propInteraction": "none"
+  },
+  "outputCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "worldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "keyColor": "#A020C0",
+  "sameFirstAndLastFrame": true,
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "User adopts batch09 new proud, retains formal affection, requests next batch. Fresh idle/watch pilots with canonical original static registration, purple alpha/edge workflow, two source/output reviewers and native-speed user gate. No formal replacement/install."
+}

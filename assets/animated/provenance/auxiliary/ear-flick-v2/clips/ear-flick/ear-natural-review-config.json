@@ -1,0 +1,16 @@
+{
+  "root": "D:/Software Projects/pi-furry-partner",
+  "knownIssues": "新版改为立耳一次向内、更竖的小调整，原先明显外扇和披布／围巾甩动已收敛，双掌保持原位。峰值耳姿仍有停留，是否像自然留意到一点动静，需要看原速确认；首尾不是逐像素相同。外围细彩点、暗边及毛尖／底缘颗粒以无损PNG查看。晃脑袋已单独通过并接入，本页新抖耳仍待评审。",
+  "items": {
+    "old": {
+      "label": "上一版 · 太刻意，已退回",
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v1/processed-detail-v1",
+      "reference": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v1/registered-reference.png"
+    },
+    "new": {
+      "label": "新候选 · 自然留意的小反应",
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v2/processed-detail-v1",
+      "reference": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v2/registered-reference.png"
+    }
+  }
+}

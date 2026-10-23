@@ -1,0 +1,7 @@
+{
+  "status": "ONE_FRESH_CHANGED_METHOD_V5_AUTHORIZED_USER_SOURCE_GATE_REQUIRED_BEFORE_ALPHA",
+  "automaticRetries": 0,
+  "allowAlphaProcessing": false,
+  "allowEdgeProcessing": false,
+  "humanAccepted": false
+}

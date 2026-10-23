@@ -1,8 +1,8 @@
-name: Build and publish release
+name: Build and publish Legacy release
 
 on:
   push:
-    tags: ['v*']
+    tags: ['legacy-v*']
 
 permissions:
   contents: read
@@ -31,7 +31,9 @@ jobs:
           node --input-type=module <<'NODE'
           import { readFileSync, writeFileSync } from 'node:fs';
           const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
-          if (process.env.RELEASE_TAG !== `v${version}`) throw new Error('Tag must match package version');
+          if (!/^2\.4\.\d+$/.test(version)) throw new Error('Legacy releases must use a stable2.4.x version');
+          if (Number(version.split('.')[2]) < 2) throw new Error('Historical2.4.0/2.4.1 releases must not be duplicated under new tags');
+          if (process.env.RELEASE_TAG !== `legacy-v${version}`) throw new Error('Legacy tag must match legacy-v plus package version');
           const changelog = readFileSync('CHANGELOG.md', 'utf8');
           const section = changelog.split(/^## /m).find(text => text.startsWith(`${version} · `));
           if (!section) throw new Error('Missing changelog section');
@@ -41,7 +43,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          archive="pi-furry-partner-${RELEASE_TAG}.zip"
+          archive="pi-furry-partner-legacy-${RELEASE_TAG#legacy-v}.zip"
           git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" "$RELEASE_TAG"
           unzip -t "$archive"
           mkdir -p work/release-archive-check
@@ -54,8 +56,8 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           gh release create "$RELEASE_TAG" \
-            "pi-furry-partner-${RELEASE_TAG}.zip" \
-            "pi-furry-partner-${RELEASE_TAG}.zip.sha256" \
+            "pi-furry-partner-legacy-${RELEASE_TAG#legacy-v}.zip" \
+            "pi-furry-partner-legacy-${RELEASE_TAG#legacy-v}.zip.sha256" \
             --verify-tag --latest=false \
-            --title "pi-furry-partner ${RELEASE_TAG}" \
+            --title "Umi · Legacy ${RELEASE_TAG} · 原资源维护版 · Pi" \
             --notes-file release-notes.md

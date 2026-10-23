@@ -1,6 +1,24 @@
 # 更新记录
 
-本项目采用带 `v` 前缀的发布 tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
+Legacy 自 2.4.2 起使用独立的 `legacy-v` 发布标签；main 全动态线使用 `v` 标签。历史标签和附件保持原样。安装可固定到某个 tag，详见 [README](README.md#安装)。
+
+From 2.4.2, Legacy uses independent `legacy-v` release tags; the full-animation main line uses `v` tags. Historical tags and assets remain unchanged.
+
+## 2.4.2 · 2026-10-23
+
+### 简体中文
+
+- 将后续旧资源维护版独立到 `legacy-v2.4.x` 标签线，发行标题明确标注 `Umi · Legacy`，并始终使用 `latest=false`，避免与 main 的全动态发行混淆。
+- 发布校验仅接受 2.4.2 起的稳定 2.4.x 版本，要求标签与 package 版本精确对应；拒绝预览版本及重新发行历史 2.4.0／2.4.1。历史标签和已发布附件不移动、不重写。
+- 更新当前下载与安装指引；全部 507 个原始素材、媒体及提示词继续按 v2.4.0 Git 对象的 SHA-256 基线保留，本次不改角色资源或行为。
+- 下载 `pi-furry-partner-legacy-2.4.2.zip`，或使用 `pi install git:github.com/KouzakiUmi/pi-furry-partner@legacy-v2.4.2`；升级后重启 Pi。
+
+### English
+
+- Moved future original-resource maintenance releases to independent `legacy-v2.4.x` tags, explicitly titled `Umi · Legacy` and always published with `latest=false`, keeping them distinct from full-animation main releases.
+- Release validation accepts only stable 2.4.x versions from 2.4.2 onward and requires an exact tag/package version match. It rejects previews and duplicate releases of historical 2.4.0 / 2.4.1. Existing tags and published assets are not moved or rewritten.
+- Updated current download and installation instructions. All 507 original artwork, media and prompt files remain bound to the v2.4.0 Git-object SHA-256 baseline; this release changes no character resources or behavior.
+- Download `pi-furry-partner-legacy-2.4.2.zip`, or use `pi install git:github.com/KouzakiUmi/pi-furry-partner@legacy-v2.4.2`. Restart Pi after upgrading.
 
 ## 2.4.1 · 2026-10-23
 

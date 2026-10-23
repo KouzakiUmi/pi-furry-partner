@@ -39,15 +39,19 @@ function sharedHosts() {
 {
   const { tui } = host(), original = tui.showOverlay;
   const guard = createOverlayVisibility(tui); assert.notEqual(tui.showOverlay,original);
+  const initialVersion = guard.version(); assert.equal(guard.version(), initialVersion);
   const above = tui.showOverlay({row:2,col:0,width:20,height:4});
+  assert.ok(guard.version() > initialVersion, "Showing an overlay changes the Kitty retransmission key");
   assert.equal(guard.allows({row:20,column:0,width:16,height:2}),true);
   const intersect = tui.showOverlay({row:21,col:3,width:3,height:1});
   assert.equal(guard.allows({row:20,column:0,width:16,height:2}),false,"The extra six-band raster row must participate in occlusion");
   assert.equal(guard.allows({row:20,column:20,width:16,height:2}),true);
   intersect.hide();assert.equal(guard.allows({row:20,column:0,width:16,height:2}),true);
+  const activeVersion = guard.version();
   above.hide();assert.equal(guard.allows({row:0,column:0,width:16,height:2}),true);
+  assert.ok(guard.version() > activeVersion, "Hiding the final overlay changes the Kitty retransmission key");
   guard.dispose();guard.dispose();assert.equal(tui.showOverlay,original);assert.equal(guard.allows({row:0,column:0,width:1,height:1}),false);
-  checks.push("Tracked public overlay bounds suppress only intersecting stripe footprints including their final-band overshoot; hide restores visibility and disposal restores the original method");
+  checks.push("Tracked public overlay bounds suppress only intersecting stripe footprints including their final-band overshoot; overlay transitions advance a stable Kitty retransmission key, hide restores visibility and disposal restores the original method");
 }
 {
   const { tui, clearInitial }=host(true), guard=createOverlayVisibility(tui);

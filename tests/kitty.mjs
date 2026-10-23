@@ -3,6 +3,7 @@ import { inflateSync } from "node:zlib";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { encodeIndexedPng, createKittyTransport } from "../lib/kitty.mjs";
+import { createSixelTransport } from "../lib/sixel.mjs";
 import { modules, version } from "./pi-runtime.mjs";
 
 const checks = [];
@@ -88,6 +89,38 @@ transport.dispose(); assert.deepEqual(deleted, [101,102,103,104], "Disposal is i
 assert.equal(transport.render({ frameIndex: 0, columns: 4, rows: 4 }), undefined);
 assert.equal(createKittyTransport({}).render({ frameIndex: 0, columns: 4, rows: 4 }), undefined);
 checks.push("Kitty transport emits one transparent PNG per terminal row, reuses and releases stable image IDs, skips unchanged frames and bounds its cache");
+
+// Kitty placements are emitted before the TUI has assigned terminal rows. Reuse
+// the Sixel cursor tracker to decide visibility at the final placement, then
+// delete only an image row which actually crosses an overlay.
+const overlayWrites = [];
+const overlayTerminal = {
+  columns: 40, rows: 20,
+  write(data) { overlayWrites.push(data); },
+};
+const sixelOverlayTransport = createSixelTransport(overlayTerminal, () => ({ widthPx: 10, heightPx: 20 }), () => undefined);
+let overlayVersion = 0, overlayActive = true;
+const kittyOverlayTransport = createKittyTransport({
+  getCellDimensions: () => ({ widthPx: 10, heightPx: 20 }), getSheet: () => sheet,
+  getOverlayVersion: () => overlayVersion,
+  isAllowed: (rect) => !overlayActive || rect?.row !== 1,
+  createOverlayMarker: (options) => sixelOverlayTransport.createOverlayMarker(options),
+  renderImage: fakeRenderImage, allocateImageId: () => ++nextId,
+  deleteImageSequence: (imageId) => `<delete:${imageId}>`,
+});
+const overlayLines = kittyOverlayTransport.render({ frameIndex: 0, columns: 4, rows: 4 });
+assert.ok(overlayLines.every((line) => line.includes("\x1b_G") && line.includes("\x1b]777;pi-furry-partner-")), "Overlay-aware Kitty rows remain image placements, not block fallback");
+overlayTerminal.write(overlayLines.join("\n"));
+const overlayOutput = overlayWrites.join("");
+assert.match(overlayOutput, /<delete:106>/, "Only the image row whose final terminal rect intersects the overlay is deleted");
+assert.doesNotMatch(overlayOutput, /<delete:105>|<delete:107>|<delete:108>/, "Uncovered Kitty rows stay high resolution");
+overlayWrites.length = 0; overlayActive = false; overlayVersion++;
+const restoredLines = kittyOverlayTransport.render({ frameIndex: 0, columns: 4, rows: 4 });
+assert.notDeepEqual(restoredLines, overlayLines, "Overlay transitions change zero-width markers so Pi retransmits retained rows");
+overlayTerminal.write(restoredLines.join("\n"));
+assert.doesNotMatch(overlayWrites.join(""), /<delete:/, "Rows are retransmitted after the overlay closes");
+kittyOverlayTransport.dispose(); sixelOverlayTransport.dispose();
+checks.push("Overlay-aware Kitty placement uses final terminal coordinates to retain uncovered high-resolution rows, hide only crossing rows and retransmit them after close");
 
 // Exercise Pi's real Kitty encoder and main-screen image lifecycle. This checks
 // protocol/layout bytes, not pixels in a native Kitty window.

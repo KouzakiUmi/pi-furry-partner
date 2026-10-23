@@ -83,7 +83,7 @@ Pi 的原生选区绘制会按列切片文本，零宽的自有 OSC 标记可能
 
 光标标记解析是另一条独立边界。Pi 的 `CURSOR_MARKER` 为 `ESC _pi:c BEL`，假光标使用 `ESC _pi:fc BEL` 与 `ESC _pi:/fc BEL`；它们不是标准的 ST 结束 APC。选区切片可能复制这些零宽标记，而宿主提取硬件光标时只移除首份。2.3.1 在传输层有限识别并剥离这三种残留私有标记，支持跨写入分片，避免 `pendingEscape` 把 `END_SYNC` 和后续正文一直暂存。其他 APC 仍以 ST 结束；图像锚点去重不能代替这项光标终止解析。测试须检查完成同步输出、重画条带和后续文字，而不只检查 DCS 锚点的横向位置。
 
-Kitty 与 Sixel 都需要终端支持。`auto` 优先使用 Pi 检测到的 Kitty 图片能力，在 Windows Terminal 且未经过 tmux 时选择 Sixel，其他情况选择半块字符；用户可以强制切换。Kitty 后端将 indexed 帧按终端行采样并编码为透明 PNG，使用稳定 image ID 和有界缓存。视口变化会触发重新上传；独立声明的放置尺寸保持预期列宽；弹层期间回退到可合成字符，关闭后恢复图片，释放时删除 image ID。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代实机验收。
+Kitty 与 Sixel 都需要终端支持。`auto` 优先使用 Pi 检测到的 Kitty 图片能力，在 Windows Terminal 且未经过 tmux 时选择 Sixel，其他情况选择半块字符；用户可以强制切换。Kitty 后端将 indexed 帧按终端行采样并编码为透明 PNG，使用稳定 image ID 和有界缓存。视口变化会触发重新上传；独立声明的放置尺寸保持预期列宽。弹层出现时，Kitty 行先以零宽锚点交给与 Sixel 共用的终端坐标追踪器：已知 bounds 时仅删除实际相交的 image row，未相交的高清行持续显示；未知弹层仍保守遮挡。弹层状态变化会重传被遮挡行。释放时删除 image ID。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代实机验收。
 
 这部分来自 [@srcres258](https://github.com/srcres258) 的 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1)。上游记录的 NixOS 26.05 / Pi 1.3.0 / Kitty 0.49.1 实机验证属于历史版本；本轮普通高清与全动态构建仍需各自保留 Pi/DSH 的验证边界。
 

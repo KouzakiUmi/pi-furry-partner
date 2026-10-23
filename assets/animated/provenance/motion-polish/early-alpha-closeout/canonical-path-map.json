@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "scope": "Additive canonical archive of already approved wait/listen interior-alpha evidence. Original frozen approval/manifests/catalog bytes and SHA remain unchanged. Historical paths in original records resolve through this mapping for inspection; no runtime build reads work.",
+  "frozenBindings": [
+    {
+      "path": "assets/animated/catalog.json",
+      "sha256": "b27faea48de625ef3fcbfecfab0af436e0df7608bc6ce631a43b67c1db517b8b"
+    },
+    {
+      "path": "assets/animated/provenance/motion-polish.json",
+      "sha256": "58ca4527296e2acebbc182176127a37f67e5613f5a510a4def4306af77ed8954"
+    },
+    {
+      "path": "assets/animated/provenance/indexed-binary.json",
+      "sha256": "352ab6fb6eef6f650ad8de50c0bb0effef39a127617266403d35596c134e3589"
+    },
+    {
+      "path": "assets/animated/provenance/motion-polish/clips/wait/technical-user-approval.json",
+      "sha256": "dce62c12aac99879304a796011939d5f06fa848be45efbb01cec5e55c5e99008"
+    },
+    {
+      "path": "assets/animated/provenance/motion-polish/clips/wait/processed-manifest.json",
+      "sha256": "ac3688860e6b37420ea4f27f7f563ba2664b51502c7ea655c650e8a4a890601e"
+    },
+    {
+      "path": "assets/animated/provenance/motion-polish/clips/listen/technical-user-approval.json",
+      "sha256": "22c28ffebe1e08e922e127bc557f2170e6eddd4ca55b0c2c2927676444c0f494"
+    },
+    {
+      "path": "assets/animated/provenance/motion-polish/clips/listen/processed-manifest.json",
+      "sha256": "b1d65751fb89571952ed11efbff1598643d762cae5c21460d50a5ddd4db84674"
+    }
+  ],
+  "records": [
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-source-core-review-A.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-source-core-review-A.json",
+      "sha256": "9c66b4412cb4e1048978f688ead7ab8e2c1c741f7db408346860c3c37f3b8936",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-source-core-review-B.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-source-core-review-B.json",
+      "sha256": "a0669e580216819676de17d52909b61b66af3579518a988c35c4a3347e807435",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-output-review-A.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-output-review-A.json",
+      "sha256": "4681fa65f9e12dc4d41643689692e8e7fd5b5a561cca37986f4b1aa8108a70a3",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-output-review-B.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-output-review-B.json",
+      "sha256": "5eadf9cc9fe99c0c37b9d8cb5d4feaaf30ca883842f4709ace0b663a88586fca",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-full-guard-preflight.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-full-guard-preflight.json",
+      "sha256": "f5d823e1c437ed47d0c54bb0c5a87c12cb6d7c23fb79017cc01e5e9e5ca059a4",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/wait-detail-comparison.png",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/wait-detail-comparison.png",
+      "sha256": "a158afab3d620a8a79eecaaab5198d1238b1d638272938e5088f86f9a38502e7",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-source-core-review-A.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-source-core-review-A.json",
+      "sha256": "f9a7e10572f2a4cffa6f84a9c386c7c6ca49344ad5b292b39ad26ff9bf0e3de3",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-source-core-review-B.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-source-core-review-B.json",
+      "sha256": "c832d0ab1f80a869c2758b4b8fc7c502c65eda27d80bb8d298149d922b329392",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-output-review-A.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-output-review-A.json",
+      "sha256": "76cf10200c28ac84e428d649b4e7e0d9adef955cfdf22158a6c638bd72ec3064",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-output-review-B.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-output-review-B.json",
+      "sha256": "62570026c5a1fca67aeba07e8e551485f39e2fcd64bf958ec357efa1599ccabe",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-full-guard-preflight.json",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-full-guard-preflight.json",
+      "sha256": "0338f343987f24e679da838401a78cbb0567af42389468f08807131b914d6eac",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/early-alpha-closeout/listen-detail-comparison.png",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/listen-detail-comparison.png",
+      "sha256": "d42b8e5384a891d57e62b0d9e4aa9924cef27f0a154f6b6f21104e33b436f1c1",
+      "byteExact": true
+    },
+    {
+      "historicalPath": "work/motion-polish-20261023/restore-early-alpha-closeout.py",
+      "canonicalPath": "assets/animated/provenance/motion-polish/early-alpha-closeout/restore-early-alpha-closeout.py",
+      "sha256": "21a1ad60950105475d66c0fe119a3f7643368590ee947d33034c5dda299d9927",
+      "byteExact": true
+    }
+  ],
+  "trackedHelperImport": {
+    "path": "scripts/process_approved_h3_actions.py",
+    "sha256": "29d22202b8ed2baea9a9d77b669789db698835defa5df052b2de92bdd82198a3"
+  },
+  "recordedOriginalHelperScope": "Archived original helper is evidence of guarded processing. Runtime/release builds consume exact committed HD/indexed assets; this ledger does not claim to regenerate all upstream source/matte history without its historical inputs.",
+  "artOrRuntimePixelsChanged": false,
+  "originalApprovalTextPreserved": true
+}

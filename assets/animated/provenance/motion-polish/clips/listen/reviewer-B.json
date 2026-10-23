@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-23",
+  "reviewer": "B",
+  "status": "ALLOW_ALPHA_CANDIDATE_EAR_PAW_SEMANTICS_RESTORED_STILLNESS_PENDING",
+  "sourceGateFromB": "ALLOW_ALPHA_CANDIDATE_WITH_STILLNESS_RISK",
+  "anatomicalHardFailureFound": false,
+  "actionSemanticHardFailureFound": false,
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "sourceVideoPlayed": false,
+  "dynamicAcceptance": false,
+  "sourceVideo": {
+    "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/Umi-listen-H3-source.mp4",
+    "sha256": "2ed65e2e06b3a90c13e955d27cd8ce8fde791dde624954ddf5908b9bbf63f354",
+    "actuallyViewed": false
+  },
+  "sourceShaMatchesRequested": true,
+  "images": [
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/early-check/overview.jpg",
+      "sha256": "5c07b18298f5d43059daba7abd2bd5b4657634c7ef0715e902085998be367e20",
+      "actuallyViewed": true,
+      "dimensions": [
+        1280,
+        1120
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/early-check/00025.png",
+      "sha256": "fdb29815c136479f1694da9b082a9c65f631677c5849458350a39245ee6251ac",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/early-check/00037.png",
+      "sha256": "9f622e5a4c098f0c7a433c555d820977f0cf45d019285a7098e67391cf7f6b8f",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/early-check/00067.png",
+      "sha256": "7bb42e2401166d3acdb818ccf9d3b6ebca39b3c218a551952c1da6a4ce1d7100",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/early-check/00107.png",
+      "sha256": "e81c6ef9eb8846b92c81ce01046aca99a942a45d866dd883514fc744fdd2323c",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/spec.json",
+      "sha256": "51fd18d16507bbed3637e76bca4629528e61586175c0ff23475db6c039030d17",
+      "actuallyViewed": false
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/motion-contract.json",
+      "sha256": "73974aa1a05e1a7eae52fb9bf6b69d57a894fc57e4eae2e924570afca77152a6",
+      "actuallyViewed": false
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/registered-reference.png",
+      "sha256": "f15ad476059c4c1d3426fef7e0821c860c0f0dc5027fe46d6dfaa0d067ff48ed",
+      "actuallyViewed": false
+    }
+  ],
+  "findings": [
+    "概览及024/036/066/106原寸，耳旁掌体持续靠近耳/脸外侧，本轮未见v1那种向外离开、腕肘展开成独立招手的关键姿态；倾听动作语义已回正。",
+    "四个小趾垫与单个中央掌垫的方向仍服从掌/腕，灰掌接厚白前臂，未见确定多趾、断腕、细臂或新手势；合理遮挡不强行认证每帧全数可见。",
+    "并非只替换眼睑：036闭眼回应时鼻/下巴相对领口更低，头侧倾略改，肩线/围巾/披布有响应，低肘/腕保持紧凑吸收，另一低位爪仍接近支撑底线。",
+    "闭眼036有独立黑眼线与上方灰豆眉，开眼样本原蓝虹膜保留；脸宽和整体尺度未见明确崩坏或全图统一缩放。"
+  ],
+  "sampledTiming": [
+    "0–1.0s主要维持参考倾听姿态；约1.25–1.75s有小幅头颈/闭眼回应，约2.0s恢复开眼倾听。",
+    "2.25s后原寸066/106及概览姿态非常接近；后半段是否活呼吸或冻结仍是明确待审风险。",
+    "不能因爪不再招手就宣布活感/普通速度通过；0.2–0.4s回应的真实时长、半幅余势与循环相位必须原速审。"
+  ],
+  "registration": {
+    "canvas": [
+      896,
+      896
+    ],
+    "sourceToReference": {
+      "size": [
+        456,
+        608
+      ],
+      "offset": [
+        220,
+        105
+      ],
+      "canvas": [
+        896,
+        896
+      ],
+      "scale": 0.4198895027624309
+    },
+    "pivot": [
+      448,
+      704
+    ],
+    "expectedPaintRect": {
+      "x": -128,
+      "y": -96,
+      "width": 896,
+      "height": 896
+    },
+    "worldAnchor": [
+      320,
+      608
+    ]
+  },
+  "recommendation": "B未发现必须再次整段重生的确定源结构或手势语义硬失败，可供root继续冻结alpha候选处理；A路颜色/边缘及用户原速活感/节奏评审仍独立未通过。",
+  "limits": [
+    "仅实际看所列静帧/0.25s概览，未连续播放、未穷举107帧。",
+    "未研究新指标、未套wait曲线，未修改源时长/算法/helper/正式资源/包或安装。"
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\surprise\\key-purple-batch08-v3",
+  "outputDirectory": "processed-detail-v3",
+  "sourceSha256": "8ecfd772f4473b159cde5778eaf4c76ad9fcb2fc5035cf63156f684be8e75ebf",
+  "referenceSha256": "4a0363335e087bad063176d743e55582afc2cf9ee9b684eaa436b029e8bb60d7",
+  "manifestSha256": "169327de70dd6a582912555d162043b8ade58f199d90e465d61731846f024e30",
+  "technicalDerivative": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-batch08-surprise-face-core.py",
+    "sha256": "9253c13c33bcc4a1d3190fb5649b4c765f99d4cd706a515ffe2fbae210bf5407",
+    "version": "fixed-reviewed-opaque-face-core-v1",
+    "priorManifestSha256": "87b82f9188fea1dee34913ffbbae1bf61ffcea5cff1c0271ceaf61d8a2776e59",
+    "reference": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\surprise\\key-purple-batch08-v3\\registered-reference.png",
+    "referenceSha256": "d8edf65fdc745ec4d82c6a96e504c7566479b8090e883fe367648df94a48c53d",
+    "modelHelperSha256": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "fixedOpaqueCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "connectivity": 8,
+    "scope": "Only unreliable sub252alpha inside this independently reviewed fixed opaque face core; restore same-registration native source RGB and255alpha. Refuse exterior8 connectivity, modification on core boundary, or any actual key-colored source pixel. No per-frame fit, no artwork repaint, no body/outside water repair."
+  },
+  "decision": "SAMPLED_REPAIRED_OUTPUT_ACCEPTABLE_FOR_USER_PLAYBACK_REVIEW",
+  "actualViewed": {
+    "nativeSizeBlackWhiteFrames": [
+      12,
+      34,
+      85
+    ],
+    "faceBlackWhiteAlphaCrops": [
+      12,
+      34,
+      85
+    ],
+    "sourceVideoPlayed": false,
+    "allFramesInspected": false
+  },
+  "observations": [
+    "Actual012/034 eye-star defects are no longer visible in repaired black/white/alpha crops;085 also retains complete eye-star/iris appearance. No new false transparent hole or visible rectangular core seam was observed.",
+    "Complete compact closed-paw masses, short supported wrists, thick white forearms and pointed gray-white borders remain coherent in the inspected native-size outputs. Face width, gray bean brows, small O-mouth, single attached cape and seated lower support show no newly visible geometry failure.",
+    "Known source yellow-symbol intermittency remains:012 has no clearly readable marks,034/085 have them. This is not repaired or accepted as perfect symbol preservation. External symbol soft alpha is outside the reviewed face repair.",
+    "Some fine colored/dark exterior grain remains visible on white-background hair/cloth edges. No zero-fringe or complete all-frame alpha claim."
+  ],
+  "sampleChecks": [
+    {
+      "frame": 12,
+      "faceCoreAlphaBelow200": 0,
+      "faceCoreMinimumAlpha": 252,
+      "outsideCoreExactlyUnchangedFromEdgeV2": true
+    },
+    {
+      "frame": 34,
+      "faceCoreAlphaBelow200": 0,
+      "faceCoreMinimumAlpha": 252,
+      "outsideCoreExactlyUnchangedFromEdgeV2": true
+    },
+    {
+      "frame": 85,
+      "faceCoreAlphaBelow200": 0,
+      "faceCoreMinimumAlpha": 252,
+      "outsideCoreExactlyUnchangedFromEdgeV2": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "processed-detail-v3/black/012.png",
+      "sha256": "088a46314dcf1b1735099f92bffc85bb14854713128b1c98c04d5dfc2e5b833e"
+    },
+    {
+      "path": "processed-detail-v3/white/012.png",
+      "sha256": "dd258ccd2b5688bca858fcfb054c9b006ae91baf00adbd47782ad80f651eb174"
+    },
+    {
+      "path": "processed-detail-v3/rgba/012.png",
+      "sha256": "91b9b3aa651d35368185b196ca821251545d4589a659bdbd9d9b4235ce9853cb"
+    },
+    {
+      "path": "processed-detail-v3/black/034.png",
+      "sha256": "1dae8e9a5ea159e70d82bbe999923d8df1db1b61e2879e29bc0c29890ab0f53b"
+    },
+    {
+      "path": "processed-detail-v3/white/034.png",
+      "sha256": "b84ec44acf32ac2eeeeb9a68538af08151869359f4d14304b101091917ada0df"
+    },
+    {
+      "path": "processed-detail-v3/rgba/034.png",
+      "sha256": "c027aed88d452a2489d9168e7d31f5bac52ea248f8f88622633777829a7481b3"
+    },
+    {
+      "path": "processed-detail-v3/black/085.png",
+      "sha256": "339f8574f38df43816f8f3bc5e7c22ccf8390467bdd7f31318b8cb9ac4e0b544"
+    },
+    {
+      "path": "processed-detail-v3/white/085.png",
+      "sha256": "cf652361b597e574d7c43c86dcb4377d5dd6c9997a172771034b228eae2cdf1a"
+    },
+    {
+      "path": "processed-detail-v3/rgba/085.png",
+      "sha256": "19e28faa97201f62ed07d44167a0edbfaa176c81f3a15477c0f75981adb3cf94"
+    }
+  ],
+  "faceProof": {
+    "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch08-surprise-detail-output-B.png",
+    "sha256": "9789c1452495c2d7ab621fc84b9a568fcd65bb94276c467f75ee2f130c26c66b"
+  },
+  "priorEdgeV2HoldPreserved": {
+    "path": "output-review-B.json",
+    "sha256": "40012f72101ab4c4217d921a0b4087a24d14af8b9d675a236a44bddbebd6e6ee"
+  },
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "fullAlphaAcceptance": false,
+  "userAccepted": false,
+  "limit": "Selected repaired lossless frame/alpha structure review only. User original-speed amplitude, rhythm and loop gate remains pending; root owns107-frame technical checks. Original source/B findings and old HOLD are unchanged."
+}

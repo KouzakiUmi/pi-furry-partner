@@ -1,0 +1,14 @@
+{
+  "status": "SOURCE_ONLY_NUMERIC_CANDIDATE_REQUIRES_ACTUAL_A_B",
+  "core": [
+    340,
+    340,
+    560,
+    490
+  ],
+  "frames": 107,
+  "minimumSourceKeyMargin": 40.0,
+  "sourceHasNoKeyLikePixelInCore": true,
+  "proof": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch09-proud-source-core-review.jpg",
+  "scope": "Source-only semantics candidate. Future alpha recovery must independently verify exterior8/coreboundary/reliableopaque guards; no universal foreground fill."
+}

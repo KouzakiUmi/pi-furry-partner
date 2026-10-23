@@ -4,7 +4,10 @@ import { dirname, join, resolve } from "node:path";
 import { homedir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
-import { installChineseUi } from "../lib/ui-chinese.mjs";
+import { installChineseUi, SUPPORTED_UI_PI_VERSIONS } from "../lib/ui-chinese.mjs";
+
+assert.deepEqual(SUPPORTED_UI_PI_VERSIONS, ["1.2.0", "1.3.0"],
+  "Only the two explicitly reviewed releases are enabled");
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { agentDir, version, modules } from "./pi-runtime.mjs";
@@ -177,7 +180,7 @@ try {
   assert.equal(agentUI.ThinkingSelectorComponent.prototype.render, foreign, "Reinstall/dispose wraps and restores the current foreign method without resurrecting a stale translation hook");
   const previousThinking = originalDescriptors.find(([prototype]) => prototype === agentUI.ThinkingSelectorComponent.prototype)[1];
   if (previousThinking) Object.defineProperty(agentUI.ThinkingSelectorComponent.prototype, "render", previousThinking); else delete agentUI.ThinkingSelectorComponent.prototype.render;
-  const unsupported = installChineseUi({ agentUI, tuiUI, version: "1.3.0" }); assert.equal(unsupported.coverage.supported, false); assert.equal(tuiUI.Text.prototype.render, plainTextRender); unsupported.dispose();
+  const unsupported = installChineseUi({ agentUI, tuiUI, version: "1.4.0" }); assert.equal(unsupported.coverage.supported, false); assert.equal(tuiUI.Text.prototype.render, plainTextRender); unsupported.dispose();
   assert.equal(installChineseUi({ agentUI, tuiUI, version: "1.2.1" }).coverage.supported, false, "Even future patch versions require an explicit compatibility audit");
   checks.push("Shared native-prototype hooks survive two observers disposed in either order, preserve foreign takeover and fail open without hooks on unsupported Pi versions");
 

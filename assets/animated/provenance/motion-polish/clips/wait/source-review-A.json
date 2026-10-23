@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "wait",
+  "version": "key-purple-brisk-accent-v2",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410",
+  "expectedSourceHashMatches": true,
+  "actualReview": "Same-job reference, freshly created0.25-second contact overview-A.jpg, native raw019/049/107. Compared material identity with original approved design/color-card direction and registered reference.",
+  "sourceFinding": "No blocking source tint or definite material/pattern damage observed. Blue-gray hood/cape, white forearms/gray paws, gray bean brows, folded ear/X stitches, eye stars, short claws and blue-white scarf remain readable.",
+  "actingDifferenceForUser": "Brief small open mouth and half-closed-eye moments are acting differences; not automatically rejected by old prompt wording. Still sampling does not approve normal-speed pacing, expressive timing or whole-body coordination.",
+  "processingScope": "Proceed with frozen key-alpha/soft-edge reconstruction. No alpha algorithm investigation or parameter changes by A.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "58b3a1ade6c0bc1c6a82f50d89600d39294220fafef41119e2252246bc5cb355"
+    },
+    {
+      "path": "early-check/overview-A.jpg",
+      "sha256": "3161ddd2197be9bad1fd19f4a5c243603f9600d77c8276e150f8a04fed30ca52"
+    },
+    {
+      "path": "early-check/00019.png",
+      "sha256": "4c3417a22808da9c4411904f065184f97d9ceb03c1f0677116984a31040632d0"
+    },
+    {
+      "path": "early-check/00049.png",
+      "sha256": "91b42d5012540e5b8a2840ec3d6d1337e8cd2ab29a59364ba49b2887ce14434e"
+    },
+    {
+      "path": "early-check/00107.png",
+      "sha256": "1ec712911ee2ebc455f3e535348685a66968379cd08be059a68a62cbf9f178f8"
+    }
+  ]
+}

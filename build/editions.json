@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "releaseLine": "main",
+  "defaultEdition": "full-animation",
+  "pixelPolicy": "Original pixel artwork and simple frames are preserved; regenerated pixel motions are excluded.",
+  "platforms": {
+    "pi": {
+      "label": "Pi terminal",
+      "resourceProfile": "pi-core",
+      "artifactPrefix": "pi-furry-partner"
+    },
+    "dsh": {
+      "label": "DSH web",
+      "resourceProfile": "full",
+      "artifactPrefix": "dsh-furry-partner"
+    }
+  },
+  "editions": {
+    "full-animation": {
+      "version": "2.5.1-preview.1",
+      "label": "全动态重做版",
+      "fullAnimation": true
+    }
+  }
+}

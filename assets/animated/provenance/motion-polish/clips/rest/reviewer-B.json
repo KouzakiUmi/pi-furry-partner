@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-23",
+  "reviewer": "B",
+  "status": "NO_DEFINITE_STRUCTURAL_HARD_FAILURE_IN_INSPECTED_STILLS",
+  "hardFailureFound": false,
+  "humanAccepted": false,
+  "sourceVideoPlayed": false,
+  "dynamicAcceptance": false,
+  "sourceVideo": {
+    "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/Umi-rest-H3-source.mp4",
+    "sha256": "e4eb5e2272ab793d420438c9849a7668702b74fb9a10e3e274c37259a7b207c4",
+    "actuallyViewed": false
+  },
+  "sourceShaMatchesRequested": true,
+  "images": [
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/early-check/overview.jpg",
+      "sha256": "118eba2c38aee34f7ba60abfbb600ff4b2db7e5dc524d49b49e5d523eec5365a",
+      "actuallyViewed": true,
+      "dimensions": [
+        1280,
+        1120
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/early-check/00025.png",
+      "sha256": "9831112f0cd2ae21d531483386f591659641b3022abcd4872ec0c2e73c920c56",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/early-check/00037.png",
+      "sha256": "dbbf457103e0bc418cc0a624c6268675e389da0d07e656cdc27753a6c8e39469",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/early-check/00079.png",
+      "sha256": "5badf8607f676fea6ea7ff4097963b159ff7c12f6fc890e1e81c1860a7f8ff12",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    }
+  ],
+  "v1ComparisonEvidence": [
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v1/early-check/overview.jpg",
+      "sha256": "0e8052a687ea8fd9827030cfc5d9794380a9f70682e90c2af04b8a1aabda03d3",
+      "actuallyViewed": true,
+      "dimensions": [
+        1280,
+        1120
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v1/early-check/00025.png",
+      "sha256": "41f1f5b1b0eb88305e484140998d37f270ff518d831d598e84005ec5b355f41a",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v1/early-check/00031.png",
+      "sha256": "1ede0f58cb9874fb8057f4a8841c60bf45338fe14938696b75672a111b80a3bd",
+      "actuallyViewed": true,
+      "dimensions": [
+        768,
+        768
+      ]
+    }
+  ],
+  "spec": {
+    "file": "Hi-Res/sources/h3-motion-polish-20261023/rest/key-purple-rest-v2/spec.json",
+    "sha256": "9686ad4f68633184d79010249d9199ab0b09d693fc2d983abe5fd239da1fab26",
+    "actuallyViewed": false
+  },
+  "registration": {
+    "canvas": [
+      896,
+      896
+    ],
+    "sourceToReference": {
+      "size": [
+        456,
+        608
+      ],
+      "offset": [
+        220,
+        121
+      ],
+      "canvas": [
+        896,
+        896
+      ],
+      "scale": 0.4198895027624309
+    },
+    "pivot": [
+      448,
+      704
+    ],
+    "expectedPaintRect": {
+      "x": -128,
+      "y": -96,
+      "width": 896,
+      "height": 896
+    },
+    "worldAnchor": [
+      320,
+      608
+    ]
+  },
+  "findings": [
+    "0.25s概览全部所见样本与024/036/078原寸保留双黑色闭眼线，灰豆眉独立在上；未见所检查样本醒眼或抹掉眼线。",
+    "厚白臂/灰掌尖毛边界、趾端短爪和双爪支撑保持，未见确定新增肢趾、断腕、细臂或漂浮爪。",
+    "原寸脸宽/头掌比例未见明显崩坏，也没有明确全图统一缩放证据；未认证全轨迹像素级尺度。",
+    "相对v1，披布两侧大展开和围巾末端水平甩出明显收敛，基本保持垂挂，仅后段可见较小余动；仍是一层连续披布。"
+  ],
+  "sampledTiming": [
+    "约0.5–1.5s有小幅头胸收气抬起；约1.75–2.25s回落到较低姿态。",
+    "约2.5–3.25s披布/围巾有小余动；末段靠近原睡姿，首末概览相容。",
+    "短落定是否真实0.2–0.35s、后半是否有活呼吸而非冻结，以及是否仍像慢头摆，必须原速观看，未据静帧通过。"
+  ],
+  "recommendation": "B路没有必须先退回重生的确定结构硬失败，可在A路颜色/材质结论与冻结处理检查齐后交用户原速评审。",
+  "limits": [
+    "本次只看静帧，不作动态、循环、全部107帧或透明边缘通过。",
+    "未套wait指标，未改任何算法/helper、源帧/时长、正式资产、代码、包或安装。"
+  ]
+}

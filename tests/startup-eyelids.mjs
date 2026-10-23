@@ -98,8 +98,11 @@ for (const style of STYLES) {
     drowsyAtMs: 10000, stableDrowsyAtMs: 10300 });
 }
 
-const illustration = sheets.illustration;
-assert.equal(styleAssetDirectory("illustration"), "illustration");
+// Legacy-coordinate assertions require the frozen original artwork. Current
+// canonical styles use registered HD remakes; their startup paths were tested
+// above and the restored header's same-body wink has its own consumer test.
+const illustration = await read('tests/fixtures/legacy-eyelids/illustration.json');
+assert.equal(styleAssetDirectory("illustration"), "umi");
 assert.notDeepEqual(illustration.frames[illustration.ids.rest].pixels,
   sheets.umi.frames[sheets.umi.ids.rest].pixels,
   "The legacy-style regression must exercise illustration artwork, not an Umi companion preview");
@@ -133,7 +136,7 @@ for (const id of ["idle-blink", "talk-blink", "concern-blink", "happy-blink", "r
 }
 first.player.dispose();
 
-const pixel = sheets.pixel;
+const pixel = await read('tests/fixtures/legacy-eyelids/pixel.json');
 const pixelInk = pixel.palette.findIndex((rgb) => rgb.join(",") === "47,58,60");
 assert.ok(pixelInk > 0);
 const pixelUpperRegions = [[32, 38, 37, 42], [55, 38, 61, 42]];
@@ -147,7 +150,7 @@ for (const region of pixelUpperRegions) {
 for (const [x, y] of [[36, 49], [35, 50], [34, 51], [56, 49], [55, 50], [54, 51]])
   assert.equal(pixel.frames[pixel.ids.rest].pixels[y * pixel.width + x], pixelInk,
     "The original pixel character's stepped closed-lid ink must survive the cleanup");
-const pokedPixel = withPokeFrame(pixel, await read("assets/reactions/pixel/poke-patch.json"));
+const pokedPixel = withPokeFrame(pixel, await read('tests/fixtures/legacy-eyelids/pixel-poke.json'));
 for (const id of ["idle-blink", "talk-blink", "concern-blink", "happy-blink", "rest", "error", "poke"])
   for (const [x, y] of [[40, 45], [40, 47], [61, 45]]) {
     const rgb = pokedPixel.palette[pokedPixel.frames[pokedPixel.ids[id]].pixels[y * pixel.width + x]];
@@ -158,7 +161,7 @@ for (const id of ["idle-blink", "talk-blink", "concern-blink", "happy-blink", "r
 // The independent header style can still be the original pixel character.
 // Compare its only wink with an open frame at the same authored angle: the
 // old upper outline must disappear while the existing lower lid survives.
-const header = await read("assets/native-frames.json");
+const header = await read('tests/fixtures/legacy-eyelids/header.json');
 assert.equal(header.frames.length, 15);
 assert.equal(header.loopDurationMs, 4800);
 const winkIndex = header.frames.findIndex((frame) => frame.wink);
@@ -166,6 +169,33 @@ assert.equal(winkIndex, 7);
 const wink = header.frames[winkIndex];
 assert.equal(wink.angleDeg, -6);
 const openHeader = header.frames.find((frame) => !frame.wink && frame.angleDeg === wink.angleDeg);
+let headerEyeReport;
+if (header.headerRestoration?.schemaVersion === 1) {
+  // Current HD-derived artwork has different eye coordinates and palette.
+  // Requiring the former 14 pixel outline here would force old body artwork
+  // back into a correctly restored same-source header.
+  assert.equal(header.headerSourcePose, "idle-open");
+  assert.equal(header.headerRestoration.eyePixelsDrawn, false);
+  assert.equal(header.headerRestoration.perFrameFit, false);
+  let changes = 0;
+  for (let i = 0; i < wink.pixels.length; i++) {
+    assert.equal(wink.pixels[i] === 0, openHeader.pixels[i] === 0,
+      "A same-angle header wink keeps the current silhouette");
+    if (wink.pixels[i] !== openHeader.pixels[i]) {
+      changes++;
+      assert.ok(i % header.width > header.width * .45 && Math.floor(i / header.width) < header.height * .62,
+        "The current source wink cannot change the other eye or body");
+    }
+  }
+  const rightIrisPixels = frame => frame.pixels.reduce((count, p, i) => {
+    const x = i % header.width / header.width, y = Math.floor(i / header.width) / header.height;
+    const [r,g,b] = header.palette[p];
+    return count + Number(p !== 0 && x > .54 && x < .76 && y > .38 && y < .57 && b > r + 25 && g > r + 15);
+  }, 0);
+  assert.ok(changes > 0 && rightIrisPixels(wink) < rightIrisPixels(openHeader),
+    "The 700ms current-artwork wink must remove its blue iris");
+  headerEyeReport = { winkIndex, currentArtwork: true, sameBody: true, changedEyePixels: changes };
+} else {
 const ink = header.palette.findIndex((rgb) => rgb.join(",") === "47,58,60");
 assert.ok(ink > 0);
 function headerInkInSourceBox(frame, [left, top, right, bottom]) {
@@ -189,8 +219,10 @@ assert.equal(headerInkInSourceBox(wink, [52, 38, 67, 49]), 0,
   "The tilted native header wink must not retain a second upper eyelid");
 assert.equal(headerInkInSourceBox(wink, [53, 49, 63, 53]), 14,
   "The header fix must preserve all 14 original stepped closed-lid pixels");
+headerEyeReport = { winkIndex, oldUpperLashPixels: 0, preservedLowerLidPixels: 14 };
+}
 assert.equal(await readFile(join(root, "config.json"), "utf8"), originalConfig,
   "Style regression must not write the user's or repository's preferences");
 console.log(JSON.stringify({ passed: true, modelRequests: 0, installedFilesRead: false,
   actualSavedLegacyStyleCovered: "illustration", oldUpperLashPixels: [0, 0],
-  header: { winkIndex, oldUpperLashPixels: 0, preservedLowerLidPixels: 14 }, checks }, null, 2));
+  header: headerEyeReport, checks }, null, 2));

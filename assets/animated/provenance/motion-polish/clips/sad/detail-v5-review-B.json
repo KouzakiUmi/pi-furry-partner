@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2",
+  "output": "processed-detail-v5",
+  "sourceSha256": "8e78d8331488f81c65ae287e64f839500285b251493d8249568c2b27481836ba",
+  "manifestSha256": "b01295cebb0ad978d9bc946f27530f8eace009b053ca137de6c394204fbbb92f",
+  "helper": {
+    "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-reference-supported-interior.py",
+    "sha256": "857b219c577da37ac1ee5b045dc6b948462923155c1464b6dc1f636d8ab6bd1d",
+    "actuallyRead": true,
+    "modelHelperSha256": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "registeredReferenceSha256": "c3e0c6821eb156d3fc017aca7ba50b598bf583085411062eb74c61700f0da8aa"
+  },
+  "decision": "HOLD_KNOWN_EYE_STAR_ALPHA_DEFECT_STILL_PRESENT",
+  "hardFailures": [
+    {
+      "frame": 84,
+      "residualComponentConnectivity": 8,
+      "residualComponentArea": 56,
+      "bboxInclusive": [
+        395,
+        393,
+        404,
+        403
+      ],
+      "componentMinAlpha": 0,
+      "nativeStrongRedRoiAlphaBelow200Pixels": 16,
+      "nativeStrongRedRoiMinAlpha": 0,
+      "cause": "Entire enclosed component skipped because1pixel is outside reference chroma envelope and does not satisfy fixed red/blue opponent witness.",
+      "unsupportedPixel": {
+        "xy": [
+          397,
+          400
+        ],
+        "nativeRGB": [
+          143,
+          19,
+          101
+        ],
+        "priorAlpha": 0,
+        "RminusG": 124,
+        "RminusB": 42
+      },
+      "unsupportedPixelCount": 1
+    }
+  ],
+  "boundaryReview": {
+    "algorithm": "8-connected enclosed alpha<252 component with strong native red seed; every component pixel must be inside fixed reference chroma envelope expanded6bytes, or strong red/blue opponent witness. Restore same-registration native RGB and alpha255. No area cap.",
+    "knownTruthProofRead": {
+      "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch07-reference-guard-proof.json",
+      "sha256": "89c7ce2cc80736783eb7b2440b304064b6d272a12949ff0f8d294d7dc022114e",
+      "reportedCases": [
+        "internal red/blue recovery",
+        "genuine purple hole retained",
+        "exterior red retained",
+        "reliable opaque retained"
+      ]
+    },
+    "judgment": "Guards bound the candidate and preserve external/opaque data as written, but the actual084 counterexample remains. Targeted synthetic probes passing does not establish complete restoration on source frames. No threshold/model changes by B.",
+    "limits": "Reference/palette chroma is a color prior, not ground-truth opacity; strong opponent colors are extra evidence. Do not generalize to arbitrary hole fill."
+  },
+  "actualVisualReview": {
+    "fullNativeBlackWhiteFrames": [
+      0,
+      53,
+      106
+    ],
+    "enlargedPriorV4VsV5BlackWhiteAlphaFrame": 84,
+    "proof": {
+      "path": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch07-sad-detail-v5-B.png",
+      "sha256": "eb4ba58a8a9ca1a17d98f0ad20c7d4551cbaaf2fb557ac4d805096865dcf623b"
+    },
+    "observations": [
+      "Actual enlarged084 shows the prior right-star hole repaired, but a left-star hole still visible in alpha and corresponding black/white appearance. V5 derives from edge-v2, so the v4-restored left component is not inherited.",
+      "000/053/106 retain individually readable complete curled paw masses, short central ivory nail marks/narrow dividing region and side/root fullness consistent with a tucked fourth thumb. No visible new palm hole, paw merge, wrist cut or loss of the thick white forearms/gray-white fur boundaries.",
+      "Face width, independent gray brows, sad mouth, folded ear, single attached cape layer and seated lower edge remain coherent in these sampled outputs. Broad source gathering/cape amplitude is unchanged and remains a native-speed user review question."
+    ],
+    "sourceVideoPlayed": false,
+    "allFramesVisuallyReviewed": false
+  },
+  "independentSampleInvariants": [
+    {
+      "frame": 0,
+      "changedPixels": 0,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideChangesExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    },
+    {
+      "frame": 53,
+      "changedPixels": 107,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideChangesExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    },
+    {
+      "frame": 84,
+      "changedPixels": 111,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideChangesExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    },
+    {
+      "frame": 106,
+      "changedPixels": 87,
+      "reliable252ExactlyUnchanged": true,
+      "external8ConnectedSoftExactlyUnchanged": true,
+      "outsideChangesExactlyUnchanged": true,
+      "restoredRGBEqualsSameResizeNative": true,
+      "restoredAlphaAll255": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": "processed-detail-v5\\rgba\\000.png",
+      "sha256": "fbfb67625b6462dd1c81aecb796cb770c95ffd44c5f7865eb674bd4ee7a224bc",
+      "viewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v5\\black\\000.png",
+      "sha256": "d333a527583a0449675736bc9fe28c19bbeeeeae99835d385e960a07a1131038",
+      "viewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v5\\white\\000.png",
+      "sha256": "d8b616cea985960df0c32880ceab0fc5175993ea198b33803d150e4026743ee8",
+      "viewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v5\\rgba\\053.png",
+      "sha256": "845c22298808dfdf508af5998ad358d61a9003dd3621e536bcc5a4e6018f72b6",
+      "viewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v5\\black\\053.png",
+      "sha256": "06962f8f1fadea7715d96b551aaf3197b411a298170be5276cace8183705b8c0",
+      "viewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v5\\white\\053.png",
+      "sha256": "d388f5e6f7fc0408ae78999e3445b8460731bed7f83ef626d006a006033ef166",
+      "viewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v5\\rgba\\084.png",
+      "sha256": "2da652a046ee3de556c14dd200e403d747373748846dd196259c1ad13a5e149f",
+      "viewScope": "enlarged eyes black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v5\\black\\084.png",
+      "sha256": "2024bc6107760f582df1c536f3e36e83ad93f07325513068d473e0f66e8fef82",
+      "viewScope": "enlarged eyes black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v5\\white\\084.png",
+      "sha256": "edd73f9f83f9b71608cb2889b85546fdda8f115794d08568ba294de974d4b4ca",
+      "viewScope": "enlarged eyes black/white/alpha"
+    },
+    {
+      "path": "processed-detail-v5\\rgba\\106.png",
+      "sha256": "3b61f3c683df7cb6baeffed580089524b648da3515eccfe6ede501a9f691e932",
+      "viewScope": "hashed provenance"
+    },
+    {
+      "path": "processed-detail-v5\\black\\106.png",
+      "sha256": "7b19d73ddaf19c346acf9faddaf6a27e5304bcbb3c594f6f5a1b002a941c66be",
+      "viewScope": "full native-size black/white"
+    },
+    {
+      "path": "processed-detail-v5\\white\\106.png",
+      "sha256": "4439e76de789d619ca514e530a9f5255c0387d9471d70b60593c41cf42b38741",
+      "viewScope": "full native-size black/white"
+    }
+  ],
+  "priorV4HoldPreserved": {
+    "path": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\sad\\key-purple-batch07-v2\\detail-review-B.json",
+    "sha256": "65aff469299e94ef8fdd5c0feda0ca013144b9693eed06389b28ed7cb8c0a82d"
+  },
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "fullAlphaAcceptance": false,
+  "userAccepted": false,
+  "originalSourceAndBReviewsUnchanged": true
+}

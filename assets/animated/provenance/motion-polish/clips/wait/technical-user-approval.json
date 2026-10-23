@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-23",
+  "status": "USER_APPROVED_INTERNAL_ALPHA_CLOSEOUT_AND_TWO_PLATFORM_STAGING",
+  "userText": "修复版可以，继续接入两端",
+  "reviewUrl": "http://127.0.0.1:63361/",
+  "humanAccepted": true,
+  "scope": "Exact wait/listen processed-detail-closeout-v1 internal-alpha outputs accepted; original acting kept. Authorizes Pi/DSH integration/staging and build verification, not local installation or public release.",
+  "actions": {
+    "wait": {
+      "job": "Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2",
+      "variant": "processed-detail-closeout-v1",
+      "manifestSha256": "ac3688860e6b37420ea4f27f7f563ba2664b51502c7ea655c650e8a4a890601e",
+      "evidence": {
+        "Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/manifest.json": "ac3688860e6b37420ea4f27f7f563ba2664b51502c7ea655c650e8a4a890601e",
+        "Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/report.json": "112f90a65d89a2924402572ccf1fcb3ebfe51f8db2e5c20c6f2dca64b1006f54",
+        "Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/user-approval.json": "37c5cfc7fc413ddd4b9d5f5f75f0bf75396ad077f9dbb0811e83d41aff1de055",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-source-core-review-A.json": "9c66b4412cb4e1048978f688ead7ab8e2c1c741f7db408346860c3c37f3b8936",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-source-core-review-B.json": "a0669e580216819676de17d52909b61b66af3579518a988c35c4a3347e807435",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-output-review-A.json": "4681fa65f9e12dc4d41643689692e8e7fd5b5a561cca37986f4b1aa8108a70a3",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-output-review-B.json": "5eadf9cc9fe99c0c37b9d8cb5d4feaaf30ca883842f4709ace0b663a88586fca",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-full-guard-preflight.json": "f5d823e1c437ed47d0c54bb0c5a87c12cb6d7c23fb79017cc01e5e9e5ca059a4",
+        "work/motion-polish-20261023/early-alpha-closeout/wait-detail-comparison.png": "a158afab3d620a8a79eecaaab5198d1238b1d638272938e5088f86f9a38502e7"
+      }
+    },
+    "listen": {
+      "job": "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2",
+      "variant": "processed-detail-closeout-v1",
+      "manifestSha256": "b1d65751fb89571952ed11efbff1598643d762cae5c21460d50a5ddd4db84674",
+      "evidence": {
+        "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/processed-detail-closeout-v1/manifest.json": "b1d65751fb89571952ed11efbff1598643d762cae5c21460d50a5ddd4db84674",
+        "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/processed-detail-closeout-v1/report.json": "efa8af6286059134d5c024cdf0078f77bdc9ab76d084c74253f12d18a52e83ff",
+        "Hi-Res/sources/h3-motion-polish-20261023/listen/key-purple-batch05-v2/user-approval.json": "50e99c773627faa16b226fd5b48785f5b9dce34f6a3870ab2eff556d29feece5",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-source-core-review-A.json": "f9a7e10572f2a4cffa6f84a9c386c7c6ca49344ad5b292b39ad26ff9bf0e3de3",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-source-core-review-B.json": "c832d0ab1f80a869c2758b4b8fc7c502c65eda27d80bb8d298149d922b329392",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-output-review-A.json": "76cf10200c28ac84e428d649b4e7e0d9adef955cfdf22158a6c638bd72ec3064",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-output-review-B.json": "62570026c5a1fca67aeba07e8e551485f39e2fcd64bf958ec357efa1599ccabe",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-full-guard-preflight.json": "0338f343987f24e679da838401a78cbb0567af42389468f08807131b914d6eac",
+        "work/motion-polish-20261023/early-alpha-closeout/listen-detail-comparison.png": "d42b8e5384a891d57e62b0d9e4aa9924cef27f0a154f6b6f21104e33b436f1c1"
+      }
+    }
+  },
+  "runtimeInstalled": false,
+  "publiclyReleased": false,
+  "action": "wait",
+  "processedVariant": "processed-detail-closeout-v1",
+  "originalActingApprovalSha256": "37c5cfc7fc413ddd4b9d5f5f75f0bf75396ad077f9dbb0811e83d41aff1de055",
+  "technicalApprovalRecordSha256": "3466b21e91a5dccf4499e14437f9f8f683b112b3ad9e8115df5c0fc75f7c35b6"
+}

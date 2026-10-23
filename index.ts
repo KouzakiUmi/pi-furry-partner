@@ -11,18 +11,25 @@ import { createKittyTransport } from "./lib/kitty.mjs";
 import { createActivity, DEMO_STATES } from "./lib/activity.mjs";
 import { DOCK_CAPTION_ROWS, dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
 import { createStatusFooter } from "./lib/footer.mjs";
+import { GESTURE_IDS } from "./lib/gestures.mjs";
 import { createMotionPlayer } from "./lib/motion.mjs";
+import { approvedMotionKeyboardClip, approvedMotionPokeFrame, approvedMotionStaticFrame, createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from "./lib/approved-motion.mjs";
+import { decodeApprovedMotionNodeResource } from "./lib/approved-motion-node.mjs";
+import { FULL_ANIMATION_EDITION, approvedMotionStyle } from "./lib/build-profile.mjs";
 import { createEditorControls } from "./lib/editor-controls.mjs";
 import { createOverlayVisibility } from "./lib/overlay-visibility.mjs";
 import { createQuickActions } from "./lib/quick-actions.mjs";
 import { compactNativePromptSections, addPersonaSection } from "./lib/native-prompt.mjs";
 import { installChineseUi } from "./lib/ui-chinese.mjs";
 import { createChineseAutocompleteFactory } from "./lib/command-chinese.mjs";
+import { getMascotArgumentCompletions } from "./lib/mascot-autocomplete.mjs";
 import { STYLES, normalizeStyle, styleAssetDirectory } from "./lib/styles.mjs";
 import { withPokeFrame } from "./lib/poke.mjs";
 import { withWatchFrames } from "./lib/watch.mjs";
 import { withListenFrames } from "./lib/listen.mjs";
 import { withSearchFrames } from "./lib/search.mjs";
+import { createGestureVideoCache, normalizeGestureVideoCatalog, stateExpressionVideo } from "./lib/gesture-video.mjs";
+import { withExpressionFrames } from "./lib/expressions.mjs";
 import { createResponseLatency, withResponseLatency } from "./lib/response-latency.mjs";
 import { normalizeLanguage, resolveLanguage, systemLanguage, localize, localizeSnapshot, replaceActivityCopy, nativeChineseEnabled, compactPromptEnabled, personaFilename, companionName, companionSubtitle, mascotDescription } from "./lib/language.mjs";
 
@@ -71,18 +78,34 @@ export default function (pi: ExtensionAPI) {
     replaceActivityCopy(voice, selected.copy, selected.phrases);
   }
   updateVoice();
+  let approvedCatalog: any = null;
+  if (FULL_ANIMATION_EDITION) {
+    try { approvedCatalog = normalizeApprovedMotionCatalog(read('assets/animated/catalog.json')); } catch { /* The ordinary reaction chain remains the complete fallback. */ }
+  }
   function selectedGraphicsMode() {
     let imageProtocol;
     try { imageProtocol = typeof (tuiUI as any).getCapabilities === "function" ? (tuiUI as any).getCapabilities().images : undefined; }
     catch { /* Capability probing failure keeps the terminal-cell fallback. */ }
     return graphicsMode(settings.renderer, process.env, imageProtocol);
   }
-  const activity = createActivity({ ...voice, rotationMs: voices["zh-CN"].phrases.rotationMs });
+  const activity = createActivity({ autoGestures: true, gestureDurations: () => ({ clips: { ...reactionCatalog().clips,
+    ...(approvedMotionStyle(settings.style) ? approvedCatalog?.clips : {}) } }), ...voice, rotationMs: voices["zh-CN"].phrases.rotationMs });
   const responseLatency = createResponseLatency();
   const readSnapshot = () => localizeSnapshot(activity.snapshot(), settings.language);
   const reactions = new Map<string, any>();
   const headerSheets = new Map<string, { native: any; fallback: any }>();
-  function reactionSheet() {
+  const reactionCatalogs = new Map<string, any>();
+  function reactionCatalog() {
+    if (!reactionCatalogs.has(settings.style)) {
+      let catalog = {};
+      try { catalog = read(`assets/reactions/${styleAssetDirectory(settings.style)}/gesture-videos.json`); } catch { /* Optional metadata. */ }
+      reactionCatalogs.set(settings.style, normalizeGestureVideoCatalog(catalog));
+    }
+    return reactionCatalogs.get(settings.style);
+  }
+  const gestureVideos = createGestureVideoCache({ load: (style: string, action: string) =>
+    read(`assets/reactions/${styleAssetDirectory(style)}/gesture-${action}-frames.json`) });
+  function reactionSheet(action = lastSnapshot?.gesture?.id || stateExpressionVideo(lastSnapshot, reactionCatalog())?.id) {
     if (!reactions.has(settings.style)) {
       const directory = `assets/reactions/${styleAssetDirectory(settings.style)}`;
       const sheet = read(`${directory}/reaction-sheet.json`);
@@ -91,9 +114,10 @@ export default function (pi: ExtensionAPI) {
       try { augmented = withWatchFrames(augmented, read(`${directory}/watch-frames.json`)); } catch { /* Earlier asset packs keep their work pose. */ }
       try { augmented = withListenFrames(augmented, read(`${directory}/listen-frames.json`)); } catch { /* Older packs keep their neutral listening fallback. */ }
       try { augmented = withSearchFrames(augmented, read(`${directory}/search-frames.json`)); } catch { /* Earlier packs keep their articulated search pose. */ }
+      try { augmented = withExpressionFrames(augmented, read(`${directory}/expression-frames.json`)); } catch { /* Older artwork retains its existing reactions. */ }
       reactions.set(settings.style, augmented);
     }
-    return reactions.get(settings.style);
+    return gestureVideos.sheet(reactions.get(settings.style), settings.style, action, reactionCatalog().clips[action]);
   }
   function titleSheets() {
     if (!headerSheets.has(settings.headerStyle)) {
@@ -105,6 +129,8 @@ export default function (pi: ExtensionAPI) {
 
   let tui: any;
   let timer: ReturnType<typeof setTimeout> | undefined;
+  let timerDueAt = Infinity;
+  let approvedFrameDueAt = Infinity;
   let suspended = true;
   let lastSnapshot: ReturnType<typeof activity.snapshot> | undefined;
   let header: ReturnType<typeof createHeader> | undefined;
@@ -162,18 +188,30 @@ export default function (pi: ExtensionAPI) {
   function stopTimer() {
     if (timer !== undefined) clearTimeout(timer);
     timer = undefined;
+    timerDueAt = approvedFrameDueAt = Infinity;
   }
   function visible() { return tui && (settings.layout === "editor" || !tui.hasOverlay()); }
   function redraw() { if (!suspended) tui?.requestRender(); }
-  function armTimer() {
+  function armTimer(renderedDeadline = false) {
     // Token events must not continually postpone the animation deadline.
     if (!settings.animation && !activity.isPoked() && !responseLatency.isWaiting()) { stopTimer(); return; }
-    if (timer !== undefined || suspended || !settings.enabled || !tui) return;
+    if (suspended || !settings.enabled || !tui) return;
     if (settings.layout === "header" && !header) return;
     const delay = !settings.animation && !activity.isPoked() ? 1000 : settings.layout === "header"
       ? Math.max(60, titleSheets().native.frames[headerFrame].durationMs) : 50;
+    const now = Date.now();
+    const dueAt = !visible() ? now + 800 : settings.animation && settings.layout === 'editor' && Number.isFinite(approvedFrameDueAt)
+      ? Math.max(now + 1, approvedFrameDueAt) : now + delay;
+    // Events can bring a deadline forward, never postpone it. A completed
+    // render replaces the provisional timer with its actual frame boundary.
+    if (timer !== undefined) {
+      if (renderedDeadline ? timerDueAt === dueAt : timerDueAt <= dueAt) return;
+      clearTimeout(timer);
+    }
+    timerDueAt = dueAt;
     timer = setTimeout(() => {
       timer = undefined;
+      timerDueAt = approvedFrameDueAt = Infinity;
       if (suspended) return;
       if (visible() && (settings.layout !== "header" || headerCanAnimate(tui))) {
         if (settings.layout === "header" && settings.animation) {
@@ -184,7 +222,7 @@ export default function (pi: ExtensionAPI) {
         redraw();
       }
       armTimer();
-    }, visible() ? delay : 800);
+    }, Math.max(1, Math.ceil(dueAt - now)));
     timer.unref?.();
   }
 
@@ -218,7 +256,10 @@ export default function (pi: ExtensionAPI) {
       private kittyTransport: ReturnType<typeof createKittyTransport> | undefined;
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
-      private motion = createMotionPlayer();
+      private motion = createMotionPlayer({ allowWholeFrameMotion: !FULL_ANIMATION_EDITION });
+      private approvedMotion = createApprovedMotionPlayer({ catalog: approvedCatalog,
+        loadIndexed: (path: string) => path.endsWith('.json') ? read(`assets/animated/${path}`)
+          : decodeApprovedMotionNodeResource(readFileSync(join(root, `assets/animated/${path}`))) });
       private disposed = false;
       private demoMotionEpoch: string | undefined;
       private demoMotionPhase: string | undefined;
@@ -231,6 +272,12 @@ export default function (pi: ExtensionAPI) {
       private quickActions = createQuickActions({
         ctx, pi, getEditor: () => this,
         getLanguage: () => settings.language,
+        onGesture: (mode: string) => {
+          const accepted = activity.playGesture(mode);
+          if (!accepted) ctx.ui.notify(l("等我忙完这一步，再陪你玩呀。", "Let me finish this bit, then I'll play."), "info");
+          else if (!settings.animation) ctx.ui.notify(l("我现在乖乖不动哦，用 /mascot play 开启动画吧。", "I'm holding still. Use /mascot play to enable motion."), "info");
+          lastSnapshot = undefined; redraw(); armTimer(); return accepted;
+        },
         isBlocked: () => suspended || activeEditor !== this || tui?.hasOverlay() || !this.focused,
         showDetails: (title: string, lines: string[]) => this.showDetails(title, lines),
         onChange: () => redraw(),
@@ -337,9 +384,25 @@ export default function (pi: ExtensionAPI) {
             (current.demoEpoch !== undefined || this.demoMotionEpoch !== undefined) &&
             motionPhase === this.demoMotionPhase) this.motion.reset();
         this.demoMotionEpoch = current.demoEpoch; this.demoMotionPhase = motionPhase;
+        const stateVideo = stateExpressionVideo(current, reactionCatalog());
+        const motionSampleAt = Date.now();
+        const approved = this.approvedMotion.sample(current, { style: settings.style, animate: settings.animation, enabled: settings.enabled, time: motionSampleAt });
+        let nextApprovedFrameMs = Infinity;
+        const approvedStyle = approvedMotionStyle(settings.style) && approvedCatalog;
+        const sheet = reactionSheet(approved || approvedStyle && !settings.animation ? '' : current.gesture?.id || stateVideo?.id);
+        const visualGesture = current.gesture || (stateVideo && sheet.motion?.gestureVideos?.[stateVideo.id] ? stateVideo : null);
         const dockLines = renderDock({
-          geometry, sheet: reactionSheet(), snapshot: current,
-          motionPlayer: this.motion, animate: settings.animation,
+          geometry, sheet, snapshot: current, visualGesture,
+          motionPlayer: { frame: (base: any, index: number, options: any) => {
+            if (!approvedStyle) return this.motion.frame(base, index, options);
+            const poked = current.reaction === 'poked';
+            const motionOptions = { ...options, animate: poked || settings.animation };
+            if (approvedStyle && !settings.animation && !poked) return approvedMotionStaticFrame(base, index, motionOptions);
+            const visual = this.approvedMotion.indexedFrame(approved, settings.style) || (approvedMotionKeyboardClip(approved?.clipId)
+              ? approvedMotionStaticFrame(base, base.ids['idle-open'] ?? 0, { phase: 'idle' }) : this.motion.frame(base, index, motionOptions));
+            if (approved && visual.approvedMotion === approved) nextApprovedFrameMs = visual.nextInMs;
+            return poked ? approvedMotionPokeFrame(visual, current.reactionElapsedMs, current.reactionStrength) : visual;
+          } }, animate: settings.animation,
           renderAvatar: (frame: any) => {
             this.displaySheet = frame.sheet;
             const mode = selectedGraphicsMode();
@@ -350,6 +413,10 @@ export default function (pi: ExtensionAPI) {
         this.geometry = joinEditor({ width, nativeLines: framedLines, dockLines, geometry, snapshot: current, theme: ctx.ui.theme, visibleWidth, truncateToWidth, editorInset: frame.inset, nativeRenderWidth });
         if (toolbarIndex >= 0) this.toolbarRow = this.geometry.offsetY + toolbarIndex;
         this.avatarBounds = geometry.collapsed || tui?.mode !== "fullscreen" ? undefined : { x: geometry.imageOffset, y: DOCK_CAPTION_ROWS, width: geometry.columns, height: geometry.rows };
+        if (activeEditor === this && settings.layout === 'editor') {
+          approvedFrameDueAt = Number.isFinite(nextApprovedFrameMs) ? motionSampleAt + Math.ceil(nextApprovedFrameMs) : Infinity;
+          armTimer(Number.isFinite(approvedFrameDueAt));
+        }
         return this.geometry.lines;
       }
       handleInput(data: string) {
@@ -395,7 +462,7 @@ export default function (pi: ExtensionAPI) {
         this.geometry = undefined; this.avatarBounds = undefined;
         this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined;
         this.kittyTransport?.dispose(); this.kittyTransport = undefined;
-        this.overlayVisibility.dispose(); this.motion.dispose(); this.controls.dispose();
+        this.overlayVisibility.dispose(); this.motion.dispose(); this.approvedMotion.dispose(); this.controls.dispose();
       }
     }
     editorFactory = (editorTui, theme, keybindings) => new UmiEditor(editorTui, theme, keybindings);
@@ -526,7 +593,7 @@ export default function (pi: ExtensionAPI) {
     responseLatency.handle("session_shutdown");
     languageReleased = true;
     languagePatch?.dispose(); languagePatch = undefined;
-    activity.handle("session_shutdown"); release();
+    activity.handle("session_shutdown"); gestureVideos.clear(); release();
   });
   const registerQuickShortcut = () => pi.registerShortcut("ctrl+alt+w", {
     description: l("打开呜咪的快捷操作菜单", "Open Umi's quick actions"),
@@ -538,12 +605,13 @@ export default function (pi: ExtensionAPI) {
 
   pi.registerCommand("mascot", {
     description: mascotDescription(settings.language),
+    getArgumentCompletions: (argumentPrefix) => getMascotArgumentCompletions(argumentPrefix, settings.language),
     handler: async (args, ctx) => {
       if (ctx.mode !== "tui") { ctx.ui.notify(l("呜咪显示在 Pi 交互终端中。", "Umi appears in Pi's interactive terminal."), "info"); return; }
       const [command, value] = args.trim().toLowerCase().split(/\s+/);
       if (!command) {
         const state = (value: boolean) => value ? l("开启", "on") : l("关闭", "off");
-        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${selectedGraphicsMode()} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|kitty|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
+        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${selectedGraphicsMode()} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|kitty|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot action [all|${GESTURE_IDS.join("|")}|off]\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
       }
       if (command === "language") {
         const next = normalizeLanguage(value);
@@ -603,6 +671,17 @@ export default function (pi: ExtensionAPI) {
       else if (command === "size" && SIZES.includes(value)) { if (settings.layout === "editor") settings.dockSize = value; else settings.size = value; apply(ctx); }
       else if (command === "render" && ["auto", "kitty", "sixel", "blocks"].includes(value)) { settings.renderer = value; apply(ctx); }
       else if (command === "info" && ["compact", "native"].includes(value)) { settings.info = value; apply(ctx); }
+      else if (command === "action") {
+        const mode = value || "all";
+        if (mode !== "all" && mode !== "off" && !GESTURE_IDS.includes(mode)) {
+          ctx.ui.notify(`action: all | ${GESTURE_IDS.join(" | ")} | off`, "info"); return;
+        }
+        if (!activity.playGesture(mode)) {
+          ctx.ui.notify(l("我先把手边这一步看好，空下来再给你演呀。", "Let me finish this bit first. I'll show you when I'm free."), "info"); return;
+        }
+        lastSnapshot = undefined; redraw(); armTimer();
+        ctx.ui.notify(l("小动作已切换；/mascot action off 收起来。", "Gesture updated; /mascot action off stops the loop."), "info"); return;
+      }
       else if (command === "demo" && (!value || value === "all" || DEMO_STATES.includes(value) || value === "off")) {
         const mode = value || "all";
         activity.setDemo(mode); lastSnapshot = undefined; redraw(); armTimer();

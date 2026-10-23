@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "wait",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\wait\\key-purple-brisk-accent-v2",
+  "status": "APPROVED_FOR_GUARDED_INTERIOR_ALPHA_RECOVERY",
+  "approvedCore": [
+    370,
+    350,
+    560,
+    480
+  ],
+  "sourceVideoSha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410",
+  "priorManifestSha256": "a08fa1091e6b1e7d8b336cefd05ac0ed0cffb97eb84b7e6f93e62feff2bb2f2a",
+  "actualViewedFiles": [
+    "work/motion-polish-20261023/early-alpha-closeout/wait-known-flag.jpg",
+    "work/motion-polish-20261023/early-alpha-closeout/wait-source-core.jpg"
+  ],
+  "actualViewedSourceFramesInProof": [
+    0,
+    12,
+    28,
+    51,
+    82,
+    106
+  ],
+  "knownFlagFinding": "Source versus priorblack/white eye magnifications show small background-dependent discontinuity/darkening/whitening at red-coral star margins consistent with erroneous partial interioralpha. Original eye-star source detail is foreground, not a designed transparent hole. This is subtle tip/rim damage, not a claim that the whole star vanished.",
+  "coreVisualFinding": "Correct newwait core[370,350,560,480] in sixposes is solid underlyingeyes/face/nose/mouth/foregroundfur; no actual key background or independent question symbol included. Old340-left rejected initialcandidate was not used for thisreview.",
+  "rootReportedComplete107Preflight": {
+    "frames": 107,
+    "minimumSourceKeyMargin": 36.0,
+    "sourceHasNoKeyLikePixelInCore": true
+  },
+  "numericPreflightIndependentlyRecomputedByA": false,
+  "allowedOperation": "Onlyalpha<252 erroneousinteriorpixels inside approvedCore may restore SAMEframe SAMEresize nativeRGB andalpha255. Require ext8connected exterior/coreboundary/reliablealpha>=252/outsidecore byteprotection; refuse on protectionconflict rather than relaxing constraints. No generalcolor edit,shape edit,outline erosion,retime or regenerate.",
+  "requiresPostRepairVisualCheck": true,
+  "limits": [
+    "Sixsourceposes and knownflag staticproof actuallyviewed; root complete107 numericalprecondition is separately attributed,not fullframe A visualclaim.",
+    "Existing userapproved acting/timing/amplitude/loop remains accepted as history; this record authorizes targetedtechnical alpha recovery only and does not reopen or extend artisticapproval.",
+    "No userapproval or installation of repairedoutput inferred; finaltarget blackwhite/alpha check and finalexact outputbinding stillrequired. Fineouteredge limitations remain unchanged."
+  ],
+  "actingUserApprovalPreserved": true,
+  "videoPlaybackViewed": false,
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "repositoryPath": "work/motion-polish-20261023/early-alpha-closeout/wait-preflight.json",
+      "sha256": "97ca08becf8c24ef79a0c4b09fb801b6b4abbd789342ea10316addba59e59321"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/early-alpha-closeout/wait-known-flag.jpg",
+      "sha256": "f43d54d3cdb2ba28a2252060f836596057221a5870337067aa96e61f82e8503a"
+    },
+    {
+      "repositoryPath": "work/motion-polish-20261023/early-alpha-closeout/wait-source-core.jpg",
+      "sha256": "8b8f58ac39a0c06bf156638a8f8cc4cd3e119857354f9aa989544ade4d2bd990"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/Umi-wait-H3-source.mp4",
+      "sha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410"
+    }
+  ]
+}

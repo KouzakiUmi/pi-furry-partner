@@ -132,7 +132,9 @@ async function scenario(initialMode, historyLines, switchMode = false, columns =
     result.modePresentation.push({ mode, editorWidth: currentEditor.geometry.editorWidth, clickRegions: currentEditor.controls.regions.map((region) => region.id), avatarClickable: Boolean(currentEditor.avatarBounds), cursor: currentEditor.getCursor() });
   };
   try {
-    for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
+    // Exercise the original regular overlay independently of optional motion packs.
+    for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), {
+      recursive: true, filter: source => source !== join(root, 'assets', 'animated') });
     if (process.env.PI_TEST_OVERLAY_MODULE) await cp(process.env.PI_TEST_OVERLAY_MODULE, join(scratch, "lib/overlay-visibility.mjs"));
     await writeFile(join(scratch, "config.json"), JSON.stringify({ language: "zh-CN", enabled: true, animation: false, persona: false, style: "wumi-pixel", layout: "editor", renderer: "sixel", info: "compact" }));
     const loaded = await loadExtensions([join(scratch, "index.ts")], scratch); assert.deepEqual(loaded.errors, []);

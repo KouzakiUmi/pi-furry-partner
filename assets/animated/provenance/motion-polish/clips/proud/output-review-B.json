@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1",
+  "decision": "PASS_SAMPLED_OUTPUT_FOR_USER_PLAYBACK_REVIEW_ONLY",
+  "sourceSha256": "a5c3f770b7d80bd186b0c5476becadfe1fc13a2cfb11e69ad1eae3893747fbb1",
+  "referenceSha256": "eb0dcac7d77d404a0a83e708f053869100bbdb17a180978550a7aa3765963105",
+  "registeredReferenceSha256": "3b70d261a2f2fc60afc94e342c63a8a41e6184c5408a1a379f89b87c66537bb7",
+  "promptSha256": "4d1e81d1d30a0d571471dfb3a79aaf4c2c4c2e302bc224e7f11e69cf636394a9",
+  "manifest": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\manifest.json",
+    "sha256": "a920180fa087a0599ef8fb2628d7b3fcd523d90a0f8d3de323070004a971ad5a"
+  },
+  "sourceReview": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\source-review-B.json",
+    "sha256": "2789e8e714da4a0f6a7a1be607717fbf17339011912a302cf5ec5ea7b762a91a"
+  },
+  "processingCore": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-batch09-face-core.py",
+    "sha256": "1ab1b39bcfed80458115cd6ea7d1617fd2af1e13e123ccb537e7c368c793d9fb",
+    "algorithmFile": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-reviewed-face-core.py",
+    "algorithmSha256": "855aa279f28299acae745a13bf61bc6392e37dfb8b690018fe0c21e4ca64905c",
+    "priorManifestSha256": "91cfd80e3848516fe79185aeb28159ce5966f8ec1205c4281535eeb6faf69fa4",
+    "sourceCorePreflightSha256": "304c301f7ecb74c9fe8272e24232bc2a7008d5ae8241f4666e7eb73c9c4d3070",
+    "actualSourceReviewGateSha256": "c8e2d99becf8d393f5d1a379f167cc53daf520ddcff6a4404d0a87158e131312",
+    "fixedCore": [
+      340,
+      340,
+      560,
+      490
+    ],
+    "scope": "This source independently A/B checked; native same-frame RGB and255alpha only inside unreliable-alpha solid face core. Reject ext8/coreboundary/key-like source; retain opaque252 and all outside RGBA."
+  },
+  "processedSamples": [
+    {
+      "frame": 0,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\black\\000.png",
+        "sha256": "2c33b2aaa2daf18c782d1a9c3303777bc86f86077397759cb6207ffdac39fd37"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\white\\000.png",
+        "sha256": "d76399a65182e911d48e0f26e89a14f1920c9b63484c1236e7c282ba546b3e6b"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\rgba\\000.png",
+        "sha256": "4c19151c32b0a1dd30d3a64f998ccbbf0bfad3541f83c12fb846397e7fcc3bb1"
+      },
+      "source": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\early-check\\00001.png",
+        "sha256": "ff948f25360bfab6302f0456d172394f9b5163447367feb3c86f591eb75e38f5"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 54,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\black\\054.png",
+        "sha256": "9a1c3397c17a36e809b70dcd4dd355e204c7dbb8f1982344c720ea6abd797e9e"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\white\\054.png",
+        "sha256": "9877b2026d9332161e3482276e9871cf9f4176fc4b9fb569f347152f46825151"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\rgba\\054.png",
+        "sha256": "8053430b06aa9aa1357e32864c925144a1d949d38af434c9172b38e456a37404"
+      },
+      "source": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\early-check\\00055.png",
+        "sha256": "cfe24e9020099eba371c0aa55206be4da6472f85d9ed034790d37e8b6669bb55"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 106,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\black\\106.png",
+        "sha256": "770941dee01bca59764fa7928370c4d69d31d6db3a5a568284d9cd83ef1a6718"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\white\\106.png",
+        "sha256": "05ea521f97343f93a5871f466e49ca6ad08e68ab4415f01f7c731782745516a1"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\processed-detail-v3\\rgba\\106.png",
+        "sha256": "76c03e1f294991acd01eee68165b0251066deea1a73534b3c7c0cdb0413c9778"
+      },
+      "source": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\proud\\key-purple-batch09-v1\\early-check\\00107.png",
+        "sha256": "3584a2605f08f8d4cadeddc2d780b74058d0fb2ed4b0832f535c3414e8619970"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    }
+  ],
+  "actualViewed": [
+    "Native source 054 re-viewed; native 000/106 previously reviewed in source gate.",
+    "Final 896 black and white 000/054/106 at native dimensions.",
+    "Face black/white and alpha crops 000/054/106 in linked proof."
+  ],
+  "observations": [
+    "000/106 maintain closed-mouth original expression; 054 shows one short upper fang in a natural open smile, with no extra fang pair or tooth row.",
+    "Hip-side compact closed paw and planted rounded gray paw retain palm volume, short wrist and thick forearm support; no sampled new paw deformation or lost nail tips. Approval is based on whole paw/support read, not nail count.",
+    "Cape remains one continuous layer; sampled registered body placement and planted support are preserved.",
+    "Face/eye stars/mouth line show no false transparency or visible rectangular repair seam on either background in these samples. Reviewed core alpha min252 with zero below252 in all three.",
+    "External gold stars retain soft perimeter; this review does not ask to make them opaque.",
+    "Fine purple/dark outer fringe remains visible on some cape/fur edges against white; no claim of globally perfect edges."
+  ],
+  "evidence": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch09-proud-output-core-B.png",
+      "sha256": "230e370d280366d5d85f6c691e70942f2f8591b0a3410f3232f250951e0a6da3"
+    }
+  ],
+  "outputAcceptanceScope": "Only selected final output stills, structure and reviewed face repair. Full107 technical checks belong to root; native-speed performance, smoothness and loop require user playback. No formal replacement or installation authorized by this B result.",
+  "fullFrameAlphaAcceptance": false,
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "userAccepted": false,
+  "formalAssetsChanged": false
+}

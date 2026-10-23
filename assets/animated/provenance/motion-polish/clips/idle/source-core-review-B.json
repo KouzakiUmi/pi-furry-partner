@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "source": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\Umi-idle-H3-source.mp4",
+    "sha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62"
+  },
+  "reference": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\reference.png",
+    "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+  },
+  "prompt": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\prompt.txt",
+    "sha256": "6f612fe2b1dea6ff01dd38206c73b0565db48d3e187b043a40906cf42aeb9cbc"
+  },
+  "preflight": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\source-core-preflight.json",
+    "sha256": "7295d707b371e9fac5587543f3ae3032c38915d3f992b40b159ef71174c97c7d"
+  },
+  "actualViewedFiles": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch10-idle-source-core-review.jpg",
+      "sha256": "687a17bbe313807ce9131b440e2b66b18763a6fc1b897632c5fc3f3d94653a3c"
+    }
+  ],
+  "actualViewedPoses": [
+    0,
+    24,
+    42,
+    66,
+    81,
+    106
+  ],
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      225,
+      280,
+      420,
+      375
+    ],
+    "canvas": [
+      640,
+      640
+    ],
+    "scope": "Underlying opaque face/eyes/mouth in this source only; not whole lens or external transparent glass.",
+    "observations": [
+      "All six drawn rectangles stay inside solid cheeks, eyes, muzzle/forehead hair despite side turn and blink; no background, paw gap, hem or external symbol in reviewed core."
+    ],
+    "guardsRequired": [
+      "Only restore prior alpha<252 pixels inside fixed rectangle from same native frame with the same fixed640 registration/resize RGB, alpha255.",
+      "Reject uncertainty connected to external alpha by8-neighbor connectivity or touching the core boundary; no mechanical lens fill.",
+      "Preserve reliable alpha>=252 RGBA exactly and every outside-core pixel exactly.",
+      "Use this source preflight across full107; reject key-like source pixels. Reviewed source-key margins53/54byte are root preflight evidence, not visual proof of every frame."
+    ],
+    "finalOutputReviewRequired": true
+  },
+  "dynamicAcceptance": false,
+  "fullFrameVisualAcceptance": false,
+  "formalAssetsChanged": false
+}

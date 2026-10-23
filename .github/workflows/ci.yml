@@ -2,7 +2,7 @@ name: Verify plugin
 
 on:
   push:
-    branches: [main]
+    branches: [main, legacy]
   pull_request:
   workflow_dispatch:
   workflow_call:
@@ -29,14 +29,26 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
-      - name: Install the verified Pi runtime for tests
-        run: npm install --prefix work/pi-runtime --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
-      - name: Run runtime and integration suites
+      - name: Install the verified Pi runtimes for tests
+        run: |
+          npm install --prefix work/pi-runtime-1.2 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
+          npm install --prefix work/pi-runtime-1.3 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.3.0 @earendil-works/pi-tui@1.3.0
+      - name: Verify release line isolation and platform archive names
+        run: python tests/release-lines.py
+      - name: Validate configured editions and both platforms (Pi 1.2.0)
         shell: pwsh
         run: |
-          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime/node_modules'
-          $env:PI_TEST_VERSION = '1.2.0'
-          npm test
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.2/node_modules'
+          python tools/build-editions.py --edition all --platform all --prepare-only --test
+      - name: Run runtime and integration suites (Pi 1.3.0)
+        shell: pwsh
+        run: |
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.3/node_modules'
+          node tests/integration.mjs
+          node tests/mouse-routing.mjs
+          node tests/ui-chinese.mjs
+          node tests/native-prompt.mjs
+          node tests/mascot-autocomplete.mjs
       - name: Verify PowerShell 7 install, upgrade and recovery
         shell: pwsh
         run: ./tests/installer.ps1 -WorkDir ./work/installer-core

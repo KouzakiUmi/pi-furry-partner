@@ -5,6 +5,9 @@ This is not an RGB despill/erode pass. The green signal becomes a separate
 grayscale background matte; its inverse is foreground alpha. Straight RGB is
 then recovered by reversing C = alpha*F + (1-alpha)*background. White fur has
 G-max(R,B) near zero and therefore stays opaque. The full-canvas scale is fixed.
+An opt-in local edge-color pass can suppress bright H.264 4:2:0 residuals
+around an already dark opaque contour. It leaves the matte and all opaque
+pixels exactly unchanged; it is not part of the inverse-compositing formula.
 Requires Pillow and NumPy, and ffmpeg only when decoding the public source.
 """
 from __future__ import annotations
@@ -13,14 +16,127 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+from collections import deque
 import numpy as np
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image,ImageDraw,ImageFont,ImageFilter
 
 ROOT=Path(__file__).resolve().parents[1]
 
+EDGE_COLOR_DECONTAMINATION={
+    'version':'dark-contour-local-4px-v1',
+    'method':'Opt-in local edge-color decontamination after inverse compositing',
+    'maxDistancePixels':4,'reliableAlphaMinimum':.985,
+    'outsideConnectivity':4,'darkContourMaximumRgb':.30,
+    'minimumAllChannelBrightnessExcess':.10,'fullWeightBrightnessExcess':.28,
+    'edgeMaximumRgb':.82,'edgeMaximumChroma':.23,
+    'protectedBrightOrColoredSupportRadius':3,
+    'alphaChanged':False,'opaqueRgbChanged':False,
+    'erosion':False,'globalColorRemap':False,
+}
+
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def extract_matte(image):
+def _outside_connected(mask):
+    """Four-connected region reachable from the canvas border, without erosion."""
+    height,width=mask.shape;seen=np.zeros(mask.shape,dtype=bool);queue=deque()
+    for y,x in [*((0,x) for x in range(width)),*((height-1,x) for x in range(width)),
+                *((y,0) for y in range(height)),*((y,width-1) for y in range(height))]:
+        if mask[y,x] and not seen[y,x]:
+            seen[y,x]=True;queue.append((y,x))
+    while queue:
+        y,x=queue.popleft()
+        for yy,xx in ((y-1,x),(y+1,x),(y,x-1),(y,x+1)):
+            if 0<=yy<height and 0<=xx<width and mask[yy,xx] and not seen[yy,xx]:
+                seen[yy,xx]=True;queue.append((yy,xx))
+    return seen
+
+
+def decontaminate_dark_contour_edges(rgba):
+    """Conservatively repair only bright, near-neutral outer soft-edge RGB.
+
+    H.264 4:2:0 edges can contain a bright/dark luma pair sharing chroma.
+    Inverting the green composite makes the bright member a gray rim around
+    dark ink. Alpha alone cannot remove that residual: premultiplied R/B
+    remain near the encoded source R/B. Use a nearby *opaque* dark contour as
+    a color prior, only where every channel is anomalously brighter. This is
+    an explicitly lossy local estimate, not a recovery of unknowable source
+    RGB. No alpha is lowered and no opaque or interior pixel is recolored.
+
+    Fixed pixel radii and fixed thresholds are shared by all frames. Nearby
+    reliable white/paper/claw or colored/scarf pixels veto correction, as do
+    isolated thin features without a reliable opaque contour. No SciPy or
+    per-frame color fitting is required.
+    """
+    array=np.asarray(rgba)
+    if array.ndim!=3 or array.shape[2]!=4:
+        raise ValueError('Expected HxWx4 straight float RGBA')
+    alpha=array[:,:,3];color=array[:,:,:3]
+    reliable=alpha>=EDGE_COLOR_DECONTAMINATION['reliableAlphaMinimum']
+    outside=_outside_connected(~reliable)
+    height,width=alpha.shape
+    nearest=np.zeros_like(color);distance_squared=np.full(alpha.shape,np.inf)
+    protected=np.zeros(alpha.shape,dtype=bool)
+    maximum=color.max(2);minimum=color.min(2)
+    bright_or_colored=reliable&((minimum>=.65)|((maximum-minimum)>=.25))
+    offsets=sorted((dy*dy+dx*dx,dy,dx) for dy in range(-4,5) for dx in range(-4,5)
+                   if dy*dy+dx*dx<=16)
+    for distance,dy,dx in offsets:
+        # Each target pixel looks at a source offset; all translations are
+        # integer and the deterministic tie order never changes over time.
+        y0=max(0,-dy);y1=min(height,height-dy)
+        x0=max(0,-dx);x1=min(width,width-dx)
+        if y0>=y1 or x0>=x1:continue
+        target=(slice(y0,y1),slice(x0,x1));source=(slice(y0+dy,y1+dy),slice(x0+dx,x1+dx))
+        take=reliable[source]&(distance<distance_squared[target])
+        distance_squared[target][take]=distance
+        nearest[target][take]=color[source][take]
+        if distance<=9:protected[target]|=bright_or_colored[source]
+    excess=(color-nearest).min(2)
+    eligible=(outside&(alpha>.005)&(~reliable)&(distance_squared<=16)
+              &(nearest.max(2)<.30)&((maximum-minimum)<.23)&(maximum<.82)&(~protected))
+    weight=np.clip((excess-.10)/.18,0,1)*eligible
+    result=array.copy()
+    result[:,:,:3]=color*(1-weight[:,:,None])+nearest*weight[:,:,None]
+    changed=weight>0
+    return result,{
+        **EDGE_COLOR_DECONTAMINATION,'enabled':True,
+        'correctedPixels':int(changed.sum()),'fullWeightPixels':int((weight>=1).sum()),
+        'protectedSupportPixels':int((outside&(~reliable)&protected).sum()),
+        'maximumWeight':float(weight.max(initial=0)),
+        'alphaExactlyUnchanged':bool(np.array_equal(result[:,:,3],alpha)),
+        'opaqueRgbExactlyUnchanged':bool(np.array_equal(result[:,:,:3][reliable],color[reliable])),
+    }
+
+
+def remove_distant_low_alpha_noise(rgba):
+    """Explicit post-save cleanup using the reviewed alpha128/9x9 support rule.
+
+    Accept 8-bit RGBA, matching clean_proud_affection_edges_20261021.py.
+    Only alpha in (0, 128) outside the square 9x9 dilation of alpha >= 128
+    is zeroed. RGB, all retained RGBA and supported soft alpha stay exact.
+    This geometric rule is opt-in: it does not identify material or anatomy.
+    It is independent of extract_matte and never runs by default.
+    """
+    array=np.asarray(rgba)
+    if array.ndim!=3 or array.shape[2]!=4 or array.dtype!=np.uint8:
+        raise ValueError('Expected HxWx4 uint8 RGBA after output quantization')
+    alpha=array[:,:,3]
+    supported=np.asarray(Image.fromarray(np.uint8(alpha>=128)*255).filter(ImageFilter.MaxFilter(9)))>0
+    removed=(alpha>0)&(alpha<128)&~supported
+    result=array.copy()
+    result[removed,3]=0
+    return result,{
+        'version':'supported-alpha128-dilate9-v1','enabled':True,
+        'supportAlphaMinimum':128,'supportDilationSize':9,
+        'removedDistantLowAlphaPixels':int(removed.sum()),
+        'allRgbExactlyUnchanged':bool(np.array_equal(result[:,:,:3],array[:,:,:3])),
+        'supportedAlphaIdentical':bool(np.array_equal(result[:,:,3][supported],alpha[supported])),
+        'opaqueRgbaIdentical':bool(np.array_equal(result[alpha>=248],array[alpha>=248])),
+        'retainedRgbaIdentical':bool(np.array_equal(result[~removed],array[~removed])),
+    }
+
+
+def extract_matte(image,*,edge_decontamination=False):
     rgb=np.asarray(image.convert('RGB'),dtype=np.float64)/255
     samples=np.concatenate((rgb[:8].reshape(-1,3),rgb[-8:].reshape(-1,3),rgb[:,:8].reshape(-1,3),rgb[:,-8:].reshape(-1,3)))
     background=np.median(samples,axis=0)
@@ -34,10 +150,14 @@ def extract_matte(image):
     straight=np.divide(numerator,alpha[:,:,None],out=np.zeros_like(rgb),where=alpha[:,:,None]>1e-12)
     straight=np.clip(straight,0,1)
     rgba=np.dstack((straight,alpha))
-    return rgba,background_matte,{'backgroundRgb':[round(v*255,4) for v in background],
+    detail={'backgroundRgb':[round(v*255,4) for v in background],
         'backgroundLuminance':float(background_luma),'softAlphaPixels':int(((alpha>0)&(alpha<1)).sum()),
         'whiteFurOpaquePixels':int(((rgb.min(2)>.85)&(alpha>.98)).sum()),
         'formula':'greenLuma=0.7152*max(0,G-max(R,B)); backgroundMatte=greenLuma/backgroundGreenLuma; alpha=1-backgroundMatte; F=(C-backgroundMatte*B)/alpha'}
+    if edge_decontamination:
+        rgba,edge_detail=decontaminate_dark_contour_edges(rgba)
+        detail['edgeColorDecontamination']=edge_detail
+    return rgba,background_matte,detail
 
 def resize_soft(rgba,size=(640,640)):
     # Resize premultiplied RGB and alpha with the same kernel. Keeping alpha
@@ -70,6 +190,8 @@ def main():
     parser.add_argument('--raw-frames',type=Path)
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--proof-only',action='store_true')
+    parser.add_argument('--edge-decontamination',action='store_true',
+                        help='Opt in to the versioned local dark-contour RGB repair; alpha is unchanged')
     args=parser.parse_args();out=args.out.resolve();out.mkdir(parents=True,exist_ok=True)
     selection=json.loads(args.selection.read_text(encoding='utf-8'))
     raw=args.raw_frames
@@ -80,7 +202,7 @@ def main():
     requested=[selected[0],selected[len(selected)//2],selected[-1]] if args.proof_only else selected
     for record in requested:
         index=record['sourceFrame'];image=Image.open(raw/f'watch_{index:05}.png').convert('RGB')
-        rgba,matte,detail=extract_matte(image);small=resize_soft(rgba)
+        rgba,matte,detail=extract_matte(image,edge_decontamination=args.edge_decontamination);small=resize_soft(rgba)
         file=record['file'];save_rgba(small,out/file)
         Image.fromarray(np.uint16(np.rint(matte*65535))).save(out/f"{Path(file).stem}-background-matte.png")
         Image.fromarray(np.uint16(np.rint((1-matte)*65535))).save(out/f"{Path(file).stem}-foreground-alpha.png")
@@ -94,6 +216,10 @@ def main():
         'hardThreshold':False,'erosion':False,'rgbDespill':False,'channelClamp':False,
         'resize':'Fixed full-canvas premultiplied Lanczos, same kernel for alpha and RGB',
         'audioIncluded':False,'interpolated':False,'reversed':False,'crossfaded':False}
+    if args.edge_decontamination:
+        processing['method']+='; opt-in local edge-color decontamination around reliable dark contours'
+        processing['inverseRgbOnly']=False
+        processing['edgeColorDecontamination']={**EDGE_COLOR_DECONTAMINATION,'enabled':True}
     manifest={**selection,'processing':processing,'frames':records}
     (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
     (out/'matte-report.json').write_text(json.dumps({'proofOnly':args.proof_only,'processing':processing,'frames':stats},indent=2)+'\n',encoding='utf-8')

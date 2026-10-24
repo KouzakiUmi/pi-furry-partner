@@ -58,7 +58,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 The **full-animation remake 2.5.1-preview.6** on `hd` provides 29 complete illustration clips, maintained for Pi. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
-Main full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
+HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
 
 <table>
@@ -105,13 +105,13 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0 and 1.3.
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-Choose a platform package from [full-animation 2.5.1-preview.6](https://github.com/KouzakiUmi/pi-furry-partner/tree/hd). For the original v2.4.0 artwork and simple frames, follow the separate [legacy v2.4.2 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Install one edition per host.
+This HD adaptation has no new Release yet. Build the package below from the [hd branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [legacy v2.4.2 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Install one edition per host.
 
 | Platform | Full-animation 2.5.1-preview.6 |
 | --- | --- |
-| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.1-pi-core.tgz` |
+| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz` |
 
-GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. Main no longer builds the HD-remaster product line.
+GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. HD builds independently of Legacy source.
 
 ### Pi terminal installation
 
@@ -143,9 +143,9 @@ Use `/mascot` to inspect your settings. Size, layout, rendering and demo command
 
 `/mascot demo` or `/mascot demo all` starts a repeating tour lasting a little over a minute: listening, thinking, speaking, working and a playful poke, with complete magnifier and search loops and time to doze and wake again. It makes no model requests and preserves settings and your draft. `demo off` or a real task ends the tour. Use `/mascot demo thinking` or `/mascot demo running` to focus on one pose.
 
-The main HD/full-animation line exposes only the `umi` illustration. Old pixel settings migrate to illustration; pixel artwork is available only in Legacy.
+The HD/full-animation line exposes only the `umi` illustration. Old pixel settings migrate to illustration; pixel artwork is available only in Legacy.
 
-For the original **100 × 100** pixel artwork and simple animations, install [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2). Main packages exclude pixel artwork on both hosts.
+For the original **100 × 100** pixel artwork and simple animations, install [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2). HD packages exclude pixel artwork.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
 

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createApprovedMotionPlayer } from '../lib/approved-motion.mjs';
+import { createApprovedMotionPlayer } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 const { catalog, data } = approvedMotionFixture();
 function harness(options = {}) {

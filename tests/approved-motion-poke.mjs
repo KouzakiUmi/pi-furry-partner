@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createMotionPlayer } from '../lib/motion.mjs';
-import { approvedMotionPokeFrame, approvedMotionStaticFrame } from '../lib/approved-motion.mjs';
+import { approvedMotionPokeFrame, approvedMotionStaticFrame } from '../lib/hd/player.mjs';
 const width = 80, height = 80, pixels = new Array(width * height).fill(0);
 for (let row = 20; row < 60; row++) for (let col = 20; col < 60; col++) pixels[row * width + col] = row % 2 ? 1 : 2;
 const sheet = { width, height, palette: [[0, 0, 0], [70, 90, 120], [220, 230, 240]], transparentIndex: 0,

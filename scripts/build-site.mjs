@@ -22,8 +22,9 @@ for (const file of await readdir(join(root, "site/assets"))) await copyFile(join
 // text/plain. Preserve the exact ESM content while using portable public URLs.
 const runtimeFiles = ["activity", "motion", "poke", "listen", "gestures", "expressions"];
 for (const file of runtimeFiles) {
-  const source = await readFile(join(root, "lib", `${file}.mjs`), "utf8");
-  await writeFile(join(out, "runtime", `${file}.js`), source.replace(/\.mjs(["'])/g, '.js$1'));
+  const source = await readFile(join(root, "lib", file === "activity" ? "hd/activity.mjs" : `${file}.mjs`), "utf8");
+  const portable = file === "activity" ? source.replace(/from (["'])\.\.\//g, 'from $1./') : source;
+  await writeFile(join(out, "runtime", `${file}.js`), portable.replace(/\.mjs(["'])/g, '.js$1'));
 }
 for (const file of ["status-phrases.json", "status-copy.json"]) await copyFile(join(root, "assets", file), join(out, "assets", file));
 await copyFile(join(root, "assets/poses/think.png"), join(out, "assets/umi-think.png"));

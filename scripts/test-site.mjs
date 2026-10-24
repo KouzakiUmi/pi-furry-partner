@@ -27,7 +27,7 @@ check("Typing uses real listening events and keeps paused motion static", () => 
 check("Caption text cannot shrink or paint over paws", () => { assert.match(css, /\.speech:lang\(en\)\{gap:2ch\}/); assert.match(css, /\.speech>span\[aria-hidden\]\{flex:0 0 2ch;min-width:2ch/); assert.match(css, /#bubble\{[^}]*min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap/); assert.match(app, /\$\("\.speech"\)\.setAttribute\("lang"/); });
 check("Pause, reduced motion and hidden-page suspension", () => { assert.match(app, /prefers-reduced-motion/); assert.match(app, /visibilitychange/); assert.match(app, /aria-pressed/); assert.match(css, /prefers-reduced-motion/); });
 check("Three independent demo switches and no model calls", () => { assert.equal((html.match(/role="switch"/g) || []).length, 3); assert.match(app, /const toggleState = \{ locale: true, prompt: true, persona: false \}/); assert.doesNotMatch(app, /fetch\(["']https?:|XMLHttpRequest|sendBeacon|WebSocket/); });
-check("Main source install command, available release listing and copy fallback", () => { assert.ok(html.includes("pi install git:github.com/KouzakiUmi/pi-furry-partner@main")); assert.match(html, /href="https:\/\/github\.com\/KouzakiUmi\/pi-furry-partner\/releases"/); assert.doesNotMatch(html, /releases\/tag\/v2\.4\.0/); assert.match(app, /navigator\.clipboard/); assert.match(app, /selectNodeContents/); });
+check("HD source install command, available release listing and copy fallback", () => { assert.ok(html.includes("pi install git:github.com/KouzakiUmi/pi-furry-partner@hd")); assert.match(html, /href="https:\/\/github\.com\/KouzakiUmi\/pi-furry-partner\/releases"/); assert.doesNotMatch(html, /releases\/tag\/v2\.4\.0/); assert.match(app, /navigator\.clipboard/); assert.match(app, /selectNodeContents/); });
 check("Character ARR and code license separated", () => { assert.match(html, /呜咪角色及动画素材保留全部版权/); assert.match(html, /代码和文档采用 Apache-2.0/); assert.match(html, /All Rights Reserved/); });
 check("Keyboard accessible named controls and visible focus", () => { assert.match(html, /skip-link/); assert.match(html, /aria-label="选择动画状态"/); assert.match(css, /focus-visible/); assert.match(html, /<noscript>/); });
 check("Relative local URLs work under repository subpath", () => { for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) { if (!/^(?:https?:|#)/.test(url)) assert.ok(url.startsWith("./"), url); } assert.doesNotMatch(html, /(?:src|href)="\//); });
@@ -35,7 +35,9 @@ check("All build hashes match", () => { assert.equal(manifest.version, pkg.versi
 for (const [file, expected] of Object.entries(manifest.hashes)) assert.equal(createHash("sha256").update(await readFile(join(out, file))).digest("hex"), expected);
 for (const file of ["activity", "motion", "poke", "listen", "gestures", "expressions"]) {
   const source = await readFile(join(out, "runtime", `${file}.js`), "utf8");
-  assert.equal(source, (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replace(/\.mjs(["'])/g, '.js$1'));
+  const original = await readFile(join(root, "lib", file === "activity" ? "hd/activity.mjs" : `${file}.mjs`), "utf8");
+  const portable = file === "activity" ? original.replace(/from (["'])\.\.\//g, 'from $1./') : original;
+  assert.equal(source, portable.replace(/\.mjs(["'])/g, '.js$1'));
   for (const [, dependency] of source.matchAll(/from\s+["'](\.\/[^"']+)["']/g)) {
     assert.ok(dependency.endsWith('.js'), `${file}: portable dependency extension`);
     await access(join(out, 'runtime', dependency));

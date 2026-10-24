@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decodeApprovedMotionNodeResource } from '../lib/approved-motion-node.mjs';
-import { decodeApprovedMotionIndexed, normalizeApprovedMotionCatalog } from '../lib/approved-motion.mjs';
+import { decodeApprovedMotionIndexed, normalizeApprovedMotionCatalog } from '../lib/hd/player.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const supplied = process.argv.indexOf('--catalog');

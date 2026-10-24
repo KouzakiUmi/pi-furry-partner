@@ -1,10 +1,10 @@
-name: Verify Pi plugin
+name: Verify Pi HD plugin
 
 on:
   push:
-    branches: [main, legacy]
+    branches: [hd]
   pull_request:
-    branches: [main]
+    branches: [hd]
   workflow_dispatch:
   workflow_call:
 
@@ -59,11 +59,7 @@ jobs:
         shell: pwsh
         run: |
           $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.3/node_modules'
-          node tests/integration.mjs
-          node tests/mouse-routing.mjs
-          node tests/ui-chinese.mjs
-          node tests/native-prompt.mjs
-          node tests/mascot-autocomplete.mjs
+          npm test
       - name: Verify PowerShell 7 install, upgrade and recovery
         shell: pwsh
         run: ./tests/installer.ps1 -WorkDir ./work/installer-core

@@ -5,6 +5,11 @@ R=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('release',R/'tools/release-edition.py');release=importlib.util.module_from_spec(s);s.loader.exec_module(release)
 def write(p,v):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v),encoding='utf-8')
 class ReleaseLines(unittest.TestCase):
+ def test_hd_is_independent_and_never_latest(self):
+  self.config['releaseLine']='hd';self.configure()
+  p,_=release.release_target(self.root,'hd-v2.5.1');self.assertEqual(p['latest'],'false');self.assertIn('HD',p['title']);self.assertFalse(p['prerelease'])
+  for tag in ['v2.5.1','legacy-v2.5.1']:
+   with self.assertRaises(AssertionError):release.release_target(self.root,tag)
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);self.config={'releaseLine':'main','editions':{'full-animation':{'version':'2.5.1','label':'Animated'}},'platforms':{'pi':{'resourceProfile':'pi-core','artifactPrefix':'pi-furry-partner'},'dsh':{'resourceProfile':'full','artifactPrefix':'dsh-furry-partner'}}};self.configure()
  def tearDown(self):self.tmp.cleanup()

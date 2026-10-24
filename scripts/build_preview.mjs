@@ -18,7 +18,7 @@ const phrases = JSON.parse(await readFile(join(root, "assets/status-phrases.json
 const copy = JSON.parse(await readFile(join(root, "assets/status-copy.json"), "utf8"));
 // Inline the exact dependency constant and remove its single known import.
 // No file: module fetch or duplicated state machine is needed for this preview.
-const activitySource = `const POKE_DURATION_MS = ${POKE_DURATION_MS};\nconst LISTEN_DURATION_MS = ${LISTEN_DURATION_MS};\n` + (await readFile(join(root, "lib/activity.mjs"), "utf8"))
+const activitySource = `const POKE_DURATION_MS = ${POKE_DURATION_MS};\nconst LISTEN_DURATION_MS = ${LISTEN_DURATION_MS};\n` + (await readFile(join(root, "lib/hd/activity.mjs"), "utf8"))
   .replace(/^import \{ POKE_DURATION_MS \} from "\.\/poke\.mjs";\r?\n/m, "")
   .replace(/^import \{ LISTEN_DURATION_MS \} from "\.\/listen\.mjs";\r?\n/m, "").replace(/^export\s+/gm, "");
 assert.doesNotMatch(activitySource, /^\s*import\s/m, "Offline activity dependencies must be explicitly bundled");

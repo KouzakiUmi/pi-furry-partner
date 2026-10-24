@@ -7,7 +7,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { createActivity } from "../lib/activity.mjs";
+import { createActivity } from "../lib/hd/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { activityBorder, renderDock } from "../lib/editor-layout.mjs";
 import { samplePixels } from "../lib/renderer.mjs";
@@ -223,12 +223,12 @@ for (const style of ["wumi", "wumi-pixel"]) for (const id of ["think", "talk-wid
   comparisons.push({ style, id, file, width: sheet.width, height: sheet.height, palette: sheet.palette });
 }
 const provenance = {};
-for (const path of ["lib/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "lib/poke.mjs", "lib/watch.mjs", "lib/listen.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json", "assets/reactions/wumi/poke-patch.json", "assets/reactions/wumi-pixel/poke-patch.json", "assets/reactions/wumi/watch-frames.json", "assets/reactions/wumi-pixel/watch-frames.json", "assets/reactions/wumi/listen-frames.json", "assets/reactions/wumi-pixel/listen-frames.json", "lib/search.mjs", "assets/reactions/wumi/search-frames.json", "assets/reactions/wumi-pixel/search-frames.json"]) {
+for (const path of ["lib/hd/activity.mjs", "lib/motion.mjs", "lib/editor-layout.mjs", "lib/editor-controls.mjs", "lib/renderer.mjs", "lib/poke.mjs", "lib/watch.mjs", "lib/listen.mjs", "config.json", "assets/status-copy.json", "assets/status-phrases.json", "assets/reactions/wumi/reaction-sheet.json", "assets/reactions/wumi-pixel/reaction-sheet.json", "assets/reactions/wumi/poke-patch.json", "assets/reactions/wumi-pixel/poke-patch.json", "assets/reactions/wumi/watch-frames.json", "assets/reactions/wumi-pixel/watch-frames.json", "assets/reactions/wumi/listen-frames.json", "assets/reactions/wumi-pixel/listen-frames.json", "lib/search.mjs", "assets/reactions/wumi/search-frames.json", "assets/reactions/wumi-pixel/search-frames.json"]) {
   provenance[path] = createHash("sha256").update(await readFile(join(root, path))).digest("hex");
 }
 const distinct = (phase) => new Set(frames.filter((frame) => frame.phase === phase).map((frame) => frame.sha256)).size;
 const check = {
-  productionModulesUsed: ["lib/activity.mjs", "lib/editor-layout.mjs", "lib/motion.mjs", "lib/renderer.mjs", "lib/editor-controls.mjs"],
+  productionModulesUsed: ["lib/hd/activity.mjs", "lib/editor-layout.mjs", "lib/motion.mjs", "lib/renderer.mjs", "lib/editor-controls.mjs"],
   firstPersonCopyUsed: true, controlButtons: controls.buttons.map((item) => item.label),
   statusPlacement: "input top border only", extraStatusRows: 0,
   modelRequests: 0, simulatedEventsOnly: true, durationMs: cumulative, fps,

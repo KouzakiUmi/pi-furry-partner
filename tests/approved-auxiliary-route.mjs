@@ -1,6 +1,6 @@
 // Routing fixtures exercise real complete-frame pixels; they do not approve art.
 import assert from 'node:assert/strict';
-import { APPROVED_AUXILIARY_IDS, createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from '../lib/approved-motion.mjs';
+import { APPROVED_AUXILIARY_IDS, createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 
 for (const id of APPROVED_AUXILIARY_IDS) {

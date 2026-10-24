@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { LISTEN_DURATION_MS, withListenFrames } from "../lib/listen.mjs";
 import { withWatchFrames } from "../lib/watch.mjs";
 import { withPokeFrame } from "../lib/poke.mjs";
-import { createActivity, DEMO_SEQUENCE } from "../lib/activity.mjs";
+import { createActivity, DEMO_SEQUENCE } from "../lib/hd/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 
 const read=async(path)=>JSON.parse(await readFile(new URL(`../${path}`,import.meta.url),"utf8"));

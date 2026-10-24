@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createActivity, DEMO_STATES, DEMO_SEQUENCE, DEMO_PERIOD_MS } from "../lib/activity.mjs";
+import { createActivity, DEMO_STATES, DEMO_SEQUENCE, DEMO_PERIOD_MS } from "../lib/hd/activity.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const checks = [];

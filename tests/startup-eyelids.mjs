@@ -5,7 +5,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { createActivity } from "../lib/activity.mjs";
+import { createActivity } from "../lib/hd/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { renderDock } from "../lib/editor-layout.mjs";
 import { samplePixels } from "../lib/renderer.mjs";

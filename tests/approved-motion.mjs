@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createApprovedMotionPlayer, normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed, approvedMotionPath } from '../lib/approved-motion.mjs';
+import { createApprovedMotionPlayer, normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed, approvedMotionPath } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 const { catalog, data } = approvedMotionFixture();
 let clock = 0;

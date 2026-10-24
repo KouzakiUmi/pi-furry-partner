@@ -8,12 +8,12 @@ import { CURSOR_MARKER, getCellDimensions, matchesKey, truncateToWidth, visibleW
 import { createHeader, headerCanAnimate, renderPixels, safeText, samplePixels, terminalVariants } from "./lib/renderer.mjs";
 import { createSixelTransport, graphicsMode } from "./lib/sixel.mjs";
 import { createKittyTransport } from "./lib/kitty.mjs";
-import { createActivity, DEMO_STATES } from "./lib/activity.mjs";
+import { createPiHdActivity as createActivity, DEMO_STATES, HD_PI_ACTIVITY_EVENTS } from "./lib/hd/pi-adapter.mjs";
 import { DOCK_CAPTION_ROWS, dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
 import { createStatusFooter } from "./lib/footer.mjs";
 import { GESTURE_IDS } from "./lib/gestures.mjs";
-import { createMotionPlayer } from "./lib/motion.mjs";
-import { approvedMotionIndexedRect, approvedMotionKeyboardClip, approvedMotionPokeFrame, approvedMotionStaticFrame, createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from "./lib/approved-motion.mjs";
+import { approvedMotionIndexedRect, approvedMotionKeyboardClip, approvedMotionPokeFrame, normalizeApprovedMotionCatalog } from "./lib/hd/player.mjs";
+import { createPiHdMotionPlayer, piHdStaticFrame as approvedMotionStaticFrame } from "./lib/hd/pi-adapter.mjs";
 import { decodeApprovedMotionNodeResource } from "./lib/approved-motion-node.mjs";
 import { FULL_ANIMATION_EDITION, approvedMotionStyle } from "./lib/build-profile.mjs";
 import { createEditorControls } from "./lib/editor-controls.mjs";
@@ -80,7 +80,7 @@ export default function (pi: ExtensionAPI) {
   updateVoice();
   let approvedCatalog: any = null;
   if (FULL_ANIMATION_EDITION) {
-    try { approvedCatalog = normalizeApprovedMotionCatalog(read('assets/animated/catalog.json')); } catch { /* The ordinary reaction chain remains the complete fallback. */ }
+    try { approvedCatalog = normalizeApprovedMotionCatalog(read('assets/animated/catalog.json')); } catch { /* HD retains authored static poses if the complete-motion catalog is unavailable. */ }
   }
   function selectedGraphicsMode() {
     let imageProtocol;
@@ -260,8 +260,7 @@ export default function (pi: ExtensionAPI) {
       private kittyTransport: ReturnType<typeof createKittyTransport> | undefined;
       private overlayVisibility: ReturnType<typeof createOverlayVisibility>;
       private geometry: ReturnType<typeof joinEditor> | undefined;
-      private motion = createMotionPlayer({ allowWholeFrameMotion: !FULL_ANIMATION_EDITION });
-      private approvedMotion = createApprovedMotionPlayer({ catalog: approvedCatalog, minimumActionMs: 1200,
+      private approvedMotion = createPiHdMotionPlayer({ catalog: approvedCatalog, minimumActionMs: 1200,
         onInteractionPresented: (epoch: number) => activity.markInteractionPresented(epoch),
         loadIndexed: (path: string) => path.endsWith('.json') ? read(`assets/animated/${path}`)
           : decodeApprovedMotionNodeResource(readFileSync(join(root, `assets/animated/${path}`))) });
@@ -391,24 +390,24 @@ export default function (pi: ExtensionAPI) {
         // clock once instead of carrying the previous lap's phase age forward.
         if (current.demoEpoch !== this.demoMotionEpoch &&
             (current.demoEpoch !== undefined || this.demoMotionEpoch !== undefined) &&
-            motionPhase === this.demoMotionPhase) this.motion.reset();
+            motionPhase === this.demoMotionPhase) this.approvedMotion.reset();
         this.demoMotionEpoch = current.demoEpoch; this.demoMotionPhase = motionPhase;
         const stateVideo = stateExpressionVideo(current, reactionCatalog());
         const motionSampleAt = Date.now();
         const approved = this.approvedMotion.sample(current, { style: settings.style, animate: settings.animation || current.interaction?.kind === "poke", enabled: settings.enabled, time: motionSampleAt });
         let nextApprovedFrameMs = Infinity;
-        const approvedStyle = approvedMotionStyle(settings.style) && approvedCatalog;
+        const approvedStyle = approvedMotionStyle(settings.style);
         const sheet = reactionSheet(approved || approvedStyle && !settings.animation ? '' : current.gesture?.id || stateVideo?.id);
         const visualGesture = current.gesture || (stateVideo && sheet.motion?.gestureVideos?.[stateVideo.id] ? stateVideo : null);
         const dockLines = renderDock({
           geometry, sheet, snapshot: current, visualGesture,
           motionPlayer: { frame: (base: any, index: number, options: any) => {
-            if (!approvedStyle) return this.motion.frame(base, index, options);
+            if (!approvedStyle) return approvedMotionStaticFrame(base, index, options);
             const poked = current.reaction === 'poked';
-            const motionOptions = { ...options, animate: poked || settings.animation };
+            const motionOptions = { ...options, phase: current.reaction || options.phase, animate: poked || settings.animation };
             if (approvedStyle && !settings.animation && !poked) return approvedMotionStaticFrame(base, index, motionOptions);
             const visual = this.approvedMotion.indexedFrame(approved, settings.style) || (approvedMotionKeyboardClip(approved?.clipId)
-              ? approvedMotionStaticFrame(base, base.ids['idle-open'] ?? 0, { phase: 'idle' }) : this.motion.frame(base, index, motionOptions));
+              ? approvedMotionStaticFrame(base, base.ids['idle-open'] ?? 0, { phase: 'idle' }) : approvedMotionStaticFrame(base, index, motionOptions));
             if (approved && visual.approvedMotion === approved) nextApprovedFrameMs = visual.nextInMs;
             return poked && !approved && !current.interaction ? approvedMotionPokeFrame(visual, current.reactionElapsedMs, current.reactionStrength) : visual;
           } }, animate: settings.animation,
@@ -477,7 +476,7 @@ export default function (pi: ExtensionAPI) {
         this.geometry = undefined; this.avatarBounds = undefined;
         this.quickActions.dispose(); this.transport?.dispose(); this.transport = undefined;
         this.kittyTransport?.dispose(); this.kittyTransport = undefined;
-        this.overlayVisibility.dispose(); this.motion.dispose(); this.approvedMotion.dispose(); this.controls.dispose();
+        this.overlayVisibility.dispose(); this.approvedMotion.dispose(); this.controls.dispose();
       }
     }
     editorFactory = (editorTui, theme, keybindings) => new UmiEditor(editorTui, theme, keybindings);
@@ -605,7 +604,7 @@ export default function (pi: ExtensionAPI) {
     if (ctx.mode !== "tui") return;
     responseLatency.handle(type, event); refreshState(); redraw(); armTimer();
   });
-  const events = ["agent_start", "message_start", "message_update", "message_end", "tool_execution_start", "tool_execution_end", "agent_before_settle", "agent_settled", "ui_prompt_start", "ui_prompt_end", "session_before_compact", "session_compact", "session_compact_failed"] as const;
+  const events = HD_PI_ACTIVITY_EVENTS;
   for (const type of events) pi.on(type, (event) => {
     responseLatency.handle(type, event);
     activity.handle(type, event); refreshState(); activeEditor?.observeActivity(); redraw(); armTimer();

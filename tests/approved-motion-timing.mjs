@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { modules } from './pi-runtime.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
-import { approvedMotionFrameAt } from '../lib/approved-motion.mjs';
+import { approvedMotionFrameAt } from '../lib/hd/player.mjs';
 
 // Real native24fps timestamps: positive modulo must not select the previous
 // frame at83.333ms merely by adding/subtracting the4458ms period.

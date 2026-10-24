@@ -5,7 +5,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
-import { createActivity } from "../lib/activity.mjs";
+import { createActivity } from "../lib/hd/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { renderDock } from "../lib/editor-layout.mjs";
 import { withPokeFrame, POKE_DURATION_MS } from "../lib/poke.mjs";

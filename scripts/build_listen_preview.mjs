@@ -7,7 +7,7 @@ import{spawnSync}from"node:child_process";
 import{withListenFrames}from"../lib/listen.mjs";
 import{withWatchFrames}from"../lib/watch.mjs";
 import{withPokeFrame}from"../lib/poke.mjs";
-import{createActivity}from"../lib/activity.mjs";
+import{createActivity}from"../lib/hd/activity.mjs";
 import{createMotionPlayer}from"../lib/motion.mjs";
 import{renderDock}from"../lib/editor-layout.mjs";
 import{styleAssetDirectory}from"../lib/styles.mjs";

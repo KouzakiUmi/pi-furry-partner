@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { loadAnimatedCatalog, loadAnimatedAsset } from '../lib/pi-resources.mjs';
-import { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed } from '../lib/approved-motion.mjs';
+import { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed } from '../lib/hd/player.mjs';
 import { decodeApprovedMotionNodeResource } from '../lib/approved-motion-node.mjs';
 const catalog = loadAnimatedCatalog(), normalized = normalizeApprovedMotionCatalog(catalog);
 assert.equal(Object.keys(normalized.clips).length, 29);

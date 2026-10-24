@@ -1,6 +1,7 @@
 // Independent product and integration suites; no model requests are made.
 await import("../scripts/verify-pi-line.mjs");
 await import("./main-action-isolation.mjs");
+await import("./hd-adapter.mjs");
 await import("./activity.mjs");
 await import("./activity-state-gap.mjs");
 await import("./response-latency.mjs");

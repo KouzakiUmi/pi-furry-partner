@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createApprovedMotionPlayer, approvedMotionStaticFrame } from '../lib/approved-motion.mjs';
+import { createApprovedMotionPlayer, approvedMotionStaticFrame } from '../lib/hd/player.mjs';
 import { renderDock } from '../lib/editor-layout.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 import { approvedMotionStyle } from '../lib/build-profile.mjs';

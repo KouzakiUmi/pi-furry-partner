@@ -19,7 +19,7 @@ assert.equal(header.frames.length, 15);
 assert.equal(header.loopDurationMs, 4800);
 let logicalEntries = 0;
 if (pkg.umiDistribution.track === 'full-animation') {
-  const { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed, APPROVED_AUXILIARY_IDS, APPROVED_IDLE_VARIANT_IDS } = await import(pathToFileURL(join(root, 'lib/approved-motion.mjs')));
+  const { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed, APPROVED_AUXILIARY_IDS, APPROVED_IDLE_VARIANT_IDS } = await import(pathToFileURL(join(root, 'lib/hd/player.mjs')));
   const { decodeApprovedMotionNodeResource } = await import(pathToFileURL(join(root, 'lib/approved-motion-node.mjs')));
   const catalog = normalizeApprovedMotionCatalog(loadAnimatedCatalog());
   const required = ['idle','think','listen','wait','rest','work','watch','search','joy','grumpy','sad','cry','shy','flustered','surprise','proud','affection','work-enter','work-exit'];

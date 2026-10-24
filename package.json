@@ -25,13 +25,10 @@
     "test": "node tests/run.mjs",
     "build:site": "node scripts/build-site.mjs",
     "test:site": "node scripts/test-site.mjs",
-    "build:dsh": "node scripts/build-dsh-client.mjs",
-    "test:dsh": "node tests/run-dsh.mjs",
     "build:animated": "python tools/build-editions.py --edition full-animation --platform all",
     "build:all": "python tools/build-editions.py --edition all --platform all",
     "build:prepare": "python tools/build-editions.py --edition all --platform all --prepare-only",
-    "build:pi": "python tools/build-editions.py --edition all --platform pi",
-    "build:packages:dsh": "python tools/build-editions.py --edition all --platform dsh"
+    "build:pi": "python tools/build-editions.py --edition all --platform pi"
   },
   "engines": {
     "node": ">=22.19.0"
@@ -39,8 +36,6 @@
   "keywords": [
     "pi-package",
     "pi-coding-agent",
-    "dsh-plugin",
-    "deepseek-harness",
     "furry",
     "mascot",
     "tui",
@@ -48,22 +43,13 @@
     "bilingual",
     "chinese-ui"
   ],
-  "main": "./lib/index.js",
-  "exports": {
-    ".": "./lib/index.js",
-    "./client": "./lib/client.js",
-    "./cordis.patch.yml": "./cordis.patch.yml",
-    "./package.json": "./package.json"
-  },
   "files": [
     "index.ts",
-    "cordis.patch.yml",
     "config.json",
     "install.ps1",
     "uninstall.ps1",
     "ASSET_LICENSE.md",
     "NOTICE",
-    "lib/*.js",
     "lib/*.mjs",
     "prompts/*.md",
     "themes/*.json",
@@ -71,26 +57,6 @@
     "assets/ui-*.json",
     "assets/illustration/*.json",
     "assets/reactions/umi/*.json",
-    "assets/hires/**",
-    "assets/branding/*",
     "assets/animated/**"
-  ],
-  "dsh": {
-    "manifestVersion": 1,
-    "bundle": {
-      "patch": "./cordis.patch.yml"
-    },
-    "client": {
-      "platform": "web"
-    },
-    "compatibility": {
-      "node": ">=18",
-      "dshReleases": {
-        "0.2.1-alpha.1": "compatible",
-        "0.2.1-alpha.2": "compatible",
-        "0.2.1-alpha.3": "compatible",
-        "0.2.1-rc.2": "compatible"
-      }
-    }
-  }
+  ]
 }

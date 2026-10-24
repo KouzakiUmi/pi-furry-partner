@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 const root = resolve(process.argv[2]);
 const read = async name => JSON.parse(await readFile(join(root, name), 'utf8'));
 const pkg = await read('package.json');
-const { loadEncodedSheet, loadAnimatedCatalog, loadAnimatedAsset } = await import(pathToFileURL(join(root, 'lib/index.js')));
+const { loadEncodedSheet, loadAnimatedCatalog, loadAnimatedAsset } = await import(pathToFileURL(join(root, 'lib/pi-resources.mjs')));
 for (const style of ['umi', 'umi-pixel', 'wumi', 'wumi-pixel', 'illustration', 'pixel']) {
   const sheet = loadEncodedSheet(style);
   assert.ok(sheet.frames.length > 1 && sheet.width > 0, `Packaged style alias ${style} resolves to real frames`);

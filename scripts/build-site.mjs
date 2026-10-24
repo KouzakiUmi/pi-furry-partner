@@ -5,7 +5,7 @@ import { readFile, writeFile, mkdir, copyFile, readdir } from "node:fs/promises"
 import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { loadEncodedSheet } from "../lib/index.js";
+import { loadEncodedSheet } from "../lib/pi-resources.mjs";
 import { STYLES } from "../lib/styles.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");

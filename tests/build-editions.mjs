@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { BUILD_EDITION, FULL_ANIMATION_EDITION, approvedMotionStyle } from '../lib/build-profile.mjs';
 import { STYLES, normalizeStyle, styleAssetDirectory } from '../lib/styles.mjs';
-import { loadEncodedSheet, loadAnimatedCatalog } from '../lib/index.js';
+import { loadEncodedSheet, loadAnimatedCatalog } from '../lib/pi-resources.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async path => JSON.parse(await readFile(new URL(path, root), 'utf8'));

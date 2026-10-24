@@ -1,4 +1,4 @@
-"""Resolve a release tag and validate that only its two audited platform packages upload."""
+"""Resolve a release tag and validate that only its configured audited platform packages upload."""
 import argparse
 import hashlib
 import json
@@ -33,7 +33,7 @@ def release_target(root, tag):
     assert len(notes) == 1 and notes[0], 'A nonempty exact-version changelog section is required'
     return {'tag': tag, 'edition': edition, 'version': version, 'releaseLine': line, 'prerelease': prerelease,
             'latest': 'false' if prerelease or line == 'legacy' else 'true',
-            'title': f"Umi · {'Legacy' if line == 'legacy' else 'Main'} {tag} · {spec['label']} · Pi / DSH"}, notes[0]
+            'title': f"Umi · {'Legacy' if line == 'legacy' else 'Main'} {tag} · {spec['label']} · Pi"}, notes[0]
 
 
 def prepare(root, tag, output, github_output=None):
@@ -69,8 +69,8 @@ def release_assets(root, plan, releases):
     expected = {(edition, platform) for platform in platforms}
     keys = [(row['edition'], row['platform']) for row in builds]
     audit_keys = [(row['edition'], row['platform']) for row in audits]
-    assert len(keys) == len(set(keys)) and set(keys) == expected, 'Require both platform builds, without duplicates'
-    assert len(audit_keys) == len(set(audit_keys)) and set(audit_keys) == expected, 'Require both platform audits, without duplicates'
+    assert len(keys) == len(set(keys)) and set(keys) == expected, 'Require configured platform builds, without duplicates'
+    assert len(audit_keys) == len(set(audit_keys)) and set(audit_keys) == expected, 'Require configured platform audits, without duplicates'
     by_key = dict(zip(audit_keys, audits))
     assets = []
     for build in builds:

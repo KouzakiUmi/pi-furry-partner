@@ -1,4 +1,6 @@
 // Independent product and integration suites; no model requests are made.
+await import("../scripts/verify-pi-line.mjs");
+await import("./main-action-isolation.mjs");
 await import("./activity.mjs");
 await import("./activity-state-gap.mjs");
 await import("./response-latency.mjs");
@@ -28,15 +30,13 @@ await import("./ui-chinese.mjs");
 await import("./language-integration.mjs");
 await import("./prompt-ordering.mjs");
 await import("./language.mjs");
-await import("./dsh-scene-title.mjs");
 await import("./build-editions.mjs");
 
 const { FULL_ANIMATION_EDITION } = await import('../lib/build-profile.mjs');
 if (FULL_ANIMATION_EDITION) {
-  for (const name of ['approved-motion', 'approved-motion-pi', 'approved-motion-dsh',
-    'approved-motion-poke', 'animated-host', 'approved-motion-pack',
-    'approved-motion-hd-delay', 'approved-motion-codec', 'approved-motion-binary-pack', 'approved-color-derivative',
-    'approved-motion-lifecycle', 'approved-motion-timing', 'approved-motion-dsh-timing', 'state-motion-routing-pi', 'approved-auxiliary-route', 'approved-idle-variants', 'approved-idle-variants-dsh', 'approved-nod', 'approved-idle-wave', 'approved-stretch', 'approved-peek', 'approved-head-shake', 'approved-ear-flick', 'approved-bounce', 'approved-nuzzle', 'approved-motion-viewport', 'approved-action-dwell', 'action-dwell-pi', 'action-dwell-dsh', 'approved-tool-gap', 'tool-gap-pi', 'tool-gap-dsh']) await import(`./${name}.mjs`);
+  for (const name of ['approved-motion', 'approved-motion-pi', 'approved-motion-poke', 'approved-motion-pack',
+    'approved-motion-codec', 'approved-motion-binary-pack', 'approved-color-derivative',
+    'approved-motion-timing', 'state-motion-routing-pi', 'approved-auxiliary-route', 'approved-idle-variants', 'approved-nod', 'approved-idle-wave', 'approved-stretch', 'approved-peek', 'approved-head-shake', 'approved-ear-flick', 'approved-bounce', 'approved-nuzzle', 'approved-motion-viewport', 'approved-action-dwell', 'action-dwell-pi', 'approved-tool-gap', 'tool-gap-pi', ]) await import(`./${name}.mjs`);
 }
 
 await import("./tool-error-activity.mjs");

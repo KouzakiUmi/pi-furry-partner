@@ -1,61 +1,27 @@
-> 开发候选 **2.5.1-preview.2（未发布）**：主线高清／全动态两端仅保留插画；像素仅在Legacy。以下已发布版本记录不代表新构建仍提供像素。
+# Pi 产品线与构建
 
-> 当前发布候选为Main **2.5.1-preview.1**，Legacy维护版为 **legacy-v2.4.2**。下文2.5.0／2.4.1记录保留历史基线。
+本仓库只维护 Pi：`main` 为高清／全动态版，当前源码版本 `2.5.1-preview.6`；`legacy` 为保留原资源及简单帧的 2.4.x 维护线。DSH 已独立到 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)，有自己的源码、测试、包和发布流程。
 
-# 呜咪插件：全动态与原资源维护分支
-
-`main` 独立发布全动态 **v2.5.0**；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)独立维护 **v2.4.1**，只优化代码，保留 v2.4.0 全部原素材与原简单帧。main 不再发行高清重制产品线。
-
-| 分支 | 插画动作 | 像素画风 |
-| --- | --- | --- |
-| main · 全动态 | 完整角色动作与键盘过渡，以已验收catalog为准；开发版已补点头 | 不提供；请使用Legacy |
-| legacy · v2.4.1 | v2.4.0 原始素材与原简单帧 | v2.4.0 原始像素与原简单帧 |
-
-本次正式发行沿用已经验收的全部动作和资源；后续优化在发布后进行。已发布的 v2.4.5 与 v2.5.0-preview.6 保留为历史，tag 不移动、不重写。
-
-## main 构建
-
-所有运行时源码、全动态插画与原始像素素材均在当前仓库。新构建不读取旁边的 regular worktree 或 work 下历史 stage；旧目录和安装包保留作历史回退。
+## main
 
 ```powershell
-npm run build:animated     # 全动态版：Pi + DSH 两个包
-npm run build:all          # 当前分支配置的全部产品与平台；main 为上述两个包
-npm run build:pi           # Pi 精简包，省去 Web 高清位图
-npm run build:packages:dsh # DSH 完整高清资源包
+npm test
+npm run build:animated
+python tools/audit-edition-bundles.py --edition full-animation
 ```
 
-版本号与默认 edition 配置在 `build/editions.json`；main 源码默认使用全动态逻辑。`tools/build-editions.py` 验证源码的默认 edition 与配置一致，在 `dist/staging` 内生成发行配置与客户端，不反向修改源码。edition 参数从当前分支配置读取。
+`build/editions.json` 只配置 Pi 平台。`build:all` 与 `--platform all` 只构建本仓库配置的 Pi 包，不再生成 DSH 包。Pi 动作播放器、最短展示时间、键盘进入／循环／退出、两秒动作保留和原生互动保持自己的调度规则。
 
-安装包与逐项哈希报告输出到 `dist/releases`，不会覆盖已存在的包。如同版本重新构建，请用 `--out` 指定另一个输出目录。
+产物是 `pi-furry-partner-full-animation-<版本>-pi-core.tgz`、SHA-256 和逐项报告。构建不覆盖旧产物；复测时使用 `--out` 指定独立目录。`v2.5.x` 及后续主线标签只发布 Pi 产品；此次拆分不提高高清版版本号。
 
-只准备隔离目录并执行当前分支回归：
+## Legacy
 
-```powershell
-python tools/build-editions.py --edition all --platform all --prepare-only --test
-```
+legacy 独立维护 Pi 旧资源版，标签为 `legacy-v2.4.x`，附件为 `pi-furry-partner-legacy-<版本>.zip` 与 SHA-256，始终 `latest=false`。CI 验证 Pi 1.2.0／1.3.0、发布线与标签匹配、安装恢复，以及 507 个 v2.4.0 原资源文件的精确哈希。
 
-测试使用本机安装的 Pi runtime；需要固定测试基线时设置 `PI_TEST_MODULES`。归档构建后，运行 `python tools/audit-edition-bundles.py --edition full-animation` 核验两个平台的真实包与解包读取器。仅准备目录的测试不代表已完成归档审计或真实宿主视觉验收。
+Legacy 的流式工具准备姿态只使用原有简单帧，不混入主线完整动作链，也不包含 DSH 运行时。
 
-## 资源与兼容
+## 历史与资源
 
-main的全动态包只含插画indexed与高清WebP，不包含任何像素风格资源、像素标题或像素启动seed。旧像素配置迁移到插画。
+已有标签、附件、来源与审批记录保留原样，不移动或重写。主线公开外观仍只提供插画，旧像素配置迁移到插画；原资源产品由 legacy 提供。DSH 项目保留了独立的动作与素材副本及来源哈希，构建不再读取相邻 Pi 仓库。
 
-原像素来自 v2.4.0：100×100 原画、16 个基础表情、戳碰补丁，以及 15 帧／4800ms 像素标题。文件出处与 SHA-256 在 `build/legacy-pixel-provenance.json`。素材导出脚本不得生成新版像素衍生图或覆盖原始像素／像素标题。
-
-主线界面只展示插画一种风格；`wumi`、`wumi-pixel`、`pixel`、`illustration` 等旧风格名称继续作为输入别名兼容。保留的普通运动数学与历史测试不构成可选像素版本；生产入口与npm文件清单均只使用插画资源。
-
-## 下载附件与发布标签
-
-新构建按宿主明确命名：Pi 为 `pi-furry-partner-full-animation-<版本>-pi-core.tgz`；DSH 为 `dsh-furry-partner-full-animation-<版本>.tgz`。对应 SHA-256 与 report 使用相同前缀。附件名用于区分宿主，内部插件标识保持兼容，现有配置不因下载命名改变而另建一份。
-
-`main` 使用 `v2.5.x` 及后续版本标签，Release 标题明确显示 `Main · 全动态重做版 · Pi / DSH`。`legacy` 独立使用 `legacy-v2.4.x` 标签，Release 标题显示 `Legacy · 原资源维护版 · Pi`，ZIP 为 `pi-furry-partner-legacy-<版本>.zip`，且始终不占用 GitHub Latest。各分支的发布校验拒绝不属于该线路的标签。
-
-已发布的 `v2.4.0`、`v2.4.1`、`v2.4.5`、`v2.5.0-preview.6`、`v2.5.0` 保留原指向与原附件作历史。新规则在各线路的后续提交和标签生效，不移动旧标签，也不创建同版本重复 Release。
-
-## 安装与升级
-
-历史 main v2.5.0 附件仍为 `pi-furry-partner-full-animation-2.5.0-pi-core.tgz` 与 `pi-furry-partner-full-animation-2.5.0.tgz`，后者是当时的 DSH 完整包。新构建的 DSH 附件改用上述 `dsh-` 前缀。legacy v2.4.1 仅支持 Pi，使用 ZIP 解压后运行 `install.ps1`；其安装细节以分支说明为准。同一宿主仅安装一个版本。
-
-已安装 preview.6 时仍须下载 2.5.0 包重新安装：Pi 关闭后运行新包内 `install.ps1`，保留已有 2.x 配置与备份恢复基线；DSH 通过其插件命令安装新完整包。更新后重启对应宿主。发布 tag 不会自动更新本机安装。
-
-构建不安装、不推送、不发布；发布、本机安装与真实宿主验收分别记录。
+源码中的原画、来源和历史校验资料用于可复现验证，不代表 Pi 分发包包含 Web 高清媒体或 DSH 插件。此次迁移没有代为更改本机安装。

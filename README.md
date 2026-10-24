@@ -1,8 +1,9 @@
 > 开发候选 **2.5.1-preview.2（未发布）** 仅保留高清插画；像素只在Legacy提供。已接入点头、挥爪、探头、伸懒腰、晃脑袋、抖耳、开心小弹与三条完整待机随机轮换，正式目录共28段；下载附件仍为下述已发布版本。旧视频中的像素画面属于历史演示。
 
+> DSH 已独立维护 / DSH is now maintained separately: [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). 本仓库只构建 Pi 产品。
 > 当前Main为2.5.1-preview.1预发布；稳定版2.5.0保留。Legacy新版标签为legacy-v2.4.2。
 
-> `main` 发布全动态版 v2.5.1-preview.1，运行 `npm run build:animated` 构建 Pi 与 DSH 包；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护保留 v2.4.0 原资源的 v2.4.2。详见[构建说明](docs/plugin-lines.md)。
+> `main` 发布全动态版 v2.5.1-preview.1，运行 `npm run build:animated` 构建 Pi 包；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护保留 v2.4.0 原资源的 v2.4.2。详见[构建说明](docs/plugin-lines.md)。
 
 <div align="center">
 
@@ -57,13 +58,12 @@
 
 ## 先看看呜咪
 
-新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 与 DSH 共用 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先，DSH 摸摸也会收到开心举爪的回应。
+新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
 
-`main` 的**全动态重做版 v2.5.1-preview.1** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡），Pi 与 DSH 共用动作逻辑。原资源 **legacy v2.4.2** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
+`main` 的**全动态重做版 v2.5.1-preview.1** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡），由 Pi 独立调度。原资源 **legacy v2.4.2** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
 主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
-DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠状态切换；加载失败或启用减少动态效果时显示原静态图。输入框里的状态按钮已移除，浮动桌宠继续互动和倾听输入。
 
 <table>
 <tr>
@@ -114,7 +114,6 @@ DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠�
 | 平台 | 全动态 v2.5.1-preview.1 |
 | --- | --- |
 | Pi 终端 | `pi-furry-partner-full-animation-2.5.1-preview.1-pi-core.tgz` |
-| DSH 桌面 | `dsh-furry-partner-full-animation-2.5.1-preview.1.tgz` |
 
 GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运行 `npm run build:animated`，再安装生成的对应平台包；main 不再构建高清重制产品线。
 
@@ -131,15 +130,6 @@ pi
 
 旧名 **pi-wink-companion** 用户可直接运行新版脚本，备份并迁移旧安装。只保留一种加载来源，避免与此前的 Pi 包管理器安装重复加载。安装后完整退出并重启 Pi；详细规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
 
-### DSH 桌面安装
-
-下载所选不带 `-pi-core` 的完整 `.tgz`，在 DSH 提供的终端中运行官方插件命令，例如：
-
-```sh
-dsh plugin --profile desktop add "./dsh-furry-partner-full-animation-2.5.1-preview.1.tgz"
-```
-
-命令会注册包声明的 bundle；更新后重启 DSH 以加载新代码。使用其他 profile 时替换 `desktop`。详见[官方插件安装说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
 
 ## 开始相处
 

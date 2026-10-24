@@ -1,7 +1,0 @@
-{
-  "method": "Exact byte-copy of approved idle registered-reference and purple reference; no resize, RGB, alpha or art changes.",
-  "sourceJob": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
-  "sourceSpecSha256": "2b50982a722ec3f414a027d7db73c6e5c4d82cd40ed917d9fbe416d43351e0c6",
-  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
-  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
-}

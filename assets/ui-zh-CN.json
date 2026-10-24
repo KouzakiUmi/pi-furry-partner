@@ -1,12 +1,11 @@
 {
   "locale": "zh-CN",
-  "compatibility": "Pi 1.2.0 and 1.3.0 native TUI display only",
+  "compatibility": "Pi 1.2.0 native TUI display only",
   "settings": {
     "autocompact": ["Auto-compact", "自动压缩上下文"],
     "steering-mode": ["Steering mode", "执行中消息投递"],
     "follow-up-mode": ["Follow-up mode", "后续消息投递"],
     "transport": ["Transport", "传输方式"],
-    "share-destination": ["Session share destination", "会话分享目标"],
     "http-idle-timeout": ["HTTP idle timeout", "HTTP 空闲超时"],
     "cache-warming-mode": ["Cache warming", "缓存预热"],
     "hide-thinking": ["Hide thinking", "隐藏思考过程"],
@@ -49,7 +48,6 @@
     "Automatically compact context when it gets too large": "上下文过长时自动压缩整理",
     "Enter while streaming queues steering messages. 'one-at-a-time': deliver one, wait for response. 'all': deliver all at once.": "输出期间按 Enter 可加入引导消息。one-at-a-time：每次投递一条并等待回应；all：一次投递全部。",
     "Preferred transport for providers that support multiple transports": "为支持多种连接方式的提供商选择传输方式",
-    "Where to upload sessions with /share (auto prefers Radius when authenticated, otherwise GitHub Gist)": "使用 /share 上传会话的位置（auto：已认证时优先 Radius，否则使用 GitHub Gist）",
     "Maximum idle gap while waiting for HTTP headers or body chunks. Disable for local models that pause longer than five minutes.": "等待 HTTP 响应头或数据块的最大空闲时间。本地模型可能暂停超过五分钟时可关闭。",
     "off; streaming while the agent runs; idle also between runs while continuation stays profitable": "off：关闭；streaming：执行期间预热；idle：执行间隔也在有收益时预热。",
     "Hide thinking blocks in assistant responses": "在界面中隐藏助手的思考过程",
@@ -116,7 +114,7 @@
   },
   "thinkingLevels": { "off": "关闭", "minimal": "极简", "low": "低", "medium": "中", "high": "高", "xhigh": "极高", "max": "最高" },
   "coverageLimits": [
-    "只翻译已识别的 Pi 1.2/1.3 原生界面显示文字；内部枚举值保留英文。",
+    "只翻译已识别的 Pi 1.2 原生界面显示文字；内部枚举值保留英文。",
     "原生设置主列表支持中文名称与说明关键词及原英文搜索；模型、会话、主题等其它列表保留原生搜索规则。",
     "模型与提供商名称、主题名称、会话名、搜索文字、路径、URL、认证码、正文与工具输出保持原文。",
     "动态认证说明、提供商错误、会话状态错误和未识别的第三方界面不翻译。",

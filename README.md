@@ -1,10 +1,3 @@
-> 开发候选 **2.5.1-preview.2（未发布）** 仅保留高清插画；像素只在Legacy提供。已接入点头、挥爪、探头、伸懒腰、晃脑袋、抖耳、开心小弹与三条完整待机随机轮换，正式目录共28段；下载附件仍为下述已发布版本。旧视频中的像素画面属于历史演示。
-
-> DSH 已独立维护 / DSH is now maintained separately: [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). 本仓库只构建 Pi 产品。
-> 当前Main为2.5.1-preview.1预发布；稳定版2.5.0保留。Legacy新版标签为legacy-v2.4.2。
-
-> `main` 发布全动态版 v2.5.1-preview.1，运行 `npm run build:animated` 构建 Pi 包；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护保留 v2.4.0 原资源的 v2.4.2。详见[构建说明](docs/plugin-lines.md)。
-
 <div align="center">
 
 **简体中文** | [**English**](README.en.md)
@@ -17,12 +10,14 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release v2.5.1-preview.1](https://img.shields.io/badge/release-v2.5.1-preview.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1)
-[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
+[![Pi 2.5.1](https://img.shields.io/badge/Pi-2.5.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1)
+[![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载全动态 v2.5.1-preview.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1) · [原资源 legacy v2.4.2](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载 Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+
+本项目仅维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.1**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。详见[发布规则](docs/release-line.md)。
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -34,7 +29,7 @@
 
 > 🐾 「我在这儿，把想法慢慢说给我听吧。」
 
-呜咪会待在 [Pi Coding Agent](https://github.com/earendil-works/pi) 输入框左边：想事情时托着下巴，修改文件时敲敲键盘，阅读内容时举着放大镜左右看看，找资料时一头钻进纸堆，只留尾巴在外面晃。你需要拿主意时，他会歪头等你；等得久了就悄悄打个盹，回来又被你叫醒。
+呜咪会待在 [Pi Coding Agent](https://github.com/earendil-works/pi) 输入框左边：想事情时托着下巴，修改文件时敲敲键盘，运行命令时举着放大镜左右看看，找资料时一头钻进纸堆，只留尾巴在外面晃。你需要拿主意时，他会歪头等你；等得久了就悄悄打个盹，回来又被你叫醒。
 
 外观之外，插件也整理了输入框、底部信息和常用操作。角色短句、控件和信息面板默认跟随系统，也可以切换**简体中文或 English**；**原生界面中文、Pi 文档提示精简、可选角色口吻**则各有开关。你可以继续使用熟悉的模型和工作方式。
 
@@ -57,13 +52,6 @@
 </table>
 
 ## 先看看呜咪
-
-新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
-
-`main` 的**全动态重做版 v2.5.1-preview.1** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡），由 Pi 独立调度。原资源 **legacy v2.4.2** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
-
-主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
-
 
 <table>
 <tr>
@@ -95,7 +83,7 @@
 
 ![放大镜完整循环：头和握爪跟着镜片移动，角色版与像素版共用连续动作](magnifier-preview.gif)
 
-像素画风的历史对照和演示见 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)。
+![同一角色的插画风与像素风对照](style-comparison.png)
 
 这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#可选展示页)。
 
@@ -103,38 +91,38 @@
 
 ## 安装
 
-**高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
+需要先安装并配置 Pi。完整自动化验证覆盖 **Windows、Pi 1.2.0 / 1.3.0、Windows PowerShell 5.1 / PowerShell 7**。原生中文界面与 Pi 文档提示精简仅启用明确审阅过的 1.2.0 / 1.3.0，未知版本保留 Pi 原有行为。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用。图片使用 Kitty PNG、Sixel 或真彩色半块字符；终端支持会影响清晰度。
 
-需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮全动态构建已在该环境重新验收。终端支持会影响清晰度。
+两种安装方式选一种，避免把同一插件加载两次。
 
-感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关代码和回归测试继续保留在共用源码中。
+### Windows 完整安装
 
-从[全动态预发布版 v2.5.1-preview.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1-preview.1)选择平台包。需要 v2.4.0 原素材与原简单帧时，使用 [legacy v2.4.2 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)的独立发行说明。同一宿主只安装一版。
-
-| 平台 | 全动态 v2.5.1-preview.1 |
-| --- | --- |
-| Pi 终端 | `pi-furry-partner-full-animation-2.5.1-preview.1-pi-core.tgz` |
-
-GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运行 `npm run build:animated`，再安装生成的对应平台包；main 不再构建高清重制产品线。
-
-### Pi 终端安装
-
-下载所选 `-pi-core.tgz`，解压后进入内层 **`package` 目录**（含 `install.ps1`）。关闭 Pi，在该目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) 下载 `pi-furry-partner-2.5.1.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 pi
 ```
 
-脚本将扩展安装到 `~/.pi/agent/extensions/pi-furry-partner/`，并安装 `pi-furry-night` 主题。首次安装设置配套主题、简短启动标题和折叠更新日志；界面模式未设置时使用 `fullscreen`。更新保留已有模式、角色偏好、模型、provider 和其他包设置。执行策略参数只作用于本次进程。
+脚本把扩展安装到 `~/.pi/agent/extensions/pi-furry-partner/`，并安装 `pi-furry-night` 主题。安装会设置配套主题、简短启动标题和折叠更新日志；界面模式尚未设置时使用 `fullscreen`，已有模式和更新时的角色偏好保留。模型、provider、工具配置和其他包继续沿用原设置。执行策略参数只作用于本次进程。
 
-旧名 **pi-wink-companion** 用户可直接运行新版脚本，备份并迁移旧安装。只保留一种加载来源，避免与此前的 Pi 包管理器安装重复加载。安装后完整退出并重启 Pi；详细规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
+旧名 **pi-wink-companion** 的用户可直接运行新版安装脚本：它会备份并迁移旧安装，保留配置，归档旧目录以避免重复加载。安装后完整退出并重新启动 Pi。详细的备份、迁移与恢复规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
 
+### 使用 Pi 包管理器
+
+```sh
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
+```
+
+这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
+
+已有脚本安装的用户，继续使用脚本路线更新；需要改用包管理器时，先按指南卸载脚本安装，避免双份扩展。
 
 ## 开始相处
 
 ```text
 /mascot style umi           插画风呜咪
+/mascot style umi-pixel     同一造型的像素风
 /mascot menu                打开常用操作
 /mascot poke                轻轻戳一下呜咪
 /mascot language en         切换为英文
@@ -147,9 +135,9 @@ pi
 
 `/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
-角色英文名为 **Umi**；主线高清／全动态版本仅展示 `umi` 插画。旧像素配置自动迁移为插画，像素画风仅在 Legacy 分支提供。
+角色英文名和风格命令统一使用 **Umi / `umi`**。旧命令 `wumi`、`wumi-pixel` 仍可作为兼容别名，新保存的风格使用 `umi`、`umi-pixel`。
 
-需要原始 **100 × 100** 像素画及旧简单动作，请安装 [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2)。主线两端安装包不再包含像素素材。
+`umi-pixel` 保留角色版的造型、五官和动作，以 **80 × 80** 显示。嘴线等细节采用局部保线处理，减少细笔画在缩小采样中丢失；线条颜色轻微整理，不重新设计角色。
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
 
@@ -206,7 +194,7 @@ pi
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 与 1.3.0 的完整测试均已通过，CI 分别用这两个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容、提示词边界及分级命令补全；Pi 1.2.0 / 1.3.0 均运行完整套件。安装、迁移与恢复使用隔离目录。原始资源 SHA-256 基线取自 v2.4.0 Git 对象，`node tests/legacy-resources.mjs` 也可验证解压后的发行包。环境准备见[贡献指南](CONTRIBUTING.md)。
 
 ## 许可与致谢
 

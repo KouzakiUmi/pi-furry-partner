@@ -1,4 +1,4 @@
-name: Build and publish Main release
+name: Build and publish Pi release
 
 on:
   push:
@@ -16,50 +16,42 @@ jobs:
     uses: ./.github/workflows/ci.yml
   release:
     needs: verify
-    runs-on: windows-latest
-    env:
-      PYTHONUTF8: '1'
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-    defaults:
-      run:
-        shell: pwsh
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
-      - name: Resolve tag to edition and release notes
-        id: target
+      - name: Validate version and extract release notes
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          python tools/release-edition.py resolve --tag $env:RELEASE_TAG --github-output $env:GITHUB_OUTPUT
-          if ($LASTEXITCODE -ne 0) { throw 'Release tag or notes validation failed' }
-      - name: Build Pi package for the selected edition
+          git fetch origin main:refs/remotes/origin/main
+          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/main
+          node scripts/verify-legacy-line.mjs --tag "$RELEASE_TAG" --notes-file release-notes.md
+      - name: Package tracked source and checksum
         env:
-          EDITION: ${{ steps.target.outputs.edition }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          python tools/build-editions.py --edition $env:EDITION --platform all
-          if ($LASTEXITCODE -ne 0) { throw 'Edition build failed' }
-      - name: Reverify archives and packaged runtime
-        env:
-          EDITION: ${{ steps.target.outputs.edition }}
-        run: |
-          python tools/audit-edition-bundles.py --edition $env:EDITION
-          if ($LASTEXITCODE -ne 0) { throw 'Archive or runtime audit failed' }
-          python tools/release-edition.py assets --plan dist/release/release-plan.json
-          if ($LASTEXITCODE -ne 0) { throw 'Release asset validation failed' }
-      - name: Publish only the selected edition
+          archive="pi-furry-partner-${RELEASE_TAG#v}.zip"
+          git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" "$RELEASE_TAG"
+          unzip -t "$archive"
+          mkdir -p work/release-archive-check
+          unzip -q "$archive" -d work/release-archive-check
+          node work/release-archive-check/pi-furry-partner/tests/legacy-resources.mjs
+          sha256sum "$archive" > "$archive.sha256"
+      - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          $plan = Get-Content -LiteralPath dist/release/release-plan.json -Raw | ConvertFrom-Json
-          $assets = @(Get-Content -LiteralPath dist/release/release-assets.json -Raw | ConvertFrom-Json)
-          $ghArgs = @('release', 'create', $plan.tag, '--verify-tag', '--title', $plan.title,
-            '--notes-file', $plan.notesFile, "--latest=$($plan.latest)")
-          if ($plan.prerelease) { $ghArgs += '--prerelease' }
-          $ghArgs += $assets
-          & gh @ghArgs
-          if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation/upload failed; existing releases are not overwritten' }
+          gh release create "$RELEASE_TAG" \
+            "pi-furry-partner-${RELEASE_TAG#v}.zip" \
+            "pi-furry-partner-${RELEASE_TAG#v}.zip.sha256" \
+            --verify-tag --latest \
+            --title "Umi · ${RELEASE_TAG} · Pi 原资源版" \
+            --notes-file release-notes.md

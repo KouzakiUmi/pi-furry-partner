@@ -9,11 +9,11 @@ import { createMotionPlayer } from "../lib/motion.mjs";
 const read = async (path) => JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), "utf8"));
 const checks = [];
 for (const style of ["wumi", "wumi-pixel"]) {
-  const base = await read(`tests/fixtures/legacy-action-packs/${style}/reaction-sheet.json`);
-  const asset = await read(`tests/fixtures/legacy-action-packs/${style}/search-frames.json`);
-  const poke = await read(`tests/fixtures/legacy-action-packs/${style}/poke-patch.json`);
-  const watch = await read(`tests/fixtures/legacy-action-packs/${style}/watch-frames.json`);
-  const listen = await read(`tests/fixtures/legacy-action-packs/${style}/listen-frames.json`);
+  const base = await read(`assets/reactions/${style}/reaction-sheet.json`);
+  const asset = await read(`assets/reactions/${style}/search-frames.json`);
+  const poke = await read(`assets/reactions/${style}/poke-patch.json`);
+  const watch = await read(`assets/reactions/${style}/watch-frames.json`);
+  const listen = await read(`assets/reactions/${style}/listen-frames.json`);
   const before = withListenFrames(withWatchFrames(withPokeFrame(base, poke), watch), listen);
   const original = JSON.stringify(base), sheet = withSearchFrames(before, asset);
   assert.equal(sheet.frames.length, before.frames.length + asset.frames.length);

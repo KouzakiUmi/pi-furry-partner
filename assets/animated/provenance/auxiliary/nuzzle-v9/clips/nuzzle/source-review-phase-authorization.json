@@ -1,9 +1,0 @@
-{
-  "status": "ROOT_RELEASED_ONE_TRUE_FL2VA_SOURCE_TRIAL",
-  "submissionAllowed": true,
-  "automaticRetries": 0,
-  "allowAlphaProcessing": false,
-  "humanAcceptedSource": false,
-  "readyForRuntimeIntegration": false,
-  "endpoint": "https://api.minimaxi.com/v2/video_generation"
-}

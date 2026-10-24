@@ -13,12 +13,15 @@ import { withPokeFrame } from "../lib/poke.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
+const releaseTag = `legacy-v${pkg.version}`;
 const out = join(root, "dist");
 await mkdir(join(out, "assets"), { recursive: true });
 await mkdir(join(out, "runtime"), { recursive: true });
 const html = (await readFile(join(root, "site/index.html"), "utf8"))
-  .replace(/(pi install git:github\.com\/KouzakiUmi\/pi-furry-partner@v)[0-9A-Za-z.+-]+/g, `$1${pkg.version}`)
-  .replace(/(<span class="version">)v[^<]+(<\/span>)/, `$1v${pkg.version}$2`);
+  .replace(/(pi install git:github\.com\/KouzakiUmi\/pi-furry-partner@)(?:legacy-)?v[0-9A-Za-z.+-]+/g, `$1${releaseTag}`)
+  .replace(/(\/releases\/tag\/)(?:legacy-)?v[0-9A-Za-z.+-]+/g, `$1${releaseTag}`)
+  .replace(/下载 v[0-9A-Za-z.+-]+/g, `下载 Legacy ${pkg.version}`)
+  .replace(/(<span class="version">)[^<]+(<\/span>)/, `$1Legacy ${pkg.version}$2`);
 await writeFile(join(out, "index.html"), html);
 for (const file of ["styles.css", "app.js"]) await copyFile(join(root, "site", file), join(out, file));
 for (const file of await readdir(join(root, "site/assets"))) await copyFile(join(root, "site/assets", file), join(out, "assets", file));

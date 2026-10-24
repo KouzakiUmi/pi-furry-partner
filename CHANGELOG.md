@@ -4,6 +4,22 @@ Legacy 自 2.4.2 起使用独立的 `legacy-v` 发布标签；main 全动态线�
 
 From 2.4.2, Legacy uses independent `legacy-v` release tags; the full-animation main line uses `v` tags. Historical tags and assets remain unchanged.
 
+## 2.4.3 · 2026-10-25
+
+### 简体中文
+
+- 将 [@srcres258](https://github.com/srcres258) 在 #4 中的 Pi 流式工具准备姿态单独适配到 Legacy：使用旧版简单帧，仅按工具名显示准备气泡，不保留流式参数；执行、撤回及会话结束正确交接和清理。
+- Kitty 弹层仅遮挡实际相交的图像行，未相交行继续显示，关闭后恢复；保留全部 507 个 v2.4.0 原资源文件的精确字节和原有动作路由。
+- CI 限定 legacy 目标分支，分别验证 Pi 1.2.0／1.3.0，并增加发布线、标签、版本与原资源校验。网站安装入口改用 `legacy-v2.4.3`。
+- 发布附件为 `pi-furry-partner-legacy-2.4.3.zip` 与 SHA-256；不设为仓库 latest。高清／全动态版与 DSH 的独立项目不随此版本发布。
+
+### English
+
+- Adapted [srcres258](https://github.com/srcres258)'s Pi streamed-tool preparation from #4 specifically to Legacy simple frames, with private-safe category bubbles and execution/cancellation/session cleanup.
+- Ported row-level Kitty overlay masking and restoration while preserving all 507 original v2.4.0 resource files and Legacy action routing.
+- Scoped CI to Legacy pull requests, retained independent Pi 1.2.0/1.3.0 checks, and added release-line/version/tag/resource guards. Website installation now targets `legacy-v2.4.3`.
+- Ships `pi-furry-partner-legacy-2.4.3.zip` and SHA-256 without becoming latest. No full-animation or DSH release is included.
+
 ## 2.4.2 · 2026-10-23
 
 ### 简体中文

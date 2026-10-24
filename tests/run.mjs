@@ -1,5 +1,7 @@
 // Independent product and integration suites; no model requests are made.
 await import("./legacy-resources.mjs");
+await import("./legacy-release.mjs");
+await import("./legacy-streaming.mjs");
 await import("./activity.mjs");
 await import("./response-latency.mjs");
 await import("./footer.mjs");

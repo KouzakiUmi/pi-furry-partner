@@ -6,6 +6,8 @@
 
 ## 数据如何流动
 
+本分支为 Legacy 产品线：流式工具参数仅依据调用 ID 与工具名选择准备气泡及旧版简单帧，不保存或显示参数。执行开始后回到 Legacy 原有工具姿态；结束、撤回、换消息和会话重置清理待处理记录。素材保持 v2.4.0 原字节，不接入 main 的完整动作播放器、两秒动作保留、键盘进入／循环／退出调度或 DSH 桥接层。Kitty／Sixel 的通用坐标与弹层修复可分别适配，两条线的动作控制器保持独立。
+
 ```mermaid
 flowchart TD
   A[Pi 会话与工具事件] --> B[activity：实际状态与时间]
@@ -83,7 +85,7 @@ Pi 的原生选区绘制会按列切片文本，零宽的自有 OSC 标记可能
 
 光标标记解析是另一条独立边界。Pi 的 `CURSOR_MARKER` 为 `ESC _pi:c BEL`，假光标使用 `ESC _pi:fc BEL` 与 `ESC _pi:/fc BEL`；它们不是标准的 ST 结束 APC。选区切片可能复制这些零宽标记，而宿主提取硬件光标时只移除首份。2.3.1 在传输层有限识别并剥离这三种残留私有标记，支持跨写入分片，避免 `pendingEscape` 把 `END_SYNC` 和后续正文一直暂存。其他 APC 仍以 ST 结束；图像锚点去重不能代替这项光标终止解析。测试须检查完成同步输出、重画条带和后续文字，而不只检查 DCS 锚点的横向位置。
 
-Kitty 与 Sixel 都需要终端协议支持。`auto` 优先使用 Pi 检测到的 Kitty Graphics Protocol，在 Windows Terminal 环境选择 Sixel，其他环境选择半块字符；用户可以强制切换。Kitty 后端把 motion player 的 indexed frame 按终端行采样并编码为透明 palette PNG，复用稳定 image ID 和 Pi 原生图片生命周期；有界 PNG 缓存避免未变化帧重复压缩或传输。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代每一种终端环境的实机验收。
+Kitty 与 Sixel 都需要终端协议支持。`auto` 优先使用 Pi 检测到的 Kitty Graphics Protocol，在 Windows Terminal 环境选择 Sixel，其他环境选择半块字符；用户可以强制切换。Kitty 后端把 motion player 的 indexed frame 按终端行采样并编码为透明 palette PNG，复用稳定 image ID 和 Pi 原生图片生命周期；有界 PNG 缓存避免未变化帧重复压缩或传输。弹层打开时，使用最终终端坐标仅隐藏与已知 bounds 相交的图像行，未相交行继续显示高清图片；未知边界保守遮挡，弹层变化后重传图像行。该传输修复不改变 Legacy 帧或动作调度。终端、字体、DPI 和窗口大小仍会影响最终显示，协议与布局检查不能替代每一种终端环境的实机验收。
 
 ## 三个互不合并的文本功能
 

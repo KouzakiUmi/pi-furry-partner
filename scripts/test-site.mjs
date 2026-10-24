@@ -5,7 +5,7 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { STYLES, styleAssetDirectory } from "../lib/styles.mjs";
-import { loadEncodedSheet } from "../lib/index.js";
+import { loadEncodedSheet } from "../lib/pi-resources.mjs";
 import vm from "node:vm";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");

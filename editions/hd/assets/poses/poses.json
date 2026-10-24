@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "width": 640,
+  "height": 640,
+  "transparent": true,
+  "poses": {
+    "neutral": "neutral.png",
+    "think": "think.png",
+    "work": "work.png",
+    "speak": "speak.png",
+    "happy": "happy.png",
+    "rest": "rest.png"
+  },
+  "metadata": "metadata.json",
+  "spriteSheet": "sprite-sheet.png"
+}

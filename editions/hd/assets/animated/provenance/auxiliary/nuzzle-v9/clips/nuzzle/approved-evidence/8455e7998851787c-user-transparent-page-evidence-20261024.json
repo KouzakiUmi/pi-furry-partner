@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-23T21:00:44.927588+00:00",
+  "reviewUrl": "http://127.0.0.1:64658/#nuzzle",
+  "servedPageSha256": "3d2cee6ba58ed61df0064d5680da72fc4ae3a4613e62acbc0961a4fb060f5ddb",
+  "server": {
+    "status": "ACTIVE",
+    "pid": 31736,
+    "port": 64658,
+    "url": "http://127.0.0.1:64658/",
+    "config": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\visual-review-20261024-config.json",
+    "serverSha256": "10259aa6eb5622b679c4a84f0bd0db69c7d6d617c79e408fc6484c5773517f40",
+    "configSha256": "c827d7f9a65de87060d2a5ac094b86a75c67d8460588b4b81e06107349ecfced",
+    "startedAt": "2026-10-24T04:58:17.05281+08:00",
+    "pageSha256": "3d2cee6ba58ed61df0064d5680da72fc4ae3a4613e62acbc0961a4fb060f5ddb",
+    "scope": [
+      "nuzzle final transparent",
+      "color sample direction"
+    ],
+    "httpChecked": true,
+    "execSessionId": 83335
+  },
+  "config": {
+    "nuzzle": {
+      "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\nuzzle\\key-purple-pilot-v9",
+      "output": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\nuzzle\\key-purple-pilot-v9\\processed-detail-v1",
+      "reference": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\nuzzle\\key-purple-pilot-v9\\registered-reference.png",
+      "manifestSha256": "ad7c57fd9730b182481153163b530214d5c26a4d3184272e66b847baf4610bb2"
+    },
+    "colors": {
+      "folder": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1",
+      "files": {
+        "work-enter": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\work-enter-comparison.jpg",
+        "work": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\work-comparison.jpg",
+        "work-exit": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\work-exit-comparison.jpg",
+        "search": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\search-comparison.jpg",
+        "watch": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\watch-comparison.jpg"
+      }
+    },
+    "reviewEvidence": {
+      "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\nuzzle\\key-purple-pilot-v9\\detail-output-review-A.json": "6638877edff510215cb6da76f04710c92d3e9654128cbdccf320c6b0d1e0fca4",
+      "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\nuzzle\\key-purple-pilot-v9\\detail-output-review-B.json": "2d7f4c70890781db603894ce960a07fb1c4b387b86d2fb2bbcf7cac399cd0b81",
+      "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\review-A.json": "4ec526e6c44258d654fecb4f4d406decdb096bf4f429cf7d256d2358e9db4347",
+      "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\color-consistency-pilot-20261024-v1\\review-B.json": "07923eca139db31874e2eac54f7bbd835c39dbc8c1f35982a049717681012173"
+    },
+    "runtimeAssetsChanged": false,
+    "purpose": "nuzzle final transparency and color sample direction; neither authorizes release/integration before user decision"
+  },
+  "configSha256": "c827d7f9a65de87060d2a5ac094b86a75c67d8460588b4b81e06107349ecfced",
+  "serverScriptSha256": "10259aa6eb5622b679c4a84f0bd0db69c7d6d617c79e408fc6484c5773517f40",
+  "userQuote": "透明版可以，接入两端",
+  "completedScope": "nuzzle final transparency",
+  "remainingReviewScope": "color sample direction only",
+  "lifecycleNote": "One shared current service remains only for the already-open color question; nuzzle decision complete, no historical server retained."
+}

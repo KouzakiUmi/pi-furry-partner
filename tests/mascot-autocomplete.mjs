@@ -1,3 +1,4 @@
+import { ACTIONS } from "../lib/actions.mjs";
 import assert from "node:assert/strict";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -11,10 +12,16 @@ const suggestions = (prefix, language = "en") => getMascotArgumentCompletions(pr
 const values = (prefix, language) => suggestions(prefix, language)?.map((item) => item.value) ?? [];
 const labels = (prefix, language) => suggestions(prefix, language)?.map((item) => item.label) ?? [];
 const checks = [];
+assert.deepEqual(values("action "), ["action all", ...ACTIONS.map(({id}) => `action ${id}`), "action off"]);
+assert.deepEqual(values("action rea"), ["action reading"]);
+assert.equal(suggestions("action reading extra"), null);
+assert.equal(suggestions("action ear"), null);
+assert.match(suggestions("action rea", "zh-CN")[0].description, /阅读/);
+assert.match(suggestions("action rea", "en")[0].description, /Read/);
 
 assert.deepEqual(labels(""), [
   "language", "menu", "poke", "layout", "style", "pause", "play", "on", "off",
-  "size", "render", "info", "locale", "prompt", "persona", "demo", "wink",
+  "size", "render", "info", "locale", "prompt", "persona", "action", "demo", "wink",
 ]);
 assert.deepEqual(labels("st"), ["style"]);
 assert.deepEqual(values("style"), ["style "]);

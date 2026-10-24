@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-10-22T21:12:29.940609+00:00",
+  "reviewDate": "2026-10-23",
+  "userText": "候选 A 合适，按这个节奏继续",
+  "reviewUrl": "http://127.0.0.1:61914/",
+  "reviewCandidateLabel": "A",
+  "reviewCandidateKey": "accent",
+  "approvedJob": "Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2",
+  "approvedProcessedVariant": "processed-edge-v2",
+  "status": "USER_APPROVED_NATIVE_ACTING_AND_CURRENT_EDGE_PRESENTATION_NOT_INSTALLED",
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "replacementDeferred": true,
+  "deploymentAllowed": false,
+  "scope": [
+    "Candidate A wait native timing/rhythm and amplitude approved as displayed.",
+    "Continue this acting direction and the current purple key/trimap/soft-edge presentation to next rest pilot.",
+    "Existing independent stationary question overlay remains the wait presentation."
+  ],
+  "knownResiduals": "Fine purple/dark rim and some granular lower edge remain; local edge RGB estimate, not lossless separation.",
+  "knownActingDifferences": "More upright short open-mouth response, half-lidded look; scarf and cape spread noticeably, then recover.",
+  "limits": [
+    "Approval is for the exact accent review bindings; checkin is not approved.",
+    "No claim of zero edge defects, lossless separation, or approval of future unreviewed generations.",
+    "No formal-resource replacement or installation performed or inferred."
+  ],
+  "nativeTimeline": {
+    "sourceFrames": 107,
+    "fps": 24,
+    "periodMs": 4458,
+    "fullForwardNativeSource": true
+  },
+  "evidence": {
+    "Umi-wait-H3-source.mp4": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410",
+    "registered-reference.png": "42e0b510a2ac99dad0f3af4df09c9eed13ed2bb56efdee91551d9f56263745fc",
+    "reference.png": "58b3a1ade6c0bc1c6a82f50d89600d39294220fafef41119e2252246bc5cb355",
+    "prompt.txt": "d3ce91db6f01aab9c9f9500831b49cd19be3baf775c57743ab03aa5934980f8c",
+    "spec.json": "fcbca7cc3597fd3e0dfd1f6be6b4bde1aa884cb2606008df2023d937c65468eb",
+    "motion-contract.json": "792af36577ddf8aba356b2fedc4d55d4b841e2e31c1959b27c3f821527865c7b",
+    "fixed-question-world.png": "ae68726e149fb02d0d0e5522d3733b5f8b6f67bcfa00b1ab8b9fdfb505f001bd",
+    "source-review-A.json": "f6b882ae85b8b31323ff7be4064e4f93614ca3093b73fff2a59b70c39872cfe4",
+    "reviewer-A.json": "642b8e7f7f2f19273b1a8e5cd066c3f31767b9f608b3348b02ecde57f670b13e",
+    "reviewer-B.json": "edc880db506f506ad120c39ebdd1eced9cb4f402c31ef5713b8dec7d5c72eff7",
+    "processed-edge-v2/manifest.json": "a08fa1091e6b1e7d8b336cefd05ac0ed0cffb97eb84b7e6f93e62feff2bb2f2a",
+    "processed-edge-v2/report.json": "e747c736e19b14c604845ea4f783f7b09c6ca0b6f47aa16c31b22e7c32c11a6d",
+    "review.json": "cc7359df06f88beb68a578dd436ceb227abb7e1a81fcd5f63c05f16f31532989"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b"
+  },
+  "displayBinding": {
+    "reviewRecord": "work/motion-polish-20261023/brisk-wait-review.json",
+    "reviewRecordSha256": "a00be890470f2c22cdcec9f6600da692d20295604ed4b101006f1fb8795d5596",
+    "page": "work/motion-polish-20261023/preview/brisk-wait.html",
+    "pageSha256": "8a93a2ebea0f4460c65df80896071fa4621b79d0f70c5bb3f06c6003b37ceb01"
+  },
+  "verifiedAllDisplayedEvidenceHashesMatch": true
+}

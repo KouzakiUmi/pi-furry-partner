@@ -1,0 +1,39 @@
+{
+  "reviewer": "B",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      245,
+      255,
+      489,
+      335
+    ],
+    "sourceOnly": true
+  },
+  "sourceVideoSha256": "bf9eb4946d413f1335a7123b7c08b8c2a9118bac546999a585c4dbac6097e9d4",
+  "proofSha256": "ffa84bb5531111265ee4ee3d072e4792f0db925b79d8d5c1e5bdbd216e8200dd",
+  "preflightSha256": "e1c2e674592fc90ff3fe1c0030264fef0bc13ef3fc2a3f4c32d00ed51671af07",
+  "helperSha256": "b8bc7df0e93162890d6b911ccfd5bbeb6c7fd0a94881daae721d4d534ba9dac4",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "ffa84bb5531111265ee4ee3d072e4792f0db925b79d8d5c1e5bdbd216e8200dd"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "4bea704db94464b5481fa90bfebabb89b72b7d25891316bedca22edaa0d5a01b"
+    }
+  ],
+  "findings": [
+    "六姿000/024/036/042/060/106实际叠框：最终框在实心眼/额毛/脸和帽内层上，无紫底/掌隙/体外孔；跨本片侧前探出的眼位完整覆盖。",
+    "000旧黑白/alpha放大实际确认双星尖误透明；本片185封闭眼组件union[257,257,485,314]含69红旗，独立定义新框，未继承旧片批准。",
+    "两个初框ext8拒绝保留：上右轮廓与090–106[489,255]真实外软点排除，未恢复或放宽guard。"
+  ],
+  "conditions": [
+    "完整107 source-key min61/potential1811，ext8/coreboundary/reliable252/框外全部保护。",
+    "只同帧固定resize nativeRGB/255恢复core内不可靠alpha；不动双爪/外围/服装其他组件，不代表源表演或艺术批准。"
+  ],
+  "humanAccepted": false,
+  "runtimeInstalled": false
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "source": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\Umi-idle-H3-source.mp4",
+    "sha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62"
+  },
+  "actualViewedFiles": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch10-idle-source-core-v2-review.jpg",
+      "sha256": "1a2d7c801376b2aecc0c4db1da5482c2cb1d3ddf1e963ad1aad534b5523264d3"
+    }
+  ],
+  "preflight": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\source-core-preflight-v2.json",
+    "sha256": "785c8da3104e0d2d2064ccc66076d7cf60236623a46ca3653d1e2c76cee1122b"
+  },
+  "actualViewedPoses": [
+    0,
+    25,
+    42,
+    66,
+    81,
+    106
+  ],
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      210,
+      280,
+      420,
+      375
+    ],
+    "canvas": [
+      640,
+      640
+    ],
+    "observations": [
+      "New left15px band x210..224 remains on solid white cheek/eye support in the reviewed side-turn and blink poses, including025 and042; no actual purple background, paw gap or outer cape in the reviewed rectangle.",
+      "This is an independently reviewed change of opaque prior region, not relaxing ext8/coreboundary guards. Old225 boundary refusal/partialv3 history must remain."
+    ],
+    "scope": "Only this idle-v1 fixed640 source, prior unreliable alpha<252 inside core restored from same-frame same-resize nativeRGB/255.",
+    "guardsRequired": [
+      "Reject8-neighbor exterior-connected uncertainty.",
+      "Reject modifications touching reviewed core boundary.",
+      "Preserve reliable alpha>=252RGBA and every outside-core pixel exactly.",
+      "Retain full107 source-key precondition; root reports minimum51byte.",
+      "Watch region and other jobs unchanged."
+    ],
+    "finalOutputReviewRequired": true
+  },
+  "dynamicAcceptance": false,
+  "formalAssetsChanged": false
+}

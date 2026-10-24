@@ -1,0 +1,12 @@
+{
+  "status": "REFUSED_UNCERTAIN_CORE_REACHES_EXTERIOR",
+  "candidateCore": [
+    245,
+    255,
+    490,
+    335
+  ],
+  "helperSnapshotSha256": "25613716525106c59a4a2d5093ece69cedcb3b7cd2daaafc193c2c5f8e3c8572",
+  "reason": "Complete107 preflight also finds exterior-connected pixel[489,255] in090\u2013106. Frozen guard refused; no restore output. Candidate right edge will exclude that actual contour pixel while retaining full eye-component union ending485.",
+  "sourceVideoSha256": "bf9eb4946d413f1335a7123b7c08b8c2a9118bac546999a585c4dbac6097e9d4"
+}

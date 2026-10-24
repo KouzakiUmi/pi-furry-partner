@@ -1,0 +1,36 @@
+{
+  "model": "MiniMax-H3",
+  "mode": "first-and-last-frame image-to-video",
+  "reference": "search.png",
+  "sameFirstAndLastReference": true,
+  "background": "#00FF00; continuous green-luminance matte inverted into alpha for foreground compositing",
+  "requestedDurationSeconds": 6,
+  "decodedDurationSeconds": 6.583333333333333,
+  "sourceDimensions": [
+    768,
+    768
+  ],
+  "sourceFps": 24,
+  "sourceFrames": 158,
+  "sourceFile": "search-h3-source.mp4",
+  "sourceSha256": "2901a71b498e86ec7068bb93edebd7b42670bbd32c587bc791af84a0ffca40ac",
+  "sourcePreparation": "Original encoded video stream preserved; unused audio and provider-specific container identifiers omitted. AI-generation origin is retained in the public source comment and this record.",
+  "promptFile": "search-h3-prompt.txt",
+  "action": "Head buried in papers; one flexible tail swishes with a traveling S-wave, root moving with rump.",
+  "tailColorsTipToRoot": [
+    "dark charcoal gray",
+    "light gray",
+    "white merging into white rump"
+  ],
+  "runtime": "Complete precomputed indexed-pixel frames; no network requests, video decoding, optical-flow warps, reverse playback or cel dissolves.",
+  "characterAndAnimationLicense": "All Rights Reserved",
+  "qa": {
+    "sourceCheck": "PASS",
+    "visualReview": "All 72 selected poses reviewed at 144px and enlarged: continuous tail volume and white root, hidden face, coherent hood and paper motion, stable right paw, no stray right cape.",
+    "sourceFramesDecoded": 158,
+    "firstLastSoftAlphaIoU": 0.9889504059351535,
+    "firstLastPremultipliedRgbMaeAt640Pixels": 1.4422667802798201,
+    "selectedFrames": 72,
+    "playbackPeriodMs": 6580
+  }
+}

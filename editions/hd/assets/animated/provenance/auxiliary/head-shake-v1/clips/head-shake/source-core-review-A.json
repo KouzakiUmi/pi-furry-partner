@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "action": "head-shake",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": [
+    220,
+    275,
+    405,
+    335
+  ],
+  "sourceVideoSha256": "c6366814b7d0b560af2434c5d0afb3dea2d9a09af4c5d443d4aa11c936ef0ef6",
+  "edgeManifestSha256": "ccad4af6f5048614dda87e9085967e1fa8f580b3fd41583e1ef1366802eac187",
+  "preflightSha256": "78f4067cf63d446f0a930561277dec958c1de21b774d2a83502e9368ab004acd",
+  "helperSha256": "deae67c9a74c21ed3932f0bab41fc01aceddc94f56f5cee546fd00d5c0c63328",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "fa75a98a34672e9ea6f0aefa2b9147f77265af7950cae86242657b9fc0227001"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "9e099846070d9237e55b6b270917bec8cd524be1b7669b2ab25e5f97da75282a"
+    }
+  ],
+  "findings": [
+    "Actual source-specific six-pose proof places the rectangle on solid face/eyes/forelock across the sampled extreme/return poses. No visible background, exterior prop, paw gap or transparent hole lies inside this core.",
+    "Actual old source/black/white/alpha eye proof shows closed internal eye-star transparency in opaque eyes, rather than an exterior antialias fringe."
+  ],
+  "conditionalAuthorization": [
+    "Only this exact source and independently reviewed rectangle: restore enclosed sub252 alpha using same-frame same-fixed-resize nativeRGB and255alpha. No art recolor, contour expansion, paw changes or timing changes.",
+    "All107 source/key margin, exterior8, coreboundary, reliable>=252 and outside-repair protections must remain strict. All peripheral soft edges and source ear-stitch blur stay untouched."
+  ],
+  "preflightEvidence": {
+    "frames": 107,
+    "minimumSourceKeyMargin": 58.0,
+    "potentialRestoredPixels": 875,
+    "all107External8Protected": true,
+    "all107CoreBoundaryProtected": true,
+    "all107Reliable252Protected": true,
+    "all107OutsideRepairProtected": true
+  },
+  "limitations": [
+    "Actual visual scope is the two listed static proofs only; numerical full107 protection is separately hashed preflight evidence.",
+    "Not final output acceptance or native-speed acting/loop review; final black/white material gate and user gate remain. Each action has a different reviewed core; neither inherits another clip permission."
+  ],
+  "humanAcceptedSource": false,
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

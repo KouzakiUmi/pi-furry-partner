@@ -1,0 +1,43 @@
+{
+  "primary": "Exact byte copy of approved idle reference and clean registration; unchanged from nod andwave1.",
+  "secondarySource": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\title.png",
+  "secondarySourceSha256": "cf097be69a8a6b7c1a32c479222d6b9cf6b7d20355108fba534ee3e075332d02",
+  "secondaryScope": "Approved static title ONLY: actual short round gray paw, four pink toe pads and central pad; no title acting approval transferred to pet wave.",
+  "secondaryRegistrationFile": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\runtime-registration.json",
+  "secondaryRegistrationSha256": "2b94e78d3468f65b0a3a3a206b8e5f49b04b1573e53b38a5bb96da5bd413efd9",
+  "secondaryRecord": {
+    "id": "title",
+    "source": "D:\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\title.png",
+    "sourceSha256": "cf097be69a8a6b7c1a32c479222d6b9cf6b7d20355108fba534ee3e075332d02",
+    "family": "title",
+    "sourceCanvas": [
+      1086,
+      1448
+    ],
+    "canonicalCanvas": [
+      640,
+      640
+    ],
+    "scale": 0.4198895027624309,
+    "resizedSourceCanvas": [
+      456,
+      608
+    ],
+    "offset": [
+      92,
+      3
+    ],
+    "sourceVisibleBoundsAlpha128": [
+      11,
+      97,
+      1085,
+      1440
+    ],
+    "supportBaseline": 608,
+    "registration": "Fixed per-static translation; common scale; no per-video-frame fitting"
+  },
+  "secondaryTransform": "Existing uniform456x608 runtime transform at stored title offset92,3 in640; original RGB unchanged before ordinary premultiplied image resize/composite, normalize original alpha250 to255 as already used in batch10. No art repaint/collage/copy of body parts.",
+  "secondaryRgbaSha256": "a6ffd076e5ab83a0213b680a1528314dcf9905f2c0c148d5c9cb5307b88251d6",
+  "secondaryReferenceSha256": "6df2ff71f1dcb8afe28d974d2bd8620f2954819b33cd4b309c3ca0e84e3d0f3f",
+  "apiRequestTemplate": "Exact two reference_image role structure already used by h3-purple-batch09.py proud submit; no guessed middle role."
+}

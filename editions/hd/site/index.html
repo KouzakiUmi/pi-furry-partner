@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1018">
+  <meta name="description" content="让命令行里多一位毛茸茸的搭档。pi-furry-partner 为 Pi 带来呜咪动态角色、状态感知输入框、中文界面和独立可选的角色口吻。">
+  <meta property="og:title" content="pi-furry-partner · 让终端，多一点陪伴">
+  <meta property="og:description" content="会思考、会打字、也会偷偷打瞌睡的 Pi 搭档。动画、界面与口吻，各自随你。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kouzakiumi.github.io/pi-furry-partner/">
+  <title>pi-furry-partner · 让终端，多一点陪伴</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/paw.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主要内容</a>
+<header class="header shell">
+  <a class="brand" href="#" aria-label="pi-furry-partner 首页"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="./assets/paw.svg#paw"/></svg><span>pi-furry-partner</span><span class="version">v2.4.0</span></a>
+  <nav aria-label="主导航"><a href="#playground">看看呜咪</a><a href="#install">安装</a><a href="https://github.com/KouzakiUmi/pi-furry-partner#readme">文档 <span aria-hidden="true">↗</span></a><a class="nav-github" href="https://github.com/KouzakiUmi/pi-furry-partner">GitHub <span aria-hidden="true">↗</span></a></nav>
+</header>
+<main id="main">
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A LITTLE FURRY. A LOT OF COMPANY.</p>
+    <h1 id="hero-title">让终端，<br>多一点<span class="accent-word">陪伴<svg viewBox="0 0 250 20" aria-hidden="true"><path d="M3 14Q95 0 245 9M13 19Q130 5 235 13"/></svg></span>。</h1>
+    <p class="hero-description">代码照样认真写，搭档可以可爱一点。<br>让呜咪陪在 Pi 的输入框旁，把思考、搜索和每一次完成，变成看得见的小表情。</p>
+    <div class="hero-actions"><a class="button button-primary" href="#install">领走你的搭档 <span aria-hidden="true">↘</span></a><a class="button button-text" href="#playground">先和呜咪打个招呼 <span aria-hidden="true">↓</span></a></div>
+    <p class="hero-meta">Pi 扩展 · 本地运行 · 无需额外模型请求</p>
+  </div>
+  <div class="hero-art" id="playground">
+    <div class="terminal-window">
+      <div class="terminal-title"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>pi — your-project</span><span class="demo-tag">交互演示</span></div>
+      <div class="terminal-body">
+        <div class="terminal-log"><span class="log-arrow">❯</span> 帮我把这个想法变成现实。<br><span class="log-response" id="demo-response">好呀，我先想想从哪儿开始。</span></div>
+        <div class="character-stage">
+          <div class="character-halo" aria-hidden="true"></div>
+          <div class="speech" aria-live="off"><span aria-hidden="true">🐾</span> <span id="bubble">我想想呀</span> <span aria-hidden="true">🐾</span></div>
+          <img class="character-fallback" src="./assets/umi-think.png" alt="呜咪穿着蓝色围巾和缝线兜帽，抬起爪子托腮思考。" width="640" height="640">
+          <canvas id="mascot" width="480" height="480" role="button" tabindex="0" aria-label="戳一戳正在思考的呜咪" title="戳一戳呜咪"></canvas>
+          <span class="character-label">UMI <span>/ 呜咪</span></span>
+        </div>
+        <div class="demo-editor"><div class="editor-status"><span id="state-glyph" aria-hidden="true">·</span><span id="state-phrase">我先把思路捋顺呀</span></div><textarea id="demo-input" class="editor-placeholder" rows="1" aria-label="倾听动作演示输入框" placeholder="待机或等你时，打字给呜咪听听吧"></textarea><div class="editor-keys"><span><kbd>Enter</kbd> 发送 <span class="key-divider">·</span> <kbd>Shift+Enter</kbd> 换行</span><span>呜咪在呢 🐾</span></div></div>
+        <div class="terminal-footer"><span>your-project <span class="branch">⎇ main</span></span><span id="frame-status">正在准备动画…</span></div>
+      </div>
+    </div>
+    <div class="demo-controls"><span class="demo-style" data-style="umi">插画版</span><button class="pause-control" type="button" id="poke">戳一戳 🐾</button><button class="pause-control" type="button" id="pause" aria-pressed="false"><span aria-hidden="true">Ⅱ</span> 暂停动画</button></div>
+    <div class="state-picker" role="group" aria-label="选择动画状态"><button type="button" data-state="idle" aria-pressed="false">待机</button><button type="button" data-state="thinking" aria-pressed="true">思考</button><button type="button" data-state="running" aria-pressed="false">敲代码</button><button type="button" data-state="searching" aria-pressed="false">找线索</button><button type="button" data-state="speaking" aria-pressed="false">说话</button><button type="button" data-state="waiting" aria-pressed="false">等你</button><button type="button" data-state="success" aria-pressed="false">完成</button><button type="button" data-state="error" aria-pressed="false">吃瘪</button><button type="button" data-state="waking" aria-pressed="false">睡醒</button><button type="button" data-state="compacting" aria-pressed="false">整理</button></div>
+    <p class="demo-note" id="demo-note" role="status">点个状态，看看呜咪的反应。这里是本地状态演示，不会连接模型。</p>
+  </div>
+</section>
+<div class="intro-line shell"><span class="line-number">01 / HELLO, PARTNER</span><p>不只是一个头像。<span>是会跟上你工作节奏的小搭档。</span></p></div>
+<section class="details shell" aria-label="功能介绍">
+  <article class="feature"><span class="feature-icon" aria-hidden="true">⌁</span><h2>工作状态，<br>有了小表情。</h2><p>思考时托腮，读取时举起放大镜，修改与运行时敲键盘，搜索时埋头翻找。眨眼、耳朵轻抖和尾巴的波浪，让等待也生动起来。</p><span class="feature-note">短状态保留最小展示时间，切换更从容。</span></article>
+  <article class="feature"><span class="feature-icon" aria-hidden="true">⌘</span><h2>更顺手的输入框，<br>更清楚的状态。</h2><p>状态短句、模型、上下文与用量各就各位。全屏模式提供鼠标快捷操作，regular 模式自动换成键盘提示。</p><span class="feature-note"><kbd>Ctrl+Alt+W</kbd> 随时打开更多功能。</span></article>
+  <article class="feature"><span class="feature-icon" aria-hidden="true">文</span><h2>熟悉的中文，<br>自由选择的口吻。</h2><p>默认跟随系统语言，也能手动切换中英文。Pi 文档提示可按语言精简成中文或英文；想让呜咪开口时，再单独打开对应语言的温柔、活泼口吻。</p><span class="feature-note">三个开关独立设置，认真工作依然认真。</span></article>
+</section>
+<section class="switch-section shell" aria-labelledby="switch-title">
+  <div class="switch-intro"><p class="eyebrow">YOUR TERMINAL, YOUR RULES</p><h2 id="switch-title">陪伴的方式，<br>你说了算。</h2><p>角色、界面和回答习惯，不必绑定在一起。<br>下面可以试着切换组合，看看它们分别做什么。</p><a class="text-link" href="https://github.com/KouzakiUmi/pi-furry-partner/blob/main/docs/guide.zh-CN.md">查看配置说明 <span aria-hidden="true">↗</span></a></div>
+  <div class="switch-demo"><p class="panel-eyebrow">独立开关 / 本页演示</p><div class="toggle-row"><div><h3>中文界面</h3><p>常用菜单、设置和命令补全说明。</p></div><button type="button" class="toggle" role="switch" aria-checked="true" aria-label="中文界面演示" data-toggle="locale"><span></span></button></div><div class="toggle-row"><div><h3>文档提示精简</h3><p>只精简 Pi 文档提示，保留原生身份、工具与规则。</p></div><button type="button" class="toggle" role="switch" aria-checked="true" aria-label="文档提示精简演示" data-toggle="prompt"><span></span></button></div><div class="toggle-row"><div><h3>呜咪角色口吻</h3><p>温柔、有点俏皮，关键地方认真稳重。</p></div><button type="button" class="toggle" role="switch" aria-checked="false" aria-label="呜咪角色口吻演示" data-toggle="persona"><span></span></button></div><div class="toggle-result" aria-live="polite"><span class="result-label" id="result-label">设置预览</span><p id="result-copy">已完成修改，并通过相关检查。</p><code id="toggle-command">/mascot persona off</code></div><p class="toggle-note">此处只演示配置组合，不会改动你的 Pi。口吻和提示词切换在下一轮请求生效。</p></div>
+</section>
+<section class="install-section shell" id="install" aria-labelledby="install-title"><div class="section-top"><div><p class="eyebrow">LET’S BUILD SOMETHING</p><h2 id="install-title">下一次打开 Pi，<br>让呜咪也在。</h2></div><a class="button button-secondary" href="https://github.com/KouzakiUmi/pi-furry-partner/releases">查看发布版本 <span aria-hidden="true">↗</span></a></div>
+  <div class="install-grid"><div class="install-steps"><div class="install-step"><span>01</span><div><h3>安装扩展</h3><p>在终端执行右侧命令，将扩展安装到 Pi。</p></div></div><div class="install-step"><span>02</span><div><h3>重新启动 Pi</h3><p>沿用你平时的启动方式，进入交互界面。</p></div></div><div class="install-step"><span>03</span><div><h3>选个舒服的方式</h3><p>用 <code>/mascot</code> 查看显示设置，或切换口吻。</p></div></div></div><div class="install-code"><div class="code-header"><span>终端 / Pi package</span><button type="button" id="copy-install" aria-label="复制安装命令">复制命令 <span aria-hidden="true">⧉</span></button></div><pre><code id="install-command">pi install ./editions/hd</code></pre><div class="code-extra"><code><span class="code-comment"># 默认跟随系统，也可切换 English</span><br>/mascot language en<br><br><span class="code-comment"># 打开呜咪口吻（可选）</span><br>/mascot persona on<br><br><span class="code-comment"># 想安静一会儿</span><br>/mascot pause</code></div><p class="copy-status" id="copy-status" role="status">也可以下载 Release ZIP，使用随附的 Windows 安装脚本。</p></div></div><p class="install-footnote">首次使用建议先阅读 <a href="https://github.com/KouzakiUmi/pi-furry-partner#readme">安装与兼容性说明</a>。图像显示效果取决于终端的图形协议支持。</p>
+</section>
+<section class="faq-section shell" aria-labelledby="faq-title"><div><p class="eyebrow">A FEW THINGS TO KNOW</p><h2 id="faq-title">出发前，<br>再说两句。</h2></div><div class="faq-list"><details open><summary>需要什么环境？<span aria-hidden="true">+</span></summary><p>面向桌面端 Pi 交互 TUI，当前原生中文与提示词适配以 Pi 1.2.0 为基准。需要 Node.js 22.19.0 或更新版本，当前已在 Node.js 24 环境验证。高清角色需要支持 Sixel 的终端；不支持时可切换为字符块渲染。Windows 可使用支持 Sixel 的新版 Windows Terminal。</p></details><details><summary>会改变代码、工具输出或项目规则吗？<span aria-hidden="true">+</span></summary><p>界面中文化只处理识别过的固定界面文字。代码、命令、工具输出和模型回答保持原文。文档提示精简独立开关，自定义 SYSTEM.md、项目 AGENTS.md、技能及工具规则保留。角色口吻只在你开启时参与下一轮提示词。</p></details><details><summary>动画和网页会额外调用模型吗？<span aria-hidden="true">+</span></summary><p>动画根据本地 agent 事件切换，不为表情发起模型请求。本页演示在浏览器本地运行，不发送聊天内容，也不连接你的 Pi 会话。</p></details><details><summary>为什么有时是快捷键，有时可以点击？<span aria-hidden="true">+</span></summary><p>插件跟随 Pi 当前 TUI 模式：fullscreen 模式保留鼠标快捷操作；regular 模式显示与实际键位对应的快捷键提示。两种模式都可用 Ctrl+Alt+W 打开更多功能。</p></details><details><summary>代码开源，角色也能随意使用吗？<span aria-hidden="true">+</span></summary><p>代码和文档采用 Apache-2.0。呜咪的角色设计、原图及动画素材单独保留全部版权，不受代码许可证授权。请不要把这些素材视为自由商用或可再授权素材。具体范围请查看仓库的素材许可文件。</p></details></div></section>
+<section class="closing shell"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="./assets/paw.svg#paw"/></svg><div><p>下一段好代码，<span>一起写吧。</span></p><span class="closing-sub">A furry little partner for your next big idea.</span></div><a href="https://github.com/KouzakiUmi/pi-furry-partner" class="button button-secondary">在 GitHub 看看 <span aria-hidden="true">↗</span></a></section>
+</main>
+<footer class="footer shell"><div class="footer-top"><a class="brand" href="#">pi-furry-partner</a><p>Made with care. Built for Pi.</p><div><a href="https://github.com/KouzakiUmi/pi-furry-partner/blob/main/LICENSE">Apache-2.0</a><a href="https://github.com/KouzakiUmi/pi-furry-partner/issues">反馈问题 ↗</a></div></div><p class="copyright">代码与文档：Apache-2.0。角色与动画素材：All Rights Reserved。<br>呜咪角色及动画素材保留全部版权。</p><p class="independent">独立社区扩展，与 Pi 官方无隶属关系。</p></footer>
+<noscript><div class="noscript-note">JavaScript 已关闭，角色将显示静态预览。安装说明和文档链接仍可使用。</div></noscript>
+</body>
+</html>

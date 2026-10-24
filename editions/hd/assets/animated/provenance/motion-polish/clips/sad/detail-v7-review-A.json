@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "sad",
+  "version": "key-purple-batch07-v2",
+  "processedVariant": "processed-detail-v7",
+  "status": "TARGETED_EYE_ALPHA_REPAIRED_SAMPLE_READY_WITH_EDGE_LIMITS",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "8e78d8331488f81c65ae287e64f839500285b251493d8249568c2b27481836ba",
+  "processedManifestSha256": "706f6eb77359aad0f730b62e798019dfd021626e6409f3f3ed3ba1a8e557e4fb",
+  "helperBinding": {
+    "path": "work/motion-polish-20261023/restore-reviewed-face-core.py",
+    "sha256": "855aa279f28299acae745a13bf61bc6392e37dfb8b690018fe0c21e4ca64905c"
+  },
+  "actualReview": "Actually viewed084 aligned source/black/white/alpha proportional4x detail and native000/053/106 black+white six stills after all files were present. Previously independently viewed six source fixed-core overlays, recorded separately.",
+  "targetedFinding": "Both eye-star lower colored tips now retain continuous source-like appearance on black/white; prior left/right alpha holes no longer visible in084 crop.",
+  "localAlphaCheck": {
+    "bboxXYXY": [
+      365,
+      380,
+      525,
+      435
+    ],
+    "minimumAlpha": 252,
+    "pixelsBelowAlpha200": 0,
+    "leftOldHoleAlpha": 255,
+    "rightOldHoleAlpha": 255,
+    "scope": "Only this target crop; no every-frame visual acceptance."
+  },
+  "otherSampleFindings": "In000/053/106 samples, thin sad mouth, pale-blue eye-corner tear pools/highlights, gray brows/eye lines, curled gray paws/white forearm division and claws, folded-ear X/white scarf details remain readable. No conspicuous new white island, wide white halo or material recoloring observed in these samples.",
+  "visualBlockingFindingsInInspectedV7Samples": [],
+  "knownLimits": "Prior fine dark/purple exterior rim and sparse edge grain remain. Fixed opaque foreground trimap is an inferred technical matte correction, not ground-truth alpha. Samples do not establish full107frame edge stability, native-speed acting/tears or loop acceptance.",
+  "fixedCoreReviewBinding": {
+    "file": "work/motion-polish-20261023/batch07-sad-fixed-core-review-A.json",
+    "sha256": "280c82d27bf9a723890a287f945fb774497f81174248df6488ec7023867c984f",
+    "coreXYXY": [
+      340,
+      340,
+      560,
+      490
+    ]
+  },
+  "previousHoldsPreserved": [
+    {
+      "file": "reviewer-A.json",
+      "sha256": "fa6cf33603787ee9bd35880634c7098fab370a0982095220d3bfb7654dffc239"
+    },
+    {
+      "file": "detail-review-A.json",
+      "sha256": "31f13d1635a1c22d74ae8c10b0fb51f2923f663e034f3edd55e7410ff9bc31d0"
+    },
+    {
+      "file": "detail-v5-review-A.json",
+      "sha256": "4353122a68232458b4cbc8473a9e03f8f060cdf551ed41923cec5e096c0a9215"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "processed-detail-v7/black/000.png",
+      "sha256": "76877f01a638d9f910e4f020630385cb2569c7992b3bb82fbcf68f04f93f311b"
+    },
+    {
+      "path": "processed-detail-v7/white/000.png",
+      "sha256": "31557b96c38c60620228c6e12b82308495abb7d12b0e194f07adf079339571fe"
+    },
+    {
+      "path": "processed-detail-v7/black/053.png",
+      "sha256": "db651cb230e3518a7b76bf214974fbec7b3a976e52f2346b59343908f8c9386f"
+    },
+    {
+      "path": "processed-detail-v7/white/053.png",
+      "sha256": "4191fbcc09637542284641d2a7dcc4412b56345054a5f03f2e9e2882e5c3aba4"
+    },
+    {
+      "path": "processed-detail-v7/black/106.png",
+      "sha256": "35438ad93129201efcc1c43b187efb9fc13edc774412cc06f60c64b273708f96"
+    },
+    {
+      "path": "processed-detail-v7/white/106.png",
+      "sha256": "53ff622b6c77b43180a8f5d787b32d7a2ebc5932f4e9dfdb9daba3bca5fcf6e5"
+    },
+    {
+      "path": "processed-detail-v7/black/084.png",
+      "sha256": "dadde6d03bae63f2f74eab5480c45fe0ddbff2d34a171c99bc56682847e9b2bd"
+    },
+    {
+      "path": "processed-detail-v7/white/084.png",
+      "sha256": "368b262d66a5db2697783adffadbbbb0a655754f3971222acb3065ffcaeee34f"
+    },
+    {
+      "path": "processed-detail-v7/rgba/084.png",
+      "sha256": "6a51f440fd9511eede17b5af007fff708f9390ada52121d906f2eba08b2bb9af"
+    },
+    {
+      "path": "early-check/00085.png",
+      "sha256": "b4305c725d1d743f4de4e47a45ce9ec40866faf6807096b86eeec86528293d1f"
+    }
+  ],
+  "detailProof": {
+    "path": "work/motion-polish-20261023/batch07-sad-detail-A/sad-084-detail-v7.png",
+    "sha256": "ebfd2b5823cb7a2141c8c9a71bff2f1ed382c001b2207d7821874fd1983cfc70"
+  },
+  "scope": "A inspection only: no source/helper edits, no color/area threshold tuning and no cry changes. Technical invariants remain root evidence, not inferred from static art review.",
+  "processedBindings": {
+    "report.json": "6293175e438c823063ce0261435b0b78f99f4a23b203bf52ef4ea3e0b71bc1c0",
+    "per-frame-detail-report.json": "0638dad9eb8d6c79a09124d554233dfb0f084c2eb5e1652dac0a675c09c23390"
+  }
+}

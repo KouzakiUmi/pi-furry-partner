@@ -1,0 +1,11 @@
+Use case: precise-object-edit / identity-preserve.
+Edit target: the attached transparent searching-pose sprite. Change ONLY the large raised wolf tail's fur pigmentation. Preserve every other part of the image exactly, including the character's pose, outline, shape of the tail, tail attachment location, size, framing, paper pile, hood, scarf, paws, linework, and transparent background.
+
+The current tail has the WRONG white tip. Correct the tail to exactly THREE contiguous color regions in this order when following the tail from its TOP CURVED TIP down to its BOTTOM ATTACHMENT/ROOT:
+1. TIP / top curved end: DEEP GRAY solid fur pigmentation, approximately #6f7378.
+2. MIDDLE / central tail length: LIGHT GRAY solid fur pigmentation, approximately #b6b7b9.
+3. ROOT / bottom attachment to the white furry rump: WHITE solid fur pigmentation.
+
+Use natural slightly jagged canine fur-tuft boundaries between these three regions. Follow the tail's curved anatomy; the top curved end must read clearly deep gray, the central tail clearly light gray, and the bottom attachment clearly white. There must be exactly these three broad contiguous zones: DEEP GRAY TIP -> LIGHT GRAY MIDDLE -> WHITE ROOT. Do NOT make a white tip, do NOT make a gray or dark root, and do NOT alternate repeated gray-white stripes. A small amount of soft lighting/shading is fine, but shading must not create additional fur-color bands or reverse this large-area color order. Remove the existing white tip pigmentation completely.
+
+Keep the existing refined 2D chibi illustration style, clean outline and fur silhouette. Do not redraw the character or change any props. Retain the exact ONE tail, existing paper pile and existing small hidden-head blue-hooded wolf pose. No text, no extra elements, no background. Preserve genuine alpha transparency everywhere outside the existing sprite. Keep the exact original canvas dimensions and artwork placement.

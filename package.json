@@ -38,5 +38,18 @@
     "umi",
     "bilingual",
     "chinese-ui"
+  ],
+  "files": [
+    "index.ts",
+    "config.json",
+    "install.ps1",
+    "uninstall.ps1",
+    "lib/*.mjs",
+    "assets/**",
+    "themes/*.json",
+    "prompts/*.md",
+    "LICENSE",
+    "NOTICE",
+    "ASSET_LICENSE.md"
   ]
 }

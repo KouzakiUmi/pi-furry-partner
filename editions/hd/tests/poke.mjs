@@ -1,0 +1,161 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { createActivity } from "../lib/hd/activity.mjs";
+import { createMotionPlayer } from "../lib/motion.mjs";
+import { POKE_DURATION_MS, withPokeFrame } from "../lib/poke.mjs";
+import { replaceActivityCopy } from "../lib/language.mjs";
+import { samplePixels } from "../lib/renderer.mjs";
+import { withWatchFrames } from "../lib/watch.mjs";
+import { withListenFrames } from "../lib/listen.mjs";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const read = async (path) => JSON.parse(await readFile(join(root,
+  path.replace(/^assets\/reactions\/(wumi(?:-pixel)?)\//, "tests/fixtures/legacy-action-packs/$1/")
+    .replace(/^assets\/reactions\/pixel\//, "tests/fixtures/legacy-pixel/")
+    .replace(/^assets\/reactions\/illustration\//, "assets/reactions/umi/")), "utf8"));
+const zh = { copy: await read("assets/status-copy.json"), phrases: await read("assets/status-phrases.json") };
+const en = { copy: await read("assets/status-copy.en.json"), phrases: await read("assets/status-phrases.en.json") };
+const checks = [];
+let clock = 10000, randomCall = 0;
+const voice = { labels: {}, bubbles: {}, phrases: {} };
+replaceActivityCopy(voice, zh.copy, zh.phrases);
+const activity = createActivity({ ...voice, now: () => clock, random: () => (++randomCall % 11) / 11 });
+activity.start({ wake: false });
+const phrasesSeen = new Set();
+for (let i = 0; i < 15; i++) {
+  activity.poke(); const state = activity.snapshot();
+  assert.equal(state.phase, "idle"); assert.equal(state.face, "poke"); assert.equal(state.reaction, "poked");
+  assert.equal(state.pokeContext, "idle"); assert.equal(state.reactionStrength, 1);
+  assert.ok(zh.phrases.phrases.poke_idle.includes(state.phrase)); phrasesSeen.add(state.phrase);
+}
+assert.ok(phrasesSeen.size >= 3);
+clock += POKE_DURATION_MS - 1; assert.equal(activity.isPoked(), true);
+clock++; assert.equal(activity.isPoked(), false); assert.equal(activity.snapshot().reaction, undefined);
+
+activity.handle("agent_start");
+activity.handle("tool_execution_start", { toolCallId: "one", toolName: "bash", args: { command: "DO_NOT_SHOW_SECRET" } });
+clock += 700;
+const before = activity.snapshot(); activity.poke();
+const busy = activity.snapshot();
+for (const key of ["phase", "busy", "toolCount", "toolName", "toolObject", "elapsedMs", "phaseElapsedMs"]) assert.equal(busy[key], before[key], key);
+assert.equal(busy.pokeContext, "busy"); assert.equal(busy.reactionStrength, .55);
+assert.ok(zh.phrases.phrases.poke_busy.includes(busy.phrase));
+replaceActivityCopy(voice, en.copy, en.phrases);
+assert.ok(en.phrases.phrases.poke_busy.includes(activity.snapshot().phrase), "A language change updates the same ongoing reaction without restarting its timer");
+assert.equal(activity.snapshot().reactionElapsedMs, 0);
+clock += 350;
+activity.handle("tool_execution_end", { toolCallId: "one", isError: false });
+activity.handle("message_update", { assistantMessageEvent: { type: "text_delta", delta: "answer" } });
+const speaking = activity.snapshot();
+assert.equal(speaking.reaction, "poked"); assert.equal(speaking.phase, "speaking"); assert.equal(speaking.toolCount, 0);
+assert.equal(speaking.elapsedMs, 1050); assert.equal(speaking.reactionElapsedMs, 350);
+clock += POKE_DURATION_MS - 350;
+const restored = activity.snapshot();
+assert.equal(restored.reaction, undefined); assert.equal(restored.phase, "speaking"); assert.notEqual(restored.face, "poke");
+assert.equal(restored.elapsedMs, 700 + POKE_DURATION_MS);
+activity.handle("ui_prompt_start"); activity.snapshot(); clock += 10000;
+assert.equal(activity.snapshot().drowsy, true);
+activity.poke(); assert.equal(activity.snapshot().pokeContext, "waiting"); assert.equal(activity.snapshot().reactionStrength, .8);
+assert.ok(en.phrases.phrases.poke_waiting.includes(activity.snapshot().phrase));
+clock += POKE_DURATION_MS; assert.equal(activity.snapshot().face, "rest"); assert.equal(activity.snapshot().drowsy, true);
+checks.push("Poke lasts exactly 1100ms; random idle/busy/waiting copy and strength differ, language changes live, tool/message events and original agent/waiting clocks continue through it");
+
+for (const style of ["wumi", "wumi-pixel", "pixel", "illustration"]) {
+  const current = await read(`assets/reactions/${style}/reaction-sheet.json`);
+  const currentPatch = await read(`assets/reactions/${style}/poke-patch.json`);
+  if (current.ids.poke !== undefined) {
+    const before = JSON.stringify(current);
+    assert.equal(current.frames[current.ids.poke].id, "poke");
+    assert.equal(current.frames[current.ids.poke].pixels.length, current.width * current.height);
+    assert.strictEqual(withPokeFrame(current, currentPatch), current,
+      `${style}: a complete authored poke takes precedence over a legacy face patch`);
+    assert.strictEqual(withPokeFrame(current, { ...currentPatch, pixels: [[-1, 1]] }), current);
+    assert.equal(JSON.stringify(current), before);
+  }
+  // Sparse-patch deformation assertions describe legacy artwork, not the
+  // registered complete HD poses checked above. Keep that compatibility path
+  // covered with frozen source fixtures instead of altering approved pixels.
+  const sheet = current.ids.poke === undefined ? current
+    : await read(`tests/fixtures/legacy-eyelids/${style}.json`);
+  const patch = current.ids.poke === undefined ? currentPatch
+    : await read(`tests/fixtures/legacy-eyelids/${style}-poke.json`);
+  const before = JSON.stringify(sheet), extended = withPokeFrame(sheet, patch);
+  assert.notEqual(extended, sheet); assert.equal(extended.frames.length, sheet.frames.length + 1);
+  assert.strictEqual(extended.palette, sheet.palette); assert.equal(extended.ids.poke, sheet.frames.length);
+  assert.equal(JSON.stringify(sheet), before);
+  const pixels = extended.frames[extended.ids.poke].pixels, original = sheet.frames[sheet.ids["idle-open"]].pixels;
+  for (let i = 0; i < pixels.length; i++) assert.equal(pixels[i] === sheet.transparentIndex, original[i] === sheet.transparentIndex, `${style} silhouette at ${i}`);
+  const changedRows = patch.pixels.map(([index]) => Math.floor(index / sheet.width));
+  assert.ok(Math.max(...changedRows) < sheet.height * .7, "Only the face patch changes; body/paws/scarf stay exact");
+  assert.strictEqual(withPokeFrame(sheet, { ...patch, width: -1 }), sheet);
+  assert.strictEqual(withPokeFrame(sheet, { ...patch, pixels: [[-1, 1]] }), sheet);
+  const legacyPatch = { ...patch }; delete legacyPatch.motion;
+  const legacy = withPokeFrame(sheet, legacyPatch);
+  assert.strictEqual(legacy.motion, sheet.motion, "Single-frame patches without landmarks remain compatible");
+  const face = { normalized: true, polygon: [[.28,.35],[.64,.35],[.66,.6],[.31,.61]], pivot: [.46,.515] };
+  const mapped = withPokeFrame(sheet, { ...legacyPatch, motion: { face: { ...face, padding: Infinity, angle: NaN } } });
+  assert.deepEqual(mapped.motion.pokeFace.polygon, face.polygon);
+  assert.deepEqual(mapped.motion.pokeFace.pivot, face.pivot);
+  assert.equal(mapped.motion.pokeFace.padding, undefined, "Unvalidated deformation settings cannot reach the renderer");
+  assert.notStrictEqual(mapped.motion.pokeFace.polygon, face.polygon);
+  for (const invalid of [{ ...face, pivot: [Infinity, .5] }, { ...face, polygon: [[-.1,.2],[.5,.5],[.6,.3]] }, { ...face, polygon: [[.1,.1],[.1,.1],[.1,.1]] }, { ...face, polygon: Array(65).fill([.5,.5]) }, { ...face, normalized: false }]) {
+    assert.strictEqual(withPokeFrame(sheet, { ...legacyPatch, motion: { face: invalid } }).motion, sheet.motion);
+  }
+  if (style === "wumi" || style === "wumi-pixel") {
+    const watch = await read(`assets/reactions/${style}/watch-frames.json`), listen = await read(`assets/reactions/${style}/listen-frames.json`);
+    const combined = withListenFrames(withWatchFrames(mapped, watch), listen);
+    assert.equal(combined.frames.length, mapped.frames.length + watch.frames.length + listen.frames.length); assert.strictEqual(combined.motion.pokeFace, mapped.motion.pokeFace);
+    assert.strictEqual(combined.palette, sheet.palette);
+  }
+  const cheekPlayer = createMotionPlayer({ now: () => 150 }), legacyPlayer = createMotionPlayer({ now: () => 150 });
+  const squeezed = cheekPlayer.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: 150 }).frame.pixels;
+  const unsqueezed = legacyPlayer.frame(legacy, legacy.ids.poke, { phase: "poked", reactionElapsedMs: 150 }).frame.pixels;
+  const cheekChanges = [...squeezed].flatMap((color, i) => color === unsqueezed[i] ? [] : [i]);
+  assert.ok(cheekChanges.length > 0, `${style}: optional landmarks visibly lift the cheeks beyond the compatible whole-body motion`);
+  assert.ok(cheekChanges.every((i) => Math.floor(i / sheet.width) < sheet.height * .72), "Cheek deformation leaves the scarf, body and paws untouched");
+  const upperFace = Math.min(...extended.motion.pokeFace.polygon.map(([, y]) => y)) * sheet.height;
+  assert.ok(cheekChanges.every((i) => Math.floor(i / sheet.width) >= upperFace), "Local cheek squeezing cannot disturb upper hair or ears");
+  cheekPlayer.dispose(); legacyPlayer.dispose();
+  let time = 0;
+  const player = createMotionPlayer({ now: () => time });
+  player.frame(extended, extended.ids["idle-open"], { phase: "idle" });
+  const samples = [];
+  for (const ms of Array.from({ length: 23 }, (_, i) => i * 50)) {
+    time = ms;
+    const sample = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: ms });
+    assert.equal(sample.frame.id, "poke"); assert.equal(sample.transitioning, false);
+    assert.ok(sample.nextInMs <= 50, "The brief recoil is sampled at 50ms rather than stepping every 100ms");
+    for (const value of Object.values(sample.motion)) assert.ok(Number.isFinite(value));
+    assert.strictEqual(sample.sheet.palette, sheet.palette, "Poke motion never creates fade colors");
+    samples.push(sample);
+  }
+  assert.ok(samples.some((sample) => sample.motion.x < 0) && samples.some((sample) => sample.motion.x > 0));
+  assert.ok(samples.some((sample) => sample.motion.scale < .985));
+  assert.ok(samples.every((sample) => sample.motion.scale >= .97 && sample.motion.scale <= 1.01));
+  assert.ok(samples.some((sample) => sample.motion.y > 0) && samples.some((sample) => sample.motion.y < 0), "A small vertical arc accompanies the side rebound");
+  assert.ok(samples.some((sample) => sample.motion.earLeft !== 0));
+  assert.ok(new Set(samples.map((sample) => sample.cacheKey)).size >= 12);
+  assert.equal(samples[2].motion.earLeft, 0, "Ears lag behind the initial tuck instead of shaking in lockstep");
+  assert.ok(samples.some((sample) => sample.motion.earLeft !== -sample.motion.earRight), "The two ears react at slightly different moments");
+  assert.ok(samples.some((sample) => sample.motion.pokeSquash > .8));
+  const at8Rows = samples.map((sample) => Buffer.from(samplePixels(sample.frame, sheet.width, sheet.height, 160, 160)).toString("base64"));
+  assert.ok(new Set(at8Rows).size >= 12, `${style}: a normal eight-row Sixel portrait retains the expressive motion`);
+  const halfBlocks = samples.map((sample) => Buffer.from(samplePixels(sample.frame, sheet.width, sheet.height, 16, 16)).toString("base64"));
+  assert.ok(new Set(halfBlocks).size >= 4, `${style}: fallback 16×16 half-block sampling still shows the reaction`);
+  assert.equal(samples.at(-1).motion.scale, 1);
+  for (const sample of samples.slice(20)) for (const key of ["x", "y", "tilt", "earLeft", "earRight", "pokeSquash", "pokeCheekTilt"]) assert.equal(Math.abs(sample.motion[key]), 0, `The last 100ms rests at the original center: ${key}`);
+  const playfulX = samples[2].motion.x;
+  time += 100;
+  const gentle = player.frame(extended, extended.ids.poke, { phase: "poked", reactionElapsedMs: 100, reactionStrength: .55 });
+  assert.ok(Math.abs(gentle.motion.x) <= Math.abs(playfulX));
+  assert.ok(gentle.motion.scale > samples[2].motion.scale);
+  assert.ok(gentle.motion.pokeSquash < samples[2].motion.pokeSquash);
+  time += 100;
+  const ended = player.frame(extended, extended.ids["idle-open"], { phase: "idle" });
+  assert.equal(ended.transitioning, false, "Returning from a poke cannot dissolve the closed eyes over an open face");
+  player.dispose();
+}
+checks.push("Single-frame legacy patches remain compatible; optional normalized face landmarks are bounded, sanitized and preserved by the append-only watch/listen composition");
+checks.push("All four styles retain source/palette/alpha/body; a grounded tuck leads into a curved damped rebound and delayed independent ears, visible at eight rows and in half-block fallback, with gentler busy motion and no entry/exit dissolve");
+console.log(JSON.stringify({ passed: true, modelRequests: 0, checks }, null, 2));

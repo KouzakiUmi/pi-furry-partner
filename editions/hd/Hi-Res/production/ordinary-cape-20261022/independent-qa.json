@@ -1,0 +1,23 @@
+{
+  "status": "INTERNAL_QA_COMPLETE_AWAITING_USER",
+  "focus": "Cape hue mismatch and green matte speckles",
+  "runtimeApplied": false,
+  "userApproved": true,
+  "reviewers": [
+    "ear_seam_diagnosis",
+    "ear_spatial_diagnosis"
+  ],
+  "findings": [
+    "Watch cloak/hood is closer to approved idle fabric; shade planes, stitches and hem retained.",
+    "Search tail blue shift found in internal v2 and rejected; v3 tail/prop protected pixels match original all 116 frames.",
+    "All 274 frames preserve subject and attached soft-edge alpha; removed pixels are disconnected components with maximum alpha below 128.",
+    "Watch output identical to v2 reviewed output on all 158 SHA hashes.",
+    "Visual samples: watch and search start/middle/end, both light/dark backgrounds."
+  ],
+  "limits": [
+    "Full motion subjective color judgment pending user; no claim all remaining attached antialias artifacts eliminated."
+  ],
+  "reviewUrl": "http://127.0.0.1:8898/ordinary-cape-color-review/",
+  "userDecision": "还行。然后是之前的版本有一些动画效果也没有了。需要检查",
+  "approvalScope": "cape hue correction and disconnected matte cleanup for the two reviewed action clips"
+}

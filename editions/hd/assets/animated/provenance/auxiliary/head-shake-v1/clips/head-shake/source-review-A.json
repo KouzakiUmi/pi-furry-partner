@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "action": "head-shake",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "humanAcceptedSource": false,
+  "humanAcceptedOutput": false,
+  "readyForRuntimeIntegration": false,
+  "sourceVideoSha256": "c6366814b7d0b560af2434c5d0afb3dea2d9a09af4c5d443d4aa11c936ef0ef6",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "promptSha256": "31344d65e1b383fd8553c4c8035144cfe2158628852e21fb680540aa38ca41ef",
+  "contractSha256": "d55eb4723a5fb709bdd04cd4eeaee5caa40454ea6005e6d28392b95bca27a361",
+  "actualViewedFiles": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v1\\reference.png",
+      "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+    },
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "e70c9ee42ee8adc2408ebdc485add20e6d6d3122fbd7328ff9e7fd146f66d2ad"
+    },
+    {
+      "file": "early-check/00037.png",
+      "sha256": "58428bd7f33260da3e04c8ded042e49ebb35ecd8d7fe163554a5210846439cf3"
+    },
+    {
+      "file": "early-check/00073.png",
+      "sha256": "f1eb776c2996c56acb7656404d9543467165d5bebccd9bc74027010c1b21e2c5"
+    }
+  ],
+  "findings": [
+    "Fresh source and same-purple input: white face/arms, gray compact paws, blue scarf/white stripes/cross, slate-blue hood/cape material and shading remain recognizable; no obvious new broad purple/green tint or material substitution is visible in the listed samples.",
+    "Viewer-left folded hood-ear identity, opposite upright hood ear, consecutive X stitches, zigzag/dot hood border, separate gray bean brows, dark eyeliner, blue star eyes and short ivory claw tips are legible in the inspected source poses."
+  ],
+  "knownLimitations": [
+    "A viewed only listed source stills/contact sheet; no native-speed performance, timing/loop or all107 visual certification. B owns full107 paw/framing and actual action-intent checks; user output review remains pending.",
+    "Source lines/shading are somewhat softer than clean input. This is not exact static RGB/geometry or zero colored edge residue certification. New alpha may expose internal eye-star flags and fine external grains; final black/white review is still required."
+  ],
+  "acceptanceScope": "Fresh source material/identity gate only; permits frozen alpha processing after independent B gate. Not human approval or formal integration.",
+  "runtimeInstalled": false
+}

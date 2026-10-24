@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "wait",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "actingUserApprovalPreserved": true,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410",
+  "priorManifestSha256": "a08fa1091e6b1e7d8b336cefd05ac0ed0cffb97eb84b7e6f93e62feff2bb2f2a",
+  "outputManifestSha256": "ac3688860e6b37420ea4f27f7f563ba2664b51502c7ea655c650e8a4a890601e",
+  "outputVariant": "processed-detail-closeout-v1",
+  "actualViewedFiles": [
+    "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/black/028.png",
+    "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/white/028.png",
+    "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/early-check/00029.png",
+    "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/black/086.png"
+  ],
+  "previouslyActuallyViewedComparisonFiles": [
+    "work/motion-polish-20261023/early-alpha-closeout/wait-known-flag.jpg"
+  ],
+  "findings": [
+    "Restoredtarget eye stars are continuous and retain source star/red-coral margin reading onboth black/white; no obvious face-interior gap, rectangular repair seam or new facecolor discontinuity found in listedtarget stills compared with correspondingraw and previouslyviewed oldflagproof.",
+    "White fur,gray paws,blue scarf andblue-gray hood material/lines remain recognizable. Fine dark/purple outerrims andfur/cloth-edge grain remain disclosed; this is not zero-defect outputcertification."
+  ],
+  "rootTechnicalEvidence": {
+    "frames": 107,
+    "nativeTimingUnchanged": true,
+    "allGuardsPassAndFullHelperRgbaReproducibleReported": true,
+    "faceInteriorRedCoralAlphaBelow200": 0,
+    "wholeDomainResidual": "21 isolatedexternal source-color samples; worst086bbox[614,542,615,543], not an internaleye-star hole"
+  },
+  "externalPointObservation": "Actually viewed086black: flaggedcoordinate is at rightouter shoulder/cloth region below scarf, away fromface/eyes. No authorization to fill external contour alpha; residualdiagnostic does not by itself imply face recovery failure.",
+  "limitations": [
+    "Only listedtarget blackwhite/source stills plus previousoldflagproof actualviewed. Complete107frame guard/reproducibility/alpha statistics attributed toroottechnical evidence,not independently recomputed byA.",
+    "Original actingapproval is retained; timing/amplitude/loop are not re-evaluated. Ready means targetedtechnical alpha result may be shown to user, not finaluseracceptance or productioninstallation.",
+    "No artistic recolor,regeneration,outlinefill or blanket alpha change authorized."
+  ],
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/manifest.json",
+      "sha256": "ac3688860e6b37420ea4f27f7f563ba2664b51502c7ea655c650e8a4a890601e"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/Umi-wait-H3-source.mp4",
+      "sha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/reference.png",
+      "sha256": "58b3a1ade6c0bc1c6a82f50d89600d39294220fafef41119e2252246bc5cb355"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/report.json",
+      "sha256": "112f90a65d89a2924402572ccf1fcb3ebfe51f8db2e5c20c6f2dca64b1006f54"
+    },
+    {
+      "path": "work/motion-polish-20261023/early-alpha-closeout/wait-source-core-review-A.json",
+      "sha256": "9c66b4412cb4e1048978f688ead7ab8e2c1c741f7db408346860c3c37f3b8936"
+    },
+    {
+      "path": "work/motion-polish-20261023/early-alpha-closeout/wait-known-flag.jpg",
+      "sha256": "f43d54d3cdb2ba28a2252060f836596057221a5870337067aa96e61f82e8503a"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/black/028.png",
+      "sha256": "5fce5a82034d65c5cdfd13652c8f49f83e0e3451aca4fe3a5461e8a3b45dc3a3"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/white/028.png",
+      "sha256": "767cb1f079827eec2fece8624e8c585aaa7489dbe3e15a336a6210a2f0ca079e"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/early-check/00029.png",
+      "sha256": "ff708785ca525fda6b40bfd1ddade30de43520080743b86ade7b7a04d21bacec"
+    },
+    {
+      "path": "D:/Software Projects/pi-furry-partner/Hi-Res/sources/h3-motion-polish-20261023/wait/key-purple-brisk-accent-v2/processed-detail-closeout-v1/black/086.png",
+      "sha256": "32cc24423529ff4375907959378bf1ffb2755637ffcb97261fa40538a489a942"
+    },
+    {
+      "path": "work/motion-polish-20261023/early-alpha-interior-alpha-diagnostic.json",
+      "sha256": "b91c7bc680fd925296c61c9c71d17989b64d9d65cf07186262043ef8ad95bb54"
+    }
+  ]
+}

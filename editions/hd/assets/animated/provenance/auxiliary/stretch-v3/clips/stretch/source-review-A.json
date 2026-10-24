@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "readyForAlphaReview": true,
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "sourceVideoSha256": "68cff5cc15ba0ea4b46a9dcfd3938603c0821287600b8d36cd032a2bd3f944ea",
+  "referenceSha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf",
+  "middleKeyposeSha256": "6562879f9bb4b9ab8b44268745962606acff7856368de2049dde63b19f440e40",
+  "promptSha256": "56d4f20ebde06f958b1c15931b8fbb90fd103d297690abe207a1cc91ce68f38d",
+  "motionContractSha256": "457589fc6ae0f5c153615a734037c1fb3538e71da0fca16d11f9938a2cbd5e01",
+  "sourceFramingPreflightSha256": "b6b89577b157cd1da7eb99c55d9ba0cd57cc9f135aeadde84a64d94b0b010783",
+  "actualViewedFiles": [
+    {
+      "file": "reference.png",
+      "sha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf"
+    },
+    {
+      "file": "middle-keypose-purple.png",
+      "sha256": "6562879f9bb4b9ab8b44268745962606acff7856368de2049dde63b19f440e40"
+    },
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "b72b257f2a803965ca32c286d84485d20295f516b63fd4180ceda3dd9eb820a3"
+    },
+    {
+      "file": "early-check/00043.png",
+      "sha256": "5d19bd25002f4baeef380d3fc06130a92188ca88d35b3639bb09fb62c8492f6e"
+    },
+    {
+      "file": "early-check/00079.png",
+      "sha256": "b5bab4448397e8e9c24f0a9c7cb0e8b9d96b45b52de16444c5ea5c55e3308258"
+    }
+  ],
+  "findings": [
+    "实际固定896 padded主/中段参考、0.25s接触表和原生042/078抬臂及降臂极值，双掌均完整落在原生画框内，所查未见v2左右掌截断；完整107余量门另有技术证据。",
+    "白臂灰掌/粉趾垫中央垫、短白甲、蓝围巾白条、蓝灰帽披阴影及左折耳X/帽沿纹样保持可读；未见新增明确材质染色硬错。",
+    "闭眼线和灰豆眉独立，白胸腹和抬臂形态清楚，未见新增脚。"
+  ],
+  "fullFrameFramingEvidence": {
+    "status": "PASS_COMPLETE107_SOURCE_MARGIN_GATE",
+    "minimumOutsideMarginNativePx": 80,
+    "minimumOutsideMarginLogicalPx": 93.33333333333333,
+    "logicalCanvas": [
+      896,
+      896
+    ],
+    "worldPaintRect": {
+      "x": -128,
+      "y": -128,
+      "width": 896,
+      "height": 896
+    },
+    "bitmapPivot": [
+      448,
+      736
+    ]
+  },
+  "knownLimitations": [
+    "接触表可见约1s才明显起抬、约1.5s到高V及较长峰值hold；不能按prompt约0.5s声称履约，节拍仍待用户原速审。",
+    "078降臂边存在原生运动模糊，透明处理不应填实/重画；胸腹与抬臂幅度是源表演差异，未认证动态自然性。",
+    "固定896全部源画面/注册应保留，不裁回640world、不按帧fit；旧v2截边HOLD保持不变。",
+    "仅所列实际静图材料/纹样/构图门，不等同最终alpha或原速用户批准。"
+  ]
+}

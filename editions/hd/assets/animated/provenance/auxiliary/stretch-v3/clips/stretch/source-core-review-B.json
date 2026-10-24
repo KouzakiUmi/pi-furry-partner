@@ -1,0 +1,34 @@
+{
+  "reviewer": "B",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "sourceVideoSha256": "68cff5cc15ba0ea4b46a9dcfd3938603c0821287600b8d36cd032a2bd3f944ea",
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      365,
+      395,
+      535,
+      470
+    ],
+    "scope": "Only stretchv3 fixed896 source; actual six poses including high-V/return and original008eye flag show opaque eyes/face/fur, no true key backdrop or palm gap."
+  },
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "4c344c7df3cb2229076d537e94f14ffd90ef75651587270df45449e0a0851490"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "e03f066667b1c02032dea4ee301f0d36724af9e291334df0ab75459ef70d5097"
+    }
+  ],
+  "preflightSha256": "a4c182084222184d607467506361c9265daa724eb3399575440813905b1de0f1",
+  "guardHelperSha256": "8c667e4ffbe7941da5b609c431ef1f0ad58d7f444f512ac9ef1d6dfce6916f97",
+  "conditions": [
+    "Only this-source core sub252 enclosed pixels recover same-frame same896 fixed-resize nativeRGB/255; no inherited ROI or source recolor.",
+    "All107 ext8/coreborder/reliable252/outside RGBA exact guards unchanged; arm/outer-soft components excluded.",
+    "Final896 full-canvas black/white and native-speed user gate remain pending."
+  ],
+  "humanAccepted": false,
+  "runtimeInstalled": false
+}

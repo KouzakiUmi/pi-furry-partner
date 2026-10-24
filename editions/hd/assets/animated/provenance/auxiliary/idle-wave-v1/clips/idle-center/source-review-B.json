@@ -1,0 +1,35 @@
+{
+  "reviewer": "B",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "action": "idle-center",
+  "sourceVideoSha256": "27c154d0136450939f12d3f53687b6ed7695988ef290401d7dad779f27f0bbbf",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "f088060f0111d1c86f71e6280527b14ab6e59e78e76a905c9758347668ca2d53",
+  "actualViewedFiles": [
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "a699020d774407c649011626b93f0d64ec9a960d45cbdba8fc4482da22c13ecc"
+    },
+    {
+      "file": "early-check/00043.png",
+      "sha256": "2c29707ee487306383b2fdbdb38d5f3778f369bebcfb9add03c314b2fe2330f4"
+    },
+    {
+      "file": "early-check/00019.png",
+      "sha256": "84554163aaa77ff19bc8f379b437e30f1163a964065d184eb0f6add8e9f1f6cb"
+    },
+    {
+      "file": "early-check/00107.png",
+      "sha256": "57342bf0218b09c27543d2cc871361b97f034158ec951cdebfc19852f99a2ff7"
+    }
+  ],
+  "findings": [
+    "概览正面居中注意力为主，0.75秒闭眼短低头样本后回睁眼；未出现旧idle持续单向朝左的明显侧转。待机方向不同可读，但静帧不认证随机切换或实时效果。",
+    "所查短圆灰掌/厚白臂/落地线、脸宽与单层披布保持，无明显长指/掌缩小或身体整体缩放；眉眼闭眼线完整。",
+    "中前段围巾右尾有向外小展、下摆角小开合，仍连续单层；该幅度应在最终原速页披露，不宣称零附属摆动。",
+    "首末近同一正面支撑姿态，未连续播放，不认证源速度/节奏/循环接缝。"
+  ],
+  "scope": "源结构/待机方向静帧gate，仅允许后续alpha输出；不代替全107人工图审和用户最终透明原速。",
+  "humanAccepted": false,
+  "runtimeInstalled": false
+}

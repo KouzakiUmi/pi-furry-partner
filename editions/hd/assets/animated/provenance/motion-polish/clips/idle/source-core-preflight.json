@@ -1,0 +1,18 @@
+{
+  "status": "CANDIDATE_REQUIRES_INDEPENDENT_ACTUAL_A_B",
+  "core": [
+    225,
+    280,
+    420,
+    375
+  ],
+  "canvas": [
+    640,
+    640
+  ],
+  "frames": 107,
+  "minimumSourceKeyMargin": 53.0,
+  "sourceHasNoKeyLikePixelInCore": true,
+  "proof": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\batch10-idle-source-core-review.jpg",
+  "scope": "Underlying white face/eyes/mouth only; watch glass is not mechanically filled. Must reject any area with true transparent background or boundary/exterior connected uncertainty."
+}

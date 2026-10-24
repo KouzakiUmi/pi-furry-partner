@@ -1,0 +1,74 @@
+name: CI · Pi HD
+
+on:
+  push:
+    branches: [main]
+    paths: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+  pull_request:
+    branches: [main]
+    paths: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+  workflow_dispatch:
+  workflow_call:
+
+defaults:
+  run:
+    working-directory: editions/hd
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pi-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  product-line:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24'
+      - run: node scripts/verify-pi-line.mjs
+  optional-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - name: Build and verify the preserved static website
+        run: |
+          npm run build:site
+          npm run test:site
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - name: Install reviewed image verification dependencies
+        run: python -m pip install --disable-pip-version-check -r tools/requirements-validation.txt
+      - name: Install the verified Pi runtimes for tests
+        run: |
+          npm install --prefix work/pi-runtime-1.2 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
+          npm install --prefix work/pi-runtime-1.3 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.3.0 @earendil-works/pi-tui@1.3.0
+      - name: Verify release line isolation and platform archive names
+        run: python tests/release-lines.py
+      - name: Validate configured editions and Pi package (Pi 1.2.0)
+        shell: pwsh
+        run: |
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.2/node_modules'
+          python tools/build-editions.py --edition all --platform all --prepare-only --test
+      - name: Run runtime and integration suites (Pi 1.3.0)
+        shell: pwsh
+        run: |
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.3/node_modules'
+          npm test
+      - name: Verify PowerShell 7 install, upgrade and recovery
+        shell: pwsh
+        run: ./tests/installer.ps1 -WorkDir ./work/installer-core
+      - name: Verify Windows PowerShell 5.1 install, upgrade and recovery
+        shell: powershell
+        run: ./tests/installer.ps1 -WorkDir ./work/installer-desktop

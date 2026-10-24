@@ -1,0 +1,32 @@
+{
+  "status": "AWAITING_USER_FINAL_MOTION_ALPHA_REVIEW",
+  "createdUtc": "2026-10-23T09:05:30.291292+00:00",
+  "url": "http://127.0.0.1:64533/",
+  "items": {
+    "idle": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/idle/key-purple-batch10-v1/processed-detail-v4",
+      "manifestSha256": "45feb3a8daca20fbfea77f2c04134031bff6365d5a605d5b6c2c62c9f787c4cd",
+      "referenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    },
+    "idle-center": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/idle/key-purple-center-v1/processed-detail-v1",
+      "manifestSha256": "ff6fe9ef68cc1e9bb4f022f44eef75272fd96d24f3b7e2513d04c9299d772662",
+      "referenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    },
+    "idle-right": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/idle/key-purple-right-v1/processed-detail-v1",
+      "manifestSha256": "38ddfcb4dc579a99a820a4a9cf746ba7a021ceee941ba068b535a43c6b68bcd4",
+      "referenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    },
+    "wave": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/wave/key-purple-pilot-v2/processed-edge-v2",
+      "manifestSha256": "67d5ac9781b7535001254e1d7c6ec3bcb211ab2a6322e49a32aacbc265fb44eb",
+      "referenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    }
+  },
+  "reviewServerSha256": "0103c45770dc64fcc66d1ff9357fa8f399fd78c8ba72db436fb5b7722fefc1d2",
+  "configSha256": "6c00a693041523244e7da1cce70260304aa8fae2775757cfda663b56e5044156",
+  "servedPageSha256": "fe9dd4cc27c38d88d95fd4fc41ab42e180eb6911d34d7373fcf11f5ef15770ec",
+  "runtimeVariantsActivated": false,
+  "newCandidatesIntegrated": false
+}

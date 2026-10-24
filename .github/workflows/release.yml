@@ -38,7 +38,7 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           archive="pi-furry-partner-${RELEASE_TAG#v}.zip"
-          git archive --format=zip --prefix=pi-furry-partner/ --output="$archive" "$RELEASE_TAG"
+          python scripts/package-pi-release.py --tag "$RELEASE_TAG" --out "$archive"
           unzip -t "$archive"
           mkdir -p work/release-archive-check
           unzip -q "$archive" -d work/release-archive-check

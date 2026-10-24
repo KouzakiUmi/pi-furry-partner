@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "recordedAtUtc": "2026-10-22T22:14:53.362905+00:00",
+  "action": "shy",
+  "version": "key-purple-batch06-v1",
+  "processedVariant": "processed-detail-v4",
+  "status": "TARGETED_FALSE_ALPHA_REPAIRED_SAMPLE_READY_FOR_USER_REVIEW_WITH_EDGE_LIMITS",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "539df9a022243c9b1b96d5e29426f2f3310267acc140d98a75d760fec330269a",
+  "actualReview": "Actually viewed target source-aligned/black/white/alpha magnified proof and v4 native000/053/106 black+white six stills. No dynamic playback claim or full-frame visual acceptance.",
+  "targetedFinding": "Shy001 screen-right eye-star tip is solid again; prior small gray-alpha holes no longer visible. Black/white star shape agrees with aligned source in the inspected crop.",
+  "otherSampleFindings": "No conspicuous new white island, wide halo, paw/arm hole or pattern erosion observed in v4 native000/053/106 samples. Shy center short-claw tips remain natural solid details; gray-paw/white-arm borders, brows/eye lines, folded-ear X stitches, white scarf patterns and blue-gray hood/cape remain readable.",
+  "visualBlockingFindingsInInspectedV4Samples": [],
+  "knownLimits": "Existing very fine purple/dark exterior rim and sparse contour/hair-tip grain remain. This is an inferred technical matte correction, not ground-truth alpha or zero-defect proof. Targeted stills cannot certify every-frame red-feature protection, dynamic edge stability, acting rhythm or loop.",
+  "previousFailurePreserved": {
+    "file": "reviewer-A.json",
+    "status": "HOLD_INTERIOR_RED_FEATURE_ALPHA",
+    "sha256": "cdb0e665ebfd7c3ffa681d226f823fdd1fef502dbff3d2e5af5b1f479678d503",
+    "note": "Previous processed-edge-v2 HOLD remains unchanged as history; v3 failed/narrow trial not approved by this record."
+  },
+  "processingScript": {
+    "path": "work/motion-polish-20261023/restore-small-interior-red-details.py",
+    "sha256": "3e84373d11c445069f6b016e7f3a36e2a5195aad15f770dacfdb5cad7abb1c0c",
+    "scopeReportedByImplementation": "Only small enclosed sub252alpha components with original native red evidence restored; no A tuning or source/frozen-helper edits. Technical invariants require root checks, not inferred from these stills."
+  },
+  "evidence": [
+    {
+      "path": "processed-detail-v4/black/000.png",
+      "sha256": "036866fab48bd7908c9fe49289402c03efbbe14e762c5de36f5b2b37bbe3103f"
+    },
+    {
+      "path": "processed-detail-v4/white/000.png",
+      "sha256": "78074a3b48cbaac5912277032cead1561058c45bdc7c632e99f395715901fde7"
+    },
+    {
+      "path": "processed-detail-v4/black/053.png",
+      "sha256": "d69fbe83d7b7b8c7ab4266bb15f0cdedd7e2cd10315b20ff32f100ab37d651ea"
+    },
+    {
+      "path": "processed-detail-v4/white/053.png",
+      "sha256": "e4cc620b98c971feb4219972a2a4544bd10b3ea1ac88bee06b1ce240f8028141"
+    },
+    {
+      "path": "processed-detail-v4/black/106.png",
+      "sha256": "c1efdb4d32f0a99757e97f58d1bbe73ceff6e375dede88bc9756586f214c5d04"
+    },
+    {
+      "path": "processed-detail-v4/white/106.png",
+      "sha256": "dfc421947295a30beb05ba57a3034fb388edc1d79973c9bf3765396458ed57e1"
+    },
+    {
+      "path": "processed-detail-v4/black/001.png",
+      "sha256": "51e857e473d6abaf9431a236011e5080fe9baf82b01016d78b94023c86c12689"
+    },
+    {
+      "path": "processed-detail-v4/white/001.png",
+      "sha256": "ca629fb5d816f234c28cdbd173f5fb48ac22e4fb851d2c8108023913ce6e7c27"
+    },
+    {
+      "path": "processed-detail-v4/rgba/001.png",
+      "sha256": "c53d2b1ccb42baca6ff737ac6f877740e80116779bd03ee4b1dc06378858f5ff"
+    },
+    {
+      "path": "early-check/00002.png",
+      "sha256": "14b8a653b861c7498516305ccb85a4554f078000465c3c94365f2278d577521a"
+    }
+  ],
+  "detailProof": {
+    "path": "work/motion-polish-20261023/batch06-edge-detail-A/shy-001-detail-v4.png",
+    "sha256": "75eb69009e6d504241c581bf3979a2d6d775a37f4f4ccb3e808b2eed985f86e8"
+  },
+  "processedBindings": {
+    "manifest.json": "42c54b051d6f06566a03e4ae9837396d91a2e533e7fec602a53fa0766f36a6a4",
+    "report.json": "bb82ab48c486c05ca85cb63c786ba4c22aff7dbf3e485ea7d132adf950f2e068",
+    "per-frame-detail-report.json": "a4f9686d10ee8b0bda9254a2d777f785e1b13d50a8f9eea38f1bf545d189428f"
+  }
+}

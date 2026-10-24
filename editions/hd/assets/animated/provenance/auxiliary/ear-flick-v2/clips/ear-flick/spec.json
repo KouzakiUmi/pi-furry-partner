@@ -1,0 +1,44 @@
+{
+  "action": "ear-flick",
+  "model": "MiniMax-H3",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\idle-open.png",
+  "sourceSha256": "759ef974e7ac320463d04188432f17559c58484e34530e2111d2e0b6f7566927",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "fee84fe862b6f647e4183ba9db19d20270cf2a41d0b7725590d9142b7ca33e5b",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Natural incidental attention to a soft nearby voice, one small visible ear-root response then breathing relaxation",
+    "primaryMotion": "Umi is naturally sitting with his friend in the supplied original idle. He seems to catch a very soft nearby voice: attention briefly sharpens, the original UPRIGHT hood-ear ROOT makes ONE modest short adjustment visible in its outline, and immediately relaxes back with the same quiet breath. The eyes/gray bean brows give only the tiniest shared acknowledgement; the head/shoulders remain comfortably supported with breathing life. This must look like an incidental listening reflex that happened to him, not Umi presenting or demonstrating an ear trick. The ear-root response is clearly perceptible but SMALL, brief and ordinary-speed, with no long preparation or held unusual ear pose. Let eye attention, the one small root twitch and breath overlap naturally, never as separate performed steps. Do not repeat or alternate flapping ears or use a large head shake instead.\n\nThe two HOOD EARS keep the SAME original HARD CLOTH volume, thickness and identity throughout: viewer-left ear keeps its forward fold and consecutive X stitches; viewer-right ear stays upright with its original shape. Never flatten, unfold, stretch, swing the whole ear far outward, fan it into an airplane shape or turn it into a soft cat ear. Only a modest ROOT adjustment belongs to this reflex, with a very small natural settle. Do not pull either ear sideways or change its silhouette for a long held pose.\n\nBOTH original broad short compact gray paws remain closed, planted in their exact original places, original size and orientations; no stepping, sliding, raising, opening, finger spreading or pad display. Keep full WHITE forearms, short sturdy wrists, pointed white/gray boundaries and tiny ivory claw tips. The seated lower root and single heavy cape stay grounded and almost at rest: narrow hem corners continue DOWN close to the original body, never spreading into wings or making an outward cape flourish. The blue scarf tips stay quiet and weighted, without an outward flick or dramatic follow-through. Keep original face width/head-body volumes, blue star eyes, separate gray bean brows, continuous dark eyelid lines and restrained tiny closed animal smile. No new teeth, props, musical notes, sound marks or extra character. Camera, registration and scale stay fixed; no whole-image rotation/warp/zoom, backwards replay or pasted endpoint. Return naturally to the same original alert idle with breathing life. The flat unlit #A020C0 plate remains identical throughout, casting no purple/green reflections on original materials.",
+    "supportChain": "Both original full compact closed paws stay original places/size/orientation; seated root supports almost still head/shoulders, no new paw or cloth action",
+    "gazeHead": "Tiniest eye/brow attention response overlaps ear-root impulse, not a deliberate head or ear demonstration",
+    "secondaryMotion": "Quiet weighted scarf/cape, no outward flare. Same hard-cloth folded ear/X identity, no unfolding/fanning or long unusual pose",
+    "anchors": "Original approved idle640 byte-identical reference at both FL2VA boundaries, pivot320608/worldRect00640640; no imagegen, body-part rigs, fit or whole-image transforms",
+    "timingLayers": "One ordinary brief incidental root response with shared attention/breath, immediate natural release; no long preparation, held extreme or repeated fan",
+    "loopBoundary": "Original same idle first/last through known FL2VA; actual full native forward return must be independently reviewed",
+    "reviewOrder": "Fresh native107 paw/framing and actual subtle-but-readable natural ear intent gate: invisible or deliberate fan source HOLD before alpha. Independent A materials and B anatomy/intent, frozen purple alpha/edge/this-source core only if needed, final A-B/native-speed user gate",
+    "propInteraction": "none"
+  },
+  "outputCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "worldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "keyColor": "#A020C0",
+  "sameFirstAndLastFrame": true,
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "User rejects ear-flick v1 as too deliberate at60034; root authorizes v2 natural small ear-root attention response, original idle same-boundary FL2VA one fresh source. Head-shake is independently accepted/integrated by A; do not touch it or formal baseline26. Fresh source/final A-B and native-speed user gate, no install/release."
+}

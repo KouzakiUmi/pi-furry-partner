@@ -1,0 +1,31 @@
+{
+  "model": "MiniMax-H3",
+  "mode": "first-and-last-frame image-to-video",
+  "reference": "watch-sequence/watch.png",
+  "sameFirstAndLastReference": true,
+  "background": "#00FF00; continuous green-luminance matte inverted into alpha for foreground compositing",
+  "requestedDurationSeconds": 6,
+  "decodedDurationSeconds": 6.583333333333333,
+  "sourceDimensions": [
+    768,
+    768
+  ],
+  "sourceFps": 24,
+  "sourceFrames": 158,
+  "sourceFile": "watch-h3-source.mp4",
+  "sourceSha256": "c898de03109ddd815c3da596027b6d0051477fb6fe65515b1dc61daf31172fdd",
+  "sourcePreparation": "Original encoded video stream preserved; unused audio and provider-specific container identifiers omitted. AI-generation origin is retained in the public source comment and this record.",
+  "promptFile": "watch-h3-prompt.txt",
+  "sourceIncludesBlink": false,
+  "runtime": "Complete precomputed indexed-pixel frames; no generation, network request, video decoding, local optical-flow deformation or cel dissolve.",
+  "characterAndAnimationLicense": "All Rights Reserved",
+  "qa": {
+    "sourceCheck": "PASS",
+    "visualReview": "Reviewed full poses, left hood and cape, glass and gripping paw, eye magnification, and 144px display size.",
+    "firstLastAlphaIoU": 0.997995,
+    "firstLastContourDistanceP95SourcePixels": 1,
+    "firstLastContourDistanceMaxSourcePixels": 2,
+    "firstLastRgbMaeAt144Pixels": 1.42
+  },
+  "transparentProcessing": "Independent 16-bit grayscale green-luminance matte; inverse foreground alpha and inverse-composite straight RGB; 8-bit soft alpha retained for HD compositing. No hard color-distance cutoff, erosion, despill or separate green-channel clamp."
+}

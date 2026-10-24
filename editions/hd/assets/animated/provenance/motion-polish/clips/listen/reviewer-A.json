@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "listen",
+  "version": "key-purple-batch05-v2",
+  "processedVariant": "processed-edge-v2",
+  "status": "WARN_USER_REVIEW_FINE_EDGE_AND_STATIC_TAIL_RISK",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "2ed65e2e06b3a90c13e955d27cd8ce8fde791dde624954ddf5908b9bbf63f354",
+  "actualReview": "Verified all six lossless processed-edge-v2 PNGs000/053/106 black+white were present, then actually viewed each at native resolution. Only edge/detail protection reviewed; source and algorithm were not re-reviewed.",
+  "finding": "No conspicuous scarf-gap bright island, wide white halo or large subject hole observed in inspected stills. Pink pads remain pink and intact, short claws/nails remain readable, white forearm fur/gray paw boundaries retained, gray bean brows/eye lines/eye stars and folded-ear X stitches/white scarf details preserved.",
+  "edgeDisclosure": "Fine purple/dark rim remains along portions of hood/cape and sparse granular/jagged edge pixels along raised white forearm and lower paw/scarf contour, clearer on white. No zero-defect or every-frame dynamic alpha claim.",
+  "dynamicUserReviewRequired": "B supports source gesture gate, but quieter/static latter-half rhythm remains a native-speed user review risk. Subtle listening intent, nod/hold rhythm, loop and dynamic edges are not approved from these stills.",
+  "scope": "No source/theory repetition, alpha parameter tuning or world crop/anchor audit; root handles world registration independently. Prior gray/source approvals do not transfer to this generation.",
+  "evidence": [
+    {
+      "path": "processed-edge-v2/black/000.png",
+      "sha256": "9ea69e0b0081cb6676f31ba0d389df10374f938882c3f11a94f21ab512c4b685"
+    },
+    {
+      "path": "processed-edge-v2/white/000.png",
+      "sha256": "fd6fb32fedc5f56d5426a706653ebf2d4b0cf4a0c23fd6e22c417ed9e461569e"
+    },
+    {
+      "path": "processed-edge-v2/black/053.png",
+      "sha256": "50a5910a6d1f59399e7058b2d2fc0fd67008742a0a7f3da13f2be14445a4a430"
+    },
+    {
+      "path": "processed-edge-v2/white/053.png",
+      "sha256": "ea56f1c6eab5c6e632ba6d1b20fc16584c98c7fc81b62618b32e17f697135317"
+    },
+    {
+      "path": "processed-edge-v2/black/106.png",
+      "sha256": "0a340fe34f1c929325cf79242d491eeb829478aa457fd0a34949add1166ce16c"
+    },
+    {
+      "path": "processed-edge-v2/white/106.png",
+      "sha256": "23abba83ebbc46ec12014df92839c5cefa6408dd91caec9a3145be1fa6561361"
+    }
+  ],
+  "processedManifestSha256": "6284d2967e6cfaa948f05e2e65486c9ba9ab54c6e1770f7a7aec7a26b60124a0",
+  "processedReportSha256": "bc87e19e95515991a9eb14230bf3f8df49c9e63287abe50e6e3447e9f9b3c0dc"
+}

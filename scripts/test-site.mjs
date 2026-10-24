@@ -35,7 +35,23 @@ check("Keyboard accessible named controls and visible focus", () => { assert.mat
 check("Relative local URLs work under repository subpath", () => { for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) { if (!/^(?:https?:|#)/.test(url)) assert.ok(url.startsWith("./"), url); } assert.doesNotMatch(html, /(?:src|href)="\//); });
 check("All build hashes match", () => { assert.equal(manifest.version, pkg.version); assert.equal(manifest.characterName, "Umi"); assert.match(html, />UMI <span>/); assert.doesNotMatch(html, /\bWUMI\b|\bWumi\b/); });
 for (const [file, expected] of Object.entries(manifest.hashes)) assert.equal(createHash("sha256").update(await readFile(join(out, file))).digest("hex"), expected);
-for (const file of ["activity", "motion", "poke", "listen"]) assert.equal(await readFile(join(out, "runtime", `${file}.js`), "utf8"), (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replaceAll('"./poke.mjs"', '"./poke.js"').replaceAll('"./listen.mjs"', '"./listen.js"'));
+for (const file of ["activity", "actions", "motion", "poke", "listen"]) {
+  const source = await readFile(join(out, "runtime", `${file}.js`), "utf8");
+  assert.equal(source, (await readFile(join(root, "lib", `${file}.mjs`), "utf8")).replace(/\.mjs(["'])/g, '.js$1'));
+  for (const [, dependency] of source.matchAll(/from\s+["'](\.\/[^"']+)["']/g)) {
+    assert.ok(dependency.endsWith('.js'));
+    await access(join(out, 'runtime', dependency));
+  }
+}
+const { createActivity: createSiteActivity } = await import('../dist/runtime/activity.js');
+let actionClock = 0;
+const siteActivity = createSiteActivity({ now: () => actionClock });
+siteActivity.start({ wake: false });
+assert.equal(siteActivity.setAction('reading'), true);
+assert.equal(siteActivity.snapshot().actionMode, 'reading');
+actionClock = 3500;
+assert.equal(siteActivity.snapshot().actionMode, undefined);
+checks.push('Built browser activity loads all dependencies and runs finite original actions');
 assert.match(await readFile(join(out, "runtime/activity.js"), "utf8"), /from "\.\/poke\.js"/);
 await access(join(out, "runtime/poke.js"));
 await access(join(out, "runtime/listen.js"));

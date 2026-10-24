@@ -89,6 +89,10 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 </details>
 
+## Actions and completion
+
+`/mascot action` supports `all`, `off` and the original edition’s 14 actions, such as `reading`, `running`, `waiting` and `poke`. Tab completion follows this edition’s action registry. Single actions expire; real work and typing interrupt them without saving preferences or calling a model. HD is maintained independently under `editions/hd/` on the same main branch.
+
 ## Installation
 
 Install and configure Pi first. Full automated coverage includes **Windows, Pi 1.2.0 / 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. Native Chinese UI and concise Pi documentation hints support only the explicitly reviewed 1.2.0 / 1.3.0 releases; unknown versions keep native behavior. The earlier supplementary production check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`) remains applicable. Images use Kitty PNG, Sixel, or true-color half-block characters; terminal support affects visual quality.

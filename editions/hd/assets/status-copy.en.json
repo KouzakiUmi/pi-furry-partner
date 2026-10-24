@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "labels": {
+    "idle": "I'm here",
+    "waking": "I'm awake",
+    "thinking": "Let me think",
+    "speaking": "I'll explain",
+    "reading": "Let me take a look",
+    "editing": "Paws busy. I'm on it",
+    "running": "I've got an eye on this",
+    "searching": "Let me dig around",
+    "waiting": "I'll wait a little longer",
+    "waiting_user": "I'm here when you're ready",
+    "success": "That's my bit for now",
+    "error": "I've hit a snag",
+    "cancelled": "I've paused",
+    "compacting": "Let me gather the key bits"
+  },
+  "bubbles": {
+    "idle": "I'm here",
+    "waking": "I'm up!",
+    "thinking": "Hmm…",
+    "speaking": "My turn",
+    "reading": "Let me see",
+    "editing": "Paws busy",
+    "running": "I'm on it",
+    "searching": "Digging",
+    "waiting": "One moment",
+    "waiting_user": "I'm here",
+    "success": "For you!",
+    "error": "A snag",
+    "cancelled": "Paused",
+    "compacting": "My notes",
+    "poke_idle": "Eep!",
+    "poke_busy": "One sec…",
+    "poke_waiting": "I'm here!",
+    "listening": "All ears"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "idle",
+  "version": "key-purple-batch10-v1",
+  "outputVariant": "processed-detail-v4",
+  "status": "SAMPLED_OUTPUT_READY_FOR_USER_REVIEW_WITH_FINE_EDGE_LIMITS",
+  "readyForUserReview": true,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "outputManifestSha256": "45feb3a8daca20fbfea77f2c04134031bff6365d5a605d5b6c2c62c9f787c4cd",
+  "actualViewedFiles": [
+    "processed-detail-v4/black/025.png",
+    "processed-detail-v4/white/025.png",
+    "processed-detail-v4/black/081.png",
+    "processed-detail-v4/white/081.png",
+    "processed-detail-v4/black/067.png",
+    "processed-detail-v4/white/067.png",
+    "early-check/00026.png",
+    "early-check/00082.png"
+  ],
+  "sourceViewedEarlierThisBatch": [
+    "early-check/00068.png"
+  ],
+  "findings": [
+    "025 oldcore left-boundary eye-star and081 worst-eye-star target are visibly continuous/readable onblack andwhite against corresponding raw00026/00082. No obvious internal eye hole, rectangular repair boundary or new face-core color seam identified in these samples.",
+    "067 closed eyelid lines remain readable and separate from graybean brows, consistent with previously viewed raw00068. White brightfur/cool shallows,gray paws/white arms,blue scarf/white marks,hood/cape blue-gray planes andX stitches retain source material reading.",
+    "No broad whitehalo or large bright detached white island observed in sampled composites. Thin purple/dark rims and fine fur/low-claw/scarf-edge particles remain; tiny outerforelock/loweredge grain especially readable onwhite is disclosed."
+  ],
+  "technicalEvidenceBoundary": "Root reports4186 erroneous interior alpha pixels restored with allguards holding. A visually reviewed only listed output/source samples; no claim of full107frame visual certification. Failed partialdetail-v3 stays history and is not approved by thisrecord.",
+  "knownLimits": [
+    "Static selected PNG evidence only; no native-speed playback or user acceptance. Timing,side-look/pout expression,blink,amplitude andloop appeal remain explicit user review.",
+    "Fine edgegrain remains; no zero-defect material/anatomy/alpha claim. No old896 core or source art recolor authorized."
+  ],
+  "formalResourcesChanged": false,
+  "evidence": [
+    {
+      "path": "Umi-idle-H3-source.mp4",
+      "sha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62"
+    },
+    {
+      "path": "reference.png",
+      "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+    },
+    {
+      "path": "registered-reference.png",
+      "sha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    },
+    {
+      "path": "prompt.txt",
+      "sha256": "6f612fe2b1dea6ff01dd38206c73b0565db48d3e187b043a40906cf42aeb9cbc"
+    },
+    {
+      "path": "motion-contract.json",
+      "sha256": "51096b9beebb9c6285da824b84b06e6f956968d0b0285507ae0d1826ac8e6260"
+    },
+    {
+      "path": "source-review-A.json",
+      "sha256": "c13b49d09c33c007d399754513d86e550978f759da9b99ddf9bab14db5177d1b"
+    },
+    {
+      "path": "source-core-v2-review-A.json",
+      "sha256": "f770475623379779cab7515b40fb152be7f9aa612fc009c4a8d45933961df602"
+    },
+    {
+      "path": "processed-detail-v4/manifest.json",
+      "sha256": "45feb3a8daca20fbfea77f2c04134031bff6365d5a605d5b6c2c62c9f787c4cd"
+    },
+    {
+      "path": "processed-detail-v4/report.json",
+      "sha256": "d066b858f253592cab5db8961159628929a8e198bf2296220c00b8d4f7f449b7"
+    },
+    {
+      "path": "processed-detail-v4/black/025.png",
+      "sha256": "f768d83900a867fac47f0cf72950ddaf7c6d18a3b00efa0946e4622cd7780bac"
+    },
+    {
+      "path": "processed-detail-v4/white/025.png",
+      "sha256": "02f0274ad746fa0d33e3510e2c192ac36d036910d5410089ea288dd7a2255ce3"
+    },
+    {
+      "path": "processed-detail-v4/black/081.png",
+      "sha256": "422568c18761fec677b6d84ac2065b81d6a9eb3600c6afad3cd6956eb5936ef6"
+    },
+    {
+      "path": "processed-detail-v4/white/081.png",
+      "sha256": "71f610906e8ca345ed48178ee307d851ede71168363511a4e097ae345b939772"
+    },
+    {
+      "path": "processed-detail-v4/black/067.png",
+      "sha256": "94e802f20b93b8729c65be11a3fb0399ed2e591f7b61414de68ba7f9e7b74677"
+    },
+    {
+      "path": "processed-detail-v4/white/067.png",
+      "sha256": "60e588efb866ce8f45bdc9f81b2766039531b8c93949768e6119582fadb388d8"
+    },
+    {
+      "path": "early-check/00026.png",
+      "sha256": "4aece890bdf5e5201ee2d73d0a566f3de94c76dd830f55719ebd1987cdf01e0d"
+    },
+    {
+      "path": "early-check/00082.png",
+      "sha256": "082cb42ddfceca0beab5477280c3b2e9c923d0c1ba08e7f09bf08625c30a9ee7"
+    },
+    {
+      "path": "early-check/00068.png",
+      "sha256": "afeb62e9076a121a47fbfd3f53ad6a49b97bca702f376077a7ea3ce9ad029bc7"
+    }
+  ]
+}

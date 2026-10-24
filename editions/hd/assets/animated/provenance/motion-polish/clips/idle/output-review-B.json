@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
+  "status": "PASS_SAMPLED_OUTPUT_FOR_USER_PLAYBACK_REVIEW_ONLY",
+  "readyForUserReview": true,
+  "source": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\Umi-idle-H3-source.mp4",
+    "sha256": "8240e205c78bf4f1c019293a547ddb9aea9af6255302e463efd006183aff0d62"
+  },
+  "reference": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\reference.png",
+    "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+  },
+  "prompt": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\prompt.txt",
+    "sha256": "6f612fe2b1dea6ff01dd38206c73b0565db48d3e187b043a40906cf42aeb9cbc"
+  },
+  "manifest": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\manifest.json",
+    "sha256": "45feb3a8daca20fbfea77f2c04134031bff6365d5a605d5b6c2c62c9f787c4cd"
+  },
+  "sourceReview": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\source-review-B.json",
+    "sha256": "8ffe6748cd053bc1760537481f1d124bbde407365b98069293f15acbc16baab0"
+  },
+  "sourceCoreReview": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\source-core-v2-review-B.json",
+    "sha256": "7396dc84af5f8599ab600354b1c25b8700c88c3d3ab2f57c8dba57d82bbe7263"
+  },
+  "actualViewedFiles": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\000.png",
+      "sha256": "dfdfed86fd1341085b8e74802cde67e1f38ed02ccfaa2bb40d107437acc5aa08"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\000.png",
+      "sha256": "e4690bba17d15bfd289c25c58bbd0ded8a18c5542be955b594f892ae0945a325"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\025.png",
+      "sha256": "f768d83900a867fac47f0cf72950ddaf7c6d18a3b00efa0946e4622cd7780bac"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\025.png",
+      "sha256": "02f0274ad746fa0d33e3510e2c192ac36d036910d5410089ea288dd7a2255ce3"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\067.png",
+      "sha256": "94e802f20b93b8729c65be11a3fb0399ed2e591f7b61414de68ba7f9e7b74677"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\067.png",
+      "sha256": "60e588efb866ce8f45bdc9f81b2766039531b8c93949768e6119582fadb388d8"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\081.png",
+      "sha256": "422568c18761fec677b6d84ac2065b81d6a9eb3600c6afad3cd6956eb5936ef6"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\081.png",
+      "sha256": "71f610906e8ca345ed48178ee307d851ede71168363511a4e097ae345b939772"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\106.png",
+      "sha256": "0b6219e6952fa8caeeb1bfd44dddea9006a7b8e3622e1f4a594e451297251817"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\106.png",
+      "sha256": "28cf22ea27a5317709ca3ff9d8e46b2f8e6b6110f45a3ce24b870ba001d983fb"
+    }
+  ],
+  "processedSamples": [
+    {
+      "frame": 0,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\000.png",
+        "sha256": "dfdfed86fd1341085b8e74802cde67e1f38ed02ccfaa2bb40d107437acc5aa08"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\000.png",
+        "sha256": "e4690bba17d15bfd289c25c58bbd0ded8a18c5542be955b594f892ae0945a325"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\rgba\\000.png",
+        "sha256": "2d147cc37b432284a9ed0d7588f208b3b2c10d3121aa4b59b7171ba613ef8266"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 25,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\025.png",
+        "sha256": "f768d83900a867fac47f0cf72950ddaf7c6d18a3b00efa0946e4622cd7780bac"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\025.png",
+        "sha256": "02f0274ad746fa0d33e3510e2c192ac36d036910d5410089ea288dd7a2255ce3"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\rgba\\025.png",
+        "sha256": "44a1fc4e90b5033d0dc3daf0999adc24c325e9329809f38be84c5be082d777b1"
+      },
+      "coreAlphaMin": 253,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 67,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\067.png",
+        "sha256": "94e802f20b93b8729c65be11a3fb0399ed2e591f7b61414de68ba7f9e7b74677"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\067.png",
+        "sha256": "60e588efb866ce8f45bdc9f81b2766039531b8c93949768e6119582fadb388d8"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\rgba\\067.png",
+        "sha256": "abc6cf98cc963c91fd001b068e2a1214878bc82c918e8d96b86b25499bced88f"
+      },
+      "coreAlphaMin": 255,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 81,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\081.png",
+        "sha256": "422568c18761fec677b6d84ac2065b81d6a9eb3600c6afad3cd6956eb5936ef6"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\081.png",
+        "sha256": "71f610906e8ca345ed48178ee307d851ede71168363511a4e097ae345b939772"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\rgba\\081.png",
+        "sha256": "88c6e2831cd1bbb1a9e03409a6b917c3d598df48f866f1c28cee911e415edd6e"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    },
+    {
+      "frame": 106,
+      "black": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\black\\106.png",
+        "sha256": "0b6219e6952fa8caeeb1bfd44dddea9006a7b8e3622e1f4a594e451297251817"
+      },
+      "white": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\white\\106.png",
+        "sha256": "28cf22ea27a5317709ca3ff9d8e46b2f8e6b6110f45a3ce24b870ba001d983fb"
+      },
+      "rgba": {
+        "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1\\processed-detail-v4\\rgba\\106.png",
+        "sha256": "b76348cb94da1b14f9382962bf810b689d04519c6397bfc64f30fe1e8920b1d8"
+      },
+      "coreAlphaMin": 252,
+      "coreAlphaBelow252": 0
+    }
+  ],
+  "observations": [
+    "025 old-core boundary eye star and081 previously worst eye-star details are intact on black and white; no sampled fake-transparent holes or rectangular core seam.",
+    "067 preserves both complete dark closed-eye lines, separate gray brows and full face volume. No sampled blink-scale collapse.",
+    "Broad rounded grounded paws, central paw gap, short wrists and thick white forearms retain supported volume across all viewed poses. No sampled new paw shrink, detached tips or lost gray/white boundary.",
+    "Single cape remains downward draped;000/106 keep compatible front pose and root support.",
+    "025/067 retain the source questioning/downturned mouth beat; it is not corrected into a different expression by processing.",
+    "Fine dark/purple outer fringe and small lower-edge speckles remain visible on white, especially near paw undersides/centralgap and cape/fur margins. This is disclosed residual edge quality, not a perfect-alpha certification."
+  ],
+  "outputAcceptanceScope": "Five selected final native-size black/white pairs only. Parent owns full107 technical guards and reported4186 interior-alpha recovery; this review neither substitutes for full-frame pixel audit nor accepts original-speed motion, amplitude or loop. Old partialdetailv3 guard refusal remains history.",
+  "dynamicAcceptance": false,
+  "loopAcceptance": false,
+  "fullFrameAlphaAcceptance": false,
+  "userAccepted": false,
+  "formalAssetsChanged": false
+}

@@ -1,0 +1,16 @@
+{
+  "config": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\bounce-v5-transparent-review-20261024-config.json",
+  "configSha256": "3f77d21db1fdacb0b8b19ef2d7905f54916aa3341141a0a0ed4312231b58df7a",
+  "items": {
+    "bounce": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/bounce/key-purple-pilot-v5/processed-detail-v1",
+      "manifestSha256": "ce50e9baecec18d7ab2b03973044c33080653305b0173231c38951ab82cc0e4c"
+    }
+  },
+  "serverSha256": "fabe671e48f53586106ffeeb060ea68d090993e0425b75817924f0f1e6695659",
+  "pageSha256": "6317fef80f3b2438c2d9d81f59d6a0e99584a4b9645b6409090ffa4daa90f9b6",
+  "processId": 9508,
+  "startedAt": "2026-10-23T16:52:12.505470+00:00",
+  "closeAfterUserReview": true,
+  "url": "http://127.0.0.1:62731/"
+}

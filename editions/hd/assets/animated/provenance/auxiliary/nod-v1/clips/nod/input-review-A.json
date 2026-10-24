@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "status": "INPUT_BYTECOPY_CONFIRMED_NOT_SOURCE_APPROVAL",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "promptSha256": "c2c113e2d44d30f02154f36ea647c60499cec8b0bd44685a5cc09c1707ccb579",
+  "motionContractSha256": "ed800aab99e9a7fa49bfac754cfce09a6bb739969db8a96fc7ffae2da43f0236",
+  "actualViewedFiles": [
+    "Hi-Res/sources/h3-motion-polish-20261023/idle/key-purple-batch10-v1/reference.png",
+    "Hi-Res/sources/character-design-reference-20261021/natural-fur-colors.png"
+  ],
+  "comparison": "Nod references are exact bytecopies of approved idle inputs; actual purple idle image inspected. White forearms/gray rounded paws, blue scarf, blue-gray single cape, separate gray bean brows, blue star eyes, folded hood ear and X seams retained. Natural existing shadows are not a recoloring license.",
+  "limitations": [
+    "No H3 source reviewed yet",
+    "No alpha/output approval",
+    "Two nod timing/support and source material drift still need actual returned-source reviewers and user gate"
+  ],
+  "runtimeInstalled": false,
+  "humanAccepted": false
+}

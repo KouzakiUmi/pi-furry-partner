@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "model": "MiniMax-H3",
+  "action": "listen",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\listen.png",
+  "sourceSha256": "b8fea66e9bcf4f6f3c80e66a23fb519499a22fac1928e8394500af12547f4dfb",
+  "referenceSha256": "9615fc5ba87c659d7820a687e9e4f40ec71a1619666d9e8681f509313510854f",
+  "promptSha256": "f4b05cd7b573177cffb6a4919d1b7ee733bbe1df348a908dc7f6f639ceb6f30e",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Quiet attentive listening with a minute normal-speed acknowledgement",
+    "primaryMotion": "Umi is already listening closely to a friend. Sustain the exact reference ear-side paw pose through the whole shot: the cupped viewer-left palm remains just outside the cheek beside the hood/ear, with the original small gap, its relaxed wrist and LOW bent elbow. The shoulder remains comfortably down, the elbow tucked close, and this same complete thick paw rests in that listening location throughout. His other paw carries the seated support. The listener has no reason to make a hand gesture; the paw is part of his sustained attentive pose.\n\nHe absorbs what his friend is saying, gives a very small comfortable \"mm-hm\" acknowledgement with eyes, chin and upper chest together, and resumes attentive listening. The original sideways head inclination stays. Complete this little chin dip and its prompt recovery at ordinary conversational speed, around0.2–0.35seconds, with a readable living pause around it. The amplitude is tiny, about1–2degrees of neck pitch, not a deep bow or an added sideways roll. Let a quick natural blink and slight closed-mouth smile carry the response; keep gray bean brows separate from the two clear dark eyelid curves, then reopen the same blue eyes. Chest/shoulder breath and the bent support elbow absorb this one thought together, while the raised paw remains beside the ear. If there is a settling echo, it is much smaller and softer than the first acknowledgement. Keep his rooted seated weight and original face/paw volume.\n\nThe four small pink toe beans and single rounded lobed central pad stay oriented with the SAME compact wrist/forearm axis; short ivory nails belong to their toe tips. Preserve the thick white forearms and original gray-paw fur boundaries. There is no shoulder abduction, reaching, waving, palm rotation, splayed toe exercise or hand movement away from the ear. This is the quiet listener's sustained posture, not a greeting. In the still room the single cape remains naturally draped, scarf tips and the folded ear only finish a minute brief after-settle of the supported nod. No wind-like cloth flare, horizontal scarf streaming, large body bend, whole-character scaling or camera movement. Continue a small living breath into the supplied starting listening pose and compatible movement phase, without a freeze or reset.",
+    "supportChain": "Breath-sized chest/shoulder response, low bent elbow and relaxed wrist absorb tiny nod while raised cupped paw stays beside ear",
+    "gazeHead": "Reference sideways tilt preserved, one minute 1–2 degree pitch dip with half-sized echo, attentive eyes and a single quick blink",
+    "secondaryMotion": "Folded ear and scarf lag the primary impulse, single-layer cape remains weighted.",
+    "anchors": "Exact clean registered896 reference copied, fixed pivot [448, 704], no per-frame fit or scale pumping.",
+    "timingLayers": "Sustained ear-side listening paw; small prompt connected acknowledgement, living attentive pause and much smaller settle, no hand gesture.",
+    "loopBoundary": "Same actual approved static reference as first/last; compatible pose, speed/direction and breathing phase; full returned source timeline preserved.",
+    "reviewOrder": "Fresh source native acting/loop and material colors versus same-key reference; A source patterns and black/white lossless edges, B support/paw/scale and pose extremes; no inherited approval from gray source.",
+    "propInteraction": "none"
+  },
+  "sameFirstAndLastFrame": true,
+  "sourceToReference": {
+    "size": [
+      456,
+      608
+    ],
+    "offset": [
+      220,
+      105
+    ],
+    "canvas": [
+      896,
+      896
+    ],
+    "scale": 0.4198895027624309
+  },
+  "outputCanvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    704
+  ],
+  "keyColor": "#A020C0",
+  "alphaPreparation": "min255 round(a*255/250); original RGB unchanged before uniform resize",
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "Fresh whole-source v2 after internal B rejection of v1 wave-like shoulder/elbow/paw opening. User requires restrained listening with ear-side paw retained; same approved registered input and frozen purple matte. New source needs fresh A/B and user native-speed review; no alpha staging of held v1.",
+  "backgroundMethod": "saturated violet-purple",
+  "registeredReferenceSha256": "f15ad476059c4c1d3426fef7e0821c860c0f0dc5027fe46d6dfaa0d067ff48ed",
+  "method": "purple",
+  "previousActingDirection": {
+    "job": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\listen\\gray-batch02-v1",
+    "approvalSha256": "57257253bedfac061203c9bc858f49b1886cece2d02421f43ea6f7ff9403aefa",
+    "scope": "Prior acting direction only; fresh source requires new review."
+  }
+}

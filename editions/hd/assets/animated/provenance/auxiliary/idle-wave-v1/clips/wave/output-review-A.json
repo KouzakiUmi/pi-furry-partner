@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "sourceVideoSha256": "4e7dde7fcb18fe960cfe2ac7a9fa1abe6bfe249e2f7591441f3939a5d3c0767b",
+  "manifestSha256": "67d5ac9781b7535001254e1d7c6ec3bcb211ab2a6322e49a32aacbc265fb44eb",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "sourceReviewASha256": "a3f6b16a3e61b806bf3d0d85c68a4e72b9873ef3b935a99c81601a9c9dabe6d2",
+  "actualViewedFiles": [
+    {
+      "file": "processed-edge-v2/black/042.png",
+      "sha256": "c2622cc17874169a361b2acf6d9feb0ac4fbb9d32e185b1983140c2b545d03bf"
+    },
+    {
+      "file": "processed-edge-v2/white/042.png",
+      "sha256": "310dc4d1ace00a01c6b89abbd3145a2915a2f8d4e157885e481bab7d7defe408"
+    },
+    {
+      "file": "processed-edge-v2/black/018.png",
+      "sha256": "9e3ff9a1bd7bc7c34a21e654c484b521ba23f51b4b8e5dffd7e92f50172dd8f8"
+    },
+    {
+      "file": "processed-edge-v2/white/066.png",
+      "sha256": "018ccb0a60d29458cf2abb015bc32b73030a866f10d033d1b0e267e6d6d2863a"
+    },
+    {
+      "file": "processed-edge-v2/black/106.png",
+      "sha256": "6f7efae713a5bb80275e30cc725e44aaf2ad52530652d7a09842439d7c726969"
+    },
+    {
+      "file": "processed-edge-v2/white/000.png",
+      "sha256": "837e51a1f7c76719c832af47f0dc2d38ab56f44122fcbd0d50cedf5b5b740ac1"
+    }
+  ],
+  "findings": [
+    "Inspected black/white native output preserves original white fur/forearm versus neutral-gray compact paw, blue scarf and blue-gray single cape, original folded-ear X stitches and separate gray bean brows. No broad white halo or newly dyed material observed.",
+    "018/042/066 raised-paw samples retain the compact pink toe-bean/central pad group, attached short ivory claw tips, and a thick white forearm, without a conspicuous pad/eye/star/mouth alpha hole in these samples.",
+    "First/final samples retain supported two-paw resting pose and recognizable neutral eye/brow/cloth markings; no obvious rectangular color seam observed."
+  ],
+  "knownLimitations": [
+    "Fine purple/dark contour and small dark/fur-tip grains remain, particularly along the raised white forearm viewer-left edge and lower fur/ground contour on white; disclosed, not called pixel-perfect.",
+    "The intermediate open friendly smile and short fang were introduced by the structural second reference and remain a visible performance difference for final user review.",
+    "A actually viewed listed stills only, not original-speed video; readyForUserReview does not approve timing/loop or certify every frame.",
+    "No face-core recovery was applied to this output; technical full-frame diagnostic belongs to the processing/B record and is not substituted for art viewing."
+  ],
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false,
+  "released": false
+}

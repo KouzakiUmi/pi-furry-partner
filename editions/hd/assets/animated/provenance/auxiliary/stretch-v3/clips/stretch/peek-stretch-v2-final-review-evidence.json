@@ -1,0 +1,91 @@
+{
+  "config": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\peek-stretch-v2-review-config.json",
+  "configSha256": "1a8846b449a44115f6b5f634194bba363eca0fdeaae0e06855092b1a9b159ed4",
+  "items": {
+    "peek": {
+      "output": "work/motion-polish-20261023/auxiliary-v2-review-world/peek",
+      "manifestSha256": "773423ba2c0c3fe6c604897255b9a1f8888bf9774b489aefedcb80a243dd030e",
+      "sourceOutput": "Hi-Res\\sources\\h3-motion-polish-20261023\\peek\\key-purple-pilot-v2\\processed-detail-v1",
+      "originalManifestSha256": "cf3b7b52f83249507c470fec4ee2dd960ef2f6e639b5a709da4479608bf9c80a",
+      "reviewRecordHashes": {
+        "source-review-A.json": "4e7cf65afdcd19b7c20f940268362d289555700fe1f14e260d7340a460123fa2",
+        "source-review-B.json": "2d0cf3cd76a1557f74724b4aaec337fa2fe4c23d454c0200fca3eb7802bf42f3",
+        "detail-output-review-A.json": "0c15043a117c977c0cc81bc794310a7354d5e712643b88a22844b8bc62280d17",
+        "detail-output-review-B.json": "d395162b90c493b7af92c11317a2b5fa365b8047083e484a396806e01bc01aa2",
+        "detail-technical-review.json": "ec32c26c119d9791a72b06fdb18323a5f0fade514a7b3573c466ee5f9cdcfce6",
+        "review.json": "00d143cf3afa17881253229850110e60fb1eb8f6bd4e9502c2d312e485401c97"
+      },
+      "reviewVideos": {
+        "black": {
+          "sha256": "e61549d44b5dba72ae52baf22b77eabb042694ca7e8c33042faa4b4a9b29134f",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        },
+        "gray": {
+          "sha256": "93cc52781cc34ccc738f27b4a666aaf5b6785679c6559b8b343f89c068bbb7b4",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        },
+        "white": {
+          "sha256": "37c8a116807595cb46844b1eb02f396351bfd2b7aff4ecc639a182abc61c0cdc",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        }
+      },
+      "all107RgbaArraysPreserved": true
+    },
+    "stretch": {
+      "output": "work/motion-polish-20261023/auxiliary-v2-review-world/stretch",
+      "manifestSha256": "5ea435359bf66a0cb2a5a0e8903a0621a5eea8f46b1d474f13aceb08402c3ccb",
+      "sourceOutput": "Hi-Res\\sources\\h3-motion-polish-20261023\\stretch\\key-purple-pilot-v3\\processed-detail-v1",
+      "originalManifestSha256": "80e799989b9aa5cc03f11b68c792dee0f2fd9e0e0e38308c6c15f58413d913cd",
+      "reviewRecordHashes": {
+        "source-review-A.json": "a5096c4fb602292933fc818231c057ed030f6f63df70f5b9ede6c50348402e05",
+        "source-review-B.json": "33938537507051c59caef75ee4d821f66b3fbdbcaa5abbd8afe5514b4e765b97",
+        "detail-output-review-A.json": "1cca35781b15f2156ec625cc8e94ecb628098dcf39eb566ea22578ae4eee8509",
+        "detail-output-review-B.json": "6a1328d39f7e61813bfbe30cdf1013e9c06216b0b1b1f5dd825b3d4b6a697612",
+        "detail-technical-review.json": "9c469cc2afce32c714416ac5828f5044010c6ca3554dd76c99e99dd71b3469a8",
+        "review.json": "38496f144a2a4ac9c09c4faaa9fd7dad781266f681cc46fead96356f6ed28cfa"
+      },
+      "reviewVideos": {
+        "black": {
+          "sha256": "b03bd1065cf8c5026bde8788f54cad6129579634a5a84b48875babd7f07b7ddc",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        },
+        "gray": {
+          "sha256": "1e31e8486e076569374f156cdd1ac305ceb6e43d12799e11b57f7c4037a3e2f6",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        },
+        "white": {
+          "sha256": "85090715f66e0e4570e3d007f7e5de12ab3ba3d619bcc54d201f2319a837f186",
+          "width": 896,
+          "height": 896,
+          "avg_frame_rate": "24/1",
+          "nb_frames": "107"
+        }
+      },
+      "all107RgbaArraysPreserved": true
+    }
+  },
+  "serverSha256": "51fa36f9538cbdd3b7139c99a4ddede9e5d219e3b43ff67a4d4042473c26eedd",
+  "pageSha256": "8d81a1060d4a1255f3152329ab628545f66dcf5bfa8c0ab37edcba8ce014c9ee",
+  "url": "http://127.0.0.1:50097/",
+  "status": "CANDIDATES_ONLY_AWAIT_USER_NATIVE_SPEED_REVIEW",
+  "userApproved": false,
+  "installed": false,
+  "formalClipCount": 23,
+  "worldRenderHelperSha256": "41e5d187589b6547c2bf2843a176e46b758f68a5050172aba8a5e7013d980858",
+  "keyposeGenerationRecord": "Hi-Res/sources/h3-motion-polish-20261023/auxiliary-keypose-v2/generation.json"
+}

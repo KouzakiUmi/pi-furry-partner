@@ -14,7 +14,7 @@ const checks = [];
 
 assert.deepEqual(labels(""), [
   "language", "menu", "poke", "layout", "style", "pause", "play", "on", "off",
-  "size", "render", "info", "locale", "prompt", "persona", "demo", "wink",
+  "size", "render", "info", "locale", "prompt", "persona", "action", "demo", "wink",
 ]);
 assert.deepEqual(labels("st"), ["style"]);
 assert.deepEqual(values("style"), ["style "]);
@@ -22,8 +22,14 @@ assert.deepEqual(values("style "), ["style umi"]);
 assert.deepEqual(values("style um"), ["style umi"]);
 assert.deepEqual(values("STYLE U"), ["style umi"]);
 assert.deepEqual(values("language zh"), ["language zh-CN"]);
+assert.deepEqual(values("action ear"), ["action ear-flick"]);
+assert.deepEqual(values("action "), [
+  "action all", "action wave", "action nod", "action peek", "action stretch", "action ear-flick",
+  "action nuzzle", "action bounce", "action head-shake", "action joy", "action grumpy", "action sad",
+  "action cry", "action shy", "action flustered", "action surprise", "action proud", "action affection", "action off",
+]);
 assert.deepEqual(values("demo thin"), ["demo thinking"]);
-checks.push("Top-level commands and second-level values complete hierarchically and case-insensitively");
+checks.push("Top-level commands, gesture IDs, and second-level values complete hierarchically and case-insensitively");
 
 assert.equal(suggestions("unknown"), null);
 assert.equal(suggestions("pause "), null);

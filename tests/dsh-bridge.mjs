@@ -24,6 +24,78 @@ const bridge = createDshBridge({ activity, responseLatency });
 activity.start({ wake: false });
 assert.equal(activity.snapshot().phase, "idle");
 
+// Discarded streamed calls must leave no activity entry, completion gap, or error.
+function lifecycleHarness() {
+  const activity = createActivity({ now: () => nowMs });
+  const events = [];
+  const bridge = createDshBridge({ activity: {
+    start: (...args) => activity.start(...args),
+    clearTyping: () => activity.clearTyping(),
+    handle(type, event) { events.push({ type, event }); activity.handle(type, event); },
+  } });
+  const partial = { blocks: [{ type: "tool_use", id: "partial-read", name: "read_file", status: "running" }] };
+  const sync = (extra = {}) => bridge.syncConversationState({ sessionId: "lifecycle", busy: true, status: "tool_calling", partial, ...extra });
+  return { activity, bridge, events, partial, sync };
+}
+
+{
+  const { activity, bridge, sync } = lifecycleHarness();
+  sync({ runningCalls: {} });
+  assert.equal(activity.snapshot().toolCount, 1);
+  sync({ partial: null, runningCalls: {} });
+  assert.equal(activity.snapshot().toolCount, 0, "Discarding a partial cancels the pending activity entry");
+  assert.equal(activity.snapshot().pendingNextState, null);
+  assert.equal(activity.snapshot().reaction, undefined);
+  bridge.handleSessionEvent({ type: "assistant/live-chunk", data: { chunk: { type: "text-delta", text: "Answer" } } });
+  assert.equal(activity.snapshot().phase, "speaking");
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  sync();
+  assert.equal(activity.snapshot().phase, "editing");
+  for (let i = 0; i < 5; i++) {
+    sync();
+    assert.equal(activity.snapshot().phase, "reading", "Legacy calls remain active across repeated snapshots");
+    assert.equal(activity.snapshot().toolCount, 1);
+  }
+  assert.equal(events.filter(({ type }) => type === "tool_execution_start").length, 1);
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 0);
+  sync({ partial: { blocks: [{ type: "tool_use", id: "partial-read", name: "read_file", status: "completed" }] } });
+  assert.equal(activity.snapshot().toolCount, 0, "A completed legacy partial ends the tool");
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 1);
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  for (let i = 0; i < 4; i++) sync({ runningCalls: {} });
+  assert.equal(activity.snapshot().phase, "editing", "An explicit empty runningCalls is authoritative");
+  assert.equal(events.filter(({ type }) => type === "tool_execution_start").length, 0);
+}
+
+{
+  const { activity, sync } = lifecycleHarness();
+  const runningCalls = { real: { id: "real", name: "read_file", status: "running" } };
+  sync({ runningCalls });
+  assert.equal(activity.snapshot().toolCount, 2);
+  sync({ partial: null, runningCalls });
+  assert.equal(activity.snapshot().toolCount, 1, "Cancelling a partial preserves parallel executing calls");
+  assert.equal(activity.snapshot().phase, "reading");
+  activity.handle("tool_call_cancelled", { toolCallId: "real" });
+  assert.equal(activity.snapshot().toolCount, 1, "Cancellation cannot end a real executing tool");
+  activity.handle("tool_call_cancelled", { toolCallId: "unknown" });
+  assert.equal(activity.snapshot().toolCount, 1);
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  sync(); sync(); sync();
+  sync({ partial: null });
+  assert.equal(activity.snapshot().toolCount, 0, "A disappearing legacy partial ends the tool once");
+  sync({ partial: null });
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 1);
+}
+
 // 1. Typing in DSH composer triggers listening reaction; clearing stops it
 bridge.syncInputDraft("帮我看看这段代码");
 assert.equal(activity.snapshot().reaction, "listening");
@@ -60,7 +132,28 @@ bridge.syncConversationState({
 assert.equal(activity.snapshot().phase, "thinking");
 assert.equal(responseLatency.snapshot().kind, "first-text");
 
-// 4. Running tool calls map to reading, searching, editing, running
+// 4. A partial tool call types before its real runningCalls entry arrives.
+nowMs += 300;
+bridge.syncConversationState({
+  sessionId: "sess-1",
+  status: "tool_calling",
+  partial: { blocks: [{ type: "tool_use", id: "stream-read", name: "read_file", input: '{"path":"NEVER_ECHO_STREAMED_CONTENT"}', status: "running" }] },
+});
+assert.equal(activity.snapshot().phase, "editing");
+assert.equal(activity.snapshot().bubble, "我读读呀");
+assert.equal(activity.snapshot().toolName, "read_file");
+assert.equal(activity.snapshot().toolObject, "");
+assert.ok(!JSON.stringify(activity.snapshot()).includes("NEVER_ECHO_STREAMED_CONTENT"));
+bridge.syncConversationState({
+  sessionId: "sess-1",
+  status: "tool_calling",
+  partial: { blocks: [{ type: "tool_use", id: "stream-read", name: "read_file", input: '{"path":"NEVER_ECHO_STREAMED_CONTENT"}', status: "running" }] },
+  runningCalls: { "stream-read": { id: "stream-read", name: "read_file", input: '{"file_path":"src/components/App.tsx"}', status: "running" } },
+});
+assert.equal(activity.snapshot().phase, "reading");
+assert.equal(activity.snapshot().toolObject, "components/App.tsx");
+
+// 5. Running tool calls map to reading, searching, editing, running
 nowMs += 300;
 assert.deepEqual(extractToolArgs('{"file_path":"src/components/App.tsx"}'), { file_path: "src/components/App.tsx" });
 assert.deepEqual(extractToolArgs('{"path":"lib/index.js", "unclosed": '), { path: "lib/index.js" });
@@ -98,7 +191,7 @@ bridge.syncConversationState({
 });
 assert.equal(activity.snapshot().phase, "editing");
 
-// 5. Pending interaction (ask_question / permission approval) enters waiting (awaitingUser)
+// 6. Pending interaction (ask_question / permission approval) enters waiting (awaitingUser)
 nowMs += 300;
 bridge.syncConversationState({
   sessionId: "sess-1",
@@ -121,7 +214,7 @@ bridge.syncConversationState({
 assert.equal(activity.snapshot().phase, "speaking");
 assert.match(activity.snapshot().face, /^talk-/);
 
-// 6. Compaction events
+// 7. Compaction events
 nowMs += 200;
 bridge.handleSessionEvent({ sessionId: "sess-1", type: "compaction/start" });
 assert.equal(activity.snapshot().phase, "compacting");
@@ -129,7 +222,7 @@ nowMs += 200;
 bridge.handleSessionEvent({ sessionId: "sess-1", type: "compaction/end" });
 assert.equal(activity.snapshot().phase, "thinking");
 
-// 7. Turn end outcomes: complete -> success, error -> error, interrupted -> cancelled
+// 8. Turn end outcomes: complete -> success, error -> error, interrupted -> cancelled
 nowMs += 200;
 bridge.handleSessionEvent({
   sessionId: "sess-1",
@@ -161,7 +254,7 @@ bridge.handleSessionEvent({
 });
 assert.equal(activity.snapshot().phase, "cancelled");
 
-// 8. Switching active session syncs cleanly
+// 9. Switching active session syncs cleanly
 bridge.syncConversationState({
   sessionId: "sess-2",
   status: "idle",

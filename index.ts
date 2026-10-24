@@ -136,6 +136,7 @@ export default function (pi: ExtensionAPI) {
   }
 
   function pausedSnapshot(next: ReturnType<typeof activity.snapshot>) {
+    if (next.actionMode) { activity.setAction("off"); next = readSnapshot(); }
     if (next.reaction === "poked" && next.demoMode !== "all") return next;
     const faces: Record<string, string> = { idle: "idle-open", thinking: "think", speaking: "talk-closed", reading: "work", editing: "work", running: "watch", searching: "search", compacting: "search", waiting: "wait", success: "happy", error: "error", cancelled: "rest" };
     const bubbles: Record<string, string> = voice.bubbles;

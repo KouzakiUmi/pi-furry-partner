@@ -1,8 +1,8 @@
-name: Build and publish Main release
+name: Build and publish HD release
 
 on:
   push:
-    tags: ['v*']
+    tags: ['hd-v*']
 
 permissions:
   contents: read
@@ -26,9 +26,16 @@ jobs:
         shell: pwsh
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
+      - name: Verify HD branch ancestry
+        run: |
+          git fetch origin hd:refs/remotes/origin/hd
+          git merge-base --is-ancestor $env:GITHUB_SHA refs/remotes/origin/hd
+          if ($LASTEXITCODE -ne 0) { throw 'HD tags must belong to the HD branch' }
       - name: Resolve tag to edition and release notes
         id: target
         env:

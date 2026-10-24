@@ -15,8 +15,8 @@ def read(path):
 def release_target(root, tag):
     configuration = read(root / 'build/editions.json')
     line = configuration.get('releaseLine', 'main')
-    assert line in ('main', 'legacy'), 'Explicit supported release line required'
-    tag_prefix = 'legacy-v' if line == 'legacy' else 'v'
+    assert line in ('main', 'legacy', 'hd'), 'Explicit supported release line required'
+    tag_prefix = {'legacy': 'legacy-v', 'hd': 'hd-v', 'main': 'v'}[line]
     matches = [(edition, spec) for edition, spec in configuration['editions'].items()
                if tag == tag_prefix + spec['version']]
     assert len(matches) == 1, 'Tag must match its release line and exactly one configured version'
@@ -32,8 +32,8 @@ def release_target(root, tag):
              if re.match(re.escape(version) + r'\s+·[^\n]*\n', section)]
     assert len(notes) == 1 and notes[0], 'A nonempty exact-version changelog section is required'
     return {'tag': tag, 'edition': edition, 'version': version, 'releaseLine': line, 'prerelease': prerelease,
-            'latest': 'false' if prerelease or line == 'legacy' else 'true',
-            'title': f"Umi · {'Legacy' if line == 'legacy' else 'Main'} {tag} · {spec['label']} · Pi"}, notes[0]
+            'latest': 'false' if prerelease or line in ('legacy', 'hd') else 'true',
+            'title': f"Umi · {line.title() if line != 'hd' else 'HD'} {tag} · {spec['label']} · Pi"}, notes[0]
 
 
 def prepare(root, tag, output, github_output=None):

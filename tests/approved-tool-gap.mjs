@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { createActivity } from '../lib/activity.mjs';
-import { createApprovedMotionPlayer } from '../lib/approved-motion.mjs';
+import { createActivity } from '../lib/hd/activity.mjs';
+import { createApprovedMotionPlayer } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 
 function harness() {

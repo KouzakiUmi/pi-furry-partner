@@ -1,3 +1,7 @@
+# 当前 HD 分支维护规则（覆盖下方历史产品线规则）
+
+本分支为 Pi HD，专用适配、状态机和完整帧播放器在 lib/hd/；不从 Legacy 分支加载、构建或导入运行时。只提供高清插画，保留已批准的 29 个动作和原资源哈希。Legacy 的简单帧与准备动作不得移植到 HD。HD 仅使用 hd-v 标签、pi-furry-partner-hd 附件前缀，latest=false；原资源版的正式发布由 main/legacy 负责。DSH 独立维护。加载失败使用 HD 原画静态姿态，不回退到旧简单帧形变。
+
 # 项目工作约束
 
 涉及 Umi 设定图、素材、角色漫画或 PV 制作时，先读 docs/production/AGENTS.md 与 PRODUCTION-SPEC.md，再读对应的状态和评审记录。已批准插件素材的可复现来源保存在 Hi-Res/production 与 assets/animated/provenance；work 中的生成会话只作为本机历史，不是必需输入。

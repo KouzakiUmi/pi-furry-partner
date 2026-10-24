@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { loadAnimatedCatalog } from '../lib/pi-resources.mjs';
 import { decodeApprovedMotionNodeResource } from '../lib/approved-motion-node.mjs';
-import { approvedMotionIndexedRect, decodeApprovedMotionIndexed } from '../lib/approved-motion.mjs';
+import { approvedMotionIndexedRect, decodeApprovedMotionIndexed } from '../lib/hd/player.mjs';
 import { dockGeometry, prepareApprovedDockFrame, renderDock } from '../lib/editor-layout.mjs';
 
 const palette = [[0,0,0],[255,255,255],[255,0,0],[0,200,255]];

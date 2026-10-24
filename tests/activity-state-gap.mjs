@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createActivity } from '../lib/activity.mjs';
+import { createActivity } from '../lib/hd/activity.mjs';
 function setup(options = {}) {
   let time = 0;
   const activity = createActivity({ now: () => time, random: () => .25, ...options });

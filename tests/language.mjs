@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { modules } from "./pi-runtime.mjs";
-import { createActivity, DEMO_STATES } from "../lib/activity.mjs";
+import { createActivity, DEMO_STATES } from "../lib/hd/activity.mjs";
 import { createEditorControls } from "../lib/editor-controls.mjs";
 import { activityLine, activityBorder } from "../lib/editor-layout.mjs";
 import { createStatusFooter } from "../lib/footer.mjs";

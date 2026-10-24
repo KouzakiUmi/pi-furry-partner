@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createActivity } from "../lib/activity.mjs";
+import { createActivity } from "../lib/hd/activity.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
 import { POKE_DURATION_MS, withPokeFrame } from "../lib/poke.mjs";
 import { replaceActivityCopy } from "../lib/language.mjs";

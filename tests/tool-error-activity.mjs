@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { createActivity, toolResultFailed } from '../lib/activity.mjs';
-import { createApprovedMotionPlayer } from '../lib/approved-motion.mjs';
+import { createActivity, toolResultFailed } from '../lib/hd/activity.mjs';
+import { createApprovedMotionPlayer } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 
 const text = text => ({ content: [{ type: 'text', text }] });

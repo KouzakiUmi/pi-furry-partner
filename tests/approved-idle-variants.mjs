@@ -1,7 +1,7 @@
 // Review-gated playlist timing with actual decoded indexed color frames.
 import assert from 'node:assert/strict';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
-import { createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from '../lib/approved-motion.mjs';
+import { createApprovedMotionPlayer, normalizeApprovedMotionCatalog } from '../lib/hd/player.mjs';
 const {catalog,data}=approvedMotionFixture();
 for (const [id,periodMs,color] of [['idle-center',800,80],['idle-right',1200,120]]) {
   const clip=structuredClone(catalog.clips.idle);

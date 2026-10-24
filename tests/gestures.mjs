@@ -2,7 +2,7 @@ import { styleAssetDirectory } from '../lib/styles.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { GESTURES, GESTURE_PERIOD_MS, gestureAt, sampleGestureMotion } from '../lib/gestures.mjs';
-import { createActivity } from '../lib/activity.mjs';
+import { createActivity } from '../lib/hd/activity.mjs';
 import { createMotionPlayer } from '../lib/motion.mjs';
 import { localizeSnapshot } from '../lib/language.mjs';
 

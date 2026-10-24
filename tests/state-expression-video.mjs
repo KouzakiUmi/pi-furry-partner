@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {createActivity} from '../lib/activity.mjs';
+import {createActivity} from '../lib/hd/activity.mjs';
 import {createMotionPlayer} from '../lib/motion.mjs';
 import {renderDock} from '../lib/editor-layout.mjs';
 import {stateExpressionVideo, createGestureVideoCache} from '../lib/gesture-video.mjs';

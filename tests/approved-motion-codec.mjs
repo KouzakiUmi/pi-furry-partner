@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { gzipSync } from 'node:zlib';
 import { APPROVED_INDEXED_MAX_BYTES, decodeApprovedMotionBinary, decodeApprovedMotionResource } from '../lib/approved-motion-codec.mjs';
 import { decodeApprovedMotionNodeResource } from '../lib/approved-motion-node.mjs';
-import { decodeApprovedMotionIndexed, createApprovedMotionPlayer } from '../lib/approved-motion.mjs';
+import { decodeApprovedMotionIndexed, createApprovedMotionPlayer } from '../lib/hd/player.mjs';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 
 const { catalog, data } = approvedMotionFixture();

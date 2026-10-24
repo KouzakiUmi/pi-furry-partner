@@ -1,5 +1,7 @@
 > **Independent Pi HD line · 2.5.1-preview.6**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
 > HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. No new HD tag has been published for this adaptation; install from the `editions/hd/` directory. See the [build guide](docs/plugin-lines.md).
+> [All documentation](../../docs/README.md) · [HD guide](docs/guide.en.md) · [Release rules](../../docs/release-line.md). The 29 complete clips are distinct from 17 selectable gestures. A remote Git install reads the root manifest; select HD through its local subdirectory or a dedicated package.
+
 
 <div align="center">
 
@@ -56,7 +58,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **full-animation remake 2.5.1-preview.6** on `hd` provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.1** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **HD full-animation remake 2.5.1-preview.6** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.1** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 

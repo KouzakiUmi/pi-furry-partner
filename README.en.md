@@ -15,7 +15,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md) · [All documentation](docs/README.md)
 
 The root package maintains the **original-resource Pi edition**, preserving the v2.4.0 assets, four styles and action routing with compatibility and rendering fixes. **v2.5.1** is the stable Latest release. DSH is maintained in [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). See [release rules](docs/release-line.md).
 

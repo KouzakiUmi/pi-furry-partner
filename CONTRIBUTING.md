@@ -14,7 +14,18 @@
 
 ## 远程发布
 
-更新 `package.json`、下载链接及 `CHANGELOG.md` 后，将匹配版本的 `v` 前缀 tag 推送到 GitHub（例如 `v2.3.3`）。`Build and publish release` 工作流复用完整验证流程，通过后从该提交的 Git 跟踪文件生成 ZIP 和 SHA-256 校验文件，再发布为最新 GitHub Release。版本 tag 必须与包版本一致，更新记录必须包含对应版本章节；构建不会包含本地 `work/` 或用户配置。
+产品代码只在 main 维护，不需要同步 legacy / hd 产品分支。贡献仍可使用临时功能分支和 PR。
+
+| 产品 | 工作目录 | CI | 标签与分发 |
+| --- | --- | --- | --- |
+| 原资源版 | 仓库根目录 | CI · Pi original resources | v<根目录版本>，ZIP 与 SHA-256，Latest |
+| HD | editions/hd/ | CI · Pi HD | hd-v<HD版本>，tgz 与校验／审计，latest=false |
+
+更新对应产品 package 和 CHANGELOG，再从 main 创建新的匹配标签。不要移动现有标签、把 HD Git tag 直接当作远程包安装入口，或从原资源包带入 HD 目录。原资源发布支持在 main 手动选择已有 tag 重跑，会检验并构建指定 tag，不重写标签；日常路径过滤不会跳过发布所需完整 CI。详见[统一发布规则](docs/release-line.md)。
+
+## 动作与文档边界
+
+原资源版 `lib/actions.mjs` 为 14 个实际动作生成命令补全；HD 的 17 项小动作与 29 个完整片段由自己的目录维护。不能为了复用命令界面而导入对方状态机。用户文档应同时更新中英文版本，当前说明链接到 [docs/README.md](docs/README.md)；日期性制作记录保留为历史，不冒充当前安装状态。
 
 ## 本地环境
 
@@ -38,7 +49,7 @@ npm test
 
 ## 检查与预览
 
-在项目根目录运行：
+下列命令在原资源版仓库根目录运行；HD 开发先进入 `editions/hd/`，见其 [贡献指南](editions/hd/CONTRIBUTING.md)。
 
 ```powershell
 npm test

@@ -1,8 +1,10 @@
 # pi-furry-partner · User guide
 
+> Current original-resource edition: **2.5.1 / Latest**, maintained at the root of main. For HD use the [separate guide](../editions/hd/docs/guide.en.md); install one edition at a time. See the [documentation index](README.md).
+
 [**简体中文**](guide.zh-CN.md) | **English**
 
-[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) · [Changelog](../CHANGELOG.md)
+[Project home](../README.en.md) · [GitHub](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [Release v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [Changelog](../CHANGELOG.md)
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers installation, language, controls and independent settings. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
@@ -12,7 +14,7 @@ Full automated coverage includes **Windows, Pi 1.2.0 / 1.3.0, Windows PowerShell
 
 Choose one route:
 
-- **Windows installer:** download and extract `pi-furry-partner-v2.4.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1), fully exit Pi, and run the following from the extracted project directory.
+- **Windows installer:** download and extract `pi-furry-partner-2.5.1.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1), fully exit Pi, and run the following from the extracted project directory.
 - **Pi package manager:** use the Git command below. This route loads the manifest resources without running the PowerShell installer.
 
 ```powershell
@@ -21,7 +23,7 @@ pi
 ```
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
 ```
 
 The installer deploys to `~/.pi/agent/extensions/pi-furry-partner/` and installs `pi-furry-night`. It manages four Pi UI settings: `theme`, `quietStartup`, `collapseChangelog` and `tuiMode`. It uses fullscreen only if the mode is unset; existing mode choices, model/provider settings and unrelated packages are preserved. The execution-policy option applies only to this process.

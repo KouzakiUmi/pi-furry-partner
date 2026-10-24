@@ -1,23 +1,26 @@
-# 单仓库维护与构建
+# main 上的两个独立源码根
 
-正式源码为本仓库根目录。`index.ts` 是 Pi 入口，`lib/index.js` 与生成的 `lib/client.js` 是 DSH 入口；公共状态、动作、文案、绘制和修复在 `lib` 中维护。
+[全部文档](../../../docs/README.md) · [发布规则](../../../docs/release-line.md) · [HD 架构](architecture.md)
 
-`build/editions.json` 同时定义产品版本与平台：
+```text
+main
+├── index.ts / lib / assets / package.json    原资源版
+├── docs / CONTRIBUTING.md                   原资源版与全仓库入口
+├── .github/workflows/ci.yml                 原资源 CI
+├── .github/workflows/release.yml            v 标签／原资源 Latest
+├── .github/workflows/ci-hd.yml              HD CI
+├── .github/workflows/release-hd.yml         hd-v 标签／不设 Latest
+└── editions/hd/
+    ├── index.ts / lib/hd/                  独立 Pi HD 接入、状态和播放器
+    ├── assets / Hi-Res / prompts           HD 素材与冻结来源
+    ├── package.json / build / tools        HD 测试与构建
+    └── docs / CONTRIBUTING.md              HD 文档
+```
 
-| 产品 | Pi | DSH |
-| --- | --- | --- |
-| 原逻辑高清重制 | 原逻辑 + 终端索引资源 | 原逻辑 + 高清透明资源 |
-| 全动态重做 | 完整动画的终端索引资源 | 完整动画的高清透明资源 |
+原资源版版本 2.5.1，14 个原版手动动作，四种原外观，507 个原资源文件；HD 源码 2.5.1-preview.6，单一插画风，17 个手动小动作／表情，29 个完整片段和 58 个索引入口。HD 尚未创建新的独立 Release。
 
-一个版本只改一套源码。构建阶段写入版本开关，Pi 资源包省去网页高清帧；两端均共用唯一的原始像素画风。旧 regular 工作树及 `work/animated-remake` 不再是构建输入。
+根目录的 npm 命令与 Git 包安装默认选择原资源版。HD 命令先进入 editions/hd/；从仓库根安装本地 HD 时用 pi install ./editions/hd。仅给远程 Git URL 换 hd-v 标签并不会改根清单。
 
-- `assets`：运行资源及完整动画验证依据。
-- `Hi-Res/approved-static-20261018`、`Hi-Res/poses-640`：已采用静态源及注册依据。
-- `Hi-Res/production`：随仓库保存的已批准修复输入。
-- `Hi-Res/sources`：只将原设定、色卡和最初认可的九格源纳入版本控制；大型会话历史保留本地。
-- `tools/history`：一次性迁移过程记录，不是可运行的当前构建入口。
-- `work`、`dist`：试验、验证输出和安装包，不作为源码依赖。
+两个产品不互相引用状态机或播放器，包只包含自身运行时。原资源 ZIP 明确排除 editions/，HD 包不包含根目录原版。各自 CI 按目录触发，发布调用对应完整 CI。旧产品分支不作为维护或发布前提。
 
-`npm run build:all` 生成四种交付组合；只校验可用 `python tools/build-editions.py --edition all --platform all --prepare-only --test`。构建不会自动安装、推送或发布。
-
-合并不表示每项美术动作已经重新设计完毕。普通高清版的旧局部耳／爪变形仍有单独校准尾项，见 `ordinary-motion-audit-20261022.md`；它们不阻止两条产品线在本仓库共同维护。
+以下路径均相对 HD 源码根：assets/animated 保留运行帧与 provenance；Hi-Res/production 保存冻结源；tools/history 是历史迁移记录；work 和 dist 只是输出，不是源码依赖。构建不安装、推送或发布。DSH 的独立源码、包与文档见 https://github.com/KouzakiUmi/dsh-furry-partner。

@@ -1,8 +1,10 @@
 # pi-furry-partner · 完整使用指南
 
+> 当前原资源版：**2.5.1 / Latest**。本指南对应 main 根目录。HD 使用同一 main 的独立目录，见 [HD 指南](../editions/hd/docs/guide.zh-CN.md)；两者择一安装。全部文档见[文档入口](README.md)。
+
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [架构说明](architecture.md)
 
 本指南针对 **pi-furry-partner 2.4.1**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
@@ -32,7 +34,7 @@
 
 完整自动化验证环境覆盖 Windows、Pi 1.2.0 / 1.3.0、Windows PowerShell 5.1 / PowerShell 7，包含原生中文界面与文档提示精简。未知 Pi 版本继续安全回退。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用；它不替代 Windows 安装脚本检查。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -81,7 +83,7 @@ Kitty 使用 Pi 的原生图片编码与生命周期；插件自行编码 Sixel�
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。

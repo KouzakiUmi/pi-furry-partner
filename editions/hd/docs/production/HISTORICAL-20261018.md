@@ -1,5 +1,8 @@
 # Character artwork workflow
 
+> **历史制作／审计记录**：下文的阶段、旧分支、双平台 API、包名、安装与发布状态均记录当时环境，不是当前使用步骤。当前维护为 main 根目录原资源版 2.5.1 与 editions/hd 的 HD 源码 2.5.1-preview.6（29 个完整片段）；DSH 独立维护。当前入口见[文档索引](../../../../docs/README.md)。批准、撤回和失败历史继续保留，不从旧记录推定本机已安装或新素材已获批准。
+
+
 - User requirement: all artistic revisions to Umi character illustrations and expression artwork must use complete-image regeneration. Never complete an artistic revision with local inpainting, retouching, pasted patches, layer compositing, or pixel replacement.
 - Use the last user-accepted complete image as the primary reference. Do not feed a withdrawn locally composited revision back into generation.
 - Preserve the raw generated full image and its transparency. Diagnostic crops, equal-scale comparisons and ordinary export processing are separate from artistic revisions; do not present a manipulated diagnostic as new artwork.

@@ -22,7 +22,7 @@ Windows 的 Segoe UI Emoji 仅作为本机 emoji 字形回退引用，不作为�
 
 ## PowerShell 示例
 
-在仓库根目录运行，或把 `$cli` 改成绝对路径：
+先从仓库根目录进入 `editions/hd/` 再运行，或把 `$cli` 改成此目录中工具的绝对路径。以下示例是本机验收环境记录，不保证其他机器有相同 WSL、字体或 Kitty：
 
 ```powershell
 $cli = '.\tools\visual-acceptance\pi-visual.py'

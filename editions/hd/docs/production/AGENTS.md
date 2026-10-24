@@ -1,6 +1,6 @@
 # Umi 角色制作工作流（本目录及子目录）
 
-开始任何生图、H3、设定图、漫画或 PV 制作前，必须读本目录的 [PRODUCTION-SPEC.md](PRODUCTION-SPEC.md)、turnaround-STATUS.json，以及本轮 review.json。先核对用户最新反馈；规范不覆盖用户后续纠正。
+本目录属于 main 的 editions/hd/。开始任何生图、H3、设定图、漫画或 PV 制作前，必须读本目录的 [PRODUCTION-SPEC.md](PRODUCTION-SPEC.md)、本轮可核验的状态与 review 记录，并核对 editions/hd/AGENTS.md 中的最新用户反馈。turnaround-STATUS.json 等旧文件名只描述当时轮次；若当前授权／评审证据不存在，不把历史状态当作本轮批准。规范不覆盖用户后续纠正。
 
 最新用户授权2026-10-22：“先全部做完吧 不要一段段了”。当前视频改为整片完成后一次评审；下文逐镜等待用户再扩展的旧规则在本轮不适用。两路实际内部校对、原设定/色卡约束、源历史和必要重做继续执行。
 

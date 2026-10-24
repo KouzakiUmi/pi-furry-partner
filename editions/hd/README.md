@@ -1,5 +1,7 @@
 > **Pi HD 独立代码线 · 2.5.1-preview.6**：29 个完整动作，仅提供高清插画。Pi 事件适配、状态机与播放器在 `lib/hd/` 独立维护，不调用 Legacy 运行时。
 > `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。当前适配尚未发布新的 HD 标签，源码安装请先进入 `editions/hd/`，运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
+> [全部文档](../../docs/README.md) · [HD 使用指南](docs/guide.zh-CN.md) · [统一发布规则](../../docs/release-line.md)。29 个完整片段不等于 17 个可点选小动作；原资源版的 action 列表独立。直接安装远程仓库 Git URL 会读取根目录清单，HD 请使用本地子目录或专用包。
+
 
 <div align="center">
 
@@ -56,7 +58,7 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
 
-`hd` 的**全动态重做版 2.5.1-preview.6** 为插画风提供 29 段完整动作，由 Pi 独立调度。原资源 **原资源版 v2.5.1** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
+`editions/hd/` 的**全动态重做版 2.5.1-preview.6** 为插画风提供 29 段完整动作，由 Pi 独立调度。根目录 **原资源版 v2.5.1** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
 主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
@@ -93,13 +95,13 @@
 
 像素画风的历史对照和演示见 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)。
 
-这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#可选展示页)。
+这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#构建与发布)。
 
 </details>
 
 ## 安装
 
-**高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#高清显示与终端要求)。
+**高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#版本终端与布局)。
 
 需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮全动态构建已在该环境重新验收。终端支持会影响清晰度。
 
@@ -124,7 +126,7 @@ pi
 
 脚本将扩展安装到 `~/.pi/agent/extensions/pi-furry-partner/`，并安装 `pi-furry-night` 主题。首次安装设置配套主题、简短启动标题和折叠更新日志；界面模式未设置时使用 `fullscreen`。更新保留已有模式、角色偏好、模型、provider 和其他包设置。执行策略参数只作用于本次进程。
 
-旧名 **pi-wink-companion** 用户可直接运行新版脚本，备份并迁移旧安装。只保留一种加载来源，避免与此前的 Pi 包管理器安装重复加载。安装后完整退出并重启 Pi；详细规则见[安装指南](docs/guide.zh-CN.md#安装与启动)。
+旧名 **pi-wink-companion** 用户可直接运行新版脚本，备份并迁移旧安装。只保留一种加载来源，避免与此前的 Pi 包管理器安装重复加载。安装后完整退出并重启 Pi；详细规则见[安装指南](docs/guide.zh-CN.md#安装与更新)。
 
 
 ## 开始相处
@@ -139,7 +141,7 @@ pi
 /mascot demo off            回到真实会话
 ```
 
-`/mascot` 查看当前设置。更多尺寸、布局、渲染和演示命令见[完整命令表](docs/guide.zh-CN.md#命令)。
+`/mascot` 查看当前设置。更多尺寸、布局、渲染和演示命令见[完整命令表](docs/guide.zh-CN.md#语言控件与独立设置)。
 
 `/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
@@ -202,7 +204,7 @@ pi
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 与 1.3.0 的完整测试均已通过，CI 分别用这两个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#素材与验证范围)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 与 1.3.0 的完整测试均已通过，CI 分别用这两个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#排错与开发)。
 
 ## 许可与致谢
 

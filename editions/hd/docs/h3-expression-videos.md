@@ -1,7 +1,10 @@
 # H3 连续表情动作 / Continuous expression clips
 
-> 最新执行顺序：先完成动作素材并逐批评审，再做适配。新 idle 运行接入和素材包仅在项目中暂存，尚未安装到本机 Pi／DSH。
-> Current order: complete and review the animation artwork first. The new idle runtime implementation and exports are staged in the checkout, not installed into either local host.
+> **历史制作／审计记录**：下文的阶段、旧分支、双平台 API、包名、安装与发布状态均记录当时环境，不是当前使用步骤。当前维护为 main 根目录原资源版 2.5.1 与 editions/hd 的 HD 源码 2.5.1-preview.6（29 个完整片段）；DSH 独立维护。当前入口见[文档索引](../../../docs/README.md)。批准、撤回和失败历史继续保留，不从旧记录推定本机已安装或新素材已获批准。
+
+
+> 当时执行顺序（历史）：先完成动作素材并逐批评审，再做适配。新 idle 运行接入和素材包仅在项目中暂存，尚未安装到本机 Pi／DSH。
+> Historical order: complete and review the animation artwork first. The new idle runtime implementation and exports are staged in the checkout, not installed into either local host.
 >
 > 历史撤回：用户指出“键盘反了”。`keyboard-ready-v1.png`（SHA `112753be4b359508f53862124a15a944ab13a20f57c195059431e3aac446216e`）及其全部键盘 H3 派生（含 global-v3）撤回，不再作为合格构型、生成参考或接入来源。新的正确方向整图已获批准并进入视频试点，见下文。Umi 面向我们使用键盘：空格行应在画面远／上侧靠 Umi，功能／顶行应在近／下侧靠观众；键位布局整体转 180°，不是左右镜像。历史脚本、spec 与原片冻结保留。
 > Historical withdrawal: the original keyboard reference and every video derived from it, including global-v3, face the wrong operator and remain withdrawn. The replacement whole still is now approved and video trials have resumed. Spacebar belongs on the far/upper Umi-facing side, function/top row on the near/lower viewer-facing side: rotate the key layout 180 degrees, never mirror it.

@@ -2,7 +2,7 @@
 
 `assets/animated/catalog.json` 的每个 `hires.frames[]` 现在提供 `sourceAsset`：
 
-- `path` 是仓库根目录下的相对路径，指向该帧已经发布的无损 WebP。
+- `path` 以 HD 源码根 `editions/hd/` 为相对根，指向该帧已经发布的无损 WebP。
 - `webpSha256` 绑定文件字节；`decodedRgbaSha256` 绑定解码后的 RGBA 像素字节。
 - 两个哈希沿用现有帧记录，未重新定义批准像素、帧顺序、时间或 QA。
 
@@ -23,7 +23,7 @@
 
 ## 独立验证
 
-在安装了 Pillow 的 Python 环境中运行：
+先进入 `editions/hd/`，在安装了 Pillow 的 Python 环境中运行：
 
 ```text
 python tools/verify-animated-provenance.py

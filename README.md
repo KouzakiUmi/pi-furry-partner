@@ -15,7 +15,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载 Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
 
 本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.1**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
 

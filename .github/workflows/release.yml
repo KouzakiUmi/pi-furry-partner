@@ -3,6 +3,12 @@ name: Build and publish Pi release
 on:
   push:
     tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing original-resource tag to verify and publish
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -14,6 +20,8 @@ concurrency:
 jobs:
   verify:
     uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ inputs.tag || github.ref }}
   release:
     needs: verify
     runs-on: ubuntu-latest
@@ -23,19 +31,20 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
       - name: Validate version and extract release notes
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           git fetch origin main:refs/remotes/origin/main
-          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/main
+          git merge-base --is-ancestor "$(git rev-parse HEAD)" refs/remotes/origin/main
           node scripts/verify-legacy-line.mjs --tag "$RELEASE_TAG" --notes-file release-notes.md
       - name: Package tracked source and checksum
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           archive="pi-furry-partner-${RELEASE_TAG#v}.zip"
           python scripts/package-pi-release.py --tag "$RELEASE_TAG" --out "$archive"
@@ -47,7 +56,7 @@ jobs:
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           gh release create "$RELEASE_TAG" \
             "pi-furry-partner-${RELEASE_TAG#v}.zip" \

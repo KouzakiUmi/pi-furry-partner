@@ -27,9 +27,9 @@ for (const file of ["styles.css", "app.js"]) await copyFile(join(root, "site", f
 for (const file of await readdir(join(root, "site/assets"))) await copyFile(join(root, "site/assets", file), join(out, "assets", file));
 // .js is served as JavaScript even by Windows static servers that map .mjs to
 // text/plain. Preserve the exact ESM content while using portable public URLs.
-for (const file of ["activity", "motion", "poke", "listen"]) {
+for (const file of ["activity", "actions", "motion", "poke", "listen"]) {
   const source = await readFile(join(root, "lib", `${file}.mjs`), "utf8");
-  await writeFile(join(out, "runtime", `${file}.js`), source.replaceAll('"./poke.mjs"', '"./poke.js"').replaceAll('"./listen.mjs"', '"./listen.js"'));
+  await writeFile(join(out, "runtime", `${file}.js`), source.replace(/\.mjs(["'])/g, '.js$1'));
 }
 for (const file of ["status-phrases.json", "status-copy.json"]) await copyFile(join(root, "assets", file), join(out, "assets", file));
 await copyFile(join(root, "assets/poses/think.png"), join(out, "assets/umi-think.png"));
@@ -58,7 +58,7 @@ for (const style of ["umi", "umi-pixel"]) {
 await writeFile(join(out, "assets/animation-sheets.json"), JSON.stringify(sheets));
 await writeFile(join(out, ".nojekyll"), "");
 const hashes = {};
-for (const file of ["index.html", "styles.css", "app.js", "runtime/activity.js", "runtime/motion.js", "runtime/poke.js", "runtime/listen.js", "assets/animation-sheets.json"]) hashes[file] = createHash("sha256").update(await readFile(join(out, file))).digest("hex");
+for (const file of ["index.html", "styles.css", "app.js", "runtime/activity.js", "runtime/actions.js", "runtime/motion.js", "runtime/poke.js", "runtime/listen.js", "assets/animation-sheets.json"]) hashes[file] = createHash("sha256").update(await readFile(join(out, file))).digest("hex");
 const manifest = { product: "pi-furry-partner", version: pkg.version, characterName: "Umi", basePathCompatible: true, buildDependencies: [], characterLicense: "ARR", copyright: "呜咪角色及动画素材保留全部版权。", sheets: Object.fromEntries(Object.entries(sheets).map(([key, value]) => [key, { width: value.width, height: value.height, frames: value.frames.length }])), hashes };
 await writeFile(join(out, "build-manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
 console.log(`Built ${out} (${Object.keys(sheets).length} character styles, ${Object.values(sheets).reduce((sum, sheet) => sum + sheet.frames.length, 0)} total runtime frames).`);

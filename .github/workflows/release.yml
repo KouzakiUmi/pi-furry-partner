@@ -21,6 +21,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
@@ -28,17 +30,9 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          node --input-type=module <<'NODE'
-          import { readFileSync, writeFileSync } from 'node:fs';
-          const { version } = JSON.parse(readFileSync('package.json', 'utf8'));
-          if (!/^2\.4\.\d+$/.test(version)) throw new Error('Legacy releases must use a stable2.4.x version');
-          if (Number(version.split('.')[2]) < 2) throw new Error('Historical2.4.0/2.4.1 releases must not be duplicated under new tags');
-          if (process.env.RELEASE_TAG !== `legacy-v${version}`) throw new Error('Legacy tag must match legacy-v plus package version');
-          const changelog = readFileSync('CHANGELOG.md', 'utf8');
-          const section = changelog.split(/^## /m).find(text => text.startsWith(`${version} · `));
-          if (!section) throw new Error('Missing changelog section');
-          writeFileSync('release-notes.md', section.slice(section.indexOf('\n') + 1).trim() + '\n');
-          NODE
+          git fetch origin legacy:refs/remotes/origin/legacy
+          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/legacy
+          node scripts/verify-legacy-line.mjs --tag "$RELEASE_TAG" --notes-file release-notes.md
       - name: Package tracked source and checksum
         env:
           RELEASE_TAG: ${{ github.ref_name }}

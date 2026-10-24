@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { loadAnimatedCatalog } from '../lib/index.js';
+import { loadAnimatedCatalog } from '../lib/pi-resources.mjs';
 import { decodeApprovedMotionNodeResource } from '../lib/approved-motion-node.mjs';
 import { approvedMotionIndexedRect, decodeApprovedMotionIndexed } from '../lib/approved-motion.mjs';
 import { dockGeometry, prepareApprovedDockFrame, renderDock } from '../lib/editor-layout.mjs';

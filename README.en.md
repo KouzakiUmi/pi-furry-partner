@@ -1,8 +1,9 @@
 > Development candidate **2.5.1-preview.2 (unreleased)** provides HD illustration only; pixel artwork belongs to Legacy. Nod, wave, peek, stretch, head sway, ear flick, a grounded happy bounce and three complete random idle variants bring the source catalog to 28 clips. Download links still point to the published version below. Pixel footage in older videos is historical.
 
+> DSH 已独立维护 / DSH is now maintained separately: [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). 本仓库只构建 Pi 产品。
 > Main currently previews2.5.1-preview.1; stable2.5.0 remains available. The new Legacy tag is legacy-v2.4.2.
 
-> `main` ships full-animation v2.5.1-preview.1. Run `npm run build:animated` for Pi and DSH packages. The [legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) maintains v2.4.2 with the original v2.4.0 artwork. See the [build guide](docs/plugin-lines.md).
+> `main` ships full-animation v2.5.1-preview.1. Run `npm run build:animated` for Pi packages. The [legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) maintains v2.4.2 with the original v2.4.0 artwork. See the [build guide](docs/plugin-lines.md).
 
 <div align="center">
 
@@ -57,13 +58,12 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 ## Meet Umi
 
-[Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the shared Pi/DSH catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority; DSH head pats can bring out his happy paws.
+[Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **full-animation remake v2.5.1-preview.1** on `main` provides 19 complete illustration clips (17 character clips and two keyboard transitions), shared by Pi and DSH. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **full-animation remake v2.5.1-preview.1** on `main` provides 19 complete illustration clips (17 character clips and two keyboard transitions), maintained for Pi. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 Main full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
-DSH uses an [independent waving title image](docs/dsh-branding.md) with a static fallback, including reduced-motion mode. It does not follow the desktop pet's activity. The composer status button has been removed; the floating pet keeps its interactions and typing listener.
 
 <table>
 <tr>
@@ -114,7 +114,6 @@ Choose a platform package from [full-animation v2.5.1-preview.1](https://github.
 | Platform | Full-animation v2.5.1-preview.1 |
 | --- | --- |
 | Pi terminal | `pi-furry-partner-full-animation-2.5.1-preview.1-pi-core.tgz` |
-| DSH desktop | `dsh-furry-partner-full-animation-2.5.1-preview.1.tgz` |
 
 GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. Main no longer builds the HD-remaster product line.
 
@@ -131,15 +130,6 @@ The script installs the extension to `~/.pi/agent/extensions/pi-furry-partner/` 
 
 Existing **pi-wink-companion** users can run the new script to back up and migrate the old installation. Keep one loading source, avoiding duplication with an earlier Pi package-manager installation. Fully exit and restart Pi afterwards; see [backup and recovery details](docs/guide.en.md#installation-and-updates).
 
-### DSH desktop installation
-
-Download the full `.tgz` without `-pi-core` and run the official plugin command in the terminal provided by DSH, for example:
-
-```sh
-dsh plugin --profile desktop add "./dsh-furry-partner-full-animation-2.5.1-preview.1.tgz"
-```
-
-The command registers the package's declared bundle; restart DSH after an update to load the new code. Replace `desktop` if using another profile. See the [official CLI reference](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md).
 
 ## Getting comfortable
 

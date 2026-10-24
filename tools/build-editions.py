@@ -16,13 +16,13 @@ def main():
     assert configuration['defaultEdition'] in specs,'Default edition must be configured'
     parser=argparse.ArgumentParser()
     parser.add_argument('--edition',choices=[*specs,'all'],default='all')
-    parser.add_argument('--profile',choices=['full','pi-core'],default='full')
-    parser.add_argument('--platform',choices=[*platforms,'all'],help='Build host-specific packages; --profile remains supported for older commands')
+    parser.add_argument('--profile',choices=['pi-core'],default='pi-core')
+    parser.add_argument('--platform',choices=[*platforms,'all'],default='pi',help='Build host-specific packages; --profile remains supported for older commands')
     parser.add_argument('--out',type=Path,default=ROOT/'dist/releases')
     parser.add_argument('--prepare-only',action='store_true')
     parser.add_argument('--test',action='store_true')
     args=parser.parse_args()
-    targets=list(platforms) if args.platform=='all' else [args.platform] if args.platform else ['pi' if args.profile=='pi-core' else 'dsh']
+    targets=list(platforms) if args.platform=='all' else [args.platform] if args.platform else ['pi']
     names=list(specs) if args.edition=='all' else [args.edition]
     build_info=[]
     for edition in names:
@@ -57,7 +57,7 @@ def main():
             if (ROOT/historical).exists():
                 shutil.copytree(ROOT/historical,stage/historical)
         for filename in ['package.json','index.ts','config.json','install.ps1','uninstall.ps1',
-                         'cordis.patch.yml','LICENSE','NOTICE','ASSET_LICENSE.md','README.md','README.en.md']:
+                         'LICENSE','NOTICE','ASSET_LICENSE.md','README.md','README.en.md']:
             if (ROOT/filename).exists():shutil.copy2(ROOT/filename,stage/filename)
         if (ROOT/'docs').exists():shutil.copytree(ROOT/'docs',stage/'docs')
         profile=stage/'lib/build-profile.mjs'
@@ -71,12 +71,10 @@ def main():
         package=read(stage/'package.json');package['version']=spec['version']
         # Only the published runtime is declared; build/test entrypoints remain
         # at repository root, not broken commands inside the install package.
-        package['scripts']={'test':'node tests/run.mjs','test:dsh':'node tests/run-dsh.mjs','build:dsh':'node scripts/build-dsh-client.mjs'}
+        package['scripts']={'test':'node tests/run.mjs'}
         (stage/'package.json').write_text(json.dumps(package,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-        run(['node','scripts/build-dsh-client.mjs'],stage)
         if args.test:
             run(['node','tests/run.mjs'],stage)
-            run(['node','tests/run-dsh.mjs'],stage)
         for platform in targets:
             profile=platforms[platform]['resourceProfile'] if args.platform else args.profile
             row={'edition':edition,'platform':platform,'version':spec['version'],'stage':str(stage),'profile':profile,

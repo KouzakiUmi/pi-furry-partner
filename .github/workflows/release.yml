@@ -36,7 +36,7 @@ jobs:
         run: |
           python tools/release-edition.py resolve --tag $env:RELEASE_TAG --github-output $env:GITHUB_OUTPUT
           if ($LASTEXITCODE -ne 0) { throw 'Release tag or notes validation failed' }
-      - name: Build both platforms for the selected edition
+      - name: Build Pi package for the selected edition
         env:
           EDITION: ${{ steps.target.outputs.edition }}
         run: |

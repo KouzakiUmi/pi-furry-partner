@@ -8,11 +8,6 @@
       "label": "Pi terminal",
       "resourceProfile": "pi-core",
       "artifactPrefix": "pi-furry-partner"
-    },
-    "dsh": {
-      "label": "DSH web",
-      "resourceProfile": "full",
-      "artifactPrefix": "dsh-furry-partner"
     }
   },
   "editions": {

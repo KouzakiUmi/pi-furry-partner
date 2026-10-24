@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createMotionPlayer } from '../lib/motion.mjs';
-import { loadEncodedSheet } from '../lib/index.js';
+import { loadEncodedSheet } from '../lib/pi-resources.mjs';
 
 const encoded = loadEncodedSheet('umi');
 const sheet = { ...encoded, frames: encoded.frames.map(frame => {

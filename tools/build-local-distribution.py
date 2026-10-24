@@ -24,14 +24,14 @@ def main():
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--track', choices=['hd-remaster', 'full-animation'], required=True)
-    parser.add_argument('--profile', choices=['full', 'pi-core'], default='full')
+    parser.add_argument('--profile', choices=['pi-core'], default='pi-core')
     parser.add_argument('--version', required=True)
     args = parser.parse_args()
     source = args.source.resolve(strict=True)
     args.out.mkdir(parents=True, exist_ok=True)
     package = json.loads((source / 'package.json').read_text(encoding='utf-8'))
     assert package['name'] == 'pi-furry-partner'
-    platform = 'pi' if args.profile == 'pi-core' else 'dsh'
+    platform = 'pi'
     configuration = json.loads((source / 'build/editions.json').read_text(encoding='utf-8'))
     prefix = configuration['platforms'][platform].get('artifactPrefix', f'{platform}-furry-partner')
     assert re.fullmatch(r'[a-z0-9][a-z0-9.-]*', prefix) and prefix.startswith(platform + '-'), 'Platform-specific safe artifact prefix required'
@@ -83,7 +83,7 @@ def main():
                  'distribution.json': (json.dumps(capability, ensure_ascii=False, indent=2) + '\n').encode('utf-8')}
     label = '原逻辑高清重制版' if args.track == 'hd-remaster' else '全动态重做版'
     intro = f'> 本地完整构建：**{label} {args.version}**。'
-    intro += ' Pi 终端精简资源包，不含 DSH 高清位图；动作、索引像素和时间轴完整保留。' if args.profile == 'pi-core' else ' Pi / DSH 完整离线资源包。'
+    intro += ' Pi 终端资源包；动作、索引像素和时间轴完整保留。'
     intro += f' 下载附件以 {prefix}- 为前缀，按宿主区分。'
     intro += ' 安装前请保存并退出对应宿主；本包尚未代为安装或公开发布。\n\n'
     for readme in ['README.md', 'README.en.md']:
@@ -99,25 +99,14 @@ def main():
     local_guide = f'''# 呜咪 · {label} {args.version}
 
 本包目标宿主：{platform.upper()}；资源类型：{args.profile}；发布线路：{configuration.get('releaseLine', 'main')}。
-Pi下载以pi-开头的包，DSH下载以dsh-开头的包。每个宿主只安装一个包；本高清／全动态包仅提供插画，像素仅在Legacy发行。
+本项目仅发布pi-前缀的Pi包；本高清／全动态包仅提供插画，像素仅在Legacy发行。
 main为2.5起的全动态线路；旧资源维护版在legacy分支，使用独立legacy-v2.4.x标签。
-
-## DSH
-
-DSH请选择full完整包。保存工作并退出DSH后，在包所在目录执行：
-
-```powershell
-dsh plugin --profile desktop add "./dsh-furry-partner-{args.track}-{args.version}.tgz"
-```
-
-该语法依本机DSH 0.2.1-rc.2的组合包发布文档核对。此构建没有代你执行安装。
-安装前保留现有插件配置和回退包；不同宿主中的真实运行验收仍需安装后完成。
 
 ## Pi
 
 Pi可使用pi-core精简资源包，所有终端动作和时间轴完整保留；只省去Web端高清位图。
 将tgz解压后，在package目录运行自带install.ps1；安装器会备份原配置和扩展。
-完整包也可用于Pi，终端显示资源与精简包相同。
+DSH 已独立到 https://github.com/KouzakiUmi/dsh-furry-partner 。
 
 ## 资源与验证
 

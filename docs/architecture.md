@@ -6,7 +6,7 @@
 
 ## 数据如何流动
 
-main 使用高清重制／全动态动作调度。工具参数的流式标记不建立待执行动画状态；只有真实工具执行或宿主工具状态驱动对应动作，原有最短可见时间、键盘进入／循环／退出、两秒动作保留和互动优先级保持独立。Legacy 的流式准备姿态仅在 legacy 分支适配，不复用到本分支的 activity 或 DSH 桥接层。通用 Kitty／Sixel 渲染修复与 `/mascot action` 补全可独立保留，不改变动作调度规则。
+main 使用高清重制／全动态动作调度。工具参数的流式标记不建立待执行动画状态；只有真实工具执行驱动对应动作，原有最短可见时间、键盘进入／循环／退出、两秒动作保留和互动优先级保持独立。Legacy 的流式准备姿态仅在 legacy 分支适配。DSH Host、Client 与桥接层已移至独立的 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner) 项目。通用 Kitty／Sixel 渲染修复与 `/mascot action` 补全保留，不改变 Pi 动作调度规则。
 
 ```mermaid
 flowchart TD

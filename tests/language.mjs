@@ -43,7 +43,7 @@ for (const language of ["en", "zh-CN"]) for (const chineseUI of [true, false]) f
   assert.equal(compactPromptFilename(language), language === "en" ? "pi-system-en.md" : "pi-system-zh.md");
   assert.deepEqual(settings, { language, chineseUI, compactPrompt });
 }
-assert.equal(personaFilename("en"), "umi-persona.en.md"); assert.equal(personaFilename("zh-CN"), "umi-persona.md");
+assert.equal(personaFilename("en"), "umi-persona.en.md"); assert.equal(personaFilename("zh-CN"), "wumi-persona.md");
 assert.equal(companionName({ language: "en", name: "呜咪" }), "Umi");
 assert.equal(companionSubtitle({ language: "en", subtitle: "你的工作搭档" }), "Your coding companion");
 assert.equal(companionName({ language: "en", name: "我的伙伴" }), "我的伙伴");

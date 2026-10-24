@@ -1,8 +1,0 @@
-{
-  "status": "NATIVE_SOURCE_READY_FOR_INDEPENDENT_A_B_REVIEW",
-  "sourceSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
-  "sourceEvidenceSha256": "fb0f48f139db50402535c7b20cb552c55b9871af1721f81c480db331789b4530",
-  "humanAccepted": false,
-  "runtimeInstalled": false,
-  "alphaProcessing": "not started"
-}

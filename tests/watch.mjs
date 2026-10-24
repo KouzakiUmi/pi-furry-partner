@@ -9,9 +9,9 @@ import { renderDock } from "../lib/editor-layout.mjs";
 const read=async(path)=>JSON.parse(await readFile(new URL(`../${path}`,import.meta.url),"utf8"));
 const checks=[];
 for(const style of ["wumi","wumi-pixel"]){
-  const base=await read(`tests/fixtures/legacy-action-packs/${style}/reaction-sheet.json`);
-  const asset=await read(`tests/fixtures/legacy-action-packs/${style}/watch-frames.json`);
-  const original=JSON.stringify(base),sheet=withWatchFrames(withPokeFrame(base,await read(`tests/fixtures/legacy-action-packs/${style}/poke-patch.json`)),asset);
+  const base=await read(`assets/reactions/${style}/reaction-sheet.json`);
+  const asset=await read(`assets/reactions/${style}/watch-frames.json`);
+  const original=JSON.stringify(base),sheet=withWatchFrames(withPokeFrame(base,await read(`assets/reactions/${style}/poke-patch.json`)),asset);
   assert.equal(base.frames.length,21);assert.equal(sheet.frames.length,22+asset.frames.length);
   assert.equal(sheet.ids.poke,21);assert.equal(sheet.ids.watch,22);assert.equal(sheet.ids["watch-blink"],23);
   assert.equal(sheet.palette,base.palette);assert.equal(withWatchFrames(sheet,asset),sheet);
@@ -102,19 +102,14 @@ for(const style of ["wumi","wumi-pixel"]){
 }
 {
   let time=1000;const activity=createActivity({now:()=>time,random:()=>.25});activity.start({wake:false});activity.handle("agent_start");
-  activity.handle("tool_execution_start",{toolCallId:"run",toolName:"bash"});assert.equal(activity.snapshot().face,"work");
-  activity.handle("tool_execution_end",{toolCallId:"run"});assert.equal(activity.snapshot().face,"work");
-  time+=1999;assert.equal(activity.snapshot().visualPhase,"running");time++;assert.equal(activity.snapshot().visualPhase,"thinking");
+  activity.handle("tool_execution_start",{toolCallId:"run",toolName:"bash"});assert.equal(activity.snapshot().face,"watch");
+  activity.handle("tool_execution_end",{toolCallId:"run"});assert.equal(activity.snapshot().face,"watch");
+  time+=1199;assert.equal(activity.snapshot().visualPhase,"running");time++;assert.equal(activity.snapshot().visualPhase,"thinking");
   activity.handle("tool_execution_start",{toolCallId:"edit",toolName:"apply_patch"});assert.match(activity.snapshot().face,/work|idle-blink/);
-  for (const [path, expected] of [["assets/reactions/umi/reaction-sheet.json", "watch"],
-    ["tests/fixtures/legacy-action-packs/wumi-pixel/reaction-sheet.json", "work"],
-    ["tests/fixtures/legacy-eyelids/pixel.json", "work"]]) {
-    const base=await read(path);let chosen;
-    renderDock({geometry:{collapsed:false,columns:16,rows:8},sheet:base,snapshot:{face:"watch",phase:"running",bubble:"",color:"accent"},
-      theme:{fg:(_token,text)=>text},visibleWidth:(text)=>[...text].length,truncateToWidth:(text,width)=>text.slice(0,width),
-      renderAvatar:({frameIndex})=>{chosen=base.frames[frameIndex].id;return Array(8).fill("");}});
-    assert.equal(chosen,expected, `${path}: use the authored watch pose when present, otherwise work`);
-  }
-  checks.push("Execution retains the work pose through its 2000ms next-state gap; explicit watch still uses magnifier and legacy sheets safely fall back to work");
+  const base=await read("assets/reactions/pixel/reaction-sheet.json");let chosen;
+  renderDock({geometry:{collapsed:false,columns:16,rows:8},sheet:base,snapshot:{face:"watch",phase:"running",bubble:"",color:"accent"},
+    theme:{fg:(_token,text)=>text},visibleWidth:(text)=>[...text].length,truncateToWidth:(text,width)=>text.slice(0,width),
+    renderAvatar:({frameIndex})=>{chosen=base.frames[frameIndex].id;return Array(8).fill("");}});
+  assert.equal(chosen,"work");checks.push("Running uses the magnifier through its 1200ms hold, editing retains typing, and older styles safely fall back to work");
 }
 process.stdout.write(JSON.stringify({passed:true,checks},null,2)+"\n");

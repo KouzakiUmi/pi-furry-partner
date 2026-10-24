@@ -37,10 +37,10 @@ const checks=[];
   checks.push("Draft activity stays local, refreshes a finite 1800ms gesture, clears on empty/submit, gives poke priority, leaves running tools intact and listens during real/demo user waits including dozing");
 }
 for(const style of ["wumi","wumi-pixel"]){
-  const base=await read(`tests/fixtures/legacy-action-packs/${style}/reaction-sheet.json`),original=JSON.stringify(base);
-  const asset=await read(`tests/fixtures/legacy-action-packs/${style}/listen-frames.json`);
-  const watch=await read(`tests/fixtures/legacy-action-packs/${style}/watch-frames.json`);
-  const sheet=withListenFrames(withWatchFrames(withPokeFrame(base,await read(`tests/fixtures/legacy-action-packs/${style}/poke-patch.json`)),watch),asset);
+  const base=await read(`assets/reactions/${style}/reaction-sheet.json`),original=JSON.stringify(base);
+  const asset=await read(`assets/reactions/${style}/listen-frames.json`);
+  const watch=await read(`assets/reactions/${style}/watch-frames.json`);
+  const sheet=withListenFrames(withWatchFrames(withPokeFrame(base,await read(`assets/reactions/${style}/poke-patch.json`)),watch),asset);
   const listenStart=base.frames.length+1+watch.frames.length;
   assert.equal(base.frames.length,21);assert.equal(sheet.frames.length,listenStart+asset.frames.length);assert.equal(sheet.ids.listen,listenStart);assert.equal(sheet.ids["listen-blink"],listenStart+1);assert.equal(sheet.palette,base.palette);
   assert.equal(withListenFrames(sheet,asset),sheet);assert.equal(withListenFrames(base,{...asset,width:1}),base);

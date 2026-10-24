@@ -199,7 +199,7 @@ try {
   } finally { failurePatch?.dispose(); Object.defineProperty(filterPrototype, "applyFilter", originalFilter); }
   checks.push("A filter throwing after assigning alias results restores original item/filtered identities and selection, preserves the user's query and unwinds its scope without leaking temporary aliases");
   const report = { testedAt: new Date().toISOString(), piVersion: version, modelRequests: 0, passed: true,
-    verification: "Real Pi 1.2 public native components and TUI layout with offline model/session fixtures; no credentials, vendor edits, network/model calls or native-window automation", checks, coverage: patch.coverage,
+    verification: "Real reviewed Pi public native components and TUI layout with offline model/session fixtures; no credentials, vendor edits, network/model calls or native-window automation", checks, coverage: patch.coverage,
     hashes: Object.fromEntries(await Promise.all(["lib/ui-chinese.mjs", "assets/ui-zh-CN.json"].map(async (file) => [file, createHash("sha256").update(await readFile(join(root, file))).digest("hex")]))), };
   await writeFile(join(root, "tests/ui-chinese-validation.json"), JSON.stringify(report, null, 2) + "\n"); console.log(JSON.stringify(report, null, 2));
 } finally { patch?.dispose(); for (const component of selectors) component.dispose?.(); }

@@ -67,7 +67,7 @@ try {
     for (const content of ["KEEP earlier memory section", "KEEP later memory section", "KEEP later subagent instructions", "KEEP late tool description", "KEEP late read guideline", "KEEP late prompt guideline", "KEEP late project constraint", "KEEP late skill", "KEEP original addendum exactly", "KEEP original project constraint", "KEEP date section exactly"]) assert.ok(text.includes(content), content);
     assert.ok(!sections.tools.includes("BASE bash tool"));
     assert.ok(sections.tools.includes("late_tool"));
-    const template = (await readFile(join(scratch, "prompts", language === "en" ? "umi-persona.en.md" : "umi-persona.md"), "utf8")).trim();
+    const template = (await readFile(join(scratch, "prompts", language === "en" ? "umi-persona.en.md" : "wumi-persona.md"), "utf8")).trim();
     assert.equal(text.includes(wrapPersona(template)), personaOn);
     assert.equal(text.split(template).length - 1, personaOn ? 1 : 0);
     if (compact) assert.ok(sections.docs.includes(language === "en" ? "Before implementing Pi work" : "处理 Pi 工作前"));
@@ -103,7 +103,7 @@ try {
   const passiveAfter = await fixture("passive-after", 'event.systemPromptOptions.sections.later = "KEEP later ignored by existing opaque mode";');
   const opaque = await setup([forcedBefore, plugin, passiveAfter]);
   await opaque.command("language zh-CN"); await opaque.command("persona on");
-  const template = (await readFile(join(scratch, "prompts/umi-persona.md"), "utf8")).trim();
+  const template = (await readFile(join(scratch, "prompts/wumi-persona.md"), "utf8")).trim();
   const opaqueResult = await opaque.runner.emitBeforeAgentStart({ prompt: "offline fixture" }, originalOptions);
   assert.equal(buildSystemPrompt(opaqueResult.systemPromptOptions), `KEEP opaque earlier force exactly\n\n${template}`);
   const lastForce = await setup([plugin, forcedAfter]);

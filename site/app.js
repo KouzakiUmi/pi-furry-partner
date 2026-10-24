@@ -4,8 +4,7 @@ const stateLabels = { idle: "待机", thinking: "思考", running: "敲代码", 
 const responses = { idle: "我在这儿呢，有想法就叫我呀。", thinking: "好呀，我先想想从哪儿开始。", running: "这几处我来改，写完再检查一遍。", searching: "线索藏在哪儿呢？我翻翻看。", speaking: "找到啦，我慢慢讲给你听。", waiting: "你慢慢想，我把耳朵竖好等你。", success: "做好啦，来看看有没有合你心意。", error: "唔，这步绊了一下。我再认真看看。", waking: "你来啦！我醒醒神，这就陪你。", compacting: "我把前面的线索收好，接着往下走。" };
 const canvas = $("#mascot"), context = canvas.getContext("2d"), stage = $(".character-stage");
 let time = 0, wall = performance.now(), paused = media.matches, timer, visible = !document.hidden;
-const style = "umi";
-let state = "thinking", sheets, activity, player, running = false;
+let state = "thinking", style = "umi", sheets, activity, player, running = false;
 const bitmaps = new Map();
 
 function advance() {
@@ -35,6 +34,7 @@ function updateControls() {
   button.append(icon, document.createTextNode(paused ? " 继续动画" : " 暂停动画"));
   button.setAttribute("aria-pressed", String(paused));
   for (const item of document.querySelectorAll("[data-state]")) item.setAttribute("aria-pressed", String(item.dataset.state === state));
+  for (const item of document.querySelectorAll("[data-style]")) item.setAttribute("aria-pressed", String(item.dataset.style === style));
 }
 
 function render() {
@@ -53,16 +53,16 @@ function render() {
   });
   const image = bitmap(visual.sheet, visual.frameIndex, `${style}:${visual.cacheKey}`);
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.imageSmoothingEnabled = true;
+  context.imageSmoothingEnabled = style !== "umi-pixel";
   context.imageSmoothingQuality = "high";
   context.drawImage(image, 0, 0, canvas.width, canvas.height);
-  stage.classList.add("ready");
+  stage.classList.add("ready"); stage.classList.toggle("pixel", style === "umi-pixel");
   canvas.setAttribute("aria-label", `戳一戳呜咪 · ${stateLabels[state]}中的${paused ? "静态表情" : "动画"}`);
   $(".speech").setAttribute("lang", snapshot.language || "zh-CN");
   $("#bubble").textContent = snapshot.bubble;
   $("#state-glyph").textContent = snapshot.glyph;
   $("#state-phrase").textContent = snapshot.phrase;
-  $("#frame-status").textContent = `${paused ? "已暂停" : "实时演示"} · 插画版`;
+  $("#frame-status").textContent = `${paused ? "已暂停" : "实时演示"} · ${style === "umi" ? "角色版" : "像素版"}`;
 }
 
 function schedule() {
@@ -74,8 +74,11 @@ for (const button of document.querySelectorAll("[data-state]")) button.addEventL
   if (!running) return;
   advance(); state = button.dataset.state; activity.setDemo(state);
   $("#demo-response").textContent = responses[state];
-  $("#demo-note").textContent = state === "waiting" ? "呜咪歪头等你回答。等十秒，还会悄悄打个瞌睡。" : state === "waking" ? "给呜咪六秒钟：从迷迷糊糊，到发现你来啦。" : `${stateLabels[state]}演示 · 本地状态演示，不会连接模型。`;
+  $("#demo-note").textContent = state === "waiting" ? "呜咪歪头等你回答。等十秒，还会悄悄打个瞌睡。" : state === "waking" ? "给呜咪六秒钟：从迷迷糊糊，到发现你来啦。" : `${stateLabels[state]}演示 · 使用插件同款动作与状态短句，不会连接模型。`;
   updateControls(); schedule();
+});
+for (const button of document.querySelectorAll("[data-style]")) button.addEventListener("click", () => {
+  advance(); style = button.dataset.style; updateControls(); schedule();
 });
 function poke() { if (!running) return; advance(); activity.poke(); schedule(); $("#demo-note").textContent = "忙的时候轻轻回应，闲时更俏皮一点；呜咪马上就接着做手头的事。"; }
 $("#poke").addEventListener("click", poke); canvas.addEventListener("click", poke); canvas.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); poke(); } });
@@ -134,5 +137,5 @@ try {
   console.error("Animation preview:", error);
   $("#frame-status").textContent = "静态角色预览";
   $("#demo-note").textContent = "动画暂时没有加载成功，可以刷新页面重试。安装与文档仍可使用。";
-  for (const button of document.querySelectorAll("[data-state], #pause, #poke")) button.disabled = true;
+  for (const button of document.querySelectorAll("[data-state], [data-style], #pause, #poke")) button.disabled = true;
 }

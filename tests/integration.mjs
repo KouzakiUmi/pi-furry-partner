@@ -132,11 +132,7 @@ function detachHostUI() {
 }
 
 try {
-  // This suite pins the original reaction/frame integration, including its
-  // fallback when a full-animation pack is absent. Complete motion routing and
-  // actual resources have separate approved-motion suites in the full build.
-  for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), {
-    recursive: true, filter: source => source !== join(root, 'assets', 'animated') });
+  for (const name of ["index.ts", "lib", "assets", "themes", "prompts", "package.json"]) await cp(join(root, name), join(scratch, name), { recursive: true });
   await writeFile(join(scratch, "config.json"), JSON.stringify({ language:"zh-CN", layout:"editor", style:"wumi", renderer:"auto", info:"compact", enabled:true, animation:true, dockSize:"auto" }));
   themeAPI.setThemeJsonValidator(validateThemeJson); themeAPI.initTheme("dark", false);
   theme = themeAPI.loadThemeFromPath(join(root, "themes/pi-furry-night.json"), "truecolor");
@@ -156,7 +152,7 @@ try {
   const mascotCommand = extension.commands.get("mascot");
   assert.equal(typeof mascotCommand.getArgumentCompletions, "function");
   assert.deepEqual(mascotCommand.getArgumentCompletions("style u").map(({ value, label }) => ({ value, label })), [
-    { value: "style umi", label: "umi" },
+    { value: "style umi", label: "umi" }, { value: "style umi-pixel", label: "umi-pixel" },
   ]);
   checks.push("The real extension registers hierarchical /mascot argument completions");
   const command = (args) => mascotCommand.handler(args, ctx);
@@ -188,7 +184,7 @@ try {
   assert.doesNotMatch(currentEditor.displaySheet.frames[0].id,/^listen/,"Submitting an emptied draft must cancel the local listening gesture");
   await emit("agent_start");await emit("tool_execution_start",{toolCallId:"typing-priority",toolName:"bash",args:{}});
   currentEditor.handleInput("x");time+=1300;tick();currentEditor.render(100);tick();tick();tick();tick();currentEditor.render(100);
-  assert.match(currentEditor.displaySheet.frames[0].id,/^work/);
+  assert.match(currentEditor.displaySheet.frames[0].id,/^watch/);
   await emit("tool_execution_end",{toolCallId:"typing-priority",isError:false});await emit("agent_before_settle",{outcome:"completed"});await emit("agent_settled",{aborted:false});
   time+=3000;currentEditor.setText("");tick();currentEditor.render(100);
   checks.push("Actual typing/paste triggers a local cupped-ear listening gesture; cursor movement cannot extend it, timeout restores idle, native draft/config/submission count survive and running work keeps priority");
@@ -231,7 +227,7 @@ try {
   checks.push("Real input/provider/stream hooks show submission, first-output wait seconds and thinking-before-text; paused motion gets one 1s metadata heartbeat, no narrow overflow, preference write or lingering timer");
   await emit("agent_start");
   await emit("tool_execution_start", { toolCallId: "pause-work", toolName: "bash", args: {} });
-  currentEditor.render(100); assert.match(currentEditor.displaySheet.frames[0].id, /^work/);
+  currentEditor.render(100); assert.match(currentEditor.displaySheet.frames[0].id, /^watch/);
   await emit("tool_execution_end", { toolCallId: "pause-work", isError: false });
   currentEditor.render(100); assert.match(currentEditor.displaySheet.frames[0].id, /^think/);
   time += 10000; currentEditor.render(100);
@@ -241,18 +237,15 @@ try {
   await command("poke"); assert.equal(jobs.size, 1); currentEditor.render(100);
   assert.equal(currentEditor.displaySheet.frames[0].id, "poke");
   const pokeFirst = currentEditor.displaySheet.frames[0].cacheKey;
-  const pokePixels = Array.from(currentEditor.displaySheet.frames[0].pixels);
   tick(); tick(); currentEditor.render(100);
-  assert.equal(currentEditor.displaySheet.frames[0].cacheKey, pokeFirst,
-    "The registered whole-frame HD poke retains its body/support instead of applying the legacy deformation rig");
-  assert.deepEqual(Array.from(currentEditor.displaySheet.frames[0].pixels), pokePixels);
+  assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, pokeFirst);
   while (jobs.size) { tick(); currentEditor.render(100); }
   assert.match(currentEditor.displaySheet.frames[0].id, /^think/);
   assert.equal(currentEditor.getText(), "keep my poke draft🙂"); assert.equal(submits.length, beforePokeSubmits);
   assert.equal(await readFile(join(scratch, "config.json"), "utf8"), beforePokeConfig);
   await emit("agent_before_settle", { outcome: "completed" }); await emit("agent_settled", { aborted: false });
   currentEditor.setText(""); await command("play");
-  checks.push("Paused work→thinking changes immediately and stays correct across a tokenless gap; regular /mascot poke holds its registered HD pose then restores the real static pose, stops its temporary timer and preserves draft/config/submission count");
+  checks.push("Paused work→thinking changes immediately and stays correct across a tokenless gap; regular /mascot poke shakes a >w< face then restores the real static pose, stops its temporary timer and preserves draft/config/submission count");
 
   let menuNativeCalls = 0;
   currentEditor.actionHandlers.set("app.message.copy", () => { menuNativeCalls++; });
@@ -286,7 +279,7 @@ try {
   assert.deepEqual(await runBeforeAgent(),{result:undefined,systemPromptOptions:{customPrompt:originalPrompt,sections:{}}},"Persona must be off by default");
   await command("persona on");
   const personaPrompt=await runBeforeAgent();
-  const templatePath=join(scratch,"prompts/umi-persona.md");
+  const templatePath=join(scratch,"prompts/wumi-persona.md");
   const template=(await readFile(templatePath,"utf8")).trim();
   assert.ok(template.length>0);
   assert.equal(personaPrompt.result,undefined,"Persona must not return a whole-prompt override");
@@ -435,8 +428,8 @@ try {
   assert.equal(currentEditor.getText(),tourDraft);assert.equal(submits.length,tourSubmits);assert.equal(jobs.size,1);
   assert.equal(await readFile(join(scratch,"config.json"),"utf8"),tourConfig,"Tour selection must not save or modify preferences");
   await command("demo all");
-  const readingOffset=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.phase==="reading")).reduce((sum,step)=>sum+step.durationMs,0);
-  time+=readingOffset+500;currentEditor.render(100);advanceDock(6);assert.match(currentEditor.displaySheet.frames[0].id,/^watch/);
+  const runningOffset=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.phase==="running")).reduce((sum,step)=>sum+step.durationMs,0);
+  time+=runningOffset+500;currentEditor.render(100);advanceDock(6);assert.match(currentEditor.displaySheet.frames[0].id,/^watch/);
   await command("demo off");currentEditor.render(100);advanceDock(6);assert.match(currentEditor.displaySheet.frames[0].id,/^idle/);
   await command("pause");const tourPausedConfig=await readFile(join(scratch,"config.json"),"utf8");
   await command("demo all");currentEditor.render(100);assert.equal(jobs.size,0);assert.match(notices.at(-1).message,/我先乖乖不动啦.*\/mascot play/);
@@ -445,26 +438,20 @@ try {
   await command("demo");assert.match(notices.at(-1).message,/\/mascot layout editor/);assert.equal(await readFile(join(scratch,"config.json"),"utf8"),tourHeaderConfig);
   await command("demo off");await command("layout editor");currentEditor.setText("");
   checks.push("Default/all demo loops every animation without requests, extra timers, draft/submission or preference changes; whole-lap same-state motion restarts, paused/header modes give actionable hints, and off restores the actual pose");
-  for (const style of ["umi", "umi-pixel", "pixel", "wumi-pixel"]) {
+  for (const style of ["umi", "umi-pixel"]) {
     await command(`style ${style}`);
-    await command("demo reading"); currentEditor.render(100); advanceDock();
+    await command("demo running"); currentEditor.render(100); advanceDock();
     assert.match(currentEditor.displaySheet.frames[0].id, /^watch/);
-    assert.equal(currentEditor.displaySheet.width, 240);
+    assert.equal(currentEditor.displaySheet.width, style === "umi-pixel" ? 80 : 240);
     assert.equal(currentEditor.displaySheet.frames.length, 1);
     const watchKey = currentEditor.displaySheet.frames[0].cacheKey;
-    advanceDock(12);
-    assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "The authored magnifier sequence must advance beyond its readable first cel");
+    advanceDock(12); assert.notEqual(currentEditor.displaySheet.frames[0].cacheKey, watchKey, "The authored magnifier sequence must advance beyond its readable first cel");
     for (const [phase, expectedId] of [["editing", /^work/], ["searching", /^search/], ["compacting", /^search/], ["error", /^error/], ["success", /^happy/]]) {
+      const before = currentEditor.displaySheet.frames[0].cacheKey;
       await command(`demo ${phase}`); currentEditor.render(100);
-      assert.equal(currentEditor.motion.stats().transitioning, false,
-        "Complete registered HD poses switch without legacy frame blending");
-      assert.equal(currentEditor.motion.stats().palettePairs, 0,
-        "HD state changes cannot synthesize mixed source colors");
+      assert.equal(currentEditor.displaySheet.frames[0].cacheKey, before, "A phase change starts from the displayed frame instead of jumping to a new pose");
       // Distinct work/watch tool poses now honor the 1200ms readable gesture.
-      advanceDock(phase === "editing" ? 30 : 5);
-      assert.match(currentEditor.displaySheet.frames[0].id,
-        expectedId);
-      assert.equal(currentEditor.displaySheet.width, 240);
+      advanceDock(phase === "editing" ? 30 : 5); assert.match(currentEditor.displaySheet.frames[0].id, expectedId);
       assert.ok(currentEditor.motion.stats().frames <= 64);
       for (const line of currentEditor.render(100)) assert.ok(visibleWidth(line) <= 100);
     }
@@ -478,7 +465,7 @@ try {
     await command("play"); currentEditor.render(100); assert.equal(jobs.size, 1);
   }
   await command("demo off"); await command("style umi"); currentEditor.render(100);
-  checks.push("Canonical umi and historical pixel aliases render illustrated Sixel frames: reading magnifier and execution/action poses avoid blending, stay bounded and pause completely");
+  checks.push("Real umi and crisp umi-pixel docks render one-frame motion sheets through Sixel: magnifier scan, typing, buried searching/compacting, XX error and success transition from the displayed frame, stay bounded and pause completely");
 
   terminal.columns=100;terminal.rows=40;currentEditor.setText("");historyLength=120;
   renderer.renderNow();assert.ok(renderer.captureRenderState().previousViewportTop>0);
@@ -505,10 +492,7 @@ try {
   const englishRows = plain(currentEditor.render(160)).join("\n");
   assert.ok(englishRows.includes("bash"), "The active tool must remain attached across the language switch");
   assert.ok(!/[\u3400-\u9fff]/u.test(englishRows), "English editor should contain no untranslated companion labels, phrases, bubbles or keyboard hints");
-  // This assertion checks language preservation, so allow the generated test
-  // directory to fit even when the suite runs inside a nested build stage.
-  // Narrow-width truncation is covered separately by the footer layout suite.
-  const englishFooter = plain(currentFooter.render(Math.max(160, visibleWidth(scratch) + 80))).join("\n");
+  const englishFooter = plain(currentFooter.render(160)).join("\n");
   assert.ok(englishFooter.includes("test/中文"), "Language must not rewrite the user's branch name");
   assert.ok(!/[\u3400-\u9fff]/u.test(englishFooter.replace("test/中文", "")));
   assert.equal(jobs.size, 1);
@@ -587,6 +571,19 @@ try {
   await command("on");
   assert.equal(foreignHeaderDisposals,1);assert.equal(foreignFooterDisposals,1);
   checks.push("External header/footer takeover revokes ownership: mascot off leaves foreign components intact, while explicit on can reclaim its configured UI");
+  await command("demo off"); await command("play"); await command("style umi"); await command("layout editor");
+  await emit("agent_start");
+  await emit("message_update", { assistantMessageEvent: { type: "toolcall_start", contentIndex: 0,
+    partial: { role: "assistant", content: [{ type: "toolCall", id: "legacy-stream", name: "bash", arguments: { command: "PRIVATE_STREAMED_ARGUMENT" } }] } } });
+  currentEditor.render(100); tick(); currentEditor.render(100);
+  assert.match(currentEditor.displaySheet.frames[0].id, /work|idle-blink/, "Legacy partial composition uses its own simple work frames");
+  assert.match(plain(currentEditor.render(100)).join("\n"), /敲命令呀|Command/, "Preparation copy works with unchanged legacy resource files");
+  await emit("tool_execution_start", { toolCallId: "legacy-stream", toolName: "bash", args: {} });
+  advanceDock(30);
+  assert.match(currentEditor.displaySheet.frames[0].id, /^watch/, "Real execution retains legacy frame routing");
+  await emit("tool_execution_end", { toolCallId: "legacy-stream", isError: false });
+  await emit("agent_settled", { aborted: false });
+  checks.push("Real Pi streamed-tool hooks use legacy simple-frame preparation and hand off to its original execution animation");
   await command("demo thinking");await command("off");assert.strictEqual(terminal.write,nativeWrite);assert.equal(jobs.size,0);
   await command("on");currentEditor.render(100);
   const shutdownEditor = currentEditor;

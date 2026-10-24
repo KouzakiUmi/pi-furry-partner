@@ -1,14 +1,12 @@
 # pi-furry-partner · 完整使用指南
 
-新增表情与两端入口见[定稿表情说明](authored-expressions.md)。Pi 使用 `/mascot action all` 循环 17 项动作，或 `/mascot action shy` 等表情 ID 单次观看；DSH 设置页提供相同目录。
-
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载稳定版 v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) · [架构说明](architecture.md)
 
-本指南适用于 `main` 的**全动态重做版 2.5.0**。保留 v2.4.0 原资源的 **legacy 2.4.1** 在[独立分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护，只优化代码。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
+本指南针对 **pi-furry-partner 2.4.1**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
-角色英文名为 **Umi**。本页说明 `main` 当前主线：输入框布局只提供 `umi` 插画，标题布局使用 `illustration`。旧配置或输入中的 `wumi`、`wumi-pixel`、`umi-pixel`、`pixel`、`illustration` 会迁移到当前插画风格，不会启用像素素材；标题旧像素配置迁移到 `illustration`。原始像素风仅由 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)提供。历史演示中的像素对比不代表当前主线仍有像素功能。`umi-persona.md` 文件名与插画素材目录使用 Umi 名称。
+角色英文名为 **Umi**，风格命令统一为 `umi`、`umi-pixel`。旧的 `wumi`、`wumi-pixel` 命令和配置作为兼容别名继续支持，保存设置时使用新 ID。`wumi-persona.md` 文件名和既有素材路径保持稳定。
 
 - [安装与启动](#安装与启动)
 - [高清显示与终端要求](#高清显示与终端要求)
@@ -24,7 +22,7 @@
 - [常见问题](#常见问题)
 - [素材与验证范围](#素材与验证范围)
 
-呜咪固定待在 Pi 输入框左侧，根据真实会话状态做出反应：思考时用灰爪托下巴，修改或执行任务时双爪打字，阅读内容时举着放大镜左右扫描，搜索资料和整理上下文时埋进资料堆、露出尾巴摇晃，输出回答时配合嘴型说话。错误时呈现 xx 眼吃瘪表情，完成后挥爪、轻轻晃脑并 wink，休息时闭眼。角色采用完整设定中的白灰毛男性拟人狼形象，保留灰爪、粉色肉垫、白腕毛、蓝围巾与带星线的灰蓝尖耳帽。
+呜咪固定待在 Pi 输入框左侧，根据真实会话状态做出反应：思考时用灰爪托下巴，修改文件时双爪打字，运行命令时举着放大镜左右扫描，搜索资料和整理上下文时埋进资料堆、露出尾巴摇晃，输出回答时配合嘴型说话。错误时呈现 xx 眼吃瘪表情，完成后挥爪、轻轻晃脑并 wink，休息时闭眼。角色采用完整设定中的白灰毛男性拟人狼形象，保留灰爪、粉色肉垫、白腕毛、蓝围巾与带星线的灰蓝尖耳帽。
 
 首次使用安装脚本且尚未选择界面模式时，使用 Pi 的 `fullscreen` 模式：输出在独立区域内滚动，输入框、角色和 footer 固定在底部。已有安装更新时保留已选模式；也可以使用 `regular`。扩展布局是 `editor`，风格是 `umi`，名称是“呜咪”，底部信息使用 `compact`。启动时在输入框左侧播放一次约 5 秒的“打盹 → 察觉动静 → 睁眼 → 问好”睡醒过程，随后进入实际状态。角色始终属于输入区，不做从启动页滚动飞到输入框的跨区域动画。重新加载扩展时直接恢复当前会话状态。
 
@@ -32,11 +30,9 @@
 
 ## 安装与启动
 
-完整验证环境是 Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7；两个版本的完整测试均已通过，界面中文与 Pi 文档提示精简对两者同样启用。上游另有 NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1 的历史实机记录，覆盖显示、动画、渲染切换和日常交互；本轮全动态构建没有据此自动取得该平台验收。请先安装并配置好 Pi。
+完整自动化验证环境覆盖 Windows、Pi 1.2.0 / 1.3.0、Windows PowerShell 5.1 / PowerShell 7，包含原生中文界面与文档提示精简。未知 Pi 版本继续安全回退。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用；它不替代 Windows 安装脚本检查。请先安装并配置好 Pi。
 
-从[全动态正式版 v2.5.0](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.0)下载平台包。Pi 下载带 `-pi-core.tgz` 的包，DSH 下载不带该后缀的完整 `.tgz`；每个宿主只安装一版。原资源旧版见 [legacy v2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)。GitHub 的 **Source code** 需先运行 `npm run build:animated`，再安装生成的平台包。
-
-Pi 使用 `pi-furry-partner-full-animation-2.5.0-pi-core.tgz`。解压后进入内层 **`package` 目录**，关闭 Pi，在含 `install.ps1` 的该目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.4.1) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -66,30 +62,31 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -AgentDir 
 
 ### 高清显示与终端要求
 
-高清头像支持 **Kitty Graphics Protocol 和 Sixel**，需要对应终端支持；普通字符块模式仍可使用插件和动画。Windows 推荐 **Windows Terminal 1.22 或更新版本**，可在“设置 → 关于”查看版本，通过 Microsoft Store 更新。[微软的 1.22 发布说明](https://devblogs.microsoft.com/commandline/windows-terminal-preview-1-22-release/)介绍了内置 Sixel 支持；通常不需要另开终端设置。PowerShell 5.1 / 7 是 shell，单独升级 PowerShell 不会让旧终端支持 Sixel。
+高清头像可使用 **Kitty Graphics Protocol** 或 **Sixel**；普通字符块模式仍可使用插件和动画。`renderer: "auto"` 优先使用 Pi 检测到的 Kitty 图片能力，在 `WT_SESSION` 且未经过 tmux 的 Windows Terminal 中使用 Sixel，其余环境回退字符块。Windows 推荐 **Windows Terminal 1.22 或更新版本**；PowerShell 是 shell，单独升级 PowerShell 不会让旧终端支持图片协议。
 
-1. 安装插件并启动 Pi。默认 `renderer: "auto"` 优先使用 Pi 检测到的 Kitty 图片能力；否则在 `WT_SESSION` 存在且没有 `TMUX` 时选择 Sixel，再回退字符块。Sixel 这一步是环境识别，不检查终端版本。升级保留已有渲染偏好。
-2. 在 Pi 输入 `/mascot`，查看当前渲染结果是否为 `kitty` 或 `sixel`。输入 `/mascot demo` 可观察实际显示，`/mascot demo off` 退出演示。
-3. 若曾选过字符块，可输入 `/mascot render auto` 恢复默认。已确认支持相应协议的终端可输入 `/mascot render kitty` 或 `/mascot render sixel`；该命令只选择插件的图片输出，不能替终端增加协议支持。
-4. 若头像不显示、乱码或错位，先更新终端，并在不经过 tmux、SSH 或嵌入式终端的本地 Windows Terminal 中重试；可输入 `/mascot render blocks` 恢复字符块显示，再排查当前终端与转发链路。
+已在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）实机确认 Kitty PNG 的角色显示与实时动画正常。该结果不代表 tmux、SSH、嵌入式终端或所有字体、DPI、窗口尺寸组合均已验证。
 
-插件自己编码 Kitty PNG 和 Sixel，无需额外安装 libsixel、chafa 或 ffmpeg。安装器不会修改 Windows Terminal 配置、安装或升级终端，也不会设置永久环境变量；无需运行所谓“高清开启脚本”。其他操作系统与终端的实际效果仍以实机验证为准。
+1. 在支持的本地终端启动 Pi；输入 `/mascot` 查看实际选中的 `kitty`、`sixel` 或 `blocks`，再用 `/mascot demo` 检查动画，`/mascot demo off` 退出演示。
+2. 使用 `/mascot render auto` 恢复自动选择；可用 `/mascot render kitty` 或 `/mascot render sixel` 强制图片后端。明确选择 `kitty` 但 Pi 未检测到该协议时会安全回退到字符块；命令不能为终端增加协议支持。
+3. 若头像不显示、乱码或错位，先在不经过 tmux、SSH 或嵌入式终端的本地会话重试；可用 `/mascot render blocks` 获得可用回退，再排查终端与转发链路。
+
+Kitty 使用 Pi 的原生图片编码与生命周期；插件自行编码 Sixel，无需额外安装 libsixel、chafa 或 ffmpeg。Windows 安装器不会修改 Windows Terminal 配置、安装或升级终端，也不会设置永久环境变量；无需运行所谓“高清开启脚本”。
 
 ### 从旧名称迁移
 
 已有 `pi-wink-companion` 脚本安装时，直接运行新版 `install.ps1`。脚本会保存旧扩展、旧主题和安装记录，迁移到 `extensions/pi-furry-partner/` 与 `themes/pi-furry-night.json`，归档旧扩展目录，避免两份同时自动加载。2.x 的 `config.json` 仅精准迁移旧风格 ID，其余字节保留，原有界面模式和首次安装前的恢复基线也继续沿用。迁移后完整退出并重启 Pi；不要同时手动复制旧目录回来。
 
-### DSH 桌面安装
+### Pi 原生包管理器
 
-DSH 使用完整包，例如：
+也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0.tgz"
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.4.1
 ```
 
-在 DSH 提供的终端中运行，使用其他 profile 时替换 `desktop`。官方命令会安装并注册包声明的 bundle；更新后重启 DSH 加载新代码。DSH 不使用 Pi 的 `install.ps1`。详见[官方 CLI 说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md)。
+该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。
 
-源码先构建对应平台包。已有 Pi 脚本安装继续使用脚本更新，避免与此前的包管理器来源重复加载。已安装 preview.6 的用户需运行 2.5.0 包内的安装脚本并重启 Pi；发行版本变更不会自动替换本机副本。
+每次选择一个安装来源。已有脚本安装的用户优先继续脚本路线；改用包管理器前先卸载旧脚本安装，避免双份扩展。原生包管理器安装的包也应通过 Pi 的包管理流程移除，不使用本项目的脚本卸载。
 
 ## 中英文切换
 
@@ -124,11 +121,11 @@ dsh plugin --profile desktop add "./pi-furry-partner-full-animation-2.5.0.tgz"
 
 呜咪说话使用 `w`、`—`、`o`、`O` 四种嘴型：闭嘴是小 w，小开口为平口，中开口为小 o，大开口为大 O，开口自然放大，适度点出单颗小虎牙。张嘴时不强留 w 型上沿。仅实际文本输出时持续说话；思考、工具调用、输出结束或暂时没有新文本时恢复闭嘴，不把“正在思考”伪装成持续说话。
 
-多数姿态切换带约 200ms 的短过渡，持续的轻呼吸、微晃与偶发耳抖让角色更有生气，并配合眨眼与微动。思考和工作时的眨眼保留原爪姿势。修改文件和执行任务时使用连续打字动作，阅读内容时则举着放大镜平顺地左右查看。
+多数姿态切换带约 200ms 的短过渡，持续的轻呼吸、微晃与偶发耳抖让角色更有生气，并配合眨眼与微动。思考和工作时的眨眼保留原爪姿势。修改文件时使用连续打字动作，运行命令时则举着放大镜平顺地左右查看输出。
 
-放大镜动画使用 MiniMax-H3 从已确认的角色原画生成连续动作，再离线去除背景、抽取完整画帧。头部和握爪跟着镜片左右查看，镜片经过眼睛时能看到眼瞳放大，斗篷随身体轻摆并保留清楚的外轮廓。运行时只按顺序播放，不对镜框局部拉伸，也不在相邻扫描帧之间叠化。当前主线仅提供插画动画。历史六帧素材包按自己的序列播放，历史两帧素材包保留静态与眨眼回退；这些历史兼容记录不表示主线提供像素风。
+放大镜动画使用 MiniMax-H3 从已确认的角色原画生成连续动作，再离线去除背景、抽取完整画帧。头部和握爪跟着镜片左右查看，镜片经过眼睛时能看到眼瞳放大，斗篷随身体轻摆并保留清楚的外轮廓。运行时只按顺序播放，不对镜框局部拉伸，也不在相邻扫描帧之间叠化。插画版与像素版使用相同节奏。旧六帧素材包仍按自己的序列播放，旧两帧素材包保留静态与眨眼回退。
 
-正式放大镜循环包含 64 张视频动作帧和 1 张仅修改眼区的闭眼帧，按 66 个播放步骤组成 6.58 秒的一圈。开头的 420ms 观察停顿拆成睁眼 200ms、闭眼 80ms、睁眼 140ms；其他动作帧至少停留 80ms。背景在离线阶段由绿色信号生成独立灰度遮罩，反相作为 Alpha，再恢复前景颜色。640px 母版和视频保留柔和的透明边缘；240px 终端插画版的外沿按配套黑色背景近似抗锯齿。制作流程见[贡献指南](../CONTRIBUTING.md#角色视频与透明边缘)。
+正式放大镜循环包含 64 张视频动作帧和 1 张仅修改眼区的闭眼帧，按 66 个播放步骤组成 6.58 秒的一圈。开头的 420ms 观察停顿拆成睁眼 200ms、闭眼 80ms、睁眼 140ms；其他动作帧至少停留 80ms。背景在离线阶段由绿色信号生成独立灰度遮罩，反相作为 Alpha，再恢复前景颜色。640px 母版和视频保留柔和的透明边缘；240px 终端版的外沿按配套黑色背景近似抗锯齿，80px 像素版保留硬像素轮廓。制作流程见[贡献指南](../CONTRIBUTING.md#角色视频与透明边缘)。
 
 收到修改或运行工具事件时，进入对应姿态并至少保持约 1.2 秒，包含约 200ms 的入场过渡，完整姿态可看见约 1 秒。回到思考时另有约 240ms 缓冲，避免短工具调用导致头像来回闪；即使工具在两次绘制之间快速完成，也会保留这次工作反应。这些措施只作用于角色，真实状态和顶边文案会立即更新。实际运行与预览共用 `lib/motion.mjs` 的动画逻辑；关闭表情时停止循环微动，静态姿态继续更新，主动戳戳仍有短暂反应。
 
@@ -224,7 +221,9 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 | `/mascot layout editor` | 使用固定在输入框左侧的角色布局 |
 | `/mascot layout header` | 恢复 1.x 的启动标题头像布局 |
 | `/mascot style umi` | 输入框布局使用完整设定的呜咪多姿态 |
-| `/mascot style illustration` | 标题布局使用插画头像；输入框布局中作为 `umi` 的兼容输入 |
+| `/mascot style umi-pixel` | 输入框布局使用保留角色版造型、加强细线保留的 80 × 80 像素版本 |
+| `/mascot style pixel` | 当前布局使用原始像素头像，保留作对照 |
+| `/mascot style illustration` | 当前布局使用早期精致插画头像，保留作对照 |
 | `/mascot pause` | 关闭循环表情微动，静态状态继续更新 |
 | `/mascot play` | 开启角色并恢复循环表情微动 |
 | `/mascot off` | 关闭角色，恢复 Pi 默认标题、输入框和底部信息 |
@@ -235,7 +234,6 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 | `/mascot size normal` | 正常尺寸 |
 | `/mascot size large` | 大尺寸；仍受窗口空间限制 |
 | `/mascot render auto` | 自动选择渲染方式 |
-| `/mascot render kitty` | 使用支持 Kitty Graphics Protocol 的终端图片渲染 |
 | `/mascot render sixel` | 使用支持 Sixel 的终端图片渲染 |
 | `/mascot render blocks` | 使用真彩色半块字符渲染 |
 | `/mascot info compact` | 输入框布局使用紧凑 footer |
@@ -257,7 +255,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 | `/mascot wink` | 兼容命令：输入框模式预览睡醒，标题模式切换 wink 帧 |
 | `/theme` | 打开 Pi 的主题选择器 |
 
-`layout` 只支持 `editor` 和 `header`，两种布局分别保存风格。输入框布局使用 `umi` 插画，标题布局使用 `illustration` 插画。`umi-pixel`、`pixel` 等旧输入或保存配置会迁移为插画，不提供另一个可选像素版本；需要原始像素风请使用 Legacy 独立发布线。
+`layout` 只支持 `editor` 和 `header`。输入框布局的风格支持 `umi`、`umi-pixel`、`pixel`、`illustration`；标题布局只支持 `pixel` 和 `illustration`，两种布局分别保存风格。`umi-pixel` 保留角色版的五官、服装和各个动作，以 80 × 80 共享色板显示；对嘴线等细笔画做局部采样保护，轻微整理线条颜色，避免细线在缩小后消失。`pixel` 和 `illustration` 继续保留旧造型，便于比较。
 
 例如，切回旧版的插画启动标题：
 
@@ -293,7 +291,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 这是部分界面覆盖。模型与 provider 名称、主题名、会话名、用户输入、路径、URL、认证码、正文和工具输出保留原文；动态认证说明、服务商错误、会话状态错误及未识别的第三方界面也不翻译。会话与对话树的列表正文保持原样，扩展弹窗的动态标题和选项保留原文，只处理已知的固定提示。`regular`、`fullscreen`、布尔值及思考等级等内部保存值不变。兼容层不改 Pi 安装文件；其他版本（包括未来补丁版本）或未匹配的文字会保留原文。`/mascot locale on` 或 `off` 在下一次绘制或打开原生菜单时生效，不需要重新发送当前请求。
 
-文档提示精简按 Pi **1.2.0 / 1.3.0** 的原生默认结构核对（两版默认提示词、规则与文档章节一致），只替换精确识别的文档提示 `docs` 章节；文档与示例路径、完整阅读和交叉引用要求保留。身份前言、工具清单和规则保持原生，后续扩展新增的工具、片段与指南仍可动态参与构建。自定义 `SYSTEM.md`、显式强制系统提示词、自定义文档章节、项目 `AGENTS.md`、技能及其它动态上下文保持原样。遇到未知版本或结构时跳过，不进行整段猜译，也不强制返回整串系统提示词。表达更短不保证不同模型中的 token 数按固定比例减少。
+文档提示精简当前按 Pi **1.2.0 / 1.3.0** 的原生默认结构核对，只替换精确识别的文档提示 `docs` 章节；文档与示例路径、完整阅读和交叉引用要求保留。身份前言、工具清单和规则保持原生，后续扩展新增的工具、片段与指南仍可动态参与构建。自定义 `SYSTEM.md`、显式强制系统提示词、自定义文档章节、项目 `AGENTS.md`、技能及其它动态上下文保持原样。遇到未知版本或结构时跳过，不进行整段猜译，也不强制返回整串系统提示词。表达更短不保证不同模型中的 token 数按固定比例减少。
 
 `/mascot prompt on` 或 `off` 从 Pi 交互终端的下一轮请求生效，不重写历史。精简内容由 `lib/native-prompt.mjs` 按已确认的文档章节结构生成，关闭后撤掉该章节替换，与角色口吻分开控制。仓库保留的 `prompts/pi-system-zh.md`、`prompts/pi-system-en.md` 及完整提示词格式化纯函数用于离线开发，不会在运行时整段覆盖 Pi 的系统提示词。界面中文和文档提示精简均不额外请求翻译模型；卸载扩展后，后续启动使用 Pi 原生界面与提示词行为。
 
@@ -306,16 +304,16 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 可以编辑已安装的模板文件：
 
 ```text
-~/.pi/agent/extensions/pi-furry-partner/prompts/umi-persona.md
+~/.pi/agent/extensions/pi-furry-partner/prompts/wumi-persona.md
 ```
 
-项目根目录中的 `prompts/umi-persona.md` 是中文模板源码；英文模式使用 `prompts/umi-persona.en.md`。二者共用 `persona` 开关，按当前 `language` 选用。保存后在下一轮使用；需要刷新扩展时执行 `/reload`。重装前的模板修改随整个旧插件目录保存到安装备份；重装会部署发行包中的模板，可从备份取回自定义版本。
+项目根目录中的 `prompts/wumi-persona.md` 是中文模板源码；英文模式使用 `prompts/umi-persona.en.md`。二者共用 `persona` 开关，按当前 `language` 选用。保存后在下一轮使用；需要刷新扩展时执行 `/reload`。重装前的模板修改随整个旧插件目录保存到安装备份；重装会部署发行包中的模板，可从备份取回自定义版本。
 
 ## 渲染与配置
 
-`auto` 优先使用 Pi 检测到的 Kitty 图片能力，其次在 Windows Terminal 环境中选择 Sixel，再回退半块字符。Kitty PNG 与 Sixel 都使用本地透明帧，半块字符不要求图片协议。终端不能显示所选协议时，可执行 `/mascot render blocks`。GIF/APNG 是可复用的导出文件，Pi 运行时不直接播放 GIF。
+`auto` 在 Pi 检测到 Kitty Graphics Protocol 时选择 Kitty PNG，在 Windows Terminal 环境中选择 Sixel，其他环境使用半块字符。Kitty 与 Sixel 可以呈现更细腻的透明插画；半块字符不要求终端图片协议。三种方式都使用本地帧数据，角色外部显示终端自己的背景。Kitty 后端将每个终端行编码为独立透明 PNG，使输入框旁的图片继续参与 Pi 的逐行布局与差分重绘。若图片协议不可用，可执行 `/mascot render blocks`。GIF/APNG 是可复用的导出文件，Pi 运行时不直接播放 GIF。
 
-需要在启动前覆盖渲染方式时，可设置 `PI_FURRY_RENDER=auto`、`kitty`、`sixel` 或 `blocks`。旧的 `PI_WINK_RENDER` 作为兼容别名继续支持；新变量优先。通常使用 `/mascot render <方式>` 即可，不要求修改所有 PowerShell 的启动配置。
+需要在启动前覆盖渲染方式时，可设置 `PI_FURRY_RENDER=auto`、`kitty`、`sixel` 或 `blocks`。显式 `kitty` 在 Pi 未检测到该协议时安全回退到半块字符。旧的 `PI_WINK_RENDER` 作为兼容别名继续支持；新变量优先。通常使用 `/mascot render <方式>` 即可，不要求修改 shell 启动配置。
 
 已安装目录中的 `config.json` 保存设置。可以使用命令修改，或退出 Pi 后编辑文件并重新启动。2.3 默认字段如下：
 
@@ -326,7 +324,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
   "animation": true,
   "renderer": "auto",
   "style": "umi",
-  "headerStyle": "illustration",
+  "headerStyle": "pixel",
   "layout": "editor",
   "dockSize": "auto",
   "info": "compact",
@@ -340,7 +338,7 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 }
 ```
 
-从 1.x 升级时，无 `layout` 字段的旧配置会迁移为 `editor` / `umi` / “呜咪” / `compact`，语气 `persona` 保持默认关闭；旧 `style` 迁移为插画值 `illustration` 后保存到 `headerStyle`，`animation`、`renderer`、`size`、`enabled`、自定义字段等原设置保留。已有 `layout` 字段的 2.x 配置仅将旧版风格值精准迁移为规范 ID，其余文件内容保留；重新安装不会重置用户的 `persona` 或其他选择；2.x 配置缺少 `persona` 时按关闭处理。缺少 `chineseUI` 或 `compactPrompt` 时，运行时分别按 `true` 处理，加载配置不会为了补字段而改写原文件；后续用命令保存设置时会一并写入这些字段。它们属于扩展的 `config.json`，不增加安装脚本管理的 Pi UI 字段。损坏的 JSON 会使迁移在替换旧扩展前停止。
+从 1.x 升级时，无 `layout` 字段的旧配置会迁移为 `editor` / `umi` / “呜咪” / `compact`，语气 `persona` 保持默认关闭；旧 `style` 保存为 `headerStyle`，`animation`、`renderer`、`size`、`enabled`、自定义字段等原设置保留。已有 `layout` 字段的 2.x 配置仅将旧 `wumi` / `wumi-pixel` 风格值精准迁移为 `umi` / `umi-pixel`，其余文件内容保留；重新安装不会重置用户的 `persona` 或其他选择；2.x 配置缺少 `persona` 时按关闭处理。缺少 `chineseUI` 或 `compactPrompt` 时，运行时分别按 `true` 处理，加载配置不会为了补字段而改写原文件；后续用命令保存设置时会一并写入这些字段。它们属于扩展的 `config.json`，不增加安装脚本管理的 Pi UI 字段。损坏的 JSON 会使迁移在替换旧扩展前停止。
 
 语言字段缺失时按 `auto` 解析，不会仅为补充默认值而改写已有配置。使用 `/mascot language` 保存偏好后，后续启动会沿用该选择；`auto` 会重新检测系统语言，显式的 `en` 或 `zh-CN` 不随系统变化。
 
@@ -368,7 +366,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 ### 头像没有显示，或者图片变成乱码
 
-先执行 `/mascot render blocks` 切换到半块字符渲染，再检查终端是否支持 Sixel。`auto` 在 Windows Terminal 环境优先使用 Sixel，这不保证每个终端版本都已启用图片协议。不要把图片数据复制到命令行执行。
+先执行 `/mascot render blocks` 切换到半块字符渲染，再检查终端是否支持 Pi 检测到的 Kitty Graphics Protocol 或 Sixel。`auto` 在 Kitty 环境优先使用 Kitty PNG，在 Windows Terminal 环境优先使用 Sixel；这不保证每个终端版本都已启用图片协议。不要把图片数据复制到命令行执行。
 
 ### 下面的操作不能点
 
@@ -396,13 +394,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 ## 素材与验证范围
 
-历史原始像素素材由本地代码去背景和生成动作，现仅由 Legacy 线路保留。精致插画以及呜咪姿态原稿使用内置图片生成工具，参考用户提供的原图与完整设定；后续裁剪、鼻尖对齐、透明度处理、嘴型、眨眼和帧数据生成均由交付代码完成。搜索姿态的尾巴毛色从尖端到根部固定为“深灰 → 浅灰 → 白色”，阴影不作为额外毛色分段。原始用户图片保持原样。角色渲染、动作演示、只读信息面板和本地素材脚本不调用模型 API，也不需要额外 API Key；Pi 的正常对话及原生会话摘要仍沿用它已有的模型配置。
+原始像素素材由本地代码去背景和生成动作。精致插画以及呜咪姿态原稿使用内置图片生成工具，参考用户提供的原图与完整设定；后续裁剪、鼻尖对齐、透明度处理、嘴型、眨眼和帧数据生成均由交付代码完成。`umi-pixel` 从角色姿态派生 80 × 80 像素版本，参考最初像素原图的清楚线条，对嘴部等细笔画做局部保线与轻微色彩整理，保持角色原有比例和形状。搜索姿态的尾巴毛色从尖端到根部固定为“深灰 → 浅灰 → 白色”，阴影不作为额外毛色分段。原始用户图片保持原样。角色渲染、动作演示、只读信息面板和本地素材脚本不调用模型 API，也不需要额外 API Key；Pi 的正常对话及原生会话摘要仍沿用它已有的模型配置。
 
 主要素材位于 `assets/poses/`、`assets/reactions/` 和 `assets/illustration/`；可复现脚本在 `scripts/`。`assets/poses/metadata.json` 记录六姿态的对齐变换及眼、嘴、爪坐标。
 
 快捷入口的模型、思考、会话分组参考了 [tomsej/pi-ext 的 Leader Key README](https://github.com/tomsej/pi-ext#readme)，状态信息与工具详情的按需查看思路参考了 [narumiruna/pi-extensions README](https://github.com/narumiruna/pi-extensions#readme)。这里只参考交互设计，没有复制这两个项目的扩展源码；实际操作由本插件对接 Pi 原生能力。
 
-`editor-preview.gif` 和 `editor-preview.png` 是明确标注的离线效果预览，角色像素由生产环境同款 `activity`、输入区姿态选择和 `motion` 代码导出，再与示例输入区组合；它们不是实际终端截图，图片中的按钮仅展示外观。主 GIF 包含睡醒、思考与工作等状态；`waiting-preview.gif` 单独展示歪头等待、十秒后打盹和再次惊醒，压缩的空等时间会在图中注明。`tail-wave-preview.gif` 是历史插画与像素搜索动作对比，`tail-wave-contact.png` 提供对应的历史相位对照。`style-comparison.png` 保留历史插画与像素风对比；这些展示不代表当前主线提供像素配置。`preview.html` 提供不发送模型请求的本地交互预览。
+`editor-preview.gif` 和 `editor-preview.png` 是明确标注的离线效果预览，角色像素由生产环境同款 `activity`、输入区姿态选择和 `motion` 代码导出，再与示例输入区组合；它们不是实际终端截图，图片中的按钮仅展示外观。主 GIF 包含睡醒、思考与工作等状态；`waiting-preview.gif` 单独展示歪头等待、十秒后打盹和再次惊醒，压缩的空等时间会在图中注明。`tail-wave-preview.gif` 并排展示插画版与像素版的完整搜索动作，`tail-wave-contact.png` 提供相位对照。`style-comparison.png` 对比同一呜咪的插画与像素风。`preview.html` 提供不发送模型请求的本地交互预览。
 
 以下开发命令都在项目根目录执行。重建正式展示图需要 Node.js，以及带 Pillow、numpy 的 Python：
 
@@ -419,15 +417,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 
 `npm test` 的单元与素材测试覆盖活动状态、说话节奏、短句轮换、输入区几何、footer 数据来源与宽度、渲染传输、鼠标控件和透明帧，也验证原生组件中文的显示与原始数据还原、中文开关、24 个内置命令补全说明及文件和第三方补全不变，以及精简提示词对原生默认段落的识别、自定义和动态内容保留、关闭与不兼容结构回退。补全测试使用真实 `CombinedAutocompleteProvider` 检查补全应用结果保持一致。
 
-Pi 1.2.0 与 1.3.0 的完整测试均已通过，覆盖活动、倾听、响应等待、真实扩展集成、Kitty、Sixel 和鼠标等交互检查，包括跨行 SGR 拖选、释放后继续打字、按钮、Esc 与 Enter；中文界面与提示词兼容层对这两个版本启用。CI 分别安装两个版本运行完整测试。
+Pi 1.2.0 / 1.3.0 均运行完整测试，覆盖真实扩展集成、中文界面、提示词边界、Sixel、Kitty、鼠标、输入、布局及命令补全。CI 使用两版运行时矩阵。`node tests/legacy-resources.mjs` 按 v2.4.0 Git 对象生成的 SHA-256 清单核对所有原始素材与提示词，也可用于解压后的发行包。此前 NixOS / Kitty 实机检查是补充验证，不能覆盖所有终端、字体、窗口尺寸或扩展组合。
 
 隔离安装测试使用临时 `AgentDir`，覆盖首次安装、1.x 配置迁移、2.x 配置除旧风格 ID 外逐字节保留、角色模板部署与 `persona` 偏好保留、中文 UTF-8、四个 UI 字段备份与恢复，以及 `tuiMode` 缺失、原先为 `regular`、旧 manifest 升级和用户后续改值的情况。运行后由测试脚本生成本地验证报告，不会更改真实 `~/.pi`。这些检查不等同于对所有终端、字体、窗口大小和其他扩展组合的实机验证；实际图像显示效果也取决于终端支持。
 
 本地验证还通过 Pi 的真实 `ProcessTerminal` / Windows ConPTY 启动路径，检查了启动、退出、同步输出与 Sixel 数据流。该验证检查实际终端进程和传输，不等同于 Windows Terminal 原生窗口中的逐像素截图验收。个人进程日志与历史环境报告不随公开源码提交。
 
 完整开发环境准备见 [CONTRIBUTING.md](../CONTRIBUTING.md)。发布仓库不包含个人会话、凭据、实时用户配置或本地进程日志。
-
-Kitty 支持与 Pi 1.3 / NixOS 历史验证由 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献。
 
 ## 许可
 

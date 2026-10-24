@@ -7,7 +7,6 @@ import { createVTTerminal } from "./vt-terminal.mjs";
 import { dockGeometry, renderDock, joinEditor, activityBorder } from "../lib/editor-layout.mjs";
 import { renderPixels, samplePixels } from "../lib/renderer.mjs";
 import { createMotionPlayer } from "../lib/motion.mjs";
-import { styleAssetDirectory } from "../lib/styles.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { agentDir, version, modules } from "./pi-runtime.mjs";
@@ -21,7 +20,7 @@ const { TuiMainScreen, TuiAltScreen, visibleWidth, truncateToWidth, setKeybindin
 const { createChatViewport } = await load(join(modules, "@earendil-works/pi-coding-agent/dist/modes/interactive/chat-viewport.js"));
 const baseline = process.argv.includes("--baseline");
 const keys = new KeybindingsManager(); setKeybindings(keys);
-const source = JSON.parse(await readFile(join(root, "assets/reactions", styleAssetDirectory("umi-pixel"), "reaction-sheet.json"), "utf8"));
+const source = JSON.parse(await readFile(join(root, "assets/reactions/wumi-pixel/reaction-sheet.json"), "utf8"));
 const theme = { fg: (_, text) => text };
 const editorTheme = { borderColor: (s) => s, selectList: { selectedPrefix: (s) => s, selectedText: (s) => s, description: (s) => s, scrollInfo: (s) => s, noMatch: (s) => s } };
 const checks = [];

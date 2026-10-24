@@ -24,6 +24,78 @@ const bridge = createDshBridge({ activity, responseLatency });
 activity.start({ wake: false });
 assert.equal(activity.snapshot().phase, "idle");
 
+// Discarded streamed calls must leave no activity entry, completion gap, or error.
+function lifecycleHarness() {
+  const activity = createActivity({ now: () => nowMs });
+  const events = [];
+  const bridge = createDshBridge({ activity: {
+    start: (...args) => activity.start(...args),
+    clearTyping: () => activity.clearTyping(),
+    handle(type, event) { events.push({ type, event }); activity.handle(type, event); },
+  } });
+  const partial = { blocks: [{ type: "tool_use", id: "partial-read", name: "read_file", status: "running" }] };
+  const sync = (extra = {}) => bridge.syncConversationState({ sessionId: "lifecycle", busy: true, status: "tool_calling", partial, ...extra });
+  return { activity, bridge, events, partial, sync };
+}
+
+{
+  const { activity, bridge, sync } = lifecycleHarness();
+  sync({ runningCalls: {} });
+  assert.equal(activity.snapshot().toolCount, 1);
+  sync({ partial: null, runningCalls: {} });
+  assert.equal(activity.snapshot().toolCount, 0, "Discarding a partial cancels the pending activity entry");
+  assert.equal(activity.snapshot().pendingNextState, null);
+  assert.equal(activity.snapshot().reaction, undefined);
+  bridge.handleSessionEvent({ type: "assistant/live-chunk", data: { chunk: { type: "text-delta", text: "Answer" } } });
+  assert.equal(activity.snapshot().phase, "speaking");
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  sync();
+  assert.equal(activity.snapshot().phase, "editing");
+  for (let i = 0; i < 5; i++) {
+    sync();
+    assert.equal(activity.snapshot().phase, "reading", "Legacy calls remain active across repeated snapshots");
+    assert.equal(activity.snapshot().toolCount, 1);
+  }
+  assert.equal(events.filter(({ type }) => type === "tool_execution_start").length, 1);
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 0);
+  sync({ partial: { blocks: [{ type: "tool_use", id: "partial-read", name: "read_file", status: "completed" }] } });
+  assert.equal(activity.snapshot().toolCount, 0, "A completed legacy partial ends the tool");
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 1);
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  for (let i = 0; i < 4; i++) sync({ runningCalls: {} });
+  assert.equal(activity.snapshot().phase, "editing", "An explicit empty runningCalls is authoritative");
+  assert.equal(events.filter(({ type }) => type === "tool_execution_start").length, 0);
+}
+
+{
+  const { activity, sync } = lifecycleHarness();
+  const runningCalls = { real: { id: "real", name: "read_file", status: "running" } };
+  sync({ runningCalls });
+  assert.equal(activity.snapshot().toolCount, 2);
+  sync({ partial: null, runningCalls });
+  assert.equal(activity.snapshot().toolCount, 1, "Cancelling a partial preserves parallel executing calls");
+  assert.equal(activity.snapshot().phase, "reading");
+  activity.handle("tool_call_cancelled", { toolCallId: "real" });
+  assert.equal(activity.snapshot().toolCount, 1, "Cancellation cannot end a real executing tool");
+  activity.handle("tool_call_cancelled", { toolCallId: "unknown" });
+  assert.equal(activity.snapshot().toolCount, 1);
+}
+
+{
+  const { activity, events, sync } = lifecycleHarness();
+  sync(); sync(); sync();
+  sync({ partial: null });
+  assert.equal(activity.snapshot().toolCount, 0, "A disappearing legacy partial ends the tool once");
+  sync({ partial: null });
+  assert.equal(events.filter(({ type }) => type === "tool_execution_end").length, 1);
+}
+
 // 1. Typing in DSH composer triggers listening reaction; clearing stops it
 bridge.syncInputDraft("帮我看看这段代码");
 assert.equal(activity.snapshot().reaction, "listening");

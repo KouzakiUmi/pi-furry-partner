@@ -1,0 +1,44 @@
+{
+  "status": "AWAITING_USER_NATIVE_ACTING_COLOR_LOOP_EDGE_REVIEW",
+  "readyForUserReview": true,
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "nativeFrames": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "fullNativeForwardTime": true,
+  "paintRect": {
+    "height": 896,
+    "width": 896,
+    "x": -128,
+    "y": 0
+  },
+  "worldAnchor": [
+    320,
+    608
+  ],
+  "evidence": {
+    "Umi-think-H3-source.mp4": "0117a12c17d91be7332d63efcac4824c4099310778aa74be4da071c8266b9434",
+    "registered-reference.png": "e9a26ad4804f64610a2f99939059bb859a9be812ede8afdef266f7abb51460a5",
+    "reference.png": "49376d06086a99b1911835a650729498b4e045883af1e06fa38bb5fb1a92cf85",
+    "prompt.txt": "3f1fc4a238eeb051a70a8bd5ca779f38cc6ab444abd3492728ca99a329ba0d32",
+    "spec.json": "b4859a2d191aedd2b333b43dbe72401712dab9ef641a4a0dc1698265598b06f2",
+    "motion-contract.json": "ef5977f484517355c8e7c99c199c477d7a570cf77caa0231b1017fe71dd390b4",
+    "source-review-A.json": "5a541c3361d45a9760aec56d87915c977dc9b8891a025777dd60591e79733bb4",
+    "reviewer-A.json": "1938fad5192e1af2613b4bf7d7d60b680fdcfcfccb2d012dc418111522bebd13",
+    "reviewer-B.json": "e89f9027ab7ff803fa490d95028917eda4688d91c7432bbad114dc5489c4a74a",
+    "processed-edge-v2/manifest.json": "6e84587bbb81ab5a4e52ffde77e14b8427f18f084ee76e16268eac194a2e4e50",
+    "processed-edge-v2/report.json": "11f1bfd7df1862b0136977594d3d090f3e19cf80aa774231c6862a5e276b1edc",
+    "processed-edge-v2/world-black.mp4": "a01a6c750fb57946b81b98a22b0e6dcbc554ed898cde11c28e76882850230f0a",
+    "processed-edge-v2/world-gray.mp4": "2242f8482c271d64b9a63584074c1fad0729b35464bc8a8ce619097d3b2f127a",
+    "processed-edge-v2/world-white.mp4": "7355ac17fdccdfbbf09f7afac60f2fc064bf0ffb5aecb92c01376ab7d2401324"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b"
+  },
+  "priorGrayApproval": "Prior acting direction only; fresh source approval not inherited.",
+  "knownEdgeLimit": "Local edge RGB estimate, not lossless separation; fine dark/purple rim and sparse contour grains may remain.",
+  "technicalChecksDoNotApproveArt": true,
+  "nativeActingDifferences": "More noticeable three-quarter clue-seeking turn and a small smile during return, compared with initial pondering mouth. Hold duration and return rhythm require native review."
+}

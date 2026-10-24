@@ -1,0 +1,12 @@
+{
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "reviewer": "root",
+  "actualViewed": [
+    "early-check/00031.png",
+    "early-check/00073.png",
+    "early-check/overview.jpg"
+  ],
+  "sourceSha256": "e4eb5e2272ab793d420438c9849a7668702b74fb9a10e3e274c37259a7b207c4",
+  "findings": "v2 visibly reduces v1 wind-like cape/scarf spread in sampled overview; small late cloth release remains. Two closed eyelid curves and separate brows, gray paws/white arms and supported sleep identity retained. A source materials/B structure checks no blocking finding; native speed/natural breathing/loop remain user gate.",
+  "humanAccepted": false
+}

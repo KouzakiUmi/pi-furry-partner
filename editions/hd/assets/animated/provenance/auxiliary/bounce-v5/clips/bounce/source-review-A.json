@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "action": "bounce",
+  "version": 5,
+  "reviewedAt": "2026-10-24T00:29:47.9272344+08:00",
+  "status": "SOURCE_MATERIAL_REVIEW_COMPLETE_WITH_CLOTH_LIMITATION",
+  "materialGate": "NO_NEW_BROAD_MATERIAL_REDESIGN_OBSERVED_IN_VIEWED_SAMPLES",
+  "overallSourceArtApproved": false,
+  "readyForUserSourceReview": "Requires independent B structural gate and root decision",
+  "allowAlphaProcessing": false,
+  "allowEdgeProcessing": false,
+  "sourceUserApproved": false,
+  "humanAcceptedSource": false,
+  "humanAcceptedOutput": false,
+  "sourceVideoSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "sourceEvidenceSha256": "4809d3dc1b80ad85ecbf857d5a065e680b1877b297b2504c03e877bed9a3413c",
+  "referenceSha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf",
+  "registeredReferenceSha256": "992b1cb7208077a7c9a91495b47111c3a20d72957a03fe8408c42d84b808d0f4",
+  "promptSha256": "d1e91b867e93c001c04ff2a172855873fc5ce2723d161ee61afda07354669212",
+  "contractSha256": "70214dd3c904fad4ff30d2794fe9c1f0a6e9d946d0dfd121bc866edd3c47872c",
+  "actualViewedFiles": [
+    {
+      "file": "reference.png",
+      "sha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf"
+    },
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "3809accc81ee3fa1e9c63b07ba803d6e016fe74a2999507165ef7a8fb867b41a"
+    },
+    {
+      "file": "early-check/00043.png",
+      "sha256": "2b57c3fc4b14a5f84eb2c6ef6ae8233c61ee8ad40911d15299d3c369a3b401a7"
+    },
+    {
+      "file": "early-check/00049.png",
+      "sha256": "8c33a1796b93cb987424c17c7247b386f6ab97c8af29e3cebfbb026ce2211baf"
+    },
+    {
+      "file": "early-check/00067.png",
+      "sha256": "b66ce7924d7db9ccb0d0a8669b844bd7580f47c1b2e3d71959904ce6216830a6"
+    },
+    {
+      "file": "early-check/00107.png",
+      "sha256": "fadb61d7ad54da248f4b57bb8737aac9b40ec7552446feda7aabff9246732331"
+    }
+  ],
+  "sourceFramesViewedNative": [
+    42,
+    48,
+    66,
+    106
+  ],
+  "nativeFrameCount": 107,
+  "nativeFps": 24,
+  "nativeDimensions": [
+    768,
+    768
+  ],
+  "authority": "Original design/palette previously actually viewed in this same review turn remains material authority. Fresh v5 original-idle reference compared; original white/gray fur boundaries and blue-gray clothing retained. No airborne middle-keypose is used or accepted as material authority.",
+  "findings": [
+    "Fresh overview and native042/048/066/106 retain white face and thick white forearms, compact gray palms with original pointed boundaries and small ivory claws. No new broad permanent fur patch is visible in these samples. Separate gray bean brows, star eyes or continuous dark closed eyelids remain recognizable.",
+    "Folded viewer-left hard-cloth ear/opposite upright ear, white X stitches and white zigzag/dot border retain their identity; source outer-ear strokes soften mildly. Blue scarf with white stripes and the original-idle small cross remains recognizable; no new motif approval is implied.",
+    "Cape darks remain recognizable blue-gray with muted shading; no broad newly green or purple recolored material block is apparent in these inspected poses. This is limited visual identity observation, not exact-palette RGB or entire-film color certification.",
+    "At native042 the single cape visibly spreads sideways on both sides and the scarf end lifts outward. At native048 lower cape corners spread along the support line. This remains a cloth-silhouette/secondary-motion limitation against the weighted-down narrow-corner intent; independent B/root must decide overall source readiness."
+  ],
+  "knownLimitations": [
+    "A material sampling does not approve support, short elastic timing, landing weight, fixed scale, source loop or anatomy; B full107 review remains required.",
+    "Raw purple backdrop/outline and any subtle edge-adjacent tint remain unprocessed and unreviewed for final transparency. No alpha/edge/core, source recolor or artistic repair is authorized; alpha cannot certify interior color.",
+    "Original-idle scarf cross is preserved in its frozen reference role and is not a new six-arm motif approval. Tail is hidden, so no new tail-material acceptance.",
+    "Native107/24fps and fixed896 original-scale world remain authority; no fit, crop, retime, drawing, new image or source editing performed."
+  ],
+  "registration": {
+    "perFrameFit": false,
+    "worldPaintRect": [
+      -128,
+      -128,
+      896,
+      896
+    ],
+    "pivot": [
+      448,
+      736
+    ],
+    "logicalCanvas": [
+      896,
+      896
+    ]
+  },
+  "acceptanceScope": "Fresh A limited source material/identity review only with explicit cape/scarf-spread limitation; no overall source art, transparent output, user acceptance or formal27 integration approval.",
+  "runtimeInstalled": false
+}

@@ -1,0 +1,50 @@
+{
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewer": "B",
+  "sourceVideoSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "edgeManifestSha256": "dd87c98629752b827df77da2f5ab31c6853cc6202f69b0e68ba2faf82ff4fa0f",
+  "sourceCorePreflightSha256": "6ca964733a79fb7201ca3c09bb791455e583c63358d1aa7e5cbb00a0b22285d9",
+  "reviewedOpaqueCore": {
+    "rect": [
+      365,
+      395,
+      535,
+      525
+    ],
+    "scope": "Only this bouncev5 moving eye/face interior; no clothing/paw/outer gap fill."
+  },
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "92a2564bfb6d88c1dff7debab43bd92a904768ee9137f8c4ce074338eb634bc4"
+    },
+    {
+      "file": "right-sleeve-gap-source-proof.png",
+      "sha256": "21bfcf65381082e11613bcd3674b7963f6bed2ea5334fe5ddbdf13227687a7ff"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "5a4466296d507e0c3b0f266ac835adc0cd8dda5b4192f0181e758d292cfde8c5"
+    },
+    {
+      "file": "processed-edge-v2/black/042.png",
+      "sha256": "e1f6f4111bc69644766f54b78383ca42449163cdc9aff2be4f8af98d604b5c82"
+    },
+    {
+      "file": "processed-edge-v2/white/042.png",
+      "sha256": "b730a526b44e419782302e9d2e0f33aae26caf116850ad6dfff2d8d396ee0a8f"
+    },
+    {
+      "file": "processed-edge-v2/black/058.png",
+      "sha256": "8905df40cc8a4fa99177f3539d33b18a82c55de6e73cee7950d2d0cbbc29f13a"
+    }
+  ],
+  "observations": [
+    "眼星附近源为连续实心结构，edge黑白对照与alpha显示小孔；六姿框图000/025/042/058/068/106覆盖静坐、压姿、回弹与眨眼，框始终在本体封闭脸区。",
+    "源袖与cape之间已见紫粉窄缝；该真实缝隙和所有外部软边/非眼core像素不恢复，不能为消除全部redflag误填。"
+  ],
+  "guardScope": "All107 preflight verified external8, reliable252, fixed core boundary and outside mask unchanged; sourcekey margin48. Conditional same-frame/same fixed896 resize native RGB and255alpha at enclosed unreliable core only, no paint/recolor/fit/time changes.",
+  "allowRestoreThisCoreOnly": true,
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

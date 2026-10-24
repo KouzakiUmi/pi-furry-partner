@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "rotationMs": 6500,
+  "phrases": {
+    "idle": [
+      "I'm right here. Got a little idea for us?",
+      "Ears up! I'm listening.",
+      "I'm ready. Where shall we start?",
+      "Take your time. I'll keep you company.",
+      "Tiny ideas count too. Let's work one out together.",
+      "Still here whenever you'd like to pick this up."
+    ],
+    "waking": [
+      "Mmm, I heard you. Let me wake up a little.",
+      "Oh, you're here! I was just resting my eyes.",
+      "One little eye rub, then I'm all ears.",
+      "A quick stretch, and I'm ready to help.",
+      "I'm awake. Turning my ears your way!",
+      "Here I am. What shall we make today?"
+    ],
+    "thinking": [
+      "Paw on my chin. Let me connect these steps.",
+      "Let me think it through before I explain.",
+      "I'll try looking at it from another angle.",
+      "I'm sorting out how these pieces fit.",
+      "Let me put these clues together for a moment.",
+      "I'll think a little deeper so I don't miss the key bit."
+    ],
+    "speaking": [
+      "Here's what I've been thinking. Let me tell you.",
+      "I'm writing it out. You can follow along.",
+      "I'll keep going and make this part clear.",
+      "Main point first, then the useful details.",
+      "I'll explain as I go. You can jump in too.",
+      "I'm just finishing this part for you."
+    ],
+    "reading": [
+      "Let me see what's in here first.",
+      "I'll read the surrounding bits carefully too.",
+      "I'm going through this file now.",
+      "Let me look at these related sections together.",
+      "I'll check the little details here as well.",
+      "A little more context should keep me on the right track."
+    ],
+    "editing": [
+      "I'll put that plan into this section now.",
+      "Let me work these changes in, one bit at a time.",
+      "Paws at work. I'm being careful with this bit.",
+      "These pieces need to fit, so I'm checking the joins.",
+      "I'm editing now, with an eye on the details.",
+      "I'll adjust this part to match what you had in mind."
+    ],
+    "running": [
+      "I've got an eye on this step. Let's see how it goes.",
+      "I'll stay right here while this bit runs.",
+      "Let me peek a little closer. This bit needs a moment.",
+      "I'm keeping my ears up for any new signs.",
+      "I'm watching. No jumping to guesses just yet.",
+      "I'm still with this step. I'll let it finish."
+    ],
+    "searching": [
+      "I'm digging through the notes for a clue.",
+      "Let me follow this keyword a little further.",
+      "I'll pull up the relevant bits for a closer look.",
+      "I'm looking for the details that matter here.",
+      "I'll check another corner in case I missed something.",
+      "Head down in the papers. One more place to look."
+    ],
+    "waiting": [
+      "I'm still right here. Let's give it a little longer.",
+      "I'll wait for a little sign. Keep me company?",
+      "Nothing new on my side yet. I'll stay beside you.",
+      "My ears are up. I'll wait for a reply before I carry on.",
+      "I'm still waiting. I won't guess what happened.",
+      "I haven't wandered off. Just waiting here a moment."
+    ],
+    "waiting_user": [
+      "I'll leave this one to you. Take your time.",
+      "I've put the question here. Tell me when you're ready.",
+      "I'm all ears. Which way would you like to go?",
+      "I'll keep you company until you're ready to reply.",
+      "I'd love to hear your thoughts before I continue.",
+      "I've tucked my paws in. This one's your call."
+    ],
+    "success": [
+      "I'll leave it here for you. Have a look when you're ready.",
+      "I've put my thoughts here. What would you like to chat about next?",
+      "I'll rest my paws a moment. What's next?",
+      "I'll look over how that went with you.",
+      "I've put my pen down for now. Still right here, though!",
+      "I'll wrap this bit up and leave the next step to you."
+    ],
+    "error": [
+      "Oof, that step didn't work. Let me look at what went wrong.",
+      "I've hit a snag. I need to look a little closer.",
+      "That didn't go through. I'll need to check the error.",
+      "I'll stop here a moment. This step hasn't worked yet.",
+      "I'm stuck on this bit. I need to understand why.",
+      "I haven't got this step through yet. Let me rethink the approach."
+    ],
+    "cancelled": [
+      "I'll stop here and wait for your next step.",
+      "Got it. Paws back for now.",
+      "I've stopped. Call me when you'd like to continue.",
+      "I won't carry on yet. I'm listening.",
+      "I'll set this step aside while you think.",
+      "A little pause for now. We'll pick it up your way."
+    ],
+    "poke_idle": [
+      "Eep! You made my ears wiggle!",
+      "Hehe, caught that poking paw!",
+      "Mmm, tickly… I might poke you back!",
+      "Oh! I'm right beside you, silly.",
+      "My ears! Hehe, I'm listening."
+    ],
+    "poke_busy": [
+      "Mmm… I'm looking closely at this bit. One little moment?",
+      "My ears felt that! Let me stay with this step.",
+      "Hehe, still here. Let me keep an eye on this first.",
+      "Oh! I'm right here, just keeping my paws on this step.",
+      "Eep! I've got my paws full. Keep me company a moment?"
+    ],
+    "poke_waiting": [
+      "Eep! I'm still right here waiting with you.",
+      "Hehe, I haven't gone anywhere. Take your time.",
+      "Hm? Got an idea? My ears are turning your way!",
+      "Tickly… I'll keep you company. No rush."
+    ],
+    "compacting": [
+      "I'll gather what we've talked about and keep the key bits close.",
+      "Let me sort through our chat for what comes next.",
+      "I'm putting our story so far in order.",
+      "I'll gather these clues. The important ones are coming with me.",
+      "I'm jotting down a few things so we can pick this up again.",
+      "Let me gather your wishes and where we've got to."
+    ],
+    "listening": [
+      "I'm right here while you put it into words. No rush.",
+      "I've turned my ears your way. My paws can wait a little.",
+      "I'm here. Tell me when you've got it how you want."
+    ]
+  }
+}

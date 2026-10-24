@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "releaseLine": "hd",
+  "defaultEdition": "full-animation",
+  "pixelPolicy": "legacy-only",
+  "platforms": {
+    "pi": {
+      "label": "Pi terminal",
+      "resourceProfile": "pi-core",
+      "artifactPrefix": "pi-furry-partner-hd"
+    }
+  },
+  "editions": {
+    "full-animation": {
+      "version": "2.5.1-preview.6",
+      "label": "Pi HD 高清重制版",
+      "fullAnimation": true
+    }
+  },
+  "publicStyles": [
+    "umi"
+  ]
+}

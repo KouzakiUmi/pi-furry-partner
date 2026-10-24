@@ -1,0 +1,14 @@
+{
+  "status": "AWAITING_TWO_REVIEWERS_AND_USER",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "frameCount": 107,
+  "periodMs": 4458,
+  "sourceTimelineUnchanged": true,
+  "registrationUnchanged": true,
+  "alphaAllFramesExactlyUnchanged": true,
+  "opaque252RgbaAllFramesExactlyUnchanged": true,
+  "outsideCorrectionAllFramesExactlyUnchanged": true,
+  "changedSoftRgbPixels": 378106,
+  "limitation": "Local edge RGB estimate, not a lossless claim; full native forward source retained. No source art recolor."
+}

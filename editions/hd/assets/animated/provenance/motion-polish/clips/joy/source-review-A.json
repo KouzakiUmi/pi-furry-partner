@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "reviewDate": "2026-10-23",
+  "action": "joy",
+  "version": "key-purple-batch04-v1",
+  "status": "SOURCE_NO_BLOCKING_COLOR_PATTERN_FINDING",
+  "readyForUserReview": false,
+  "accepted": false,
+  "humanApproval": false,
+  "deploymentAllowed": false,
+  "videoPlaybackViewed": false,
+  "sourceVideoSha256": "28e12bc704d5092587058c3e1fd591a38cddd3f563b08a13b5881851bb80181b",
+  "expectedSourceHashMatches": true,
+  "actualReview": "Actually viewed same-job reference, newly created0.25-second overview.jpg, and native raw00025.png,00061.png. Applicable material/color direction compared with original design card and approved registered reference.",
+  "sourceFinding": "No blocking new broad purple tint or pattern damage observed. White forearms/gray paws, cool-shadow blue-gray hood/cape, separate gray brows and eye lines, folded-ear X stitches, scarf white stripes/cross and short claws remain readable in inspected samples.",
+  "actingObservationForUser": "Laughing eyes and mouth remain readable as joy; cape/scarf spreading near2–2.5s is for native-speed amplitude/acting review.",
+  "processingScope": "Frozen key-alpha/soft-edge/material prior; no pixel algorithm investigation or tuning. Processed black/white edge review pending.",
+  "approvalLimit": "This is a new purple source. Prior gray-source acting approval does not transfer; fresh A/B and user native-speed review are required. Sampled stills are not dynamic approval.",
+  "evidence": [
+    {
+      "path": "reference.png",
+      "sha256": "7661b289f0a0378238c7d3e7c3d83fa4ca056c349eebc174aa7ff07ce6a07e75"
+    },
+    {
+      "path": "early-check/overview.jpg",
+      "sha256": "1529e7db6b88f402f0f5811abf83ddc4607fe096cedc9baa0209915cd6f30b7b"
+    },
+    {
+      "path": "early-check/00025.png",
+      "sha256": "cb68fc1353ebc97fc6ff3966fd6b9ea3c414ff15099ae8c7ca76c6a5e3f7a9c3"
+    },
+    {
+      "path": "early-check/00061.png",
+      "sha256": "1b539011406a1c6b30a3a5462b0e7033a7f2966a6ff48bd9986ae52eadbc6968"
+    }
+  ]
+}

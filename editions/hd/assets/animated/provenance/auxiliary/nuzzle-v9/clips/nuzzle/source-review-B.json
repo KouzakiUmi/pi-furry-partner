@@ -1,0 +1,89 @@
+{
+  "reviewer": "B",
+  "action": "nuzzle",
+  "version": 9,
+  "status": "READY_FOR_USER_NATIVE_SOURCE_GATE_WITH_ACTING_LIMITATIONS",
+  "sourceVideoSha256": "e72c5f0add9d42887c73c1eda85368caa549d23adc6f6441ae27bd1a68dd090b",
+  "sourceEvidenceSha256": "de3e15b5e938d441ae8f54983e91f6d7869651d3061b50afeb620505c82509df",
+  "sourceFramingPreflightSha256": "b8bee44fcde5b4be13f665e31421686ea168f9da310c5393a9a06877eba320e5",
+  "actualRequestAuditSha256": "57436a0330a1adbdc70d73b7115e8578d5cbc02555b99d1f7591767a623d0808",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "04d37221406fbdc876ec2c53c22e0d8016c8f1045e551942e78668e3b3b91619",
+  "actualViewedFiles": [
+    {
+      "file": "endpoint-first-proof.jpg",
+      "sha256": "20f35a44e90d4e60845a926debd3a698c18c02e9c0d727f58f5f1d64ff1dd3a1"
+    },
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "496dc6882d5ead024a7ff731929ba5a28b39c61c97340833498e15771870a013"
+    },
+    {
+      "file": "early-check/full-contact-01.jpg",
+      "sha256": "56111ce87137169a7e7517d0a458e8965862244d90d5c57b9dbf76e62ebf50f6"
+    },
+    {
+      "file": "early-check/full-contact-02.jpg",
+      "sha256": "8c81ccfeddc5f3c94182c056b7eee1f489c258f1011d28d344e51898b98c24d9"
+    },
+    {
+      "file": "early-check/full-contact-03.jpg",
+      "sha256": "733f215bf4215402ab5267bd6856845225c61119de204997995d914fd789dd82"
+    },
+    {
+      "file": "early-check/full-contact-04.jpg",
+      "sha256": "8dc3d7e7918d598adec4691a84c43f56ca370b5caa1d40529d3733b37a2727e3"
+    },
+    {
+      "file": "early-check/00031.png",
+      "sha256": "6950a39b0233f3ad31c5674fc64a75df97f1e61be6b4d938eba965c62dd50f8e"
+    },
+    {
+      "file": "early-check/00055.png",
+      "sha256": "fa15d9ee28aaacb54f4ac9ab1e3585c1fedaeb5b5607145cf518aec3852b3baf"
+    },
+    {
+      "file": "early-check/00067.png",
+      "sha256": "8dac28bd1dc0241bd6b6fcb9e7b457a0417041c1e01db2b60b12856a5209cd58"
+    },
+    {
+      "file": "early-check/00107.png",
+      "sha256": "68d27ba6934611e783888067d4e37bbaf322ff7803f25f1db134f90d99cb299e"
+    }
+  ],
+  "checkScope": "Actual endpoint comparison, all107 full-body native contact thumbnails, overview and native030/054/066/106. This is a source structural gate; actual native-speed nuzzle meaning belongs to user.",
+  "nativeFrameCount": 107,
+  "nativeFps": 24,
+  "durationMs": 4458.333,
+  "logicalCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "worldPaintRect": [
+    0,
+    0,
+    640,
+    640
+  ],
+  "minimumNativeMargin": 36,
+  "sourceFramesBelow4PxMargin": [],
+  "findings": [
+    "真实FL2VA同原640待机图首尾，实际000/106均正面开眼回原neutral坐姿，未见v6末帧斜头退步。",
+    "全107原生边距最小36px，折耳/立耳/掌/披布角全程在框内；没有v7/v8原生源极值裁切。",
+    "小幅头颈胸肩倾斜连续经过两侧并回正，双掌仍在下方承重；实际原寸030/054/066没有新增脚或明显伸长白臂/灰腕。用户已豁免的静态趾形不重开，不按可见甲数宣判。",
+    "中段两眼闭合微笑可读，约012至067保持闭眼但姿势在变化；比v8收窄了整体动作。是否读成亲昵颊蹭而非轻晃，须交用户原速门，不以静帧代判。",
+    "约048至066披布两角有横向展开、围巾尾稍扬，仍单层连贯且没有越框；如需更克制布形，应由用户就此源决定，不宣称完全无侧展。"
+  ],
+  "readyForUserSourceReview": true,
+  "humanAcceptedSource": false,
+  "allowAlphaProcessing": false,
+  "allowEdgeProcessing": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "approvedV5Preserved": true,
+  "serverStarted": false
+}

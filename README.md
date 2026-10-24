@@ -17,7 +17,7 @@
 
 [**下载 Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
-本项目仅维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.1**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。详见[发布规则](docs/release-line.md)。
+本项目仅维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.1**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](editions/hd/) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -88,6 +88,10 @@
 这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#可选展示页)。
 
 </details>
+
+## 手动动作与补全
+
+`/mascot action` 支持 `all`、`off` 和原资源版的 14 个动作，例如 `reading`、`running`、`waiting`、`poke`；Tab 补全从原版动作定义生成。单次播放会自动结束，任务开始或输入内容时退出；不更改偏好、不调用模型。HD 的动作集和实现独立维护。
 
 ## 安装
 

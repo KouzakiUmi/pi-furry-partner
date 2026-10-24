@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "source": "neutral.png",
+  "width": 640,
+  "height": 640,
+  "angleDeg": 5.5,
+  "pivot": [
+    288,
+    374
+  ],
+  "falloffRows": [
+    325,
+    390
+  ],
+  "unchangedBodyFromRow": 390,
+  "method": "Premultiplied bilinear inverse neck warp with smoothstep falloff",
+  "questionMark": {
+    "placement": "outside head, upper right",
+    "bounds": [
+      541,
+      130,
+      599,
+      222
+    ],
+    "color": "scarf blue"
+  },
+  "poses": {
+    "wait": "wait.png",
+    "wait-blink": "wait-blink.png"
+  }
+}

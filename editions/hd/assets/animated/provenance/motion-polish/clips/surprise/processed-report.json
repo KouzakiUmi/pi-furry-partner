@@ -1,0 +1,16 @@
+{
+  "status": "AWAITING_FRESH_A_B_AND_USER",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "frameCount": 107,
+  "periodMs": 4458,
+  "sourceTimelineUnchanged": true,
+  "registrationUnchanged": true,
+  "externalSoftRgbaAllFramesExactlyUnchanged": true,
+  "reliable252RgbaAllFramesExactlyUnchanged": true,
+  "outsideDetailRepairAllFramesExactlyUnchanged": true,
+  "changedAlphaInteriorPixels": 6408,
+  "minimumAllFramesSourceCoreVsKeyMarginBytes": 38.0,
+  "allCoreBoundaryRgbaUnchanged": true,
+  "knownLimits": "Specific independently reviewed surprise-v3 foreground trimap, not valid for arbitrary poses or future clips; no source artistic repaint. Fine exterior dark/purple rim remains."
+}

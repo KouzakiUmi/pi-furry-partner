@@ -1,0 +1,37 @@
+{
+  "accepted": [
+    {
+      "item": "2D continuous rotation",
+      "file": "h3-2d-turntable-20261022/Umi-2D-turntable-source.mp4",
+      "scope": "Spatial basis"
+    },
+    {
+      "item": "Right-facing static seated profile",
+      "file": "approved-rotation-profile/profile-right.png",
+      "scope": "Accepted with tolerable minor placement deviation; frozen"
+    },
+    {
+      "item": "Tail materials in front/back fullbody pairs",
+      "file": "tail-source-audit/review.json",
+      "scope": "User accepted white/lightgrey/darkgrey scheme and removal of false bluegrey root. Other known defects remain tracked."
+    }
+  ],
+  "pending": [
+    {
+      "item": "Front full-body clothed/fur-only pair",
+      "file": "tail-source-audit/front-pair-v8.png",
+      "status": "Cape/paw structure and tail materials accepted in respective reviews; faint scarf ghost still tracked"
+    },
+    {
+      "item": "Back full-body clothed/fur-only pair",
+      "file": "tail-source-audit/back-pair-v7.png",
+      "status": "Tail materials accepted. Standalone forearm pilot rejected; rollback to usable back-pair-v7 with original paw diagram beside it. Further paw rework deferred by user; direct video production active."
+    },
+    {
+      "item": "Full-body side pairs",
+      "status": "First right-facing side candidate generated and parked until rear-paw review is resolved; not approved"
+    }
+  ],
+  "bodyPairRequirement": "Clothed versus hood/cape/scarf removed, same body proportions and original fur markings",
+  "reviewGate": "One paired view at a time before expanding"
+}

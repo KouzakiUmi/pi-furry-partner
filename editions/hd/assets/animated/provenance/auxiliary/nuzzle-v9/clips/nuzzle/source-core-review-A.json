@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SOURCE_SPECIFIC_EYE_CORE_ONLY",
+  "reviewer": "A",
+  "sourceSpecific": "nuzzle/key-purple-pilot-v9",
+  "core": [
+    245,
+    280,
+    392,
+    352
+  ],
+  "allowEyeInteriorRestore": true,
+  "allowGarmentGapFill": false,
+  "allowCoreExpansion": false,
+  "sourceVideoSha256": "e72c5f0add9d42887c73c1eda85368caa549d23adc6f6441ae27bd1a68dd090b",
+  "edgeManifestSha256": "9410142afacf5537ed047220d07ded74199f5cc5684c3ab27adddd02a0505142",
+  "preflightSha256": "4b5e4d34312b85f1ac2c28ed5f231e319ca5c705befcd577b2e21ecb08a93a47",
+  "proofSha256": "1974dbb9823b880b5e09ac7a6f14cbe99f622911f3e5974eccc54e3634b3442d",
+  "actualViewed": [
+    "source-core-proof.jpg",
+    "interior-alpha-flag-proof.png",
+    "processed-edge-v2/face-source-edge-proof.png",
+    "processed-edge-v2/white/054.png"
+  ],
+  "findings": [
+    "092 same-frame source RGB visibly has continuous warm star tips; alpha proof has small gray holes there. These are interior feature pixels rather than real background gaps.",
+    "Fixed source-specific ROI lies inside the painted face/hair at inspected open/squint/lean/recovery phases. Source closed-eye lines remain outside or opaque where crossing; no garment or exterior fill is endorsed.",
+    "Preflight all107 passes external8, reviewed rectangle boundary, reliable252 and outside-repair invariance. Minimum source-key distance52 exceeds24; potential1183 unreliable enclosed pixels differs from154 red/coral-alpha<200 heuristic flags."
+  ],
+  "scope": "Root authorized THIS source-only technical alpha restoration. Recover exact same-frame fixed-resized nativeRGB and255alpha only at uncertain closed8 pixels inside fixed ROI. No color correction or artistic paint; final output A/B and user transparent gate remain.",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

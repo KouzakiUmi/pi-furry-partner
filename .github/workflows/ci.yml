@@ -1,10 +1,12 @@
-name: Verify Pi original-resource plugin
+name: CI · Pi original resources
 
 on:
   push:
-    branches: [main, legacy]
+    branches: [main]
+    paths-ignore: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
   pull_request:
-    branches: [main, legacy]
+    branches: [main]
+    paths-ignore: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
   workflow_dispatch:
   workflow_call:
 

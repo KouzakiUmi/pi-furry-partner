@@ -1,0 +1,30 @@
+{
+  "$schema": "https://pi.dev/schemas/theme.schema.json",
+  "name": "pi-furry-night",
+  "appearance": "dark",
+  "vars": {
+    "text": "#e5edf5", "muted": "#a4b2c5", "blue": "#89b4e6",
+    "pink": "#ed9fa7", "mint": "#9bd6c4", "yellow": "#e6c68e",
+    "red": "#ec8b91", "blueBg": "#1c2c42"
+  },
+  "colors": {
+    "accent": "blue", "border": "#779fc8", "borderAccent": "pink", "borderMuted": "#526277",
+    "success": "mint", "error": "red", "warning": "yellow", "muted": "muted", "dim": "#8091a8", "text": "text",
+    "thinkingText": "#aab7cb", "selectedBg": "#2b405b", "scrollbarTrack": "#283547", "scrollbarThumb": "#7296ba",
+    "searchMatchBg": "#55472f", "searchMatchText": "#f5dfb3",
+    "userMessageBg": "blueBg", "userMessageText": "text", "customMessageBg": "#2d293e",
+    "customMessageText": "muted", "customMessageLabel": "pink",
+    "toolPendingBg": "#202b3b", "toolSuccessBg": "#203830", "toolErrorBg": "#412c34",
+    "toolTitle": "text", "toolOutput": "muted", "mdHeading": "blue", "mdLink": "mint", "mdLinkUrl": "muted",
+    "mdCode": "pink", "mdCodeBlock": "#b4cfea", "mdCodeBlockBorder": "#526277", "mdQuote": "muted",
+    "mdQuoteBorder": "#779fc8", "mdHr": "#526277", "mdListBullet": "pink",
+    "toolDiffAdded": "mint", "toolDiffRemoved": "red", "toolDiffContext": "muted",
+    "syntaxComment": "#8294ac", "syntaxKeyword": "#bdace8", "syntaxFunction": "#e6c68e",
+    "syntaxVariable": "#a6c9ed", "syntaxString": "#9bd6c4", "syntaxNumber": "#efb794",
+    "syntaxType": "#9ccfe0", "syntaxOperator": "#a4b2c5", "syntaxPunctuation": "#a4b2c5",
+    "thinkingOff": "#607b99", "thinkingMinimal": "#7896b9", "thinkingLow": "#89b4e6",
+    "thinkingMedium": "#a4abe4", "thinkingHigh": "#d2a7d8", "thinkingXhigh": "#ed9fa7",
+    "thinkingMax": "#f1b18c", "bashMode": "mint"
+  },
+  "export": { "pageBg": "#101827", "cardBg": "#182335", "infoBg": "#283547" }
+}

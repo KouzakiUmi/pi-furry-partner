@@ -1,0 +1,15 @@
+Use case: identity-preserve
+Asset type: one production animation sprite sheet, 3 columns by 2 rows, six square cells, transparent background.
+Input image: watch.png is the exact character/painting reference to preserve.
+Primary request: create six carefully drawn, consistent keyframes of Umi holding a magnifying glass and looking around, for a looping Japanese anime-style chibi companion animation. Keep the reference character unmistakably identical: a white-furred wolf boy, blue eyes, dark navy star-stitched wolf-ear hood, blue striped scarf, gray paws with small pale claws, same facial features and soft polished linework.
+Composition: exactly 3 equal-width columns and 2 equal-height rows, no borders or labels. Every character has identical camera scale, chest-up crop, neck/base anchor, transparent margins, and front-facing torso/paws at the bottom. Fully contain each hood, scarf and magnifier in its own cell. The resting paw and body stay steady. Do not add a tail.
+Frame order, left to right then next row:
+1. Center/front neutral inspection, matching the reference closely.
+2. Gentle glance toward the character's left (viewer's right), head turned only a little; gripping paw and magnifier follow naturally.
+3. Slightly further glance in that same direction, with a modest change in the magnifier's perspective and gaze.
+4. Gentle glance toward the character's right (viewer's left), same small amplitude.
+5. Slightly further glance in that direction, coherent paw, handle, lens and head perspective.
+6. Back at center/front with a soft ordinary closed-eye blink and tiny content smile, matching cell 1 pose and scale.
+Constraints: draw the lens and holding paw together as one coherent pose in each cel. Each cel contains exactly ONE magnifier, one clean rim, one handle and one gripping paw, without motion trails or duplicate outlines. No ghost images, no crossfades, no blur, no speed lines. Keep head turns small and suitable for a calm terminal UI. Preserve the wolf muzzle, nose, ear hood, outfit patterns and fur colors. No costume or character redesign; no human hands, extra limbs, text, numbers, watermark, grid lines or background. Genuine transparent alpha around all six sprites.
+
+Layout refinement: preserve the same six poses and character identity, but scale each sprite to approximately 84% inside its own grid cell. Center on a shared torso/base anchor and leave at least 5% genuinely transparent border on every side of every cell. Keep the complete scarf, hood ears, cape and paw/claw tips inside the cell, restoring any tiny clipped tips. Do not alter poses or character style.

@@ -12,7 +12,7 @@ assert.equal(baseline.baselineTag, "v2.4.0");
 assert.equal(baseline.baselineCommit, "74cac9651eaf70af80eadc596e205fbcd68d75eb");
 const expected = baseline.files.map(({ path }) => path).sort();
 const actual = [];
-const ignored = new Set([".git", "node_modules", "work", "dist"]);
+const ignored = new Set([".git", "node_modules", "work", "dist", "editions"]);
 const mediaExtensions = new Set(baseline.mediaExtensions);
 async function inspect(directory = "") {
   for (const entry of await readdir(join(root, directory), { withFileTypes: true })) {

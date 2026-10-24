@@ -1,0 +1,56 @@
+{
+  "reviewer": "A",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false,
+  "action": "idle-right",
+  "sourceVideoSha256": "db6b775c964c4d309833b55153291671b31cbbe5ccc8d2cd138d8529205e21b2",
+  "finalManifestSha256": "38ddfcb4dc579a99a820a4a9cf746ba7a021ceee941ba068b535a43c6b68bcd4",
+  "helper": "work/motion-polish-20261023/restore-idle-variant-face-core.py",
+  "helperSha256": "95e48181f58003d762c286dc3021c123132c00e198ee4fecca6db2687cf12b18",
+  "technicalReviewSha256": "2d01190c856e8a9fd80dcdd087f2a99094be63264c4120df9c6d0fee28264f55",
+  "sourceCoreReviewASha256": "df9638e5dd3e625ab7582f1f21b23023c2d6388a0b788eeccad101a71e1bf266",
+  "sourceCoreReviewBSha256": "8190d584aca4f05d0771a0d132e9affc14ae99ea1a490f17fde71b0df93c8eb1",
+  "reviewedOpaqueCore": [
+    250,
+    275,
+    450,
+    340
+  ],
+  "actualViewedFiles": [
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "f6dfbb27feec5cae088bebf7d04064cfec4953c44284d324bc6645410117d2d4"
+    },
+    {
+      "file": "processed-detail-v1/white/085.png",
+      "sha256": "6b6359d01339eaf7e00554e23957ddfebec472cfdf2e72fbf6995b370611a0dc"
+    },
+    {
+      "file": "processed-detail-v1/black/036.png",
+      "sha256": "d40bcffba8a66d543788bbed67104887e6f361dadfdd0d904264655323fabf0d"
+    },
+    {
+      "file": "processed-detail-v1/white/042.png",
+      "sha256": "0756386341998d6f3f22e455260cd8f0464ffc92ebfb43f4219ca520f9113b02"
+    },
+    {
+      "file": "processed-detail-v1/black/106.png",
+      "sha256": "76d55996d550b9f5e12e747540422dd7bf5645ad67b0914bf87788af1bd81e06"
+    }
+  ],
+  "findings": [
+    "实际眼部源/旧edge/最终黑白/alpha对照，旧眼星内部透明孔已消失，所查未见矩形接缝；仅sub252恢复，不声称原有252全部变255。",
+    "所查白脸白臂、灰掌、蓝围巾与蓝灰帽披色层保持，左折耳与X针脚、灰豆眉和眼线可读；未见新大块紫绿染色。",
+    "所查短圆掌与白臂灰掌分界、单层下摆保持；未见宽白边、明显分离亮岛或新穿孔。",
+    "right036三分之四侧转与042闭眼线保留，折耳身份未镜像，灰掌白臂分界保持。"
+  ],
+  "knownLimitations": [
+    "仍有细暗紫软轮廓及少量毛尖/底缘颗粒；仅所列原尺寸无损静图实际艺术检查，不宣称全片零瑕疵。",
+    "实际右侧三分之四转头幅度比tiny glance更明显，原速幅度/节拍/循环仍待用户。",
+    "未播放原速视频，未认证runtime随机轮换，未加入正式catalog、安装或发布。"
+  ],
+  "fullFrameTechnicalEvidence": "完整107帧同helper重放RGBA、PNG↔WebP完整RGBA、PTS/registration与ext8/coreboundary/reliable252/outside保护均通过；red/coral低于200为0，最低252。技术证据不等同用户审美批准。",
+  "historicalHoldPreserved": "output-review-A.json and processed-edge-v2 retained as failed internal eye-alpha history"
+}

@@ -1,0 +1,49 @@
+{
+  "reviewer": "B",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "humanAcceptedOutput": false,
+  "action": "idle-center",
+  "sourceVideoSha256": "27c154d0136450939f12d3f53687b6ed7695988ef290401d7dad779f27f0bbbf",
+  "finalManifestSha256": "ff6fe9ef68cc1e9bb4f022f44eef75272fd96d24f3b7e2513d04c9299d772662",
+  "technicalReviewSha256": "9b33cb24da61e9279d6c32dc9d6486c3ec42c44b327379f230786af9fb118340",
+  "helperSha256": "95e48181f58003d762c286dc3021c123132c00e198ee4fecca6db2687cf12b18",
+  "reviewedOpaqueCore": [
+    248,
+    280,
+    400,
+    355
+  ],
+  "actualViewedFiles": [
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "cc5fa49ef9361bdf9457859291a88c880e2564aad1e9e4549a73f954fee4399f"
+    },
+    {
+      "file": "processed-detail-v1/black/010.png",
+      "sha256": "9d82abc337bad8390af86fbbcda5a37e5747df1d6c1fe0f7a316efbd67b9ae68"
+    },
+    {
+      "file": "processed-detail-v1/white/018.png",
+      "sha256": "01b9781f08e08052029b19c191d2f4ef7b63bd6ee1ff04f0054f3895c0e1f060"
+    },
+    {
+      "file": "processed-detail-v1/black/000.png",
+      "sha256": "58dadd5be6d1560fc72f8b695bd2e5f1de7720a2e4691051712ea0ec578f259d"
+    },
+    {
+      "file": "processed-detail-v1/white/106.png",
+      "sha256": "3058c976eb337a6921e68c8a2e51aec2d14a643a5a934cf6715018cdb2e3a338"
+    }
+  ],
+  "findings": [
+    "实际旧/新黑白/alpha对照：010旧眼星/星周内孔已消失，无矩形修复接缝，可靠alpha252及以上保持原样。",
+    "所查闭眼线深且连续、灰豆眉独立；开眼星/嘴线与脸宽未见新增缺失。",
+    "厚白臂到灰掌毛界、短圆掌体/短甲/中央爪隙和落地支撑保持；单层下摆轮廓未被填孔或削除。",
+    "原寸所查无大片白边/分离亮噪/新体内透明孔；细暗紫轮廓颗粒及底缘点仍可见，不宣称零噪点。"
+  ],
+  "sourcePerformanceDisclosure": "居中注意力为主，中前段小闭眼低头及围巾尾/下摆轻开合。",
+  "technicalScope": "A全107同helper重放RGBA、PNG/WebP、clock/registration/ext8/coreborder/reliable252/outside精确保持与red/coral<200为0已有独立技术记录；本B只实际复核所列图片。",
+  "userBoundary": "静帧不认证原速节拍/循环，也不宣称已实际测试runtime随机选择；最终透明原速交用户，未修改正式catalog/安装发布。",
+  "oldFailedOutput": "processed-edge-v2 eye-alpha flags retained"
+}

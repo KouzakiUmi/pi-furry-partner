@@ -1,0 +1,73 @@
+name: Build and publish HD release
+
+on:
+  push:
+    tags: ['hd-v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci-hd.yml
+  release:
+    needs: verify
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: '1'
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: editions/hd
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+      - name: Verify main branch ancestry
+        run: |
+          git fetch origin main:refs/remotes/origin/main
+          git merge-base --is-ancestor $env:GITHUB_SHA refs/remotes/origin/main
+          if ($LASTEXITCODE -ne 0) { throw 'HD tags must belong to main' }
+      - name: Resolve tag to edition and release notes
+        id: target
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python tools/release-edition.py resolve --tag $env:RELEASE_TAG --github-output $env:GITHUB_OUTPUT
+          if ($LASTEXITCODE -ne 0) { throw 'Release tag or notes validation failed' }
+      - name: Build Pi package for the selected edition
+        env:
+          EDITION: ${{ steps.target.outputs.edition }}
+        run: |
+          python tools/build-editions.py --edition $env:EDITION --platform all
+          if ($LASTEXITCODE -ne 0) { throw 'Edition build failed' }
+      - name: Reverify archives and packaged runtime
+        env:
+          EDITION: ${{ steps.target.outputs.edition }}
+        run: |
+          python tools/audit-edition-bundles.py --edition $env:EDITION
+          if ($LASTEXITCODE -ne 0) { throw 'Archive or runtime audit failed' }
+          python tools/release-edition.py assets --plan dist/release/release-plan.json
+          if ($LASTEXITCODE -ne 0) { throw 'Release asset validation failed' }
+      - name: Publish only the selected edition
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          $plan = Get-Content -LiteralPath dist/release/release-plan.json -Raw | ConvertFrom-Json
+          $assets = @(Get-Content -LiteralPath dist/release/release-assets.json -Raw | ConvertFrom-Json)
+          $ghArgs = @('release', 'create', $plan.tag, '--verify-tag', '--title', $plan.title,
+            '--notes-file', $plan.notesFile, "--latest=$($plan.latest)")
+          if ($plan.prerelease) { $ghArgs += '--prerelease' }
+          $ghArgs += $assets
+          & gh @ghArgs
+          if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation/upload failed; existing releases are not overwritten' }

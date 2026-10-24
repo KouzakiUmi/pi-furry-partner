@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceCatalogSha256": "f8de911e18da73a6d091a9193c667dfcf6350374c0509b5c1c69c82b133150c1",
+  "pilotScriptSha256": "4588d6ff9f5e463d1714439e2563e6d978530ac65c9b48b1bde8cb6f10b06794",
+  "frozenTransformSha256": "1b56b66f46ce21b61052754713b061c4471715d53079576cb30de8bbcd4752f1",
+  "targetBluegrayRgb": [
+    80,
+    97,
+    117
+  ],
+  "lumaWeights": [
+    0.2126,
+    0.7152,
+    0.0722
+  ],
+  "fixedMethod": "Byte-identical approved pilot transform/smooth/LUMA/TARGET. Same soft material gates and existing prop protections for all29; no per-frame/clip statistics, means, exposure or geometry fitting.",
+  "userIntent": "颜色只要做到不容易一眼看出来即可",
+  "alphaExactlyPreserved": true,
+  "alpha0RgbExactlyPreserved": true,
+  "output": "Lossless exact WebP only for fullHD; no fullPNG duplication",
+  "formalAssetsChanged": false,
+  "runtimeApplied": false
+}

@@ -1,3 +1,4 @@
+import { ACTION_IDS } from "./lib/actions.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -554,7 +555,7 @@ export default function (pi: ExtensionAPI) {
       const [command, value] = args.trim().toLowerCase().split(/\s+/);
       if (!command) {
         const state = (value: boolean) => value ? l("开启", "on") : l("关闭", "off");
-        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${selectedGraphicsMode()} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|kitty|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
+        ctx.ui.notify(`${companionName(settings)}: ${state(settings.enabled)} · ${settings.layout} · ${settings.layout === "header" ? settings.headerStyle : settings.style} · ${selectedGraphicsMode()} · ${l("语气", "Persona ")}${state(settings.persona)}\n${l("语言", "Language")}: ${settings.language === "auto" ? `auto → ${resolveLanguage(settings.language)}` : settings.language} · ${l("界面中文偏好", "Chinese UI preference")}: ${state(settings.chineseUI)} · ${l("Pi 文档提示精简", "Concise Pi docs preference")}: ${state(settings.compactPrompt)}\n/mascot language auto|en|zh-CN|status\n/mascot poke · /mascot menu · Ctrl+Alt+W ${l("快捷操作", "Quick actions")}\n/mascot layout editor|header · style umi|umi-pixel|pixel|illustration\n/mascot pause|play|on|off · size auto|small|compact|normal|large\n/mascot render auto|kitty|sixel|blocks · info compact|native\n/mascot locale on|off|status · prompt on|off|status\n/mascot persona on|off|status\n/mascot action [all|${ACTION_IDS.join("|")}|off]\n/mascot demo [all|${DEMO_STATES.join("|")}|off]\n${l("不填状态会自动循环全部动画；demo off 回到真实状态。", "Omit the state to loop every animation; demo off returns to the real state.")}`, "info"); return;
       }
       if (command === "language") {
         const next = normalizeLanguage(value);
@@ -592,6 +593,22 @@ export default function (pi: ExtensionAPI) {
         ctx.ui.notify(`${l(`呜咪语气：${settings.persona ? "开启" : "关闭"}。从下一轮回答生效，独立于头像显示开关；代码、格式和技术准确性优先。模板：`, `Umi's persona: ${settings.persona ? "on" : "off"}. Applies from the next answer, independently of the avatar. Code, format and technical accuracy come first. Template: `)}${join(root, "prompts", personaFilename(settings.language))}`, "info");
         return;
       }
+      if (command === "action") {
+        const mode = value || "all";
+        if (args.trim().split(/\s+/).length > 2 || !["all", "off", ...ACTION_IDS].includes(mode)) {
+          ctx.ui.notify(l(`用法：/mascot action all|${ACTION_IDS.join("|")}|off`, `Usage: /mascot action all|${ACTION_IDS.join("|")}|off`), "warning"); return;
+        }
+        if (mode !== "off" && (!settings.enabled || !settings.animation || settings.layout !== "editor")) {
+          ctx.ui.notify(l("先用 /mascot on、/mascot play 和 /mascot layout editor 开启输入框旁的动作。", "Enable actions with /mascot on, /mascot play and /mascot layout editor."), "info"); return;
+        }
+        if (!activity.setAction(mode)) {
+          ctx.ui.notify(l("我正在处理任务，先保留真实任务动作。空闲后再叫我演示呀。", "A task is active; keeping its real pose. Try the action again when idle."), "info"); return;
+        }
+        lastSnapshot = undefined; redraw(); armTimer();
+        ctx.ui.notify(mode === "off" ? l("动作展示已停止，回到真实状态。", "Action stopped; back to the real state.")
+          : mode === "all" ? l("我来轮流展示原版动作。action off 停止，任务开始也会退出。", "Cycling original-resource actions. Use action off to stop; a real task also ends the cycle.")
+          : l(`我来演示 ${mode}，结束后回到真实状态。`, `Showing ${mode}; the real state returns when it ends.`), "info"); return;
+      }
       if (command === "poke") {
         if (settings.layout !== "editor" || !settings.enabled) {
           ctx.ui.notify(l("先让我回到输入框旁边呀：/mascot on，然后 /mascot layout editor。", "Bring me beside your input with /mascot on, then /mascot layout editor."), "info");
@@ -600,9 +617,9 @@ export default function (pi: ExtensionAPI) {
         activity.poke(); lastSnapshot = undefined; redraw(); armTimer();
         return;
       }
-      if (command === "pause") { settings.animation = false; activity.clearTyping(); lastSnapshot = pausedSnapshot(readSnapshot()); stopTimer(); redraw(); if (activity.isPoked()) armTimer(); }
+      if (command === "pause") { activity.setAction("off"); settings.animation = false; activity.clearTyping(); lastSnapshot = pausedSnapshot(readSnapshot()); stopTimer(); redraw(); if (activity.isPoked()) armTimer(); }
       else if (command === "play") { settings.enabled = true; settings.animation = true; apply(ctx); }
-      else if (command === "off") { settings.enabled = false; apply(ctx); }
+      else if (command === "off") { activity.setAction("off"); settings.enabled = false; apply(ctx); }
       else if (command === "on") { settings.enabled = true; apply(ctx); }
       else if (command === "layout" && ["editor", "header"].includes(value)) { settings.layout = value; apply(ctx); }
       else if (command === "style" && normalizeStyle(value)) {

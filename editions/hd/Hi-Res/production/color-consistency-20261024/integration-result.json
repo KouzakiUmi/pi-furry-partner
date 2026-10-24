@@ -1,0 +1,13 @@
+{
+  "catalogSha256": "a3c6d6d06600253a90a43bff3f2e66611c88857700425efcca5964f6499c97b4",
+  "clipCount": 29,
+  "derivationSha256": "b0abebdbf275f774c6caf60bab37094313760aaee1756e404c05d4abba30c1ec",
+  "formalColorAssetsChanged": true,
+  "hdFrames": 3048,
+  "piFrames": 1526,
+  "revision": "animated-color-consistency-20261024-521fbc24a412ead0",
+  "runtimeOrPackageChangedByThisHelper": false,
+  "sourceCatalogSha256": "f8de911e18da73a6d091a9193c667dfcf6350374c0509b5c1c69c82b133150c1",
+  "status": "APPLIED_CURRENT_HISTORY_AND_FULL_REPRODUCTION_PASS",
+  "validationA": "Hi-Res/production/color-consistency-20261024/integration-validation-A.json"
+}

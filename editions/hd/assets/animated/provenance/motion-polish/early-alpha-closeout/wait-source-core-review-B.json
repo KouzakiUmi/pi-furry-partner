@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "reviewDate": "2026-10-23",
+  "action": "wait",
+  "status": "APPROVED_FOR_GUARDED_INTERIOR_ALPHA_RECOVERY",
+  "approvedCore": [
+    370,
+    350,
+    560,
+    480
+  ],
+  "sourceVideoSha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410",
+  "source": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\wait\\key-purple-brisk-accent-v2\\Umi-wait-H3-source.mp4",
+    "sha256": "af380f9e674d0ef70c3b011c2d62f25254a20b205c37c5dd149eb249ea457410"
+  },
+  "priorManifestSha256": "a08fa1091e6b1e7d8b336cefd05ac0ed0cffb97eb84b7e6f93e62feff2bb2f2a",
+  "preflight": {
+    "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\early-alpha-closeout\\wait-preflight.json",
+    "sha256": "97ca08becf8c24ef79a0c4b09fb801b6b4abbd789342ea10316addba59e59321"
+  },
+  "actualViewedFiles": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\early-alpha-closeout\\wait-known-flag.jpg",
+      "sha256": "f43d54d3cdb2ba28a2252060f836596057221a5870337067aa96e61f82e8503a"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\early-alpha-closeout\\wait-source-core.jpg",
+      "sha256": "8b8f58ac39a0c06bf156638a8f8cc4cd3e119857354f9aa989544ade4d2bd990"
+    }
+  ],
+  "viewedCorePoses": [
+    0,
+    12,
+    28,
+    51,
+    82,
+    106
+  ],
+  "observations": [
+    "Known-flag source versus old black/white eye crops show localized eye-star highlight/tip changes with backing color inside an opaque eyeball/face; these are true unwanted interior transparency, not a legitimate external soft edge. JPEG proof establishes visual location; exact pixel counts/alpha remain the technical diagnostic responsibility.",
+    "Reviewed fixed rectangle lies over solid underlying forehead/eye/cheek/mouth in all six shown poses, away from purple background and paw gaps. It is not approval of an arbitrary foreground fill.",
+    "Use only finalwait rect[370,350,560,480]; rejected initial340left candidate included key and is not approved.",
+    "Fixed question symbol is a separate layer outside this face recovery, unchanged."
+  ],
+  "guardsRequired": [
+    "Only oldalpha<252 inside this approved fixed core, recovered from same native frame with the same fixed resize/registrationRGB andalpha255.",
+    "Reject8-neighbor external connectivity and any modification on coreboundary.",
+    "Reliablealpha>=252RGBA and every outside-core pixel remain exactly unchanged.",
+    "No color grading, artistic redraw, source duration/frame/registration change, or broader hole filling.",
+    "Full107source-key preflight remains mandatory; recorded minimum margin36.0byte.",
+    "Repaired final outputs require actual black/white review; acting approval remains valid and is not reopened."
+  ],
+  "actingApprovalWithdrawn": false,
+  "dynamicReReviewPerformed": false,
+  "finalOutputAccepted": false,
+  "formalAssetsChanged": false
+}

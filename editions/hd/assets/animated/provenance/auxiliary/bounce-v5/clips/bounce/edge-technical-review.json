@@ -1,0 +1,1435 @@
+{
+  "status": "TECHNICAL_GUARDS_PASS_INTERIOR_FEATURE_FLAGS_REQUIRE_ACTUAL_REVIEW",
+  "sourceVideoSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "manifestSha256": "dd87c98629752b827df77da2f5ab31c6853cc6202f69b0e68ba2faf82ff4fa0f",
+  "sourceProcessingAuthorizationSha256": "3e9211e9b28e06d36a6cb3ec0481366dd70c2854731b096ad9023195345185b1",
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "canvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    736
+  ],
+  "sourceTimelineUnchanged": true,
+  "perFrameFit": false,
+  "losslessWebpExactAllRgba": true,
+  "edgeAlphaExactAll107": true,
+  "edgeOpaque252RgbaExactAll107": true,
+  "stage1Guards": {
+    "status": "AWAITING_TWO_REVIEWERS_AND_USER",
+    "runtimeInstalled": false,
+    "humanAccepted": false,
+    "frameCount": 107,
+    "periodMs": 4458,
+    "completeForwardSource": true,
+    "sourceScale": 1.1666666666666667,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "borderTouchFrames": [],
+    "fringeAlphaExact": true,
+    "fringeOpaqueRgbExact": true,
+    "noiseAllRgbExact": true,
+    "noiseSupportedAlphaExact": true,
+    "removedDistantLowAlphaPixels": 6347,
+    "correctedWhiteFringePixels": 15431,
+    "numericChecksDoNotApproveArt": true,
+    "seamWarningOnly": {
+      "lastToFirstMAD": 0.001950418709150327,
+      "medianAdjacentMAD": 0.0005346966911764705,
+      "maxAdjacentMAD": 0.058190819035947715
+    }
+  },
+  "redCoralSamples": 9593,
+  "samplesBelowAlpha200": 376,
+  "enclosedSamplesBelowAlpha200": 376,
+  "worst": {
+    "frame": 58,
+    "rgbaSha256": "cd42883e210507fae2d77766d1080ce3af8afec8abcb0fda83b83da49d353614",
+    "redCoralSamples": 102,
+    "samplesBelowAlpha200": 11,
+    "enclosedSamplesBelowAlpha200": 11,
+    "bbox": [
+      393,
+      421,
+      604,
+      625
+    ],
+    "minimumAlpha": 0
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "rgbaSha256": "9943e67e2e40170c9d4c45942f9a7f567b0d253a0827bd8f66bf693d0d4e2cbd",
+      "redCoralSamples": 135,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 159
+    },
+    {
+      "frame": 1,
+      "rgbaSha256": "bc13bcff536628525822300e1bcc9345b323cd7735feddf0a0e91c049f8e50c4",
+      "redCoralSamples": 133,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 166
+    },
+    {
+      "frame": 2,
+      "rgbaSha256": "9ad18ac027d85fe198c096642a63366a3c931db9365f0636f73aacd05c90fe4f",
+      "redCoralSamples": 134,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 167
+    },
+    {
+      "frame": 3,
+      "rgbaSha256": "27c4e7efdd42779f25bdd78085bd0b937cfb8909a59fe513101649d13b06df19",
+      "redCoralSamples": 134,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 166
+    },
+    {
+      "frame": 4,
+      "rgbaSha256": "ff7e2356d289a7a8c1829568fda10b3863eb53f04ef362efce6dad719df34e11",
+      "redCoralSamples": 134,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 167
+    },
+    {
+      "frame": 5,
+      "rgbaSha256": "5508960e754f4ac753dc3a9765ff5f4afbdbd4ed0dc914571b5c856f8fcfc3c1",
+      "redCoralSamples": 132,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 166
+    },
+    {
+      "frame": 6,
+      "rgbaSha256": "44ddbd497fa6468b1bb7d1224ad80d02612a0da885905aff71f405069c8b37cc",
+      "redCoralSamples": 132,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 166
+    },
+    {
+      "frame": 7,
+      "rgbaSha256": "17fa4554a8b337b043b763e797775a48026f43c570397a9a9ccccd2ebf4f40d5",
+      "redCoralSamples": 130,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 166
+    },
+    {
+      "frame": 8,
+      "rgbaSha256": "70c28f62aa0e60bb3115fb259496baeeb2d9c4b51a0ea1de138b4f86425414af",
+      "redCoralSamples": 127,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 167
+    },
+    {
+      "frame": 9,
+      "rgbaSha256": "496a0f52550ddd26704174094975b128223302a3da44e734b0f74539bdda2a3f",
+      "redCoralSamples": 132,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 163
+    },
+    {
+      "frame": 10,
+      "rgbaSha256": "0f06f86e190baa661689163f91e2e73b2f2e8a9822b82e2d0fdaa997041195b2",
+      "redCoralSamples": 131,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 163
+    },
+    {
+      "frame": 11,
+      "rgbaSha256": "3f0bbadbbdb70a571e30de512faa8e86ad30f6f5b5fac776ad1ee67edd2b086c",
+      "redCoralSamples": 131,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 163
+    },
+    {
+      "frame": 12,
+      "rgbaSha256": "52ec113abaaabc290ac6d3470bc6058910f7c298e73f4c2f52ddce3ffae0c738",
+      "redCoralSamples": 131,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        507,
+        427,
+        508,
+        429
+      ],
+      "minimumAlpha": 163
+    },
+    {
+      "frame": 13,
+      "rgbaSha256": "8ce4313b0bf049e057df571caac73f37ef28ea14209d4e9ace930e7aa333a7f5",
+      "redCoralSamples": 105,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 14,
+      "rgbaSha256": "8b2b96765325b02d7e6f55ca53bf94aeceaec727397770cb061000e46f0b6be3",
+      "redCoralSamples": 95,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 15,
+      "rgbaSha256": "049939fb5490415b56860621e3b898700ae0693e3c7add9ca218ef4432960008",
+      "redCoralSamples": 96,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 16,
+      "rgbaSha256": "081eba21edfa1b62086b34d55854f2ebed1a3f6bc594992d05b18dca7c7763d9",
+      "redCoralSamples": 114,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 17,
+      "rgbaSha256": "4862857e16c326d16bb1c0ae24825c135bbd6a56d3c34490434b40c39a272f2c",
+      "redCoralSamples": 69,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 18,
+      "rgbaSha256": "32746c80d3b3b9deeef9f0f56e69dbc0fdf3099be9f16441ecb4b11dddda5b32",
+      "redCoralSamples": 79,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 19,
+      "rgbaSha256": "8e7ef6c2cb47b5001df9accac05c812fda4d075d93bd405d2a46c14ec46ebf44",
+      "redCoralSamples": 69,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        505,
+        417,
+        508,
+        436
+      ],
+      "minimumAlpha": 177
+    },
+    {
+      "frame": 20,
+      "rgbaSha256": "dd4a98433bebcc044ec6a2f9058aacdadc85bea02af038e2799d20bcf72201b5",
+      "redCoralSamples": 88,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        505,
+        417,
+        509,
+        436
+      ],
+      "minimumAlpha": 87
+    },
+    {
+      "frame": 21,
+      "rgbaSha256": "6a79df4fe41cefca61f8d09fd5b142503ed8695746ef1a18c6152955d9d7fce9",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 1,
+      "enclosedSamplesBelowAlpha200": 1,
+      "bbox": [
+        507,
+        421,
+        508,
+        422
+      ],
+      "minimumAlpha": 176
+    },
+    {
+      "frame": 22,
+      "rgbaSha256": "4a4815b8a7fb196679c62856467ffed2a1f572173cab7a5e45503f093de43569",
+      "redCoralSamples": 76,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 23,
+      "rgbaSha256": "88faf8a34434f81505917ab8b86bec269760dc0fc51ba5a4e1b49e7993bffae1",
+      "redCoralSamples": 71,
+      "samplesBelowAlpha200": 1,
+      "enclosedSamplesBelowAlpha200": 1,
+      "bbox": [
+        507,
+        417,
+        508,
+        418
+      ],
+      "minimumAlpha": 192
+    },
+    {
+      "frame": 24,
+      "rgbaSha256": "f40fbc22721b8de20123e40402a3d3671907be88b2224d52bc122f26a30221fa",
+      "redCoralSamples": 72,
+      "samplesBelowAlpha200": 1,
+      "enclosedSamplesBelowAlpha200": 1,
+      "bbox": [
+        507,
+        417,
+        508,
+        418
+      ],
+      "minimumAlpha": 192
+    },
+    {
+      "frame": 25,
+      "rgbaSha256": "59f67b4fea2ed46f806a58a3586e88fe3d479e759b6503e9a3521b0bcc8e4075",
+      "redCoralSamples": 64,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        505,
+        413,
+        511,
+        420
+      ],
+      "minimumAlpha": 143
+    },
+    {
+      "frame": 26,
+      "rgbaSha256": "5e1b7a0ad5ca0ccbfe1c04809eeeab0af8aa9eaf8592b9455807f128d597a332",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 27,
+      "rgbaSha256": "011bc77ce5d022b64efa7fcc5c69d2d3206168dbf278bb002f553dac46731d2a",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 28,
+      "rgbaSha256": "6bc6a13c6d836f04ab2ecf986d21107a03cd6c49420df3d17be2e6c907ae686b",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 29,
+      "rgbaSha256": "29d35df0e1785428ec2c0c9e2e390e8c02e969d1143f3559e8967fbcf3dc5d99",
+      "redCoralSamples": 65,
+      "samplesBelowAlpha200": 8,
+      "enclosedSamplesBelowAlpha200": 8,
+      "bbox": [
+        504,
+        411,
+        509,
+        419
+      ],
+      "minimumAlpha": 78
+    },
+    {
+      "frame": 30,
+      "rgbaSha256": "2072debe8ff9433349675704be5fe1075ef54bb298d4a9b06c4bcec3e0af6169",
+      "redCoralSamples": 63,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 31,
+      "rgbaSha256": "b983637daaa6729b5b3ce538189931fdfee8dd7e9f69d17530e1e00a70b2e0d8",
+      "redCoralSamples": 65,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 32,
+      "rgbaSha256": "2020080e14c11ee757e0e7e841107b29a5bbac15e75b399f5417a7c6c85c05da",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 33,
+      "rgbaSha256": "34643bd4cbe2a9f1328fdf716aa9833867210cf8ea3e0d44aaab9361f630ef33",
+      "redCoralSamples": 62,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        505,
+        412,
+        509,
+        419
+      ],
+      "minimumAlpha": 79
+    },
+    {
+      "frame": 34,
+      "rgbaSha256": "c6f0a41cd17330ace1572875f7f616c4bb39acd5ebd7eae66e2589c0e3403a3c",
+      "redCoralSamples": 54,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        505,
+        413,
+        508,
+        419
+      ],
+      "minimumAlpha": 57
+    },
+    {
+      "frame": 35,
+      "rgbaSha256": "077f01e8d7eade52bd506d9bb60168e9d3417bd49c4b150cc113ac4391b29154",
+      "redCoralSamples": 65,
+      "samplesBelowAlpha200": 8,
+      "enclosedSamplesBelowAlpha200": 8,
+      "bbox": [
+        505,
+        412,
+        509,
+        420
+      ],
+      "minimumAlpha": 52
+    },
+    {
+      "frame": 36,
+      "rgbaSha256": "b392bd7dbea02526c352f7ea806d0daab8a8503141aa748bdcfabfb1f031132d",
+      "redCoralSamples": 84,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 37,
+      "rgbaSha256": "12eadf1d5e922efe3df5630af3530ca170216fdccf9e4cd14a772930f557f752",
+      "redCoralSamples": 79,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 38,
+      "rgbaSha256": "ed38f7de011d6aa8e7ad3f08f6380022c006256d07779660d56d1e87382a4d44",
+      "redCoralSamples": 30,
+      "samplesBelowAlpha200": 1,
+      "enclosedSamplesBelowAlpha200": 1,
+      "bbox": [
+        385,
+        482,
+        386,
+        483
+      ],
+      "minimumAlpha": 122
+    },
+    {
+      "frame": 39,
+      "rgbaSha256": "40659d6a0f6004a17ee8f522acee6b699228c224a83d010c3905765af51ff8c4",
+      "redCoralSamples": 38,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        385,
+        496,
+        399,
+        501
+      ],
+      "minimumAlpha": 49
+    },
+    {
+      "frame": 40,
+      "rgbaSha256": "d11fe611ec1fec5ecf139937c58064ae8544670df374bba5573d727b0c941191",
+      "redCoralSamples": 37,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        385,
+        496,
+        399,
+        501
+      ],
+      "minimumAlpha": 92
+    },
+    {
+      "frame": 41,
+      "rgbaSha256": "6a1fb75563360bc593ca379fae39e3c731e075b4b07bcb8c8f6ca93b0e50225f",
+      "redCoralSamples": 43,
+      "samplesBelowAlpha200": 7,
+      "enclosedSamplesBelowAlpha200": 7,
+      "bbox": [
+        384,
+        498,
+        498,
+        502
+      ],
+      "minimumAlpha": 84
+    },
+    {
+      "frame": 42,
+      "rgbaSha256": "584f4ec6bc1f8c3a0d75157f0984c8a9c4d129abc39c3fcac1e30089b1d01f09",
+      "redCoralSamples": 42,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        384,
+        498,
+        390,
+        502
+      ],
+      "minimumAlpha": 85
+    },
+    {
+      "frame": 43,
+      "rgbaSha256": "ed917390426c31175803f3ad4f7b62bac2b546e38efdcd50ddefac926771fe64",
+      "redCoralSamples": 18,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 44,
+      "rgbaSha256": "120cdc3154f2f2ec08c4db70f4cd1407c089620ffc36e9f4a07302611a2b6fd5",
+      "redCoralSamples": 19,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 45,
+      "rgbaSha256": "93ee88110e293e32bd49a6f5740a76e507554a2686148858a083ae297bc61347",
+      "redCoralSamples": 43,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 46,
+      "rgbaSha256": "3f2f120b8649a7d8ac62c01b9613772c269a59204288b639c0c3c4ef31a4abaf",
+      "redCoralSamples": 27,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 47,
+      "rgbaSha256": "93d1395505d52b5c39004fcb51099033f11370899d12d50d21aba63189b5ee8b",
+      "redCoralSamples": 18,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 48,
+      "rgbaSha256": "b3f70386d4f1e9555b86c5657b2cb4eb0d064c2bdd8485db91390f68328a545d",
+      "redCoralSamples": 42,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        403,
+        423,
+        406,
+        426
+      ],
+      "minimumAlpha": 29
+    },
+    {
+      "frame": 49,
+      "rgbaSha256": "626e0b404e711da2454f9c51060d8c4bc363b9bddb8db560c653482b614261db",
+      "redCoralSamples": 59,
+      "samplesBelowAlpha200": 3,
+      "enclosedSamplesBelowAlpha200": 3,
+      "bbox": [
+        403,
+        423,
+        406,
+        425
+      ],
+      "minimumAlpha": 135
+    },
+    {
+      "frame": 50,
+      "rgbaSha256": "bd02f5924c9f8949817ca80d4bd59f47d3beeebc422b174c28ce5ce6380c1e46",
+      "redCoralSamples": 37,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        403,
+        415,
+        499,
+        418
+      ],
+      "minimumAlpha": 90
+    },
+    {
+      "frame": 51,
+      "rgbaSha256": "8804fbc207083645ee70b4a3eb21e8d4fed632730b13b0ea2f78b7afcc026fb2",
+      "redCoralSamples": 42,
+      "samplesBelowAlpha200": 3,
+      "enclosedSamplesBelowAlpha200": 3,
+      "bbox": [
+        403,
+        416,
+        405,
+        418
+      ],
+      "minimumAlpha": 117
+    },
+    {
+      "frame": 52,
+      "rgbaSha256": "cefa5295a6bd2213b7eb25935ba6e1ef40efb1cca9b121dde5be75b715a93a88",
+      "redCoralSamples": 20,
+      "samplesBelowAlpha200": 2,
+      "enclosedSamplesBelowAlpha200": 2,
+      "bbox": [
+        403,
+        421,
+        405,
+        422
+      ],
+      "minimumAlpha": 138
+    },
+    {
+      "frame": 53,
+      "rgbaSha256": "b26f98bca0e0eef45f64347b53b7554717b15f29ec8d9a6dfaea7f1f6e16f19e",
+      "redCoralSamples": 37,
+      "samplesBelowAlpha200": 1,
+      "enclosedSamplesBelowAlpha200": 1,
+      "bbox": [
+        507,
+        417,
+        508,
+        418
+      ],
+      "minimumAlpha": 179
+    },
+    {
+      "frame": 54,
+      "rgbaSha256": "ae2bbfc2f1d7c7aa4a8e007cca0ca0eb1fad0f29cc06a149cd1f4f0e956b2ca8",
+      "redCoralSamples": 56,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        395,
+        420,
+        404,
+        431
+      ],
+      "minimumAlpha": 159
+    },
+    {
+      "frame": 55,
+      "rgbaSha256": "4b15452c54ece5ebc851787e2e1f56372259c1aebe8611c77523bf23af2e9aa9",
+      "redCoralSamples": 56,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        395,
+        420,
+        404,
+        431
+      ],
+      "minimumAlpha": 159
+    },
+    {
+      "frame": 56,
+      "rgbaSha256": "df5f9ac5f3815e9a9c974f33e431d2e194f022ad20e96c4bbe9f1255124a2f9d",
+      "redCoralSamples": 98,
+      "samplesBelowAlpha200": 9,
+      "enclosedSamplesBelowAlpha200": 9,
+      "bbox": [
+        393,
+        420,
+        604,
+        625
+      ],
+      "minimumAlpha": 0
+    },
+    {
+      "frame": 57,
+      "rgbaSha256": "f0e38bfb4b2ac26f8ad1a111584480b44060a250124b3eb86da97773f97c4172",
+      "redCoralSamples": 102,
+      "samplesBelowAlpha200": 10,
+      "enclosedSamplesBelowAlpha200": 10,
+      "bbox": [
+        393,
+        421,
+        604,
+        625
+      ],
+      "minimumAlpha": 0
+    },
+    {
+      "frame": 58,
+      "rgbaSha256": "cd42883e210507fae2d77766d1080ce3af8afec8abcb0fda83b83da49d353614",
+      "redCoralSamples": 102,
+      "samplesBelowAlpha200": 11,
+      "enclosedSamplesBelowAlpha200": 11,
+      "bbox": [
+        393,
+        421,
+        604,
+        625
+      ],
+      "minimumAlpha": 0
+    },
+    {
+      "frame": 59,
+      "rgbaSha256": "dc92afb36f76565e90e3efca8a3d23099da26ab78780c6e2891d8b12cecfebbf",
+      "redCoralSamples": 99,
+      "samplesBelowAlpha200": 10,
+      "enclosedSamplesBelowAlpha200": 10,
+      "bbox": [
+        393,
+        421,
+        604,
+        625
+      ],
+      "minimumAlpha": 0
+    },
+    {
+      "frame": 60,
+      "rgbaSha256": "078037d5cc49e6a9993aea578935ba9806fcbefceea4e66f709ffbc4026d9d1c",
+      "redCoralSamples": 97,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        394,
+        420,
+        396,
+        425
+      ],
+      "minimumAlpha": 11
+    },
+    {
+      "frame": 61,
+      "rgbaSha256": "ec35abb585f2a3f3b0e77ce6217aab6fe5cb86e44df2fdda6e3abd9eb5f21c3d",
+      "redCoralSamples": 97,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        394,
+        420,
+        396,
+        425
+      ],
+      "minimumAlpha": 11
+    },
+    {
+      "frame": 62,
+      "rgbaSha256": "84f20236dfc4b768a05ef6a0dec1892c22007f772862848e133d864384fbbfe8",
+      "redCoralSamples": 96,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        394,
+        420,
+        396,
+        425
+      ],
+      "minimumAlpha": 11
+    },
+    {
+      "frame": 63,
+      "rgbaSha256": "1ceb961605b913ebe4b0981df67f5dcb01da6f5382a8813d1c43e094520a43cd",
+      "redCoralSamples": 97,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        394,
+        420,
+        396,
+        425
+      ],
+      "minimumAlpha": 11
+    },
+    {
+      "frame": 64,
+      "rgbaSha256": "b17435d470d11c40fddc3df2d75cc3252a6ce8e82c4bf06964ce205615070f6c",
+      "redCoralSamples": 87,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        393,
+        422,
+        396,
+        434
+      ],
+      "minimumAlpha": 17
+    },
+    {
+      "frame": 65,
+      "rgbaSha256": "4634345c8eefa667c8c71fd507731e3db11bc1c6f1f1b5e50d3c56951c2572d9",
+      "redCoralSamples": 87,
+      "samplesBelowAlpha200": 7,
+      "enclosedSamplesBelowAlpha200": 7,
+      "bbox": [
+        393,
+        422,
+        500,
+        438
+      ],
+      "minimumAlpha": 33
+    },
+    {
+      "frame": 66,
+      "rgbaSha256": "b7ef960346114f1945f0d1ec074ae683954417dee15ae5599690ea35f19c3ae1",
+      "redCoralSamples": 10,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 67,
+      "rgbaSha256": "26fb376ff424f4886736204e4793f912b7ca13f8e66e6268c88be06fd6efa2fe",
+      "redCoralSamples": 10,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 68,
+      "rgbaSha256": "2f696f3728bf05c595194d19589f0778c27af223ccc9d5435a76efc56e675c94",
+      "redCoralSamples": 11,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 69,
+      "rgbaSha256": "1bee88c1a7c08fcb115a259eddd70f6667989b6171b3a9196ca5a5d66cab3983",
+      "redCoralSamples": 10,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 70,
+      "rgbaSha256": "72fc1ba20b3e2ce9be3e9583f7c1e2ddf6f14481d90784034ce0f537ac202f0f",
+      "redCoralSamples": 85,
+      "samplesBelowAlpha200": 3,
+      "enclosedSamplesBelowAlpha200": 3,
+      "bbox": [
+        390,
+        423,
+        396,
+        430
+      ],
+      "minimumAlpha": 162
+    },
+    {
+      "frame": 71,
+      "rgbaSha256": "5ccf24e1309d3eea4ac0a052f90558d671c98c23ab3bc1ce8240d3b978222843",
+      "redCoralSamples": 98,
+      "samplesBelowAlpha200": 6,
+      "enclosedSamplesBelowAlpha200": 6,
+      "bbox": [
+        392,
+        420,
+        396,
+        434
+      ],
+      "minimumAlpha": 128
+    },
+    {
+      "frame": 72,
+      "rgbaSha256": "801802b304dd798f12cf7ab1ec7e9667c0942f421c6dc764f4ae5ed726b4346a",
+      "redCoralSamples": 103,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        392,
+        420,
+        396,
+        434
+      ],
+      "minimumAlpha": 126
+    },
+    {
+      "frame": 73,
+      "rgbaSha256": "8271e30b6787a33177ccd6842ed8f8e8666bae51b48d13083785cad88ef5af2f",
+      "redCoralSamples": 109,
+      "samplesBelowAlpha200": 5,
+      "enclosedSamplesBelowAlpha200": 5,
+      "bbox": [
+        392,
+        420,
+        396,
+        434
+      ],
+      "minimumAlpha": 128
+    },
+    {
+      "frame": 74,
+      "rgbaSha256": "12b3164817d1fb8646e0cb1fdf25367146f4876e236af3fbb2a6616b18458ac4",
+      "redCoralSamples": 113,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 116
+    },
+    {
+      "frame": 75,
+      "rgbaSha256": "ccaf00275c3ca2d2449bca7331509750a216ef8d7998b0f6d6b7643685370d0c",
+      "redCoralSamples": 113,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 116
+    },
+    {
+      "frame": 76,
+      "rgbaSha256": "d4f18d8ab9fe91ff2527d05f55a81afd176e7a49fa7ce23b02ecd891a295b050",
+      "redCoralSamples": 113,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 121
+    },
+    {
+      "frame": 77,
+      "rgbaSha256": "580f4fe32cc50601ccfcc23fa62c54f654cd371e6ba8b7edaad78c8f0f817501",
+      "redCoralSamples": 113,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 124
+    },
+    {
+      "frame": 78,
+      "rgbaSha256": "c0cc9ecbc8c4724ada189f896b01658fa76f7b2548b99ef73e73b4f266ba5127",
+      "redCoralSamples": 114,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 124
+    },
+    {
+      "frame": 79,
+      "rgbaSha256": "70dcf8efd74ee548c835f1567c9c6a9b125211113c6be4956309fcdd24473c3e",
+      "redCoralSamples": 114,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 124
+    },
+    {
+      "frame": 80,
+      "rgbaSha256": "217936eb041edea3d96c8c460388135d01c540bd5d803039b30c828b9272c81e",
+      "redCoralSamples": 115,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 124
+    },
+    {
+      "frame": 81,
+      "rgbaSha256": "9e7d5cae07495ccb791a211b5a78fa7940206c12967444afcfa9facf89d73c74",
+      "redCoralSamples": 115,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 124
+    },
+    {
+      "frame": 82,
+      "rgbaSha256": "4649124ae55fa88952a73df5a2dc80ae4745ff3f00f3f9dfc6b33661c199206d",
+      "redCoralSamples": 117,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 127
+    },
+    {
+      "frame": 83,
+      "rgbaSha256": "f0f663063bb1d8edf4b039d347d6d22fc2759b6b1d3a829813d2535647f2512d",
+      "redCoralSamples": 117,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 129
+    },
+    {
+      "frame": 84,
+      "rgbaSha256": "e22d56f579953e8434eb106a9af83d90942daeb3e72273f41b31c7f6fb066e40",
+      "redCoralSamples": 117,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 129
+    },
+    {
+      "frame": 85,
+      "rgbaSha256": "657b8d1897ae8cfcadb0031bee2f2ae680cb43a439fd718deb1cf11b36e2bb33",
+      "redCoralSamples": 115,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 134
+    },
+    {
+      "frame": 86,
+      "rgbaSha256": "e02a04459588d51fa29783ff279eed76954f8035e443d56e42abfd8a8ef57fd7",
+      "redCoralSamples": 120,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 144
+    },
+    {
+      "frame": 87,
+      "rgbaSha256": "f0750e45c7f034aebd6c0a3744c616d14ce77eb61cc5fcb0fe6a7114ae2197a5",
+      "redCoralSamples": 119,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 145
+    },
+    {
+      "frame": 88,
+      "rgbaSha256": "fc6252ae7095c783d37a3d83f9b370d5c62c77eb9eff8b05d08ae522d45ec177",
+      "redCoralSamples": 119,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        394,
+        420,
+        396,
+        423
+      ],
+      "minimumAlpha": 150
+    },
+    {
+      "frame": 89,
+      "rgbaSha256": "4bec77fa4b7aac4c7cb4b06186354af67a8857590670b0da70f55bc3de3f8582",
+      "redCoralSamples": 118,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 90,
+      "rgbaSha256": "34b1701175a3e1b20fe7ee7083af8111e707261c593cc7470231bcbb595ad1b1",
+      "redCoralSamples": 126,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 91,
+      "rgbaSha256": "b042ba5c1fb18ef9b2c61f78b37d7a0f3145730f1e668cea802445d994366c8a",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 92,
+      "rgbaSha256": "ead463d4b7410507c14491e627794c751dbe38c64b4b834f3a83eff8f23a06e1",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 93,
+      "rgbaSha256": "48ade7e653193844fad52b2d1133269fbae0ef9eaa755aa2de278128c193c877",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 94,
+      "rgbaSha256": "a94af91f584da0c667ef849f36e2107005690a6e8e4a7e8fc04f7e7c3605c493",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 95,
+      "rgbaSha256": "040721e0bbf1404a93230a44d2a0ac6ba100d22b24215c9ee3327dc5cfe57453",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 96,
+      "rgbaSha256": "99d89f385d1d961f4f94b146cda5dea36936e6d6b48ef6af35dbe962ba2c97cb",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 97,
+      "rgbaSha256": "b5208953ee670adac5483c06f11f5e5cb91261d620471b8d9e8befa8d06cd766",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 98,
+      "rgbaSha256": "425a8ad47a5570146fcba03c7ccb87ed1b18c748a89f12d73684573153e526a3",
+      "redCoralSamples": 124,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 99,
+      "rgbaSha256": "092f1944bc7a2a7699e43095732d9ebed01881386f93bfb23ce6db3311f76b77",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 100,
+      "rgbaSha256": "de87a1d9e245e69b5367fe01266847b03a98080264d49eb70aafec3882734ca8",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 73
+    },
+    {
+      "frame": 101,
+      "rgbaSha256": "b47c83de785bc077642ed62b2708d485752fd97f32673f1cd5ae9904cc2870c3",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 102,
+      "rgbaSha256": "61b86651f665e1e189787d5297cf6cd3905d7d911189ad5b19678568184b853e",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 103,
+      "rgbaSha256": "317e9812f3fb664acb33afaaf94b3a1955fbd9bfc2f1c7613c696a1663d19d66",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 104,
+      "rgbaSha256": "83057dbb648ea3bde66b123c23a5b632f6c553f21c611d53efd5802591a17d8c",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 105,
+      "rgbaSha256": "0c66e83ba20b25d38bfc3c34006388e7fc356b05a658365ded86ee52e270011c",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    },
+    {
+      "frame": 106,
+      "rgbaSha256": "54c649fe6e9907d4641ba63fb0799d7e2cc0058fbb08a73ddcc01f555e7f1a59",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 4,
+      "enclosedSamplesBelowAlpha200": 4,
+      "bbox": [
+        507,
+        437,
+        510,
+        441
+      ],
+      "minimumAlpha": 72
+    }
+  ],
+  "diagnosticScope": "Original same-fixed-resize red/coral source evidence only; flags require visual review. No fill or opaque core is authorized by this diagnostic.",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

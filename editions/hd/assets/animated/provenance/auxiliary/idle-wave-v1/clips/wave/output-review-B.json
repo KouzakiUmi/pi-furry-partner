@@ -1,0 +1,58 @@
+{
+  "reviewer": "B",
+  "status": "READY_FOR_USER_TRANSPARENT_NATIVE_SPEED_REVIEW",
+  "readyForUserReview": true,
+  "humanAccepted": false,
+  "sourceVideoSha256": "4e7dde7fcb18fe960cfe2ac7a9fa1abe6bfe249e2f7591441f3939a5d3c0767b",
+  "outputDirectory": "processed-edge-v2",
+  "finalManifestSha256": "67d5ac9781b7535001254e1d7c6ec3bcb211ab2a6322e49a32aacbc265fb44eb",
+  "technicalReviewSha256": "8289cfb0f88f1b36a1415a062cf993dd5d7d9cf0435bc88ea37ebbb4d9eae931",
+  "wrapperSha256": "c1606902b51585302136df09e064b1aa32c33f6295c1a865d99aa5d7658a561b",
+  "edgeWrapperSha256": "b5779bd6a8ccc95ff863b4a07e1ca2e3ce085d3142318d0bdfc97e4694f059d1",
+  "actualViewedFiles": [
+    {
+      "file": "processed-edge-v2/black/018.png",
+      "sha256": "9e3ff9a1bd7bc7c34a21e654c484b521ba23f51b4b8e5dffd7e92f50172dd8f8"
+    },
+    {
+      "file": "processed-edge-v2/white/018.png",
+      "sha256": "18a369b271c4e620d69607b99898038a79b8467b4215f58843d2aad30f558e69"
+    },
+    {
+      "file": "processed-edge-v2/black/042.png",
+      "sha256": "c2622cc17874169a361b2acf6d9feb0ac4fbb9d32e185b1983140c2b545d03bf"
+    },
+    {
+      "file": "processed-edge-v2/white/066.png",
+      "sha256": "018ccb0a60d29458cf2abb015bc32b73030a866f10d033d1b0e267e6d6d2863a"
+    },
+    {
+      "file": "processed-edge-v2/black/000.png",
+      "sha256": "0b5af455e41533110d3a6e8f80f7a8e02cea65457bdd60309f68f1228aed157a"
+    },
+    {
+      "file": "processed-edge-v2/white/106.png",
+      "sha256": "47a837fb4d17abda4eeea8fef8d77287dd041b2c5ef909910cc926c655b6374c"
+    },
+    {
+      "file": "processed-edge-v2/black/012.png",
+      "sha256": "ba2ea4c7b2bd290ea311dc78b4d1bd9ce4849d3e1842cc88252b810c09931d13"
+    },
+    {
+      "file": "processed-edge-v2/white/012.png",
+      "sha256": "70ff434f298717630751054873fd8d623a5e648130bc5eb0f76d822a6f5c7417"
+    }
+  ],
+  "findings": [
+    "012闭眼线连续，灰豆眉独立；018/042/066开眼星、嘴线/小牙与掌垫在黑白底未见内孔或断线。全107 red/coral236334样本alpha<200为0，本片未使用任何face core恢复。",
+    "抬掌四短圆趾体/粉豆+中央垫可读，白厚臂灰掌分界与落地另一掌保持；未因alpha损失趾垫、甲尖或掌体。",
+    "单层下摆仍收向下，掌/身体间真实空隙保持，无alpha填入背景或矩形接缝。",
+    "所查黑白原寸无大片漏底/明显分离亮白噪岛；白臂外缘、底缘有细暗紫颗粒/软边锯齿，不能宣称零噪点。"
+  ],
+  "technicalScope": "独立107 PNG/WebP RGBA、clock/registration/alpha/reliable252/outside guards已在edge-technical-review记录通过；这些数值不替代艺术接受。",
+  "knownPerformanceDifferences": [
+    "中间开口小笑/短牙取自第二参考；没有声称已全程遵守prompt闭口。",
+    "Ref2VA首末为近neutral支撑但非像素完全相同；未实际连续播放，不认证正常速度、挥动节拍或循环接缝。"
+  ],
+  "approvalBoundary": "当前仅候选透明原速送用户；A另作材质/软边独立复核，用户final acceptance后才允许formal integration；未修改正式19/nod素材、未安装发布。"
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "model": "MiniMax-H3",
+  "action": "sad",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\emotion-sad.png",
+  "sourceSha256": "aac490934312b8b0d2e086ba03249ad2f85b656c3e0630abc3079ca8f96acb88",
+  "referenceSha256": "c483020e2c66269ac112c2794e38dcddbd3a70c71f4c2c3ac89279c245ab3645",
+  "promptSha256": "db68101dcb01ff5802cd606cbaa5298d1069f01833a15f3d2b1d27258abe1d39",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Connected vulnerable breath and reassurance-seeking gaze",
+    "primaryMotion": "This is an unresolved moment of sadness, before any comfort has arrived. Umi's compact gray bean brows lift at the inner ends over watery blue star eyes; his little animal mouth keeps DOWNWARD corners, with a tiny uncertain trembling lower lip. That sad mouth feeling continues through the entire shot, including the recovery. A brief worried glance and a caught breath draw the head, chest, shoulders and bent arms together into one vulnerable huddle; the same breath loosens into a small weighted settling while he looks toward his friend again, still hurt and unsure. The return is NOT relief, pride, bashful pleasure or a smile. Keep the overall tender sadness readable without a title.\n\nMake the attention change and catch/release short normal-speed movements, around0.2–0.4seconds, with a living pause, not a slow2–3second head sway. The body overlaps as one feeling rather than eyes-stop-head-stop-hands exercises. Two rounded curled paws remain near the scarf with a small natural gap. Three front curled digits wrap each complete paw while the fourth thumb-like digit stays behind with a believable full base, not three thin fingers. Keep short ivory nail tips, thick white forearms and the same pointed gray/white borders. Eye-corner pools remain little clear-blue moisture; dark eyelid lines and compact gray brows stay separate in a natural blink. Original face width and grounded seated weight are stable. Folded ear, scarf and the one draped cape have only small weighted after-settle. Recover the supplied original SAD pose and compatible breath, still emotionally unresolved; no smile during the middle or a happy ending, no snap or freeze.",
+    "supportChain": "Breathing, chest/shoulders, neck/head and bent elbows/compact curled paws continuously accommodate each other within one living pose. No isolated hand demonstration or sequential body-part cues.",
+    "gazeHead": "Watery uncertain gaze and compact mouth respond within one supported feeling",
+    "secondaryMotion": "Scarf/folded hood lag supported movement naturally without an isolated secondary-motion section.",
+    "anchors": "Canvas896/pivot448704/worldPaintRect(-128,-96,896,896), world support320608; fixed original registration, no per-frame fit.",
+    "timingLayers": "Brief ordinary-speed0.2–0.4s attention/weight changes, living pauses and smaller after-settle; no whole-shot slow sway or segmented body-part exercises.",
+    "loopBoundary": "Same original supplied pose, grounded weight and compatible motion phase; continuous forward unresolved emotion. Cry water continues downward, never reverse or endpoint paste.",
+    "reviewOrder": "A source materials/patterns against clean2D reference and original color card; B action semantics, four-digit support and natural whole-body unity; then complete native source and frozen purple matte/edge review, interior color/tear detail validation and original-speed user review.",
+    "propInteraction": "none"
+  },
+  "sameFirstAndLastFrame": true,
+  "sourceToReference": {
+    "size": [
+      456,
+      608
+    ],
+    "offset": [
+      220,
+      109
+    ],
+    "canvas": [
+      896,
+      896
+    ],
+    "scale": 0.4198895027624309
+  },
+  "outputCanvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    704
+  ],
+  "keyColor": "#A020C0",
+  "alphaPreparation": "min255 round(a*255/250); original RGB unchanged before uniform resize",
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "User approved purple shy/grumpy v4 and says 两条都可以，继续下一批. Fresh sad/cry pilots with existing approved body/paw/flow references. Each new source requires A/B and native-speed user review; no formal asset replacement or install.",
+  "registeredReferenceSha256": "c3e0c6821eb156d3fc017aca7ba50b598bf583085411062eb74c61700f0da8aa",
+  "worldPaintRect": {
+    "x": -128,
+    "y": -96,
+    "width": 896,
+    "height": 896
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "USER_APPROVED_TRANSPARENT_OUTPUT_INTEGRATION_AUTHORIZED",
+  "sourceSha256": "e72c5f0add9d42887c73c1eda85368caa549d23adc6f6441ae27bd1a68dd090b",
+  "sourceEvidenceSha256": "de3e15b5e938d441ae8f54983e91f6d7869651d3061b50afeb620505c82509df",
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "alphaProcessing": "authorized; candidate processing in progress",
+  "sourceReviewBSha256": "ca12c6bcd54a2980f1c9e1db88a83f34ae60352200eae81dec589c028783235e",
+  "readyForUserSourceReview": true,
+  "allowAlphaProcessing": true,
+  "humanAcceptedSourceOnly": true,
+  "humanAcceptedTransparentOutput": true,
+  "userSourceApprovalSha256": "8c3f13e4f5f9e909bd4af9ee0f7712aeeecf3bc401ec0036a1ed4386faade07e",
+  "readyForRuntimeIntegration": true,
+  "userApprovalSha256": "37f980bf8cd615093f73fc142a57d96a7b0ce5e3f3b28cc809c97f36b2ca4e28"
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUtc": "2026-10-22T22:20:01.484514+00:00",
+  "reviewDate": "2026-10-23",
+  "userText": "两条都可以，继续下一批",
+  "reviewUrl": "http://127.0.0.1:54319/#grumpy",
+  "approvedJob": "Hi-Res/sources/h3-motion-polish-20261023/grumpy/key-purple-batch06-v1",
+  "approvedProcessedVariant": "processed-detail-v4",
+  "status": "USER_APPROVED_NATIVE_ACTING_LOOP_AND_V4_EDGE_INTERIOR_REPAIR_NOT_INSTALLED",
+  "humanAccepted": true,
+  "runtimeInstalled": false,
+  "replacementDeferred": true,
+  "deploymentAllowed": false,
+  "scope": [
+    "grumpy native timing/rhythm, amplitude and loop approved as displayed.",
+    "Current displayed v4 exterior edges and enclosed red mouth/eye-star interior matte repair accepted for this exact clip.",
+    "Proceed next sad+cry pilots through fresh A/B/source/edge/user review."
+  ],
+  "knownResiduals": "Fine dark/purple rim and sparse contour/hair-tip grains remain disclosed; inferred matte correction is not ground-truth alpha or zero-defect/lossless separation.",
+  "interiorMatteRepair": "Enclosed red mouth/eye-star details previously acquired false alpha holes. Native-source color and opaque alpha restored only for enclosed components<=64px containing native red evidence; external edges/reliable opaque preserved. Old edge-v2 held, not overwritten.",
+  "limits": [
+    "Approval binds processed-detail-v4 only. Failed processed-edge-v2 and narrow-v3 trials are not approved; historical HOLD records remain preserved.",
+    "This approval does not authorize future sources or transfer to sad/cry generations.",
+    "No formal-resource replacement or runtime installation performed or inferred."
+  ],
+  "nativeTimeline": {
+    "sourceFrames": 107,
+    "fps": 24,
+    "periodMs": 4458,
+    "fullForwardNativeSource": true
+  },
+  "paintRect": {
+    "height": 640,
+    "width": 640,
+    "x": 0,
+    "y": 0
+  },
+  "worldAnchor": [
+    320,
+    608
+  ],
+  "evidence": {
+    "Umi-grumpy-H3-source.mp4": "95e4b4bc455d8f278eb1fb41c9a3e75c6de421bfa91f8bd793f64b6ebff98238",
+    "registered-reference.png": "e88a7401a0e7fc7a418365d8b528b2fa3e1ea928003b58b35b443aff14ff62d7",
+    "reference.png": "f30021cb2be2aefd090200a2052b5c37c3655ecd1cb9f4fff2efe41c93fafc61",
+    "prompt.txt": "04b4334107ecd1e5df2b3d47798b02a26e62aee2192186d0260e243d9aed1568",
+    "spec.json": "41acef57962d5be4c435b08b41d0f8a8141f85ac631eeb73fb8509d60ab8d90f",
+    "motion-contract.json": "6dc4217a3f4790eeb206ea88274235c71246a5ccbf1773b152bfb9d3e5cd6f96",
+    "source-review-A.json": "4a5684871b4321e60bd6882d4ed925502fe27b51b717436a1852e94f6f8ff56e",
+    "reviewer-A.json": "e8a465bd99c7001fc714a312d38cca966e57f5ec3524db77f57aec40e91f56fc",
+    "reviewer-B.json": "b01c21bab136a8476cccdff4818e4a65c32bc3043bf6dbc46170a5a8e827ad91",
+    "detail-review-A.json": "63da78cac95de99d705cabca517e0301f0edd888cde2ca0a44fe73bf94a0b784",
+    "detail-review-B.json": "a77730fd89c8958aaae0d955f9b5b3ae7e32e0cb6649a07b01fde982c222804f",
+    "processed-detail-v4/manifest.json": "03a1a01835cbd928de370670690bac71dbaa958af8edc5a9ee93cf52c5f549ba",
+    "processed-detail-v4/report.json": "31ac6d1a58b1768e3807abc7c9c97263bceb7f42db4d116032efc956bc18c044",
+    "processed-detail-v4/world-black.mp4": "2e059f88f6d3b417e8e2ebda59e001fa5069c3f1583872748af9db3ae91875ee",
+    "processed-detail-v4/world-gray.mp4": "d48853e9084bbd102a827c0e6cf526a3f24aaeebdc72d2182afe8e86e22bc112",
+    "processed-detail-v4/world-white.mp4": "8c47d74783ab2526e47a2f4f88d942424579477d4fed6bdbbe8db95cae529730",
+    "review.json": "dc34a90a3d1656ddeb9f5cd42884f777bcc3275718c58b7efee9a48237035502"
+  },
+  "processingHelpers": {
+    "key-color-matte.py": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2",
+    "repair-key-edge-color.py": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b",
+    "restore-small-interior-red-details.py": "3e84373d11c445069f6b016e7f3a36e2a5195aad15f770dacfdb5cad7abb1c0c"
+  },
+  "technicalDetailProofs": {
+    "batch06-detail-v4-red-alpha.json": "d7761518fb118242b3e508fc1536b63afffbaffbe7c6332cd58cc8bfdd137cc1",
+    "batch06-detail-exterior-proof.json": "54fffb0601b0046f1dc42e6ff95510d94dcaffe2a02b53c0e992e752e17f545b",
+    "batch06-reference-chroma.json": "6fa32c3bd94aa60407b0c90ce870b340502f9a29105b3ce9490b3497330390c7",
+    "batch06-pipeline-provenance.json": "b6adb52aa168a86011c92b61f0792457e4ae34ed0c1e976bce4c5455d6e4adfb"
+  },
+  "displayBinding": {
+    "reviewRecord": "work/motion-polish-20261023/purple-batch06-review.json",
+    "reviewRecordSha256": "40197917b977ae532b99dbd65b59dd7725574a41c40090307f8e99cfc4ebea30",
+    "page": "work/motion-polish-20261023/preview/purple-batch06.html",
+    "pageSha256": "05fbb3c9ea09f5a94f36fdfb50ae8fda666a63f1adaf41b552f0fe5341bad1a2"
+  },
+  "verifiedAllDisplayedEvidenceHashesMatch": true
+}

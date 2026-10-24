@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "model": "MiniMax-H3",
+  "action": "wait",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\wait.png",
+  "sourceSha256": "c0cc5ab0509be7650f1427ae315754f6f3cb8187f4f5a0be2e1c9896821a57d9",
+  "referenceSha256": "58b3a1ade6c0bc1c6a82f50d89600d39294220fafef41119e2252246bc5cb355",
+  "promptSha256": "d3ce91db6f01aab9c9f9500831b49cd19be3baf775c57743ab03aa5934980f8c",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Brisk attentive waiting with short connected thought accents and living holds",
+    "primaryMotion": "Umi suddenly has the thought, \"Oh, are you about to answer?\" His eyes make a brisk attentive check toward the friend; his head and upper chest promptly follow in ONE connected, light, curious perk. The seated body and bent elbows support it, while both thick rounded paws stay comfortably down. He arrests the small movement cleanly, reads the friend for a SHORT living beat, then lets the head and chest land promptly back into patient expectation. A smaller quick eye check and a brief natural blink keep the pause alive before he returns to the supplied tilted-head waiting pose. This is a snappy, friendly check-in, not startled excitement or a talking gesture. The impulse comes from attention, and the entire supported body responds; do not keep the body rigid while only eyes or paws move.\n\nIMPORTANT TIMING: complete each main SMALL change of direction in roughly6–9 frames at24fps, around0.25–0.375s, at normal alert everyday speed. Follow those short clear moves with readable attentive pauses; do NOT spread a single head tilt gradually across2–3 seconds. The brief moving accents and the living holds must have strongly different spacing. Let the scarf and folded ear trail the impulse by a couple of frames and finish a small after-settle only after the main body has stopped. Never put the entire character into one continuous evenly eased slow sway. Keep the physical amplitude conversational and grounded, with original face width, paw/forearm volume and sideways tilt identity, rather than increasing the size to look fast. One blink is quick: two clear dark eye curves close and promptly reopen, with gray bean brows separately above. Keep the small CLOSED smile, no open mouth or speech. No paw wave, toe exercise, jumping or new prop. Finish in a living pose/breath phase compatible with the supplied first/last reference, without a long frozen final second or reset. NO question mark, text or icon in the generated video: a separate fixed question graphic is composited later.",
+    "supportChain": "Seated support and two grounded complete gray paws; bent elbows support chest/shoulder and tiny neck response; no global scaling.",
+    "gazeHead": "Brisk eye-led head/chest response, short readable hold, prompt supported recovery; conversational amplitude",
+    "secondaryMotion": "Tiny scarf and folded-ear settling follows the same primary body movement; single cape remains draped. No generated icon.",
+    "anchors": "Exact clean registered896 reference, fixed pivot448704; original sourceToReference offset retained; no per-frame fitting.",
+    "timingLayers": "Main small moves0.2-0.375s at normal speed; living attentive pauses; smaller echo with different spacing. No2-3second slow turn.",
+    "loopBoundary": "Same approved original character pose for first/last, naturally compatible direction and breath; full returned forward source kept.",
+    "reviewOrder": "First source material fidelity versus same-color reference, then independent chroma signal alpha/inverse compositing and white/gray/nail/stitch/blue/pink protection, contour fringe on3 backgrounds; native acting/loop unchanged by processing.",
+    "propInteraction": "none"
+  },
+  "sameFirstAndLastFrame": true,
+  "sourceToReference": {
+    "size": [
+      456,
+      608
+    ],
+    "offset": [
+      220,
+      116
+    ],
+    "canvas": [
+      896,
+      896
+    ],
+    "scale": 0.4198895027624309
+  },
+  "outputCanvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    704
+  ],
+  "keyColor": "#A020C0",
+  "alphaPreparation": "min255 round(a*255/250); original RGB unchanged before uniform resize",
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "User rejected gray separation because dark hood contour is confused; explicitly requests a different background color, alpha/mask extraction plus edge repair. Controlled wait pilot compares saturated purple/yellow; retain original character RGB, existing no-question input and separate fixed overlay. No formal replacement or installation.",
+  "backgroundMethod": "saturated violet-purple",
+  "registeredReferenceSha256": "42e0b510a2ac99dad0f3af4df09c9eed13ed2bb56efdee91551d9f56263745fc",
+  "method": "purple",
+  "inputPreparation": {
+    "originalRegisteredReferenceSha256": "0d6c8561ff738b4fb258ba80888f35abaef5c4290224022cb2571fe0d59d62bf",
+    "characterRgbUnedited": true,
+    "questionMotion": false,
+    "removedDetachedQuestionAlphaPixels": 1596,
+    "method": "Only alpha of separate components entirely within original question ROI615,305,680,390 set to zero; all RGB and every pixel outside selected components unchanged",
+    "authorization": "User explicitly requested removing moving question and compositing a separate stationary icon; subsequent fixed-question-layer-v2 approved. Not a character artwork edit."
+  },
+  "fixedOverlay": {
+    "file": "fixed-question-overlay.png",
+    "sha256": "b3e32dc6e7c3ad6359cd86854fee31846e8499cf9b217ffc705f810ced54bc6b",
+    "position": [
+      684,
+      284
+    ],
+    "questionMotion": false,
+    "approvedSource": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-wait-rest-20261020\\wait\\v1\\fixed-question-layer-v2\\user-approval.json"
+  }
+}

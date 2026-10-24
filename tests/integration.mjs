@@ -167,6 +167,19 @@ try {
   assert.notStrictEqual(terminal.write, nativeWrite);
   checks.push("Real Pi loader/theme/keybindings create the editor/header/footer; RPC has no terminal factories, hook or timer");
 
+  time += 6000;
+  const actionConfig = await readFile(join(scratch, "config.json"), "utf8");
+  assert.ok(mascotCommand.getArgumentCompletions("action rea").some(item => item.value === "action reading"));
+  await command("action reading"); currentEditor.render(100);
+  assert.match(notices.at(-1).message, /reading/);
+  assert.equal(await readFile(join(scratch, "config.json"), "utf8"), actionConfig);
+  await command("action off"); await command("action all");
+  await emit("agent_start"); await command("action searching");
+  assert.match(notices.at(-1).message, /正在处理任务/);
+  await emit("agent_settled", { aborted: true }); time += 3000;
+  currentEditor.render(100);
+  checks.push("Original-resource action completion invokes real command handlers, preserves config, and yields to actual Pi tasks");
+
   // Actual native typing, cursor-only input, paste and submission are observed
   // without intercepting or rewriting their data. Busy phases keep priority.
   time += 6000; currentEditor.setText("");

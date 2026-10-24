@@ -1,0 +1,17 @@
+{
+  "root": "D:/Software Projects/pi-furry-partner",
+  "items": {
+    "ear-flick": {
+      "label": "抖抖耳朵",
+      "note": "本条以耳部短促外抖和回收为主，眉眼／头肩微跟，双掌原位。原生耳部极值的上部X针脚略软／拖糊，披布侧角和围巾有外展；细暗边／少量彩色颗粒以无损PNG查看。动作是否像自然抖耳、帽耳体积和循环是否合适，仍待原速确认。",
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v1/processed-detail-v1",
+      "reference": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v1/registered-reference.png"
+    },
+    "head-shake": {
+      "label": "晃晃脑袋",
+      "note": "本条是恢复精神的小幅左右晃头，带眨眼、肩胸微反向和围巾附随，不以负面拒绝为目标。实际首段约1秒等待、两向有停留；细暗边／少量彩色颗粒以无损PNG查看。晃头的节奏和收住是否自然，仍待原速确认。",
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/head-shake/key-purple-pilot-v1/processed-detail-v1",
+      "reference": "Hi-Res/sources/h3-motion-polish-20261023/head-shake/key-purple-pilot-v1/registered-reference.png"
+    }
+  }
+}

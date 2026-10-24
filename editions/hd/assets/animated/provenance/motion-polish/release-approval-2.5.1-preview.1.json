@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "status": "USER_AUTHORIZED_MAIN_PRERELEASE_PUSH_AND_PUBLICATION",
+  "humanAuthorized": true,
+  "authorizationSource": "Current user authorization to push and publish, relayed explicitly by root to this independent audit task.",
+  "userInstruction": "推送发布",
+  "releaseLine": "main",
+  "tag": "v2.5.1-preview.1",
+  "version": "2.5.1-preview.1",
+  "prerelease": true,
+  "latest": false,
+  "scope": "Publish the user-approved motion selection and tested Pi/DSH integration as main2.5.1-preview.1 prerelease. Earlier acting/technical approvals remain exact and retain disclosed deviations. Legacy publication is handled separately.",
+  "selection": {
+    "path": "assets/animated/provenance/motion-polish/approved-selection.json",
+    "sha256": "3f32d31e18fea7c60a9189652a0992644e93bcd23749a703437a9b7b57d8abc4"
+  },
+  "catalog": {
+    "path": "assets/animated/catalog.json",
+    "sha256": "b27faea48de625ef3fcbfecfab0af436e0df7608bc6ce631a43b67c1db517b8b"
+  },
+  "revision": "animated-motion-polish-v1-6a3a4654cb81a55a",
+  "motionProvenance": {
+    "path": "assets/animated/provenance/motion-polish.json",
+    "sha256": "58ca4527296e2acebbc182176127a37f67e5613f5a510a4def4306af77ed8954"
+  },
+  "earlyAlphaCanonicalEvidence": {
+    "path": "assets/animated/provenance/motion-polish/early-alpha-closeout/canonical-path-map.json",
+    "sha256": "4c5c7ae779498e39cca7e407ff829425fcd651601b5855676d97202a44f02510"
+  },
+  "internalPackageName": "pi-furry-partner",
+  "downloadArtifactPrefixes": {
+    "pi": "pi-furry-partner",
+    "dsh": "dsh-furry-partner"
+  },
+  "tagPolicy": {
+    "main": "v2.5.x",
+    "legacy": "legacy-v2.4.x",
+    "legacyIncludedInThisApprovalRecord": false
+  },
+  "historicalTechnicalApprovalScope": "Earlier technical approval authorized staging only. This new record separately captures the later push/publication authorization; it does not rewrite older records or their hashes.",
+  "historicalTechnicalUserText": "Original frozen technical-user-approval userText encoding is retained as historical evidence; authorization here follows the current explicit user instruction.",
+  "localInstallationPerformed": false,
+  "publicReleasePerformedByThisRecorder": false
+}

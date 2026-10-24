@@ -6,6 +6,7 @@ import { resolve, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { loadEncodedSheet } from "../lib/index.js";
+import { STYLES } from "../lib/styles.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
@@ -13,7 +14,6 @@ const out = join(root, "dist");
 await mkdir(join(out, "assets"), { recursive: true });
 await mkdir(join(out, "runtime"), { recursive: true });
 const html = (await readFile(join(root, "site/index.html"), "utf8"))
-  .replace(/(pi install git:github\.com\/KouzakiUmi\/pi-furry-partner@v)[0-9A-Za-z.+-]+/g, `$1${pkg.version}`)
   .replace(/(<span class="version">)v[^<]+(<\/span>)/, `$1v${pkg.version}$2`);
 await writeFile(join(out, "index.html"), html);
 for (const file of ["styles.css", "app.js"]) await copyFile(join(root, "site", file), join(out, file));
@@ -28,7 +28,7 @@ for (const file of runtimeFiles) {
 for (const file of ["status-phrases.json", "status-copy.json"]) await copyFile(join(root, "assets", file), join(out, "assets", file));
 await copyFile(join(root, "assets/poses/think.png"), join(out, "assets/umi-think.png"));
 const sheets = {};
-for (const style of ["umi", "umi-pixel"]) {
+for (const style of STYLES) {
   const data = loadEncodedSheet(style);
   // The current browser preview consumes exact byte indices. Reject unsupported
   // encodings explicitly instead of truncating a future wider palette.

@@ -60,17 +60,12 @@ try{
  checks.push('Prompt/terminal/error/abort clear pending gap; parallel completion reveals remaining real tool');
  for(const mode of ['pause','hidden']){await longTool('read');if(mode==='pause')controller.applySettingsLocal({animation:false});else{globalThis.document.hidden=true;controller.notifyChange();}clock=3999;controller.notifyChange();assert.equal(gap()?.remainingMs,1,'Wall gap ages even while animation is frozen');assert.equal(timers.size,0);clock=4000;controller.notifyChange();assert.equal(gap(),null);if(mode==='pause')controller.applySettingsLocal({animation:true});else globalThis.document.hidden=false;clip(await paint(4000),'think');}
  checks.push('Paused/hidden animation does not extend wall-clock2s gap; no background timer and no old tool replay on resume');
- await fresh();
- const partial={blocks:[{type:'tool_use',id:'stream-read',name:'read_file',status:'running'}]};
- function syncPartial(extra={}){controller.bridge.syncConversationState({sessionId:'dwell-test',busy:true,status:'tool_calling',partial,...extra});controller.notifyChange();}
- syncPartial({runningCalls:{}});facts('editing',1);await paint(400);
- syncPartial({partial:null,runningCalls:{}});facts('thinking');assert.equal(gap(),null);
- event('assistant/live-chunk',{chunk:{type:'text-delta',text:'Answer'}});
- facts('speaking');assert.equal(await paint(420),null,'Real answer immediately preempts a discarded partial');
- await fresh();syncPartial();facts('editing',1);await paint(400);
- syncPartial();facts('reading',1);const promoted=await paint(2000);clip(promoted,'watch');
- for(const at of [2100,2200,2300]){syncPartial();facts('reading',1);const next=await paint(at);clip(next,'watch');assert.equal(next.playbackEpoch,promoted.playbackEpoch);assert.equal(next.playbackMs,promoted.playbackMs+at-2000);}
- syncPartial({partial:null});facts('thinking');assert.equal(gap()?.remainingMs,2000);
- checks.push('Discarded partials release live facts and allow immediate speech; legacy partials retain continuous watch playback across repeated snapshots');
+ await longTool('read');const mainClock=await paint(2100);
+ event('assistant/live-chunk',{chunk:{type:'block-start',blockType:'tool_call'}});
+ facts('thinking');const stillReading=await paint(2500);clip(stillReading,'watch');
+ assert.equal(stillReading.playbackEpoch,mainClock.playbackEpoch);
+ assert.equal(stillReading.playbackMs,mainClock.playbackMs+400);
+ event('step/start');await paint(4000);facts('thinking');clip(await paint(4200),'think');
+ checks.push('Main streamed-tool transport markers preserve the original reading clock and expire into thinking without importing legacy preparation or reviving old reads');
  controller.dispose();assert.equal(timers.size,0);console.log(`DSH tool-gap integration passed: ${checks.join('; ')}.`);
 }finally{controller?.dispose();pending.splice(0).forEach(r=>r());await flush();Math.random=oldRandom;for(const[k,v]of Object.entries(saved))if(v===undefined)delete globalThis[k];else globalThis[k]=v;}

@@ -1,3 +1,4 @@
+await import("./main-action-isolation.mjs");
 await import("./dsh-bridge.mjs");
 await import("./dsh-session-following.mjs");
 await import("./dsh-companion.mjs");

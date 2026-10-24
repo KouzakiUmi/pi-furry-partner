@@ -8,6 +8,8 @@ See [authored expressions](authored-expressions.md) for the nine new reactions s
 
 Umi is an animated companion for the interactive Pi Coding Agent terminal. This guide covers full-animation 2.5.0 on `main`: installation, language, controls and independent settings. [Legacy 2.4.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) is maintained separately with code improvements and the original v2.4.0 artwork. Code and documentation use Apache-2.0; character artwork and animation are All Rights Reserved.
 
+The current main line provides only the `umi` illustrated companion in the editor and `illustration` in the header. Old pixel settings migrate to these illustrated styles; original pixel artwork remains available only on the [Legacy line](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Pixel comparisons in historical previews do not describe a current main-line option.
+
 ## Installation and updates
 
 The fully tested environment is **Windows, Pi 1.2.0 and 1.3.0, Windows PowerShell 5.1 and PowerShell 7**. The full suite passes on both releases, and native Chinese UI and concise Pi documentation hints are enabled for both. Upstream also records a historical native check on NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1. It does not establish a fresh acceptance of the current full-animation release on NixOS. Configure Pi and your model provider before installing the extension.
@@ -72,19 +74,17 @@ Prompt and persona changes apply to the next request. Language changes do not tr
 
 ## States and animation
 
-The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing uses a typing motion, while running commands uses a magnifying glass that scans from side to side. Searching and compaction share a MiniMax-H3 paper-pile animation: 72 complete cels and 72 playback steps over 6.58 seconds, with coordinated head, tail, body, cloak and page movement. Runtime does not independently warp these parts. The tail remains dark gray at its tip, light gray in the middle and white at the root, joining the white rump. Speech uses `w / — / o / O` shapes and stops when text output stops.
+The companion reacts to actual Pi events: model thinking, text output, tool execution, user questions, context compaction and the turn's outcome. Editing and execution use a typing motion, while reading content uses a magnifying glass that scans from side to side. Searching and compaction share a MiniMax-H3 paper-pile animation: 72 complete cels and 72 playback steps over 6.58 seconds, with coordinated head, tail, body, cloak and page movement. Runtime does not independently warp these parts. The tail remains dark gray at its tip, light gray in the middle and white at the root, joining the white rump. Speech uses `w / — / o / O` shapes and stops when text output stops.
 
-The magnifier scan uses a continuous MiniMax-H3 animation made from the approved character artwork. Its background is removed and complete cels are prepared offline. The head and gripping paw follow the lens, which enlarges the eye when it passes in front of it. The cloak moves with the body and keeps a clean outline. Runtime only plays the cels in order, without local lens deformation or dissolving neighboring scan cels together. Illustrated and pixel styles share the timing. Older six-frame packs still play their own sequence, while two-frame packs retain a static pose and blink fallback.
+The magnifier scan uses a continuous MiniMax-H3 animation made from the approved character artwork. Its background is removed and complete cels are prepared offline. The head and gripping paw follow the lens, which enlarges the eye when it passes in front of it. The cloak moves with the body and keeps a clean outline. Runtime only plays the cels in order, without local lens deformation or dissolving neighboring scan cels together. The current main line provides illustrated animation only. Historical six-frame packs play their own sequence, while historical two-frame packs retain a static pose and blink fallback; these compatibility records do not indicate current pixel support.
 
-The released magnifier has 64 video cels and one eye-only blink, arranged into 66 playback steps over 6.58 seconds. Its opening 420ms inspection hold becomes 200ms open, 80ms closed and 140ms open; other motion cels last at least 80ms. Offline processing extracts a separate grayscale matte from the green signal, inverts it for alpha, and recovers foreground color. The 640px masters and film retain soft alpha; the 240px terminal edge approximates antialiasing over the matching black background, while the 80px style keeps crisp pixel coverage. See the [asset workflow](../CONTRIBUTING.md#角色视频与透明边缘).
+The released magnifier has 64 video cels and one eye-only blink, arranged into 66 playback steps over 6.58 seconds. Its opening 420ms inspection hold becomes 200ms open, 80ms closed and 140ms open; other motion cels last at least 80ms. Offline processing extracts a separate grayscale matte from the green signal, inverts it for alpha, and recovers foreground color. The 640px masters and film retain soft alpha; the 240px illustrated terminal edge approximates antialiasing over the matching black background. See the [asset workflow](../CONTRIBUTING.md#角色视频与透明边缘).
 
 The startup wake-up lasts about five seconds. Waiting for your answer produces a curious head tilt and question mark; after ten seconds, Umi dozes off. Resuming work triggers a short startled wake-up. These are visual reactions and do not delay tools or model output.
 
 Short editing/running reactions remain visible for about 1.2 seconds, with a buffer before returning to thinking. The real status text updates immediately. Narrow or short terminals collapse the large portrait to preserve editing space. The `Motion: On` / `Motion: Off` control shows the current state. Turning it off pauses looping motion while static poses still update with agent activity; an intentional poke still plays its short reaction. Pi keeps working.
 
-The canonical style IDs are `umi` and `umi-pixel`, matching the English character name **Umi**. The former style IDs are no longer accepted: an old saved configuration falls back to the default style at runtime, and the installer rewrites it to the canonical ID. Asset directory names match the canonical IDs.
-
-`umi-pixel` keeps the illustrated character's proportions, features and poses at 80 × 80. Local protection preserves fine mouth strokes that a sampling point could otherwise miss, with a gentle color adjustment around the lines. The magnifier, listening pose and other reactions retain the same character design.
+The editor style ID is `umi`, matching the English character name **Umi**; the header uses `illustration`. Historical inputs or saved values `wumi`, `wumi-pixel`, `umi-pixel`, `pixel` and `illustration` normalize to the current illustrated editor style, and old pixel header settings migrate to `illustration`. These values do not select separate pixel artwork on main. Use the Legacy release line for the original pixel style.
 
 After you send, the editor status shows request preparation, waiting for the first output, or thinking received while waiting for answer text, together with elapsed seconds. If no first output arrives after 10 seconds of waiting, it says so explicitly; after 15 seconds, the indicator uses a warning color. The wait indicator still updates once a second with looping motion off. The indicator follows local lifecycle events and returns to the appropriate activity when tool work or a visible response starts.
 
@@ -113,8 +113,8 @@ Use `/mascot` for current settings. The command values remain the same in both l
 | `/mascot language auto` / `en` / `zh-CN` / `status` | Follow the system, choose a language, or inspect the result |
 | `/mascot menu` | Open quick actions |
 | `/mascot poke` | Give Umi a gentle poke without interrupting the agent |
-| `/mascot style umi` / `umi-pixel` | Illustrated or pixel Umi |
-| `/mascot style pixel` / `illustration` | Earlier header styles retained for comparison |
+| `/mascot style umi` | Illustrated Umi in the editor |
+| `/mascot style illustration` | Illustrated header; also a compatibility alias for `umi` in the editor |
 | `/mascot layout editor` / `header` | Input-area companion or startup header |
 | `/mascot pause` / `play` | Disable or enable looping motion; static activity poses keep updating |
 | `/mascot on` / `off` | Show or hide the companion |

@@ -46,16 +46,11 @@ assert.ok(umiSheet.ids.search !== undefined, "umi sheet includes search frames")
 assert.equal(typeof umiSheet.frames[0].pixels, "string");
 assert.equal(Buffer.from(umiSheet.frames[0].pixels, "base64").length, 240 * 240 * (umiSheet.pixelsEncoding==='u16le'?2:1));
 
-const pixelSheet = loadEncodedSheet("umi-pixel");
-assert.equal(pixelSheet.style, "umi-pixel");
-assert.equal(pixelSheet.width, 100);
-assert.equal(pixelSheet.height, 100);
-assert.equal(pixelSheet.frames.length, 17, "Original 16-pose pixel bank plus compatible poke patch");
-assert.equal(pixelSheet.ids.watch, undefined, "Old pixel retains work fallback rather than remade watch art");
-assert.equal(Buffer.from(pixelSheet.frames[0].pixels, "base64").length, 100 * 100);
-for (const [legacy, canonical] of [["illustration", "umi"], ["pixel", "umi-pixel"], ["wumi", "umi"], ["wumi-pixel", "umi-pixel"]]) {
-  assert.equal(sanitizeDshSettings({ style: legacy }).style, canonical);
-  assert.equal(loadEncodedSheet(legacy), loadEncodedSheet(canonical), "Legacy DSH style uses the canonical asset bank");
+const migratedSheet = loadEncodedSheet("umi-pixel");
+assert.equal(migratedSheet, umiSheet, "Old pixel preferences no longer require a pixel asset bank");
+for (const legacy of ["illustration", "pixel", "wumi", "wumi-pixel", "umi-pixel"]) {
+  assert.equal(sanitizeDshSettings({ style: legacy }).style, "umi");
+  assert.equal(loadEncodedSheet(legacy), umiSheet, "Every historical style input migrates to illustration");
 }
 
 // 3. Validate DSH persona prompt adaptation (zh-CN and en)
@@ -158,8 +153,8 @@ try {
   const sheetRes = await routes.get(SHEET_PATH).fetch(new Request(`http://localhost${SHEET_PATH}?style=umi-pixel`));
   assert.equal(sheetRes.status, 200);
   const fetchedSheet = await sheetRes.json();
-  assert.equal(fetchedSheet.style, "umi-pixel");
-  assert.equal(fetchedSheet.width, 100);
+  assert.equal(fetchedSheet.style, "umi");
+  assert.equal(fetchedSheet.width, 240);
 
   // When persona is false, system-prompt/assemble leaves sections untouched
   const assembleHook = hooks.get("system-prompt/assemble");
@@ -183,7 +178,7 @@ try {
   assert.equal(postRes.status, 200);
   const updatedConfig = await postRes.json();
   assert.equal(updatedConfig.persona, true);
-  assert.equal(updatedConfig.style, "umi-pixel");
+  assert.equal(updatedConfig.style, "umi");
   assert.equal(updatedConfig.size, "large");
 
   // Verify Pi-specific keys in config.json were preserved!

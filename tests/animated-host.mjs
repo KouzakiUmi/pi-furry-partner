@@ -39,7 +39,7 @@ try {
  if (FULL_ANIMATION_EDITION) {
  assert.equal(catalogResponse.status,200,'Full-animation package serves its approved catalog');
  const actual=await catalogResponse.json();
- assert.equal(Object.keys(actual.clips).length,19,'17 approved loops plus 2 keyboard transitions');
+ assert.equal(Object.keys(actual.clips).length,29,'28 retained clips plus exact approved nuzzle');
  for(const clip of Object.values(actual.clips))assert.deepEqual(Object.keys(clip.indexed).sort(),['illustration','umi']);
  const first=actual.clips.idle.indexed.umi.file;
  const url='http://localhost'+ANIMATED_ASSET_PATH+'?path='+encodeURIComponent(first)+'&v='+encodeURIComponent(actual.revision);
@@ -57,7 +57,7 @@ try {
  }
  const invalid=await routes.get(ANIMATED_ASSET_PATH).fetch(new Request('http://localhost'+ANIMATED_ASSET_PATH+'?path=..%2Fconfig.json'));
  assert.equal(invalid.status,404);
- console.log(`Approved motion Host: ${FULL_ANIMATION_EDITION?'19 illustration clips, binary/JSON/WebP, ETag and path gates':'HD-remaster catalog/asset denial'} passed.`);
+ console.log(`Approved motion Host: ${FULL_ANIMATION_EDITION?'29 illustration clips, binary/JSON/WebP, ETag and path gates':'HD-remaster catalog/asset denial'} passed.`);
 } finally {
  assert.ok(resolve(scratch).startsWith(testRoot+sep),'Temporary cleanup remains within stage/work');
  await rm(scratch,{recursive:true,force:true});

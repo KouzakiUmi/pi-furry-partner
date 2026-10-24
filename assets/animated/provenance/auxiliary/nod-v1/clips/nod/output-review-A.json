@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "HOLD_INTERIOR_EYE_STAR_ALPHA_HOLE",
+  "readyForUserReview": false,
+  "sourceVideoSha256": "cc8bea3affde81debe5223b43d8c7d31e1e7afd71a6a837e17445d9ac3127379",
+  "manifestSha256": "56a55b4ca40937683659b4750821ecbeb09f93bc1ad299af54854fde4dffc2b7",
+  "actualViewedFiles": [
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "f02a0dd0c52e13a24a25a0d5038182ce08f4e5b548f7a92f71e146fe73acf25c"
+    },
+    {
+      "file": "processed-edge-v2/black/029.png",
+      "sha256": "2eafb082aea421ee8686aec4eafe3413148e0dc04901bf638e4b933b3eb65b79"
+    },
+    {
+      "file": "processed-edge-v2/white/029.png",
+      "sha256": "cba1d08653d51a47fe3d54c11313d4344399c9546246eaf96090837d476c36e4"
+    }
+  ],
+  "findings": [
+    "029 right-eye red/orange star tip has incorrect partial alpha; white background shows pale/pink replacement and alpha proof has enclosed dark hole. Full107 diagnostic118 red/coral samples below200, all enclosed."
+  ],
+  "sourcePerformanceApprovalUnchanged": true,
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

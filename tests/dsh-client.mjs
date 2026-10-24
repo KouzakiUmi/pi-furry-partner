@@ -89,12 +89,13 @@ assert.ok(initialSnap.visual, "Seed sheet provides immediate visual frame on fra
 assert.equal(initialSnap.visual.sheet.width, 240, 'The default illustration seed never flashes the unrelated old pixel character');
 const offlineSeed = clientPlugin.createMascotController({ fetchImpl: async () => new Response('Unavailable', { status: 404 }), now: () => fakeClock });
 offlineSeed.applySettingsLocal({ style: 'umi-pixel' });
-assert.equal(offlineSeed.getSnapshot().visual.sheet.width, 100, 'Pixel has its own byte-derived original seed before Host data is ready');
-assert.equal(offlineSeed.getSnapshot().visual.sheet.motion?.approvedWholeFrames, undefined);
+assert.equal(offlineSeed.getSnapshot().visual.sheet.width, 240, 'Historical pixel settings use the sole illustration seed offline');
+assert.equal(offlineSeed.getSnapshot().settings.style, "umi");
+assert.equal(offlineSeed.getSnapshot().visual.sheet.motion?.approvedWholeFrames, true);
 offlineSeed.dispose();
 
 await controller.init();
-assert.equal(controller.getSnapshot().settings.style, "umi-pixel");
+assert.equal(controller.getSnapshot().settings.style, "umi");
 assert.equal(controller.getSnapshot().styleLoaded, true);
 
 // Test bindDshRuntime slot registrations, sessions service, and /mascot commandUi
@@ -184,9 +185,9 @@ const options = await registeredCommand.ui.options({}, new AbortController().sig
 assert.ok(options.some((o) => o.id === "poke"));
 assert.ok(options.some((o) => o.id === "persona"));
 assert.ok(options.some((o) => o.id === "style:umi"));
-assert.deepEqual(options.filter((o) => o.id.startsWith("style:")).map((o) => o.id), ["style:umi", "style:umi-pixel"]);
+assert.deepEqual(options.filter((o) => o.id.startsWith("style:")).map((o) => o.id), ["style:umi"]);
 assert.ok(options.find((o) => o.id === "style:umi").label.endsWith("插画"));
-assert.ok(options.find((o) => o.id === "style:umi-pixel").label.endsWith("像素"));
+assert.equal(options.some((o) => o.id === "style:umi-pixel"), false);
 assert.ok(options.some((o) => o.id === "zoom-in"));
 assert.ok(options.some((o) => o.id === "zoom-out"));
 
@@ -244,5 +245,48 @@ assert.match(heroVdom.props.className, /furry-dsh-hero-mark/);
 const settingsVdom = components.MascotSettingsPage();
 assert.equal(settingsVdom.props.className, "furry-dsh-settings");
 assert.ok(!JSON.stringify(settingsVdom).includes('composerPill'),'No dead composer setting remains');
+
+
+// Modern DSH observable runtime: callbacks invalidate snapshots rather than carrying events.
+{
+  const observable = value => {
+    const listeners = new Set();
+    return { getSnapshot: () => value,
+      subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
+      set(next) { value = next; for (const fn of listeners) fn(); },
+      count: () => listeners.size };
+  };
+  const modern = clientPlugin.createMascotController({ fetchImpl: mockFetch, now: () => fakeClock });
+  const lifecycle = [];
+  const session = observable({ sessionId: 'modern', running: false });
+  const events = observable({ revision: 0, entries: [], change: { kind: 'replace', entries: [] } });
+  const list = observable({ byId: { modern: { id: 'modern', retainedBy: { mainView: 1 } } } });
+  const binding = { session, eventSource: events };
+  const effect = fn => { const off = fn(); if (typeof off === 'function') lifecycle.push(off); };
+  const ctx = { effect, slots: { register: () => () => {}, inject() {} },
+    inject(deps, cb) { if (deps.length === 1 && deps[0] === 'sessions')
+      cb({ sessions: { list, binding: () => binding }, effect }); } };
+  clientPlugin.bindDshRuntime(ctx, mockReact, modern, clientPlugin.createMascotComponents(mockReact, modern));
+  session.set({ sessionId: 'modern', running: true });
+  assert.equal(modern.getSnapshot().snapshot.phase, 'thinking');
+  let seq = 0;
+  const emit = (type, data) => {
+    const entry = { type: 'event', event: { type, data, seq: ++seq } };
+    events.set({ revision: seq, entries: [...events.getSnapshot().entries, entry],
+      change: { kind: 'append', entries: [entry] } });
+  };
+  emit('tool/call', { callId: 'read', name: 'read_file', arguments: '{"path":"README.md"}' });
+  assert.equal(modern.getSnapshot().snapshot.phase, 'reading', 'Compiled client follows snapshot event windows');
+  emit('tool/result', { message: { toolCallId: 'read' } });
+  emit('tool/call', { callId: 'exec', name: 'run_command', arguments: '{}' });
+  assert.equal(modern.getSnapshot().snapshot.phase, 'running');
+  emit('turn/end', { reason: { kind: 'completed' } });
+  assert.equal(modern.getSnapshot().snapshot.phase, 'success');
+  lifecycle.reverse().forEach(off => off());
+  assert.equal(events.count(), 0);
+  assert.equal(session.count(), 0);
+  assert.equal(list.count(), 0);
+  modern.dispose();
+}
 
 controller.dispose();

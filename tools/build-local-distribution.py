@@ -49,14 +49,21 @@ def main():
         assert not {'.git', 'node_modules'}.intersection(relative.parts)
         alias = name.startswith(('assets/reactions/wumi/', 'assets/reactions/wumi-pixel/'))
         hd = name.startswith(('assets/hires/', 'assets/animated/hires/'))
-        generation_media = name.startswith('assets/animated/provenance/motion-polish/') and relative.suffix.lower() in {'.mp4', '.png', '.jpg', '.jpeg', '.webp', '.gif'}
-        if alias or generation_media or (args.profile == 'pi-core' and hd):
-            reason = 'canonical style alias' if alias else 'generation-only source/reference media; runtime frames and approval records retained' if generation_media else 'Pi uses indexed artwork'
+        generation_media = name.startswith('assets/animated/provenance/') and relative.suffix.lower() in {'.mp4', '.png', '.jpg', '.jpeg', '.webp', '.gif'}
+        legacy_pixel = name.startswith(('assets/reactions/pixel/', 'assets/reactions/umi-pixel/')) or name in {'assets/native-frames.json','assets/terminal-frames.json','legacy-pixel-provenance.json','build/legacy-pixel-provenance.json'} or (relative.parent.as_posix() == 'assets' and relative.suffix.lower() in {'.png','.gif'})
+        if legacy_pixel or alias or generation_media or (args.profile == 'pi-core' and hd):
+            reason = 'pixel artwork belongs to the legacy release line' if legacy_pixel else 'canonical style alias' if alias else 'generation-only source/reference media; runtime frames and approval records retained' if generation_media else 'Pi uses indexed artwork'
             excluded.append({'path': name, 'bytes': row['size'], 'reason': reason})
             continue
         path = (source / relative).resolve(strict=True)
         assert path.is_relative_to(source)
         files[name] = path
+    clip_ids, transition_count = [], 0
+    if args.track == 'full-animation':
+        catalog = json.loads((source / 'assets/animated/catalog.json').read_text(encoding='utf-8'))
+        clip_ids = sorted(catalog['clips'])
+        transition_count = sum(clip['family'] == 'transition' for clip in catalog['clips'].values())
+        assert clip_ids and all(clip.get('qa', {}).get('accepted') is True for clip in catalog['clips'].values())
     source_version = package['version']
     package.update(version=args.version)
     capability = {
@@ -65,17 +72,15 @@ def main():
         'releaseLine': configuration.get('releaseLine', 'main'),
         'hdArtIncluded': args.profile == 'full', 'indexedArtIncluded': True,
         'sourceVersion': source_version,
-        'description': 'Ordinary behavior with remastered artwork' if args.track == 'hd-remaster' else '19 approved whole-frame motion clips with keyboard chain',
+        'description': 'Ordinary behavior with remastered artwork' if args.track == 'hd-remaster' else f'{len(clip_ids)} approved whole-frame motion clips with keyboard chain',
         'installation': 'Local package only; not installed or published by this build.',
-        'pixelPolicy': 'Original pixel artwork and legacy animation shared by both editions; no regenerated pixel motions.',
+        'pixelPolicy': 'legacy-only', 'publicStyles': ['umi'],
+        'approvedMotionClipIds': clip_ids, 'approvedMotionClipCount': len(clip_ids),
         'fullMotionStyles': ['umi', 'illustration'] if args.track == 'full-animation' else [],
     }
     package['umiDistribution'] = capability
     overrides = {'package.json': (json.dumps(package, ensure_ascii=False, indent=2) + '\n').encode('utf-8'),
                  'distribution.json': (json.dumps(capability, ensure_ascii=False, indent=2) + '\n').encode('utf-8')}
-    pixel_provenance = source / 'build/legacy-pixel-provenance.json'
-    if pixel_provenance.exists():
-        overrides['legacy-pixel-provenance.json'] = pixel_provenance.read_bytes()
     label = '原逻辑高清重制版' if args.track == 'hd-remaster' else '全动态重做版'
     intro = f'> 本地完整构建：**{label} {args.version}**。'
     intro += ' Pi 终端精简资源包，不含 DSH 高清位图；动作、索引像素和时间轴完整保留。' if args.profile == 'pi-core' else ' Pi / DSH 完整离线资源包。'
@@ -94,7 +99,7 @@ def main():
     local_guide = f'''# 呜咪 · {label} {args.version}
 
 本包目标宿主：{platform.upper()}；资源类型：{args.profile}；发布线路：{configuration.get('releaseLine', 'main')}。
-Pi下载以pi-开头的包，DSH下载以dsh-开头的包。每个宿主只安装一个包，保留插画／像素两种画风。
+Pi下载以pi-开头的包，DSH下载以dsh-开头的包。每个宿主只安装一个包；本高清／全动态包仅提供插画，像素仅在Legacy发行。
 main为2.5起的全动态线路；旧资源维护版在legacy分支，使用独立legacy-v2.4.x标签。
 
 ## DSH
@@ -117,7 +122,7 @@ Pi可使用pi-core精简资源包，所有终端动作和时间轴完整保留�
 ## 资源与验证
 
 Legacy分支保留原版资源与简单帧；本main全动态包不混装为另一条高清重制线路。
-全动态重做版包含17段完整角色动作和两段400ms键盘过渡；说话保留独立口型。
+全动态重做版包含{len(clip_ids)-transition_count}段完整角色动作和{transition_count}段键盘过渡；键盘过渡各400ms，说话保留独立口型。
 全动态版索引载荷为精确无损字节编码；不降低原图分辨率、帧率或改变颜色、Alpha。
 完整离线包保留高清与旧回退资源。安装包旁的report.json记录每个文件SHA-256及全包回读验证。
 '''

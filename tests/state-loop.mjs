@@ -1,3 +1,4 @@
+import { styleAssetDirectory } from '../lib/styles.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {loadStateLoops, withStateLoopFrames, normalizeStateLoopCatalog, reviewedHiResStateLoop, stateLoopFamily} from '../lib/state-loop.mjs';
@@ -53,7 +54,7 @@ assert.equal(reviewedHiResStateLoop('idle',hd,'old'),null);
 // authored pixels, their period, and HD allowlisting without rewriting assets.
 for(const style of ['umi','umi-pixel','pixel','illustration']) {
  const packet=loadEncodedSheet(style);
- const staticFrames=JSON.parse(readFileSync(new URL(`../assets/reactions/${style}/reaction-sheet.json`,import.meta.url)));
+ const staticFrames=JSON.parse(readFileSync(new URL(`../assets/reactions/${styleAssetDirectory(style)}/reaction-sheet.json`,import.meta.url)));
  for(const name of ['idle-open','idle-blink','watch','search'])
   assert.ok(packet.frames.some(f=>f.id===name),'Original static '+name+' remains available');
  const installed=packet.motion?.stateLoops?.idle;

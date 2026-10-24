@@ -43,13 +43,15 @@ try {
   controller.activity.start({ wake: false }); controller.notifyChange(); await flush();
   controller.getRenderLayer(); await flush();
   assert.equal(controller.cacheStats().approvedHiResDownloads, 4);
-  controller.applySettingsLocal({ style: 'umi-pixel' }); await flush();
-  emptyHD('Pixel style stops the illustrated HD pipeline');
+  controller.applySettingsLocal({ style: 'umi-pixel' });
+  assert.equal(controller.getSnapshot().settings.style, 'umi');
+  controller.applySettingsLocal({ animation: false }); await flush();
+  emptyHD('Pause stops the illustrated HD pipeline');
   assert.ok(optionsSeen.slice(0, 4).every(options => options.signal.aborted), 'In-flight HD requests are aborted');
   pending.splice(0).forEach(resolve => resolve()); await flush();
   assert.equal(closed, 4, 'Late completed image decodes are closed instead of becoming resident');
   hold = false;
-  controller.applySettingsLocal({ style: 'umi' }); await flush();
+  controller.applySettingsLocal({ animation: true }); await flush();
   controller.activity.handle('tool_execution_start', { toolCallId: 'lifecycle-edit', toolName: 'edit' });
   for (clock = 0; clock < 400; clock += 16) {
     controller.notifyChange(); controller.getRenderLayer(); await flush(); controller.getRenderLayer();
@@ -66,7 +68,7 @@ try {
   controller.getRenderLayer(); emptyHD('Hidden rendering cannot restart HD loop requests');
   globalThis.document.hidden = false; controller.notifyChange(); controller.getRenderLayer(); await flush();
   controller.applySettingsLocal({ enabled: false }); emptyHD('Disabling the pet releases motion bitmaps');
-  console.log('Approved HD lifecycle: abort/late close, pixel/pause/hidden/disabled release, shared decoded-byte budget and bounded chain prefetch passed.');
+  console.log('Approved HD lifecycle: abort/late close, pause/hidden/disabled release, shared decoded-byte budget and bounded chain prefetch passed.');
 } finally {
   controller?.dispose(); pending.splice(0).forEach(resolve => resolve()); await flush();
   for (const [key, value] of Object.entries(saved)) if (value === undefined) delete globalThis[key]; else globalThis[key] = value;

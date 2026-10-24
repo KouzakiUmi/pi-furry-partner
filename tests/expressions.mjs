@@ -1,3 +1,4 @@
+import { styleAssetDirectory } from '../lib/styles.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -43,8 +44,8 @@ for(const e of EXPRESSIONS) {
   }
 }
 for(const style of ['umi','umi-pixel']) {
-  const published=await read(`../assets/reactions/${style}/reaction-sheet.json`);
-  const pack=await read(`../assets/reactions/${style}/expression-frames.json`);
+  const published=await read(`../assets/reactions/${styleAssetDirectory(style)}/reaction-sheet.json`);
+  const pack=await read(`../assets/reactions/${styleAssetDirectory(style)}/expression-frames.json`);
   // Exercise the legacy augmentation contract with a legacy-shaped fixture.
   // The current approved bank intentionally already owns all emotion IDs and
   // must reject an old pack, rather than append it over the approved art.

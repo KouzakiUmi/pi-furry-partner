@@ -5,6 +5,7 @@ import { homedir } from "node:os";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { createEditorControls, renderKeyboardHints } from "../lib/editor-controls.mjs";
 import { DOCK_CAPTION_ROWS } from "../lib/editor-layout.mjs";
+import { FULL_ANIMATION_EDITION } from "../lib/build-profile.mjs";
 import { createVTTerminal } from "./vt-terminal.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -305,7 +306,7 @@ try {
   assert.notEqual(currentEditor.displaySheet.frames[0].id, "poke", "An expired poke restores the actual pose before another UI operation");
   for (const width of [79, 80, 100, 110, 119, 120, 160]) {
     terminal.columns = width; draw();
-    const expectedOffset = width >= 120 ? 4 : width >= 80 ? 2 : 0;
+    const expectedOffset = width >= 120 ? 4 : width >= 80 || FULL_ANIMATION_EDITION ? 2 : 0;
     const bounds = currentEditor.avatarBounds;
     assert.deepEqual(bounds, { x: expectedOffset, y: DOCK_CAPTION_ROWS, width: 16, height: 8 }, `${width}: hit bounds follow the centered 16-column image, independently of the caption width`);
     const imageTop = terminal.rows - footer.render(width).length - editorBox.render(width).length + bounds.y;
@@ -324,7 +325,7 @@ try {
     assert.equal(await readFile(join(scratch, "config.json"), "utf8"), preservedConfig);
   }
   clock += 1200; terminal.columns = 110; draw();
-  checks.push("Real SGR clicks at widths 79/80/100/110/119/120/160 follow the fixed 16-column avatar at offsets 0/2/4: image edges poke, neighboring blank cells do not, and the native draft and preferences remain intact");
+  checks.push("Real SGR clicks at widths 79/80/100/110/119/120/160 follow the fixed 16-column avatar at registered caption offsets (legacy0/2/4, main2/4): image edges poke, neighboring blank cells do not, and the native draft and preferences remain intact");
   const stylePoint = find("[换装]"); click(stylePoint.x, stylePoint.y); await flush(); draw();
   assert.ok(selected > 0); assert.equal(screen.getFocusedComponent(), currentEditor, "Style selection must not refocus the detached old editor");
   checks.push("All three caption rows stay outside the avatar hit box; real SGR clicks on its first image row show a >w< poke reaction and caption even while animation is paused, without changing preferences/input; style selection preserves text/focus");

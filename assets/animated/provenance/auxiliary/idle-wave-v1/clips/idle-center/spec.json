@@ -1,0 +1,48 @@
+{
+  "action": "idle-center",
+  "stateFamily": "idle",
+  "variant": "center",
+  "model": "MiniMax-H3",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\idle-open.png",
+  "sourceSha256": "759ef974e7ac320463d04188432f17559c58484e34530e2111d2e0b6f7566927",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "f088060f0111d1c86f71e6280527b14ab6e59e78e76a905c9758347668ca2d53",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "Front-facing relaxed living idle",
+    "primaryMotion": "Umi is relaxed and present with his friend directly in front of him. Keep the original supported front-facing seated pose as his home. He enjoys one unhurried but alert little breath, notices his friend's face with a prompt small refocusing of the blue eyes, gives one quick complete natural blink and lets a tiny friendly smile reach his cheeks. The focus change and eyelid response happen at normal everyday speed with a clear short accent, around0.2–0.35seconds, then a comfortable living hold and soft recovery. His gaze stays mainly toward his friend in FRONT, not repeatedly scanning to the left or right. The eyes, eyelids, separate gray bean eyebrows, head, neck, chest and relaxed shoulders share that same simple feeling, with a subtle supported accommodation in the elbows. Do not mechanically wiggle each part in turn. Breathing is a slight real chest response, never scale-pulsing the entire drawing. Avoid identical periodic blinking or metronomic body sways. Recover the supplied original open-eyed front pose naturally, with compatible relaxed breathing phase for the next forward cycle; no frozen ending or reset.",
+    "supportChain": "Original paired grounded compact paws and thick white forearms support a small connected chest/shoulder/head response; lower seated root remains still.",
+    "gazeHead": "Mostly front-facing eye contact and prompt blink, no directional scanning",
+    "secondaryMotion": "Very small motivated folded-ear/scarf-tip settling; single heavy lower cape remains down.",
+    "anchors": "Exact approved original idle2D640 inputs, bytecopy only, pivot320608, paintRect00640640; no per-frame fitting.",
+    "timingLayers": "Normal-speed short accent0.2–0.35seconds contrasted with a comfortable engaged hold and soft recovery, not mechanical periodic micro-wiggle.",
+    "loopBoundary": "Same approved front idle input supplied first and last, compatible pose/breath phase, complete forward returned timeline retained without reverse/timewarp/freeze.",
+    "reviewOrder": "Independent A materials/patterns and B structure/support on actual returned source; frozen transparency then native-speed final user review before random-idle catalog integration.",
+    "propInteraction": "none"
+  },
+  "outputCanvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "worldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "keyColor": "#A020C0",
+  "sameFirstAndLastFrame": true,
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "inputSourceJob": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\idle\\key-purple-batch10-v1",
+  "inputUserApprovalSha256": "64f675c8ac1caf8ca4655dcbc1a062ab68f127dc929612c7adb9d9d371525fd0",
+  "authorization": "User finds idle mechanical and looking only left, requests several random/natural variants. Root authorizes one H3 center and one right source, zero retries; fresh A/B and final transparency/native-speed user review before catalog."
+}

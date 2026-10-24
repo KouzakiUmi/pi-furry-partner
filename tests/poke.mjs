@@ -12,6 +12,7 @@ import { withListenFrames } from "../lib/listen.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = async (path) => JSON.parse(await readFile(join(root,
   path.replace(/^assets\/reactions\/(wumi(?:-pixel)?)\//, "tests/fixtures/legacy-action-packs/$1/")
+    .replace(/^assets\/reactions\/pixel\//, "tests/fixtures/legacy-pixel/")
     .replace(/^assets\/reactions\/illustration\//, "assets/reactions/umi/")), "utf8"));
 const zh = { copy: await read("assets/status-copy.json"), phrases: await read("assets/status-phrases.json") };
 const en = { copy: await read("assets/status-copy.en.json"), phrases: await read("assets/status-phrases.en.json") };
@@ -45,7 +46,7 @@ assert.ok(en.phrases.phrases.poke_busy.includes(activity.snapshot().phrase), "A 
 assert.equal(activity.snapshot().reactionElapsedMs, 0);
 clock += 350;
 activity.handle("tool_execution_end", { toolCallId: "one", isError: false });
-activity.handle("message_update", { assistantMessageEvent: { type: "text_delta" } });
+activity.handle("message_update", { assistantMessageEvent: { type: "text_delta", delta: "answer" } });
 const speaking = activity.snapshot();
 assert.equal(speaking.reaction, "poked"); assert.equal(speaking.phase, "speaking"); assert.equal(speaking.toolCount, 0);
 assert.equal(speaking.elapsedMs, 1050); assert.equal(speaking.reactionElapsedMs, 350);

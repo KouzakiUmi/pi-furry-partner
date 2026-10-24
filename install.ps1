@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$AgentDir = (Join-Path $HOME '.pi\agent')
 )
@@ -55,31 +55,30 @@ function Set-Property($Object, [string]$Name, $Value) {
 }
 
 function Copy-StylePreferences([string]$Source, [string]$Destination, $Preferences) {
-    $property = $Preferences.PSObject.Properties['style']
-    $canonical = if ($null -ne $property -and $property.Name -ceq 'style' -and $property.Value -ceq 'wumi') { 'umi' } elseif ($null -ne $property -and $property.Name -ceq 'style' -and $property.Value -ceq 'wumi-pixel') { 'umi-pixel' } else { $null }
-    if ($null -eq $canonical) {
-        Copy-Item -LiteralPath $Source -Destination $Destination -Force
-        return
-    }
-    # Locate only the top-level JSON style value. Tokenizing avoids changing a
-    # nested custom style or text in a string, and preserves BOM/spacing/newlines
-    # and all other preference bytes instead of reserializing the user's file.
+    # Replace only known top-level legacy style values. Preserve all unrelated
+    # bytes, nested custom fields, BOM, spacing and line endings.
     $raw = [System.Text.Encoding]::UTF8.GetString([System.IO.File]::ReadAllBytes($Source))
     $tokens = [regex]::Matches($raw, '"(?:\\.|[^"\\])*"|[{}\[\]:,]')
     $depth = 0
+    $edits = @()
     for ($index = 0; $index -lt $tokens.Count; $index++) {
         $token = $tokens[$index]
         if ($token.Value -eq '{' -or $token.Value -eq '[') { $depth++; continue }
         if ($token.Value -eq '}' -or $token.Value -eq ']') { $depth--; continue }
         if ($depth -ne 1 -or -not $token.Value.StartsWith('"') -or $index + 2 -ge $tokens.Count -or $tokens[$index + 1].Value -ne ':') { continue }
         $key = ConvertFrom-Json -InputObject $token.Value
-        if ($key -cne 'style') { continue }
+        if ($key -cne 'style' -and $key -cne 'headerStyle') { continue }
         $value = $tokens[$index + 2]
-        $raw = $raw.Substring(0, $value.Index) + '"' + $canonical + '"' + $raw.Substring($value.Index + $value.Length)
-        [System.IO.File]::WriteAllText($Destination, $raw, $utf8)
-        return
+        if (-not $value.Value.StartsWith('"')) { continue }
+        $old = ConvertFrom-Json -InputObject $value.Value
+        $canonical = if ($key -ceq 'style' -and @('wumi', 'wumi-pixel', 'umi-pixel', 'pixel') -ccontains $old) { 'umi' } elseif ($key -ceq 'headerStyle' -and @('pixel', 'umi-pixel', 'wumi-pixel', 'wumi', 'umi') -ccontains $old) { 'illustration' } else { $null }
+        if ($null -ne $canonical) { $edits += @{ Index = $value.Index; Length = $value.Length; Value = '"' + $canonical + '"' } }
     }
-    throw "Unable to migrate the top-level style preference: $Source"
+    if ($edits.Count -eq 0) { Copy-Item -LiteralPath $Source -Destination $Destination -Force; return }
+    foreach ($edit in ($edits | Sort-Object -Property Index -Descending)) {
+        $raw = $raw.Substring(0, $edit.Index) + $edit.Value + $raw.Substring($edit.Index + $edit.Length)
+    }
+    [System.IO.File]::WriteAllText($Destination, $raw, $utf8)
 }
 
 $sourceRoot = [System.IO.Path]::GetFullPath($PSScriptRoot)
@@ -159,14 +158,14 @@ $stagedConfig = Assert-ManagedPath (Join-Path $stagePath 'config.json')
 if (Test-Path -LiteralPath $existingConfig -PathType Leaf) {
     $preferences = Read-JsonObject $existingConfig
     if ($null -ne $preferences.PSObject.Properties['layout']) {
-        # An explicit layout identifies a 2.x configuration. Only rename an
-        # old style ID; keep every other preference and the original formatting.
+        # An explicit layout identifies a 2.x configuration. Only migrate
+        # historical style IDs; keep every other preference and the original formatting.
         Copy-StylePreferences $existingConfig $stagedConfig $preferences
     } else {
         # Migrate 1.x preferences, retaining animation/rendering/size/enablement
-        # and other custom fields. Keep the former style for header mode.
+        # and other custom fields. Use the current illustrated header.
         $previousStyle = $preferences.PSObject.Properties['style']
-        $headerStyle = if ($null -ne $previousStyle -and @('pixel', 'illustration') -contains $previousStyle.Value) { $previousStyle.Value } else { 'pixel' }
+        $headerStyle = 'illustration'
         Set-Property $preferences 'headerStyle' $headerStyle
         Set-Property $preferences 'layout' 'editor'
         Set-Property $preferences 'style' 'umi'

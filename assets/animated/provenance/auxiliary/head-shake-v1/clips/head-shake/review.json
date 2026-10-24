@@ -1,0 +1,71 @@
+{
+  "status": "A_B_FINAL_OUTPUT_READY_FOR_USER_TRANSPARENT_NATIVE_SPEED_REVIEW",
+  "sourceSha256": "c6366814b7d0b560af2434c5d0afb3dea2d9a09af4c5d443d4aa11c936ef0ef6",
+  "sourceEvidenceSha256": "6d3e06e41f87a2013b37d9e6bef7707aea81c93616913de6eaf28752d66d22f4",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "alphaProcessing": "complete: frozen purple matte/edge + independently reviewed THIS-source guarded enclosed eye recovery",
+  "schemaVersion": 1,
+  "action": "head-shake",
+  "version": 1,
+  "humanAcceptedOutput": false,
+  "readyForUserReview": true,
+  "readyForRuntimeIntegration": false,
+  "replacementAllowed": false,
+  "finalOutputDirectory": "processed-detail-v1",
+  "finalManifestSha256": "837834bc0997f337a5cc886b75f3e6f4b6e30795b3b1ff178ecfd24cd3f0d1df",
+  "sourceVideoSha256": "c6366814b7d0b560af2434c5d0afb3dea2d9a09af4c5d443d4aa11c936ef0ef6",
+  "sourceReviewASha256": "6300996cce1039d156ee5b30c9a6745ea62c12e8ff975dd92d4b6d873dedfadc",
+  "sourceReviewBSha256": "05743b2467189768d0e4da34a0d0e415f5baf761a5657006e19d3d53297f2fd3",
+  "all107PawFramingPreflightSha256": "5318130f222efad73773b5c9e1e3f6c49a031d34b6211bb9d1090e875a963da7",
+  "outputReviewASha256": "d3a1eb8781bc68341b32f74b352c4bee9ffce8c38ab0b34289e95457a56d3919",
+  "outputReviewBSha256": "63ad1c49669190104c2d52fbfeb92f5fbf5be91204479971074ebe69b4349278",
+  "finalTechnicalReviewSha256": "2ba5a4d90eb16595cc7f187d5b8a685cd4f2c241d8afca64552d52bc647ac31d",
+  "previewPawTechnicalReviewSha256": "20e97fc1d931ea504cb23f8b3d822302556a21eede2878d771e2dab9c7d83f30",
+  "finalVerification": {
+    "command": "python work/motion-polish-20261023/check-head-shake-v1-detail.py head-shake",
+    "exitCode": 0,
+    "verifierSha256": "e4c9bc13e939d06b0883583fb8ed0e077ab18ffc058275de4a97fdec1699b62a",
+    "logSha256": "b81e79b64f41db1026d2a71476268db8e9f51300e8ae2094fc516b442ee5da9b"
+  },
+  "softEdgeRunner": {
+    "file": "work/motion-polish-20261023/apply-ear-headshake-key-edge.py",
+    "sha256": "a586acc171ad9695d0aaf5d111a5493cb30b092562dc178b5ec338fe51421cda",
+    "command": "python work/motion-polish-20261023/apply-ear-headshake-key-edge.py head-shake purple",
+    "versionArgumentDefault": "pilot-v1",
+    "repairFunctionUnchanged": true
+  },
+  "finalCanvas": [
+    640,
+    640
+  ],
+  "finalPivot": [
+    320,
+    608
+  ],
+  "finalWorldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "inputMethod": "Original approved idle byte-identical registered RGBA/purple plate, known same-first/last FL2VA each once, automaticRetries0, no imagegen or body-part rig",
+  "limitations": [
+    "两向极值有近似停留，首段约1s后才出现明显摆动；实际速度、轻快程度/重量与循环留用户原速，静帧不认证自然节拍。",
+    "外围毛尖/掌底/下摆仍有细暗边和颗粒；独立A实际底缘4x确认细绿黄点及暗紫边，最终A SHAd3a1eb8781bc68341b32f74b352c4bee9ffce8c38ab0b34289e95457a56d3919已完整披露。不宣称仅含紫边、无彩点或全片零瑕。",
+    "只所列最终无损静帧与源107爪ROI实际看图，不等于实际原速播放或用户批准；固定640/pivot320608与原生时间保持。"
+  ],
+  "technicalSummary": {
+    "restoredInteriorPixels": 875,
+    "redCoralBelowAlpha200": 0,
+    "minimumRedCoralAlpha": 252,
+    "all107OriginalTimelineAndRegistration": true,
+    "all107ReproducedFinalRgbaAndLosslessWebp": true,
+    "all107External8CoreBoundaryReliable252OutsideUnchanged": true,
+    "all107FinalPawRoiExactlyUnchangedFromEdge": true,
+    "oldEdgeHoldPreserved": true
+  }
+}

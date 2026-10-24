@@ -2,6 +2,91 @@
 
 Main采用 `v` 前缀，Legacy采用独立 `legacy-v` 前缀的发布tag。安装可固定到某个 tag，详见 [README](README.md#安装)。
 
+## 2.5.1-preview.6 · 未发布
+
+### 简体中文
+
+- 统一用户通过的29段动作配色，保留自然阴影、透明度、原生时序、画布和支点。喜欢使用单独复核后的围巾提亮、减饱和与轻微衣料校偏，不改原动作、三颗爱心或单层下摆。
+- 开场复用完整挥爪招呼；戳一戳按闲时、忙碌和等待情境选择已通过的轻弹、抖耳或晃脑袋，避免连续重复。连点不重置或排队，真实任务与回答能及时接管。
+- 互动从真实首帧可见后计时；暂停自动动画时，主动戳一戳仍可播放一次，结束后恢复静止。继续使用单个计时器与有界缓存。
+- 高清与Pi索引素材从同一批已批准候选派生，保留原采样和共同调色板；冻结旧29源供历史原像素验证，源档不进入Pi或DSH安装包。
+- 保留preview.5的错误反应、连续工具接续、2秒状态等待和动作最短可见时长。Pi与DSH分别构建，主线仅含插画风格；旧像素仍归Legacy。
+
+### English
+
+- Unify the reviewed29 motion colors while retaining native lighting, alpha, geometry, anchors and timing. Affection uses its separately approved scarf/material correction, preserving the original acting, hearts and cape.
+- Reuse the accepted wave for startup and vary native poke responses by idle, busy or waiting context. Repeated clicks do not restart or queue a reaction, and real task updates can interrupt it.
+- Start finite interactions at actual presentation. Explicit pokes can play once while automatic animation is paused, then return to a static state with the existing single timer.
+- Derive both host resources from the same approved candidates and common indexed palette. Retain a source-only pre-color bank for historical pixel checks without including it in either installer.
+
+## 2.5.1-preview.5 · 未发布
+
+### 简体中文
+
+- 修复 Pi 与 DSH 单次工具失败不触发错误表情；识别显式工具失败、命令工具结构化非零退出码，以及 DSH 官方命令输出的严格末尾退出状态，不扫描一般正文关键词。
+- 失败表情立即显示1800ms，保留真实忙碌状态、工具数量与后续工具更新；一次命令失败不冒充整轮失败。回答、等待用户、取消等状态可立即接管，重复或未知结果不延长表情。
+- 暂停动画时仍显示并自动结束短暂失败表情，继续复用单个计时器。保留preview.4的2秒工具间等待、连续同动作接续与原有可见驻留。
+- 加入用户最终通过的蹭蹭眯眼循环：107帧高清／54帧Pi，固定640世界构图与原生时序。原有28段画面与节奏保留，共29段；新配色试点仍待方向评审，不混入本包。
+
+### English
+
+- Show a finite1800ms failure expression for genuine tool errors and nonzero shell exits on both hosts, including DSH's official trailing exit-status format.
+- Preserve live task/tool facts, urgent interruptions and deduplication. Paused playback still clears the expression using the existing single timer.
+- Retain continuous same-action playback and the bounded next-state gap. Add the user-approved107-frame nuzzle loop with54 native-time Pi samples, preserving the prior28 clips. Color-consistency samples remain review-only.
+
+## 2.5.1-preview.4 · 未发布
+
+### 简体中文
+
+- Pi 与 DSH 在最后一个工具完成后保留当前动作，等待真正的下一状态，最多2秒；工具数量立即归零，业务状态保持准确，不把显示保留冒充工具仍在执行。
+- 连续读取、连续编辑和使用相同动画的连续工具沿用原播放时钟；键盘保留在打字循环，不重复拿出／收起，也不从首帧重播。
+- 消息／步骤开始、空分块与正常消息结束属于占位，不取消或延长等待；非空思考／回答、新工具、用户等待和终止按真实事件接管。超时后忙碌会话回到思考，整轮完成仍按原规则处理。
+- 2秒业务截止时间独立于暂停／隐藏的动画时钟，不新增常驻计时器；继续保留1200ms可见驻留、加载上限和紧急打断。28段已批准素材与用户配置保持不变。
+
+### English
+
+- Both hosts retain the last tool animation for up to2 seconds while waiting for an actual next state, without changing completed-tool counts or task facts.
+- Consecutive calls mapped to the same animation continue its playback clock. Typing keeps its loop instead of repeatedly entering or exiting the keyboard sequence.
+- Placeholder lifecycle events cannot cancel or renew the gap. Real content, tools, interactions and terminal events take over normally; the bounded handoff uses wall time even while frames are paused.
+
+## 2.5.1-preview.3 · 未发布
+
+### 简体中文
+
+- 修复 DSH 新会话接口：前台会话绑定、事件窗口通知、真实流式事件及工具完成的 `toolCallId`；历史加载不回放旧任务，切会话释放旧监听。
+- Pi 与 DSH 统一动作最短可见时长：普通动作至少展示1200ms，首帧真正可见后起算；短编辑完整进入400ms、敲键盘至少800ms、退出400ms，真实工具状态立即结束。
+- 只跟进最新待切状态，避免积压过期动作；回答、错误、等待用户和主动互动可立即抢占。加载失败的视觉等待有上限。
+- Pi 在工具事件到达时保留动作候选，避免同一刷新间隔内开始、结束的编辑只剩抬手。暂停回退保持阅读用放大镜、执行和编辑用键盘。
+- 三条待机保持完整4458ms原生周期，高清107帧与Pi54帧均到达原生末帧后再随机轮换，不因普通动作驻留逻辑缩短或冻结。
+- 继续使用已批准的28段素材；蹭蹭试片尚待源表演评审，不进入本包。新增两端实际集成与真实素材时序回归。
+
+### English
+
+- Follow current DSH foreground Session bindings, observable event windows, stream events and real tool-result IDs without replaying idle history.
+- Keep activity facts live while both hosts give ordinary actions1200ms of actual visible presentation. Short work completes its400ms entry,800ms typing and400ms exit; stale targets do not form a queue.
+- Capture Pi tool starts before batched paint, preserve urgent interruptions and bounded loading, and keep all three native4458ms idle cycles intact.
+- Retain the28 approved motion clips. The pending nuzzle source is excluded.
+
+## 2.5.1-preview.2 · 未发布
+
+### 简体中文
+
+- 修复大画布索引显示：Pi利用固定横向余量保持头身尺度和双爪完整，DSH高清与索引回退遵循同一paintRect；原23条画面保持。
+- 主线 Pi 与 DSH 仅提供高清插画；像素选择、像素标题、像素启动 seed 和像素运行资源退出主线分发，仅由 Legacy 保留。
+- 历史像素风格输入和配置迁移到 `umi`，旧标题配置迁移为 `illustration`。安装器只修改对应顶层值，保留其余配置、格式与原始备份。
+- 修正阅读与执行的动作对应：阅读用放大镜，执行／编辑用键盘。同步修复暂停、加载回退和阅读打断键盘转场的情况。
+- 恢复两端完整 H3 点头：保持107帧高清／54帧Pi原时间抽样，手动与自动触发均播完4458ms后回到待机，原19条影片的画面与QA不变。新增经用户确认的完整挥爪动作，加入已批准的完整伸懒腰，保留896画布与世界锚点；新增用户认可的前倾微歪头探看，保持双爪原位、640世界尺度与原生时间。加入已认可的晃脑袋、收敛后的抖耳和双爪贴地的开心小弹；小弹保持107帧高清／54帧Pi原时间及完整896世界尺度。蹭蹭仍在接触姿势设计评审，不混入正式资源。
+- 增加经评审待机片的完整周期随机轮换与下一片预取，不连续重复、不逐帧重抽、不变速或缩放。用户已通过正面放松与向右留意两条新待机，和原左看组成三片轮换；不把随机逻辑测试当作素材验收。
+
+### English
+
+- Render registered extended indexed frames at the original character scale in Pi; DSH indexed fallback follows the same paintRect as HD. Preserve the prior23 clip artwork.
+- Main Pi and DSH builds now provide HD illustration only. Pixel selectors, headers, startup seeds and runtime artwork remain exclusive to Legacy.
+- Migrate historical pixel inputs/settings to `umi` and old header settings to `illustration`. Preserve unrelated preference bytes and the original installer backup.
+- Route reading to the magnifier and execution/editing to the keyboard, including pause/loading fallbacks and direct reading preemption of keyboard cleanup.
+- Restore approved H3 nod playback on both hosts:107 HD frames/54 native-time Pi samples, complete4458ms manual and automatic playback, and unchanged visual payloads/QA for the original nineteen clips. Add the user-approved complete wave clip; Add the approved full stretch with its896 canvas and fixed world anchor, plus the user-approved forward-leaning curious peek with planted paws, fixed640 world scale and native timing; The approved head sway, restrained ear reaction and grounded happy bounce are included; bounce retains107 HD frames/54 native-time Pi samples and its full896 world. Nuzzle remains at the contact-pose design review gate and is not included in runtime artwork.
+- Add review-gated whole-cycle random idle selection and next-clip prefetch without immediate repetition, per-frame rerolls, retiming or scaling. The approved center and right idle clips join the original left glance as a three-clip pool; fixture tests do not approve artwork.
+
 ## 2.5.1-preview.1 · 2026-10-23
 
 ### 简体中文

@@ -20,13 +20,8 @@ for (const style of ['umi','umi-pixel','illustration','pixel']) {
    'Explicit expression gestures are not removed');
  const a=sheet.frames[sheet.ids.happy],b=sheet.frames[sheet.ids['happy-blink']];
  assert.ok(a&&b);
- if(normalizeStyle(style)==='umi-pixel') {
-  // Historical v2.4.0 supplied these two IDs with identical artwork. The
-  // provenance test verifies exact bytes; never invent a replacement blink.
-  assert.equal(a.pixels,b.pixels,'Original pixel happy aliases retain the historical same pixels');
- } else {
-  assert.notDeepEqual(a.pixels,b.pixels,'The selected HD happy open/blink files are different real frames');
- }
+ assert.equal(normalizeStyle(style), 'umi');
+ assert.notDeepEqual(a.pixels,b.pixels,'Canonical illustration and historical aliases preserve real open/blink artwork');
 }
 
 const globals={window:globalThis.window,document:globalThis.document,createImageBitmap:globalThis.createImageBitmap};

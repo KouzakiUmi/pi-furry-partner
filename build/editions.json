@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "releaseLine": "main",
   "defaultEdition": "full-animation",
-  "pixelPolicy": "Original pixel artwork and simple frames are preserved; regenerated pixel motions are excluded.",
+  "pixelPolicy": "legacy-only",
   "platforms": {
     "pi": {
       "label": "Pi terminal",
@@ -17,9 +17,12 @@
   },
   "editions": {
     "full-animation": {
-      "version": "2.5.1-preview.1",
+      "version": "2.5.1-preview.6",
       "label": "全动态重做版",
       "fullAnimation": true
     }
-  }
+  },
+  "publicStyles": [
+    "umi"
+  ]
 }

@@ -1,0 +1,17 @@
+{
+  "config": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-natural-review-config.json",
+  "configSha256": "6dbed0b87fe495ae8fb287a08ea8d13af6d8f9ce67a07fb57f3520af2a49c282",
+  "items": {
+    "old": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v1/processed-detail-v1",
+      "manifestSha256": "3f061916612a6f1a82302f43d974d63ea52621001b4998743bf8e7f1f289718a"
+    },
+    "new": {
+      "output": "Hi-Res/sources/h3-motion-polish-20261023/ear-flick/key-purple-pilot-v2/processed-detail-v1",
+      "manifestSha256": "d4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf"
+    }
+  },
+  "serverSha256": "926765bb26c51d1138202f943f4486fe62d6089d8a849fb179cbc071c24d8392",
+  "pageSha256": "e00344c6b932e47d27488f54bb51e203d1a14f29a5be920019274050fbc44206",
+  "url": "http://127.0.0.1:49972/"
+}

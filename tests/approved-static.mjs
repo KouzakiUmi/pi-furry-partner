@@ -1,3 +1,4 @@
+import { styleAssetDirectory } from '../lib/styles.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -35,7 +36,7 @@ for(const [action,expected] of Object.entries(approvedActions)) {
 }
 assert.deepEqual(hd.animations.search.clips.searching,hd.animations.search.clips.compacting);
 for (const style of ['umi','umi-pixel','pixel','illustration']) {
-  const sheet = read(`assets/reactions/${style}/reaction-sheet.json`);
+  const sheet = read(`assets/reactions/${styleAssetDirectory(style)}/reaction-sheet.json`);
   assert.equal(sheet.approvedStaticRevision, revision);
   assert.equal(sheet.frames.length,40);
   assert.deepEqual(Object.keys(sheet.ids).sort(), manifest.records.map(r=>r.id).sort());
@@ -79,7 +80,7 @@ for (const style of ['umi','umi-pixel','pixel','illustration']) {
   }
   for(const [file,augment] of [['poke-patch.json',withPokeFrame],['watch-frames.json',withWatchFrames],
                               ['search-frames.json',withSearchFrames],['listen-frames.json',withListenFrames]]) {
-    let old; try { old=read(`assets/reactions/${style}/${file}`); } catch { continue; }
+    let old; try { old=read(`assets/reactions/${styleAssetDirectory(style)}/${file}`); } catch { continue; }
     // Even valid-looking old pack files must not overwrite approved complete art.
     if(old.approvedStaticRevision!==revision) assert.equal(augment(sheet,old),sheet,`${style}/${file}`);
   }

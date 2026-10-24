@@ -1,0 +1,806 @@
+{
+  "status": "TECHNICAL_GUARDS_PASS_NO_ENCLOSED_RED_ALPHA_FLAG",
+  "sourceVideoSha256": "4e7dde7fcb18fe960cfe2ac7a9fa1abe6bfe249e2f7591441f3939a5d3c0767b",
+  "manifestSha256": "67d5ac9781b7535001254e1d7c6ec3bcb211ab2a6322e49a32aacbc265fb44eb",
+  "sourceProcessingAuthorizationSha256": "4b30c5f564b2180ff8a7e5e221bd076724410a099227b882843c774dd0ed392a",
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "canvas": [
+    640,
+    640
+  ],
+  "pivot": [
+    320,
+    608
+  ],
+  "sourceTimelineUnchanged": true,
+  "perFrameFit": false,
+  "losslessWebpExactAllRgba": true,
+  "edgeAlphaExactAll107": true,
+  "edgeOpaque252RgbaExactAll107": true,
+  "stage1Guards": {
+    "status": "AWAITING_TWO_REVIEWERS_AND_USER",
+    "runtimeInstalled": false,
+    "humanAccepted": false,
+    "frameCount": 107,
+    "periodMs": 4458,
+    "completeForwardSource": true,
+    "sourceScale": 0.8333333333333334,
+    "sourceSize": [
+      768,
+      768
+    ],
+    "borderTouchFrames": [],
+    "fringeAlphaExact": true,
+    "fringeOpaqueRgbExact": true,
+    "noiseAllRgbExact": true,
+    "noiseSupportedAlphaExact": true,
+    "removedDistantLowAlphaPixels": 22,
+    "correctedWhiteFringePixels": 3546,
+    "numericChecksDoNotApproveArt": true,
+    "seamWarningOnly": {
+      "lastToFirstMAD": 0.0058383884803921565,
+      "medianAdjacentMAD": 0.010234094158496732,
+      "maxAdjacentMAD": 0.024338745915032677
+    }
+  },
+  "redCoralSamples": 236334,
+  "samplesBelowAlpha200": 0,
+  "enclosedSamplesBelowAlpha200": 0,
+  "worst": null,
+  "frames": [
+    {
+      "frame": 0,
+      "rgbaSha256": "4eeee303e7630ee1a151fdd2d2bf0e9b10772f7139482f294d746f442509d8c6",
+      "redCoralSamples": 136,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 1,
+      "rgbaSha256": "3069283e751d3b4af976ef8678c4c7c8917b20e4f898af50d3eca404504142a8",
+      "redCoralSamples": 139,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 2,
+      "rgbaSha256": "0b61ccc14ff87edbb74a4faa7fb7ae5b2218cfcd6a9babe010ec808b81d2f3f6",
+      "redCoralSamples": 140,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 3,
+      "rgbaSha256": "9be28dbc3c346eb92604be263b4273139b68a4e69416c1196f0e7556ee43d072",
+      "redCoralSamples": 136,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 4,
+      "rgbaSha256": "8029a34b97e3063b29429b88f7849b66063595e0a1aedff9fd34a551d996d1d2",
+      "redCoralSamples": 134,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 5,
+      "rgbaSha256": "5ecdea4f449a5c75614263805c5b068a87066b73b68ba426d805faa713281685",
+      "redCoralSamples": 103,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 6,
+      "rgbaSha256": "dce0f2783e03af25004d5551a7b6949c18677a93df2e68e4db535e7a0fe8bf86",
+      "redCoralSamples": 108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 7,
+      "rgbaSha256": "d6a08534f64583df237488cfa71fe9336e0af748fb08f1fb85333797b93abb03",
+      "redCoralSamples": 89,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 8,
+      "rgbaSha256": "623057bc9efea93bf9dbce5856e6ad11bb8f8d30b1328dbbaa4e7bb92e2c17e2",
+      "redCoralSamples": 113,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 9,
+      "rgbaSha256": "bab787a020e0ec943858639f93832fb6558c15d23c897a813fde23f3def429d9",
+      "redCoralSamples": 93,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 10,
+      "rgbaSha256": "97cd69d1968b659b366f98c54e8beefcf44d69ee8a188c293392e7864e89168d",
+      "redCoralSamples": 51,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 11,
+      "rgbaSha256": "51d4d44ee54c7f5827e60db1753ef63c435d27ac10bed6563c8047e3c3f04b42",
+      "redCoralSamples": 317,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 12,
+      "rgbaSha256": "26f34bc440ffc5616874e8ba8e255dc94f6d2f75399ce238dff7671d60e8a826",
+      "redCoralSamples": 2012,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 13,
+      "rgbaSha256": "bb8e187cd68e0c5ca7985904988d0498d639c387bc8987fb371612a90ff752de",
+      "redCoralSamples": 2111,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 14,
+      "rgbaSha256": "0d9ea4c3bb8388004b89b4f2e1f69820dd4fd3f5d3dbdd98e8a8dc723ce1376f",
+      "redCoralSamples": 2339,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 15,
+      "rgbaSha256": "393605e4cea49dab3b487567defbb03b7b63fe09925a1ce3a781b53ca7848fed",
+      "redCoralSamples": 2660,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 16,
+      "rgbaSha256": "1d67811c3ffded971b7f591fa58943a9fc7de68a011dd2536c4e0260da82a184",
+      "redCoralSamples": 2913,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 17,
+      "rgbaSha256": "38658bfbb82e8a5edad4cd9c976ac8fd5bda9004b4a607cf7200dc3deaf99328",
+      "redCoralSamples": 2990,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 18,
+      "rgbaSha256": "846d19f881f9e60e380f77bff8baa27de493dcd930f8d83be6462030ed391fd7",
+      "redCoralSamples": 3074,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 19,
+      "rgbaSha256": "ab644318aa28124754ee6686aa58ee0907dab040e749417672634f856239ea10",
+      "redCoralSamples": 3100,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 20,
+      "rgbaSha256": "32eb5d8d5c10932415d6113684b7d96d50cd0ea6bdb530070c0da0d30bd294a3",
+      "redCoralSamples": 3124,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 21,
+      "rgbaSha256": "83ca527257b0c8633366c0d30d92b635974f94e7e008e01f380d0b659205213e",
+      "redCoralSamples": 3131,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 22,
+      "rgbaSha256": "59c3448cb61586af34edd93334ccf76d9de02722f4c07607aeec91ed69ebc79d",
+      "redCoralSamples": 3126,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 23,
+      "rgbaSha256": "5d6fd210e9c08ec6e1cf79537f7ab39b6fcf7f7f8433329609e0f9c9c06bce4e",
+      "redCoralSamples": 3136,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 24,
+      "rgbaSha256": "d8c01c410b1eb5bbdd80d52d5dbb633ce1d8d35b0e7769bacae1de80b5bcab26",
+      "redCoralSamples": 3141,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 25,
+      "rgbaSha256": "57bf95fc708aaf82458afdf265c9b19433fb2f426316bf318dc558a54c24bd80",
+      "redCoralSamples": 3118,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 26,
+      "rgbaSha256": "f364410236a837d3484e0e5def6898f84a615fe050b6a374178a7ff487a817d7",
+      "redCoralSamples": 3102,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 27,
+      "rgbaSha256": "d1aaff46bf2255be7ab34d2dd08615f44b1bdef5cc57ee0879974a8708d90163",
+      "redCoralSamples": 3161,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 28,
+      "rgbaSha256": "311cdb647f8a109ea804add7b795d0014406a2c4cbb94910f93d722f805581d7",
+      "redCoralSamples": 3192,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 29,
+      "rgbaSha256": "b25f16ff8fc80283befcedafb6c80bfebf428cb3b198175308c872b190616399",
+      "redCoralSamples": 3135,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 30,
+      "rgbaSha256": "a57a4d570b14ee12522fe5805e8d85fa94ac775e4b8b078ea77623e9aae9e773",
+      "redCoralSamples": 3134,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 31,
+      "rgbaSha256": "791956874443eb651ee4d4dbc4a3bd151c6388cf3a451ae1cc3d123a38577afc",
+      "redCoralSamples": 3139,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 32,
+      "rgbaSha256": "88ce8daf67c52aaad8572e9e74c527e5e9d14142f5fd056c17b946a3e053c435",
+      "redCoralSamples": 3185,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 33,
+      "rgbaSha256": "15fd2d49365b35282a25b054782a266d0d69373a23b2c84323b22839e5a24d99",
+      "redCoralSamples": 3130,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 34,
+      "rgbaSha256": "6d6a75407071f163bcd7abffdb31a9b5d02419e4b890c0908fff9626f92f7fd5",
+      "redCoralSamples": 3152,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 35,
+      "rgbaSha256": "d1b256710102c95ede5b971c956def2f8a80ca650b536c5f289fdeebae940526",
+      "redCoralSamples": 3106,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 36,
+      "rgbaSha256": "70cda7e9df9c9aeb3d0eae36e99e07685bc9b2826c7dc2d085a5a281729f7320",
+      "redCoralSamples": 3197,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 37,
+      "rgbaSha256": "85c170f9230f647408198c86b421a22b1892516d534365966a4bc437962953a2",
+      "redCoralSamples": 3199,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 38,
+      "rgbaSha256": "628659763370d4d6462662110183466e8724ba4ae4c81f2ba11b3a81362dfed0",
+      "redCoralSamples": 3182,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 39,
+      "rgbaSha256": "d777cc6b6c641f8be6becd8a3aeac84ff9045577d3a5eae384b3d39026ce5bb5",
+      "redCoralSamples": 3187,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 40,
+      "rgbaSha256": "6cd4f95b6becb370fa61ea891ed3f14f179e23ce47e66b490b99c7db48895ff0",
+      "redCoralSamples": 3193,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 41,
+      "rgbaSha256": "fbf6d513c9372b6512b417365daa46b60b05b6f10f8ccb6eac21c1e6637042af",
+      "redCoralSamples": 3180,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 42,
+      "rgbaSha256": "a65e33896fa53858b636b9f59f810f1ed68fc0609493a7d9d2e48b25805a079d",
+      "redCoralSamples": 3144,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 43,
+      "rgbaSha256": "d18a80f862fa0ff9883beaf880e98e2f69ef53f3b565342cf20e782d0a78423a",
+      "redCoralSamples": 3120,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 44,
+      "rgbaSha256": "cb208de9a027dea8261127cbff470541209074bee69af6cecc2f2b9f4da52e4e",
+      "redCoralSamples": 3176,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 45,
+      "rgbaSha256": "cb175ddd67237b7149624348176cb0cf1ea8c9b2748f62c33223961ceaa248b7",
+      "redCoralSamples": 3182,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 46,
+      "rgbaSha256": "1d293c1d6b2d60fdb79a73c75bed786c5e1af1727afeba59d9b56b448db8b744",
+      "redCoralSamples": 3155,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 47,
+      "rgbaSha256": "7a2a3cbabd2125fc8f53a996f07e3734a4284ef0c2ab69b16a0e30b7e8be8dfa",
+      "redCoralSamples": 3149,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 48,
+      "rgbaSha256": "11455aff1e86f4620939e664670e66dd422d7a28e48d63656ebb243a3e1f617d",
+      "redCoralSamples": 3156,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 49,
+      "rgbaSha256": "0c550a86518c0a7f76b6716ae7a1ba9442a951b32279b17a64a1f8a7d0148c97",
+      "redCoralSamples": 3144,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 50,
+      "rgbaSha256": "781298a4bf24fb4525814ef3df95a7294fdebc54775c4c6af76fdea9d41d6f74",
+      "redCoralSamples": 3135,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 51,
+      "rgbaSha256": "9bc1e3fa28b5e9f7b253eb25982fc42ce24acf73298de866fbe5a5f9b4d5dfa2",
+      "redCoralSamples": 3099,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 52,
+      "rgbaSha256": "fb2a6bf81cae4b0f2f8f880c9e0afc03e8d5d59f09c70577875a8ad9bd03f12e",
+      "redCoralSamples": 3089,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 53,
+      "rgbaSha256": "29a0ddb265183f41b795afeb6d79b8f438ac88ad1ec18f716a7f58a299f47edb",
+      "redCoralSamples": 3067,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 54,
+      "rgbaSha256": "5c06ab97163c9ea9cdd530d4a4b55c5bb2591ce124fd53c69a61082028aa885f",
+      "redCoralSamples": 3089,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 55,
+      "rgbaSha256": "7f11ddce9dc1c36abeff49e699289e74fdcdaad5f8ca194970f79396ed44162e",
+      "redCoralSamples": 3130,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 56,
+      "rgbaSha256": "159705c7309827efca1d15ffb4a8f5029a63956bbf287b12e5446c88b1f3cd49",
+      "redCoralSamples": 3131,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 57,
+      "rgbaSha256": "6728b6211ebb167fa8d31f0faa305aacdc0f2c3ca198d78b5a972f694ee2de43",
+      "redCoralSamples": 3131,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 58,
+      "rgbaSha256": "95340c5b14a77e1d25cc749b9378ffb299aafb4f618d2b8e72afdc1d14d261f8",
+      "redCoralSamples": 3125,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 59,
+      "rgbaSha256": "9b7282726edd95a627937a119f024c8dc84677c0beb348950db26b41a9866671",
+      "redCoralSamples": 3123,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 60,
+      "rgbaSha256": "17c3b69c6269c11ffd286452a29f7fd85360613b86737f38122c3f7bc16f62bf",
+      "redCoralSamples": 3157,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 61,
+      "rgbaSha256": "984175af65ab3e252f29a2f669111d824b7305270e1c943e6ddf5a5933feda12",
+      "redCoralSamples": 3141,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 62,
+      "rgbaSha256": "828a8fe1b0f4e87c10ba40df8cb36132c0349707c60074f5ba2e7a61d4f33ed4",
+      "redCoralSamples": 3146,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 63,
+      "rgbaSha256": "8a61deaa71c50cd8f372c92a3c82d2049f0cdd47b865f25298149e7cec5bfb92",
+      "redCoralSamples": 3120,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 64,
+      "rgbaSha256": "153bc790e7fc10ee2f986874ba6bbca38830f84fb90cc99b7f3f683fd60df44a",
+      "redCoralSamples": 3167,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 65,
+      "rgbaSha256": "8888f5c226cc127ef07dd4dceb448eca60af66a3170fe3671d39e7d3712f0382",
+      "redCoralSamples": 3076,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 66,
+      "rgbaSha256": "bec35f7664ba5558dd0b416df871f1041ddfb75a9a07dda72d388b11d4988bbf",
+      "redCoralSamples": 3076,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 67,
+      "rgbaSha256": "7e347d0ca01c87d9bafc3dc72c3401b17a223b32c7cc24eeaeb1cd21109fc8d5",
+      "redCoralSamples": 3074,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 68,
+      "rgbaSha256": "f02b664db3c418d05f1761e0aa0c5d5b665e36271a5fc5b0e8f7859b2139e5d8",
+      "redCoralSamples": 3134,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 69,
+      "rgbaSha256": "5077eb74e32eab89a7445a833a1289680c767aca91c80f1e86356e47806e4053",
+      "redCoralSamples": 3084,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 70,
+      "rgbaSha256": "4126fec04f2851fc6ce9d5efdcce3f63bc193640489aac250cc04670970234df",
+      "redCoralSamples": 3122,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 71,
+      "rgbaSha256": "4dca3a364f5cd816e3e6045b484522f8171e7a356c5b0e8ac26d752c3c568fe6",
+      "redCoralSamples": 3112,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 72,
+      "rgbaSha256": "dbec6091a09242e0a08c0101e9218b914c1a65ea6301ecb288cbb1962a2b6966",
+      "redCoralSamples": 3166,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 73,
+      "rgbaSha256": "33a489943805dc44524c7dc30f5a67f6b7baea114aea6475334a9f373885db35",
+      "redCoralSamples": 3081,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 74,
+      "rgbaSha256": "83bb9126d9fb33a91fdcb07f7a1a73be1db6f2bb02dec32c3594317d67f5da71",
+      "redCoralSamples": 3108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 75,
+      "rgbaSha256": "701d14af8547a7e8de2bc5c6faebd3917c402c6dd3b9514d11e56f1c69ac699c",
+      "redCoralSamples": 3084,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 76,
+      "rgbaSha256": "ab7f9c14c403f62a4799909d9dd48c3b34bd4f9cdbf09ce23a4e20e0fbfa6824",
+      "redCoralSamples": 3109,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 77,
+      "rgbaSha256": "488135d9666615f7b22e7ca2959d1c042a89bafd04208e61dbae627f7683f852",
+      "redCoralSamples": 3078,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 78,
+      "rgbaSha256": "8cae8bb76b993344c6debdc8ec3123c62bf451aa26889fc050ea6b1acf55bca8",
+      "redCoralSamples": 3105,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 79,
+      "rgbaSha256": "ce2841611d72f81b6e2ee0f672f4f9a19db5840b2d842e2d583d4ae14a3832c5",
+      "redCoralSamples": 3122,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 80,
+      "rgbaSha256": "aa44dbfad4958a35112995771b7098042230381f93bcc1face316844ec7206a1",
+      "redCoralSamples": 3130,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 81,
+      "rgbaSha256": "dfabc6bc734e59ba71c8ff84614fca16da5ca16f6e21662499561d21f107cf87",
+      "redCoralSamples": 3092,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 82,
+      "rgbaSha256": "9b4339197f10ce4d8780bbf83c126fa3967e7265221d28b4961ddd17b4f367e7",
+      "redCoralSamples": 2850,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 83,
+      "rgbaSha256": "cf5f30233b5984554cb293c86957c0152c285790bc4f3bebf8d8940fc8cdbf3d",
+      "redCoralSamples": 2732,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 84,
+      "rgbaSha256": "f539f8b504c8539cd6b2a59ae9ece256cc3446dce1d5eb4fb8ded54380fffc51",
+      "redCoralSamples": 2511,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 85,
+      "rgbaSha256": "dbbaa52a4ded35ed86531dfec19d2054c8bfb3ea1917bb139561d420592cf9ae",
+      "redCoralSamples": 2450,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 86,
+      "rgbaSha256": "49ffa62c7076a127ee0b4a5b8d21f46e47d755bce62c888f6b899587d00e4bef",
+      "redCoralSamples": 2391,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 87,
+      "rgbaSha256": "f0ccedb26451c5fd9c932410c188067bf8fa0c04d4c00d7d82289571ad6aec5e",
+      "redCoralSamples": 2213,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 88,
+      "rgbaSha256": "4e79cf2a6180b6eabe5ebc5c2145e03127c9bd54134d306b4d5a4e62a61ad5a9",
+      "redCoralSamples": 1487,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 89,
+      "rgbaSha256": "2238a1dda81c066ca48759161cb3a1d5287dab9a383d852c3ee66db5c4af47e8",
+      "redCoralSamples": 893,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 90,
+      "rgbaSha256": "36e01140b625fbd48d8c2737db44662f6adfb93f17d165559809d837650df3dc",
+      "redCoralSamples": 353,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 91,
+      "rgbaSha256": "693c17968f77af62599ead41bb1d2fe3fc3aa6d1a1d7dd1ba3468c9e0cb7cc57",
+      "redCoralSamples": 0,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 92,
+      "rgbaSha256": "417465e1474c706f3d48a7b88005aff510c3e969d2ad7a30ff74412754f1428b",
+      "redCoralSamples": 37,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 93,
+      "rgbaSha256": "4e3db6c4daec9a75d9b748c8302fc5588cb4e20d9db11045521651139af78951",
+      "redCoralSamples": 61,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 94,
+      "rgbaSha256": "905416d8a9a6e2f7211e061038e9ae96d69a4b90eb6fd5f178846b977d55271b",
+      "redCoralSamples": 94,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 95,
+      "rgbaSha256": "2460e424664be52279c3a0757c119caae887344f387dcf06a5eb4753700293b1",
+      "redCoralSamples": 110,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 96,
+      "rgbaSha256": "9e39aa56dcb4fd401c67e8910268d80e5e3be9700b7284715fc4bd32446eb4b0",
+      "redCoralSamples": 125,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 97,
+      "rgbaSha256": "b41f5581aa7809722e13420beb6870c6fc01a782f3cf9e1255d3b806462c1e14",
+      "redCoralSamples": 119,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 98,
+      "rgbaSha256": "a723dbd6d522048f7ee729eea0fe72cc2bb39c428747ae4a97822fee372d900e",
+      "redCoralSamples": 106,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 99,
+      "rgbaSha256": "9a0fcb90ca6cb7afd8847276645c07b183d6119f6f280e0040bd631c706b8538",
+      "redCoralSamples": 109,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 100,
+      "rgbaSha256": "2d68771eccc586cc575fbfcb2535401cb560dabdb829880f17b277a2bc0adde8",
+      "redCoralSamples": 107,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 101,
+      "rgbaSha256": "c121b70032c938bf2709194069102c76374668162109eec95955fd5bc21de07b",
+      "redCoralSamples": 108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 102,
+      "rgbaSha256": "01e688ea5d7e422c6736fffef38c1c35cb66de9a2792f758df70b249cf411fde",
+      "redCoralSamples": 107,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 103,
+      "rgbaSha256": "776f54c80db049f5c72a513ccae31637ac249c902e03e596670ae85f9e6381be",
+      "redCoralSamples": 108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 104,
+      "rgbaSha256": "da71dab044f193639ad6f1b28170db2ff36bca7c0d8a57400b3c372d64d01769",
+      "redCoralSamples": 108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 105,
+      "rgbaSha256": "2232d144c607b8bb0a865f505440c89af356c3379197eee8d7d3453e63e4f470",
+      "redCoralSamples": 110,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    },
+    {
+      "frame": 106,
+      "rgbaSha256": "fdd3442d9111b06a38d6d2cf1e81076ac8b9784e30678f26e62f18059fcfca3c",
+      "redCoralSamples": 108,
+      "samplesBelowAlpha200": 0,
+      "enclosedSamplesBelowAlpha200": 0
+    }
+  ],
+  "diagnosticScope": "Original same-fixed-resize red/coral source evidence only; flags require visual review. No fill or opaque core is authorized by this diagnostic.",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

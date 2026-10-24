@@ -12,9 +12,8 @@ const expected = [
   [-2,false,100],[-1,false,100],[0,false,700],
 ];
 const fingerprint = value => createHash('sha256').update(Buffer.from(value)).digest('hex');
-const terminal = await read('assets/terminal-frames.json');
 
-for (const [style,file,edge] of [['pixel','assets/native-frames.json',100],['illustration','assets/illustration/native-frames.json',240]]) {
+for (const [style,file,edge] of [['illustration','assets/illustration/native-frames.json',240]]) {
   const native = await read(file);
   assert.deepEqual([native.width,native.height],[edge,edge],'Keep the current native canvas');
   assert.equal(native.frames.length,15,'A static title replacement must never collapse the header animation');
@@ -48,8 +47,8 @@ for (const [style,file,edge] of [['pixel','assets/native-frames.json',100],['ill
   },0);
   assert.ok(blueRightEye(native.frames[6])>0&&blueRightEye(native.frames[7])===0,
     'A real eye closure removes the current source blue iris');
-  } // Pixel title is byte-for-byte legacy artwork, checked separately by provenance.
-  const fallback=style==='pixel'?terminal:terminalVariants(native);
+  }
+  const fallback=terminalVariants(native);
   for(const [name,variant] of Object.entries(fallback.variants)) {
     assert.equal(variant.frames.length,15,`${style}/${name} cannot silently fall back to one frame`);
     assert.deepEqual(variant.frames.map(f=>[f.angleDeg,f.wink,f.durationMs]),expected);
@@ -70,4 +69,4 @@ for (const [style,file,edge] of [['pixel','assets/native-frames.json',100],['ill
   assert.notDeepEqual(openUploads,winkUploads,'HD Kitty output includes the wink instead of a held static pose');
   transport.dispose();
 }
-console.log('Pi header restoration: both native styles, four fallback sizes, exact historical 15-frame/4800ms clock, same-body wink and actual header→Kitty PNG output passed.');
+console.log('Pi header restoration: the sole illustrated native style, four fallback sizes, exact historical 15-frame/4800ms clock, same-body wink and actual header→Kitty PNG output passed.');

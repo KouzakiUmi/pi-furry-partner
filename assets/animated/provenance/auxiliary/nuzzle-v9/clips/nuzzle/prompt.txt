@@ -1,0 +1,7 @@
+How the reference pictures align with the target video — Picture 1 aligns with the 0.00-second opening; Picture 2 aligns with the 4.00-second ending. Picture 1 and Picture 2 are the same original neutral seated Umi image.
+
+integrated_multimodal_description: [Shot 1] A static medium shot in the reference illustration style. Umi stays seated and gives the viewer a small, affectionate cheek nuzzle, softly squinting with a contented smile, then relaxes back into the starting pose. His entire figure remains visible at a steady framing scale against the flat purple background.
+
+overall_soundscape: N/A
+
+non_diegetic_music: N/A

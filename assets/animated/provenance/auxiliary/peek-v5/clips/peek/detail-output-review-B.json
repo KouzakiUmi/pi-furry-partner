@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "humanAcceptedOutput": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "sourceVideoSha256": "bf9eb4946d413f1335a7123b7c08b8c2a9118bac546999a585c4dbac6097e9d4",
+  "finalManifestSha256": "db71b64cb187a387af4534c72492915b4f38b62215ee9665c4b1c00966992e69",
+  "helperSha256": "b8bc7df0e93162890d6b911ccfd5bbeb6c7fd0a94881daae721d4d534ba9dac4",
+  "technicalReviewSha256": "e5bc5892833a9a633ab5b44dc8a357081c2f8dd0bb8bf47ccf05884d4b1e4027",
+  "previewPawTechnicalReviewSha256": "71cd1353389968bde17b15910c97506227d76a63ae55bcd6222ee49b672c5b34",
+  "sourceReviewBSha256": "a87e630c8a8cf93aa27b66d24c865d9e839fe67c1ab883b88cfac2892591517a",
+  "sourceCoreReviewASha256": "0e39e017c8b14d53f315f88702be30d7afadc2b93c6802e01b01e808f9c02f06",
+  "sourceCoreReviewBSha256": "bff0d52665bf83c9d300d14fa7341414a43fd098eac51975aba5fdcd0e9241a3",
+  "sourceCorePreflightSha256": "e1c2e674592fc90ff3fe1c0030264fef0bc13ef3fc2a3f4c32d00ed51671af07",
+  "actualViewedFiles": [
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "0fe685876a3ac7259dc186127f711758b36de8e8751552fa21efaa67a986a921"
+    },
+    {
+      "file": "processed-detail-v1/white/042.png",
+      "sha256": "1a3af0478ac8111abaf6ea031fa417f3f3450f8b27ce1c638c3ca136225cf12a"
+    },
+    {
+      "file": "processed-detail-v1/black/000.png",
+      "sha256": "04c76c8803d0bad817e6e7d796a7248de8979aee92d80a1b72dccd579dd81d15"
+    },
+    {
+      "file": "processed-detail-v1/white/000.png",
+      "sha256": "c68a6676f2ff9d05ca30d33c592c6feac8c879b62676c967da177eab512998ff"
+    },
+    {
+      "file": "processed-detail-v1/white/060.png",
+      "sha256": "357e28e2371a269c5fe890790ccf9e5f6cb10ba7465deb2ba8eeab01f9df9615"
+    },
+    {
+      "file": "processed-detail-v1/black/106.png",
+      "sha256": "76e755ab5e05fa0b0d2b527f16d8bb996dacbe7f708b17ed9009a4730ddb899f"
+    }
+  ],
+  "findings": [
+    "000最终黑白与源/旧edge/final/alpha放大实际对照：旧星尖内点误透明恢复，所查双星完整无矩形接缝。",
+    "042/060最终白底最大侧前探出：头鼻相对固定双掌向侧前方探出，伴较明显侧转/抬下巴；不将其静帧读感升级为用户所需前倾艺术通过。",
+    "双灰掌仍原位闭合落地、短厚掌体/小甲和白臂灰界连续。源已实际看全107固定爪ROI；最终全部107同ROI相对edge RGBA精确不变，眼区恢复未改爪。",
+    "106落定所查脸宽/星眼豆眉/单层下摆保留，原生整640固定pivot320608；耳尖余量较少但未裁边。"
+  ],
+  "knownLimitations": [
+    "前探带较明显侧转/抬下巴，中段峰值停留较长；前倾是否足够、微歪头是否自然及节拍/循环均由用户原速评审，未艺术通过。",
+    "所查外围仍有细暗边/毛尖掌底颗粒；独立A实际000底缘4x另确认细绿黄点与暗紫边，见最终A报告SHA9739fa3148da6248776967be272cd537653300c7bc8d5f76784025f125833baf。真实披露，不宣称只含紫边或零彩点。",
+    "原idle是双爪体量/落点/身份唯一权威，新keypose仅上身意图；v4只双爪部分认可，旧v1/v2/v3拒绝和v4表演HOLD都保留。",
+    "仅所列最终无损静图及源107爪ROI实际检查，不等于实际播放原速或用户批准。"
+  ],
+  "outputAcceptanceScope": "Ready only for fixed-world native-speed user review of body-forward lean + slight head tilt. Technical safeguards/static internal checks do not approve acting. No formal25 integration, install, release or runtime change."
+}

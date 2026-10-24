@@ -1,0 +1,42 @@
+{
+  "reviewer": "B",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": {
+    "approved": true,
+    "rect": [
+      220,
+      275,
+      405,
+      335
+    ],
+    "sourceOnly": true
+  },
+  "sourceVideoSha256": "c6366814b7d0b560af2434c5d0afb3dea2d9a09af4c5d443d4aa11c936ef0ef6",
+  "proofSha256": "fa75a98a34672e9ea6f0aefa2b9147f77265af7950cae86242657b9fc0227001",
+  "preflightSha256": "78f4067cf63d446f0a930561277dec958c1de21b774d2a83502e9368ab004acd",
+  "helperSha256": "deae67c9a74c21ed3932f0bab41fc01aceddc94f56f5cee546fd00d5c0c63328",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "fa75a98a34672e9ea6f0aefa2b9147f77265af7950cae86242657b9fc0227001"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "9e099846070d9237e55b6b270917bec8cd524be1b7669b2ab25e5f97da75282a"
+    }
+  ],
+  "findings": [
+    "实际本片六姿叠框：框中均实心眼脸/额毛，无背景/掌隙或体外区域，包含各自主动作极值。",
+    "旧黑白/alpha放大确认封闭眼星误透明，非原生缺色或艺术重画；本片新框按完整移动眼组件确定，不继承其他动作批准。"
+  ],
+  "conditions": [
+    "完整107 source-key/ext8/coreboundary/reliable252/框外保护必须均成立；只同源同固定resize nativeRGB/255恢复core内不可靠alpha。",
+    "不修改掌/外边/服装；原生耳X拖糊/头摆节拍与已知细彩边保持披露，最终须实际A/B和用户原速。"
+  ],
+  "preflightSummary": {
+    "minimumSourceKeyMargin": 58.0,
+    "potentialRestoredPixels": 875
+  },
+  "humanAccepted": false,
+  "runtimeInstalled": false
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": [
+    365,
+    395,
+    535,
+    470
+  ],
+  "canvas": [
+    896,
+    896
+  ],
+  "bitmapPivot": [
+    448,
+    736
+  ],
+  "worldPaintRect": {
+    "x": -128,
+    "y": -128,
+    "width": 896,
+    "height": 896
+  },
+  "sourceVideoSha256": "68cff5cc15ba0ea4b46a9dcfd3938603c0821287600b8d36cd032a2bd3f944ea",
+  "edgeManifestSha256": "0b71e7e4963f01c7859be50e44674408799a84441c5f4e9db736bccbb567ea9c",
+  "proofSha256": "4c344c7df3cb2229076d537e94f14ffd90ef75651587270df45449e0a0851490",
+  "preflightSha256": "a4c182084222184d607467506361c9265daa724eb3399575440813905b1de0f1",
+  "guardHelperSha256": "8c667e4ffbe7941da5b609c431ef1f0ad58d7f444f512ac9ef1d6dfce6916f97",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "4c344c7df3cb2229076d537e94f14ffd90ef75651587270df45449e0a0851490"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "e03f066667b1c02032dea4ee301f0d36724af9e291334df0ab75459ef70d5097"
+    }
+  ],
+  "findings": [
+    "实际000/008/024/042/078/106六姿新框：均位于本片实心眼/脸/额毛，未见背景、掌或披布进入框；抬臂峰值/回落时框仍在实心脸内。",
+    "实际008源/黑白/alpha proof，眼星右尖出现封闭内区暗点，为内部误alpha，非外轮廓软边。"
+  ],
+  "conditions": [
+    "仅本片独立896框内sub252像素恢复同帧同896resize nativeRGB/255；不得把640/旧矩形套来，不裁640world。",
+    "外界8邻连通、core边界、reliable252和修复区外RGBA全帧不变，source key-margin拒绝真背景。",
+    "三处臂/外软边附近组件在框外，明确不填；只纳入本片完整移动眼脸内67个组件，不只19个红点。"
+  ],
+  "frozenAlgorithmCheck": "recover AST equals prior frozen helper after only canvas shape assertions640→896; connectivity/thresholds/boundary/opaque/RGB operations unchanged.",
+  "all107PreflightMinimumSourceKeyMarginBytes": 54.0,
+  "potentialRestoredPixels": 812,
+  "scope": "技术trimap许可，仅B独立实看认可后执行；最终A/B静图和原速用户评审仍另行，未批准表演/未来源或正式集成。",
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

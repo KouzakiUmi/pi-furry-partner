@@ -1,3 +1,5 @@
+> Development candidate **2.5.1-preview.2 (unreleased)** provides HD illustration only; pixel artwork belongs to Legacy. Nod, wave, peek, stretch, head sway, ear flick, a grounded happy bounce and three complete random idle variants bring the source catalog to 28 clips. Download links still point to the published version below. Pixel footage in older videos is historical.
+
 > Main currently previews2.5.1-preview.1; stable2.5.0 remains available. The new Legacy tag is legacy-v2.4.2.
 
 > `main` ships full-animation v2.5.1-preview.1. Run `npm run build:animated` for Pi and DSH packages. The [legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) maintains v2.4.2 with the original v2.4.0 artwork. See the [build guide](docs/plugin-lines.md).
@@ -31,7 +33,7 @@
 
 > 🐾 “I'm right here. Tell me what you've got in mind.”
 
-Umi stays beside the [Pi Coding Agent](https://github.com/earendil-works/pi) editor. He rests a paw under his chin while thinking, types while editing and scans command results with a magnifying glass, and dives into a pile of papers to find things, leaving his tail swishing above the stack. When you need to decide, he tilts his head and waits; stay away a little longer and he dozes off, ready to wake when you return.
+Umi stays beside the [Pi Coding Agent](https://github.com/earendil-works/pi) editor. He rests a paw under his chin while thinking, types while executing or editing and reads content with a magnifying glass, and dives into a pile of papers to find things, leaving his tail swishing above the stack. When you need to decide, he tilts his head and waits; stay away a little longer and he dozes off, ready to wake when you return.
 
 The extension also tidies up the editor, footer and everyday actions. Companion text, controls and information panels follow your system language by default and support **English and Simplified Chinese**. The **native Chinese UI patch, concise bilingual Pi documentation hints and optional character voice** each have their own switch, so you can keep your existing models and workflow.
 
@@ -59,7 +61,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 The **full-animation remake v2.5.1-preview.1** on `main` provides 19 complete illustration clips (17 character clips and two keyboard transitions), shared by Pi and DSH. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
-The full-animation edition retains the original **100 × 100** pixel artwork and its simple frames; it excludes regenerated pixel derivatives. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
+Main full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
 DSH uses an [independent waving title image](docs/dsh-branding.md) with a static fallback, including reduced-motion mode. It does not follow the desktop pet's activity. The composer status button has been removed; the floating pet keeps its interactions and typing listener.
 
@@ -93,7 +95,7 @@ Searching and context compaction share a continuous paper-pile animation: the he
 
 ![Full magnifier loop: the head and gripping paw follow the lens in illustrated and pixel styles](magnifier-preview.gif)
 
-![Illustrated and pixel renditions of the same Umi design](style-comparison.png)
+Historical pixel comparisons are retained on the [Legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy).
 
 These are offline exports. The local `preview.html` can demonstrate states and layouts without making model requests. Optional standalone showcase source is also retained; see the [local preview instructions](CONTRIBUTING.md#可选展示页).
 
@@ -143,7 +145,6 @@ The command registers the package's declared bundle; restart DSH after an update
 
 ```text
 /mascot style umi           Illustrated Umi
-/mascot style umi-pixel     Pixel Umi in the same design
 /mascot menu                Open everyday actions
 /mascot poke                Give Umi a gentle poke
 /mascot language en         Switch to English
@@ -156,9 +157,9 @@ Use `/mascot` to inspect your settings. Size, layout, rendering and demo command
 
 `/mascot demo` or `/mascot demo all` starts a repeating tour lasting a little over a minute: listening, thinking, speaking, working and a playful poke, with complete magnifier and search loops and time to doze and wake again. It makes no model requests and preserves settings and your draft. `demo off` or a real task ends the tour. Use `/mascot demo thinking` or `/mascot demo running` to focus on one pose.
 
-The character name is **Umi**; the interface exposes only `umi` and `umi-pixel`. The former `wumi`, `wumi-pixel`, `illustration` and `pixel` IDs remain compatibility aliases.
+The main HD/full-animation line exposes only the `umi` illustration. Old pixel settings migrate to illustration; pixel artwork is available only in Legacy.
 
-`umi-pixel` uses the original **100 × 100** pixel artwork and simple frames in both editions; it is not a downsampled replacement of the new illustration.
+For the original **100 × 100** pixel artwork and simple animations, install [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2). Main packages exclude pixel artwork on both hosts.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
 

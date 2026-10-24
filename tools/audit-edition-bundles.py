@@ -44,8 +44,8 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
                 for platform in configuration['platforms']}
     keys = [(build['edition'], build['platform']) for build in builds]
     assert len(keys) == len(set(keys)) and set(keys) == expected, 'Require each edition/platform exactly once'
-    origin = read(root / 'build/legacy-pixel-provenance.json')
-    required_original = {entry['path'] for entry in origin['files'] if entry['path'].endswith('.json')}
+    assert configuration['pixelPolicy'] == 'legacy-only'
+    assert configuration['publicStyles'] == ['umi']
     verified = root / 'dist/verified'
     verified.mkdir(parents=True, exist_ok=True)
     results = []
@@ -64,19 +64,16 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
         assert archive_sha == report['archiveSha256'] == build['archiveSha256']
         names = {row['path']: row for row in report['files']}
         assert len(names) == len(report['files']) == report['fileCount']
-        assert not any(path.startswith(('assets/reactions/umi-pixel/', 'assets/reactions/wumi',
+        assert not any(path.startswith(('assets/reactions/pixel/', 'assets/reactions/umi-pixel/', 'assets/reactions/wumi',
                        'assets/animated/indexed/umi-pixel/', 'assets/animated/indexed/pixel/')) for path in names)
         assert not any('state-idle' in path for path in names), 'Withdrawn unused bank must not return'
         assert any(path.startswith('assets/animated/') for path in names) == configuration['editions'][edition]['fullAnimation']
         has_hd = any(path.startswith(('assets/hires/', 'assets/animated/hires/')) for path in names)
         assert has_hd == (profile == 'full'), 'Pi core excludes HD; DSH full retains HD'
-        checked = []
-        for source in origin['files']:
-            if source['path'] not in names:
-                continue  # Original preview PNGs are not runtime package inputs.
-            assert names[source['path']]['sha256'] == source['sha256']
-            checked.append(source['path'])
-        assert required_original <= set(checked), 'Original pixel runtime/header files are mandatory'
+        checked = []  # Original pixel artwork is maintained only by legacy.
+        assert not {'assets/native-frames.json', 'assets/terminal-frames.json', 'legacy-pixel-provenance.json'} & names.keys()
+        assert report['capabilities']['publicStyles'] == ['umi']
+        assert report['capabilities']['pixelPolicy'] == 'legacy-only'
         # A fresh directory prevents stale files from an earlier platform/version
         # from making a missing package dependency appear to pass.
         target = Path(tempfile.mkdtemp(prefix=f'{edition}-{platform}-', dir=verified))

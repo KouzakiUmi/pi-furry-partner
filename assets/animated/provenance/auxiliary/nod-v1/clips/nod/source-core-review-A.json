@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "A",
+  "status": "APPROVED_REVIEWED_OPAQUE_CORE_FOR_THIS_SOURCE_ONLY",
+  "reviewedOpaqueCore": [
+    240,
+    285,
+    402,
+    366
+  ],
+  "sourceVideoSha256": "cc8bea3affde81debe5223b43d8c7d31e1e7afd71a6a837e17445d9ac3127379",
+  "sourceCorePreflightSha256": "d3ebd43c3149a3110890e944cb9b7ef1e454fd35695ae14161dd9a4011be75a6",
+  "proofSha256": "b3d75ce63a16405b2798d3f8882c69ee4d4b3abd948a68c0245e3ad62635707d",
+  "actualViewedFiles": [
+    {
+      "file": "source-core-proof.jpg",
+      "sha256": "b3d75ce63a16405b2798d3f8882c69ee4d4b3abd948a68c0245e3ad62635707d"
+    },
+    {
+      "file": "interior-alpha-flag-proof.png",
+      "sha256": "f02a0dd0c52e13a24a25a0d5038182ce08f4e5b548f7a92f71e146fe73acf25c"
+    },
+    {
+      "file": "processed-edge-v2/black/029.png",
+      "sha256": "2eafb082aea421ee8686aec4eafe3413148e0dc04901bf638e4b933b3eb65b79"
+    },
+    {
+      "file": "processed-edge-v2/white/029.png",
+      "sha256": "cba1d08653d51a47fe3d54c11313d4344399c9546246eaf96090837d476c36e4"
+    }
+  ],
+  "findings": [
+    "029 enlarged source/black/white/alpha confirms a true interior alpha hole at right eye star, not an external antialiased contour.",
+    "Actual six source poses000/012/024/029/078/106 show this nod-specific box over solid face/eye/forehead fur throughout the two dips; no background or externally transparent symbol in the box.",
+    "Full107 source/key min45byte and ext8/coreboundary/reliable252/outside guards support scoped nativeRGB/255 technical recovery."
+  ],
+  "scope": "Only alpha<252 inside this exact nod-source core; use same native frame fixed640 resize RGB and255alpha, with refusal if external8/core boundary/key-source precondition fails. Preserve reliable252RGBA, all external soft edges and everything outside repair.",
+  "limitations": [
+    "Source-specific trimap, invalid for future or other clips",
+    "Not output-alpha approval or dynamic approval; acting approval remains separately bound",
+    "Fine exterior dark/purple rim/grain still requires final black/white samples"
+  ],
+  "humanAcceptedOutput": false,
+  "runtimeInstalled": false
+}

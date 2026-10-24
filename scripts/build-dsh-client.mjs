@@ -31,6 +31,7 @@ const moduleOrder = [
   "motion.mjs",
   "response-latency.mjs",
   "dsh-bridge.mjs",
+  "dsh-session-observer.mjs",
   "dsh-companion.mjs",
   "dsh-presentation.mjs",
   "dsh-scene-title.mjs",
@@ -66,9 +67,9 @@ const voices = {
   },
 };
 
-// Keep each startup seed in its selected artwork style; no pixel/illustration flash.
+// Main ships one illustrated startup seed, including migrated legacy settings.
 const seedSheets = {};
-for (const [style, directory] of [['umi', 'umi'], ['umi-pixel', 'pixel']]) {
+for (const [style, directory] of [['umi', 'umi']]) {
   const raw = JSON.parse(await readFile(join(root, 'assets/reactions', directory, 'reaction-sheet.json'), 'utf8'));
   const frames = [], ids = {};
   for (const id of ['idle-open', 'idle-blink', 'think']) {

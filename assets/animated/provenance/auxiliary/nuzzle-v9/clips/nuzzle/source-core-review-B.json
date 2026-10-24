@@ -1,0 +1,34 @@
+{
+  "reviewer": "B",
+  "status": "PASS_SOURCE_SPECIFIC_EYE_CORE_ONLY",
+  "sourceVideoSha256": "e72c5f0add9d42887c73c1eda85368caa549d23adc6f6441ae27bd1a68dd090b",
+  "edgeManifestSha256": "9410142afacf5537ed047220d07ded74199f5cc5684c3ab27adddd02a0505142",
+  "preflightSha256": "4b5e4d34312b85f1ac2c28ed5f231e319ca5c705befcd577b2e21ecb08a93a47",
+  "proofSha256": "1974dbb9823b880b5e09ac7a6f14cbe99f622911f3e5974eccc54e3634b3442d",
+  "interiorFlagProofSha256": "e29fbe5a68201bd0cfd7f35680961ffe1e3d8f3eea38c357ea5e533511f3f6ee",
+  "userSourceReviewSha256": "8c3f13e4f5f9e909bd4af9ee0f7712aeeecf3bc401ec0036a1ed4386faade07e",
+  "core": [
+    245,
+    280,
+    392,
+    352
+  ],
+  "actualViewed": [
+    "source-core-proof.jpg (000/030/054/066/092/106)",
+    "interior-alpha-flag-proof.png (092 aligned source/black/white/alpha)",
+    "processed-edge-v2/face-source-edge-proof.png"
+  ],
+  "findings": [
+    "Actual092 proof shows thin accidental alpha loss at bright star tips enclosed inside solid eye/face; aligned source RGB has intact highlight, so original same-frame RGB restoration is technical recovery.",
+    "The fixed reviewed rectangle stays within opaque face/hair/eye tissue in the viewed neutral, lean and squint frames; no background, garment/paw gap or external outline enters it. Closed-eye poses move lower inside face, and no rectangle expansion is authorized to chase features.",
+    "Preflight supplies all107 external8/coreboundary/reliable252/outside guards, minimum source/key separation52 and potential1183 enclosed low-alpha pixels. Counts are supporting evidence, not alone visual authorization."
+  ],
+  "allowEyeInteriorRestore": true,
+  "allowGarmentGapFill": false,
+  "allowCoreExpansion": false,
+  "allowArtisticColorCorrection": false,
+  "scope": "Only this exactv9 source and fixed rectangle: guard-enclosed alpha<252 pixels may recover aligned same-frame sourceRGB and alpha255. Keep reliable252 RGBA/exterior8/coreboundary/outside unchanged; source acting/paw exemption frozen. Re-review finaldetail before user transparent gate.",
+  "humanAcceptedTransparentOutput": false,
+  "readyForRuntimeIntegration": false,
+  "serverStarted": false
+}

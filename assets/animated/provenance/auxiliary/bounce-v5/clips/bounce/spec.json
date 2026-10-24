@@ -1,0 +1,49 @@
+{
+  "action": "bounce",
+  "model": "MiniMax-H3",
+  "mode": "FL2VA",
+  "duration": 4,
+  "resolution": "768P",
+  "source": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\approved-static-20261018\\idle-open.png",
+  "sourceSha256": "759ef974e7ac320463d04188432f17559c58484e34530e2111d2e0b6f7566927",
+  "registeredReferenceSha256": "992b1cb7208077a7c9a91495b47111c3a20d72957a03fe8408c42d84b808d0f4",
+  "referenceSha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf",
+  "promptSha256": "d1e91b867e93c001c04ff2a172855873fc5ce2723d161ee61afda07354669212",
+  "motionContract": {
+    "schemaVersion": 2,
+    "intent": "One small grounded joyful seated weight rebound, never airborne",
+    "primaryMotion": "Animate this original compact seated Umi with ONE spontaneous little happy seated BOUNCE of weight, like a pleased small animal giving a quick buoyant body accent while staying seated. This is a GROUNDED chest-and-shoulder rebound, never a jump. The original paired short broad gray paws remain comfortably in contact at their original floor support, with both thick white forearms naturally bending to support the same small change of chest weight. His shoulders and upper chest gather a SMALL soft downward compression, then the head, neck, chest and shoulders spring lightly back into relaxed alert sitting as ONE quick elastic happy accent. The movement is modest and readable at ordinary everyday speed, the gather-and-rebound taking roughly half a second, then it finishes. Do not stretch the movement across the whole shot, demonstrate separate joints, lift the entire lower body, or hold any peak. Let a tiny pleased eye/cheek smile share the accent; the rest of the shot has easy grounded eye contact, one natural blink and relaxed breathing. Start and finish in the supplied original neutral seated support.\n\nThe compact lower seated root and BOTH original paws stay grounded throughout. Preserve the original head-body proportions, broad compact gray animal palms, short sturdy wrists and thick WHITE forearms with the exact original pointed white/gray boundary. Bent elbows accommodate the small chest press without lengthening the arms. Keep toes softly grouped and closed with the original tiny ivory nails; no reaching, paw display, sliding fingers, extra feet, new hind paws, long gray columns, standing torso, exposed long belly, image stretching, scaling or rigid whole-picture translation. The happy accent belongs to the supported head-neck-chest-shoulder body chain, never just wiggling the paws or nodding a detached head.\n\nPreserve original face width, blue star eyes, continuous dark eyelid curves and separate gray bean brows. No broad talking mouth or new teeth. Keep the same viewer-left folded hard-cloth hood ear with its original X stitches and the other ear upright. ONE continuous heavy cape stays draped DOWN close to the seated root, with both narrow lower corners weighted downward even during the accent; never sideways wings, upward flung points, extra hem, skirt or sleeve panels. Only tiny scarf-tip and fold settling follows the small chest response, with no wind flourish.\n\nThe sole image is the original identity, materials, proportions and supported neutral pose, supplied as BOTH first and last frame. No airborne pose reference is used. FIXED896 world: original640 character pixel scale centered by128 margin, pivot448736, world paintRect[-128,-128,896,896]. Camera and scale remain fixed; preserve ample empty space around every ear, claw, cape and scarf extreme, at least40logicalpixels. The backdrop is exactly the same flat unlit #A020C0 throughout. Preserve original white/gray fur, blue scarf and blue-gray clothing colors and natural shadows without key-colored reflections. Natural forward recovery, no reversed replay, exact-frame paste, slow motion or freeze.",
+    "supportChain": "Original compact paired planted gray paws and seated root remain grounded; thick white arms bend naturally under one small chest/shoulder/head-neck weight accent.",
+    "gazeHead": "Tiny happy eye/cheek response and head-neck-chest/shoulders share the same supported impulse; original blue star eyes recover.",
+    "secondaryMotion": "Tiny scarf-tip settle only; single heavy cape and narrow corners remain down, no wings.",
+    "anchors": "Fixed896 source canvas, original640pixel identity exact-padded128 each side, bitmap pivot448736/worldpivot320608, paintRect(-128,-128,896,896), no per-frame fit/scaling. All pose extremes inside>=40logicalpixel margin.",
+    "timingLayers": "One short supported compression/rebound around half a second, no peak hold; remaining time grounded pleased gaze, blink and breathing.",
+    "loopBoundary": "Original idle same image first/last FL2VA; actual endpoint compatibility requires source review.",
+    "reviewOrder": "Full107 fixed-world source anatomy/support/framing/intent plus independent A/B, then USER unchanged nativepurple original-time source gate BEFORE alpha/edge/core. No runtime change.",
+    "propInteraction": "none"
+  },
+  "outputCanvas": [
+    896,
+    896
+  ],
+  "pivot": [
+    448,
+    736
+  ],
+  "worldPaintRect": {
+    "x": -128,
+    "y": -128,
+    "width": 896,
+    "height": 896
+  },
+  "keyColor": "#A020C0",
+  "sameFirstAndLastFrame": true,
+  "automaticRetries": 0,
+  "runtimeDeferred": true,
+  "authorization": "Root explicitly authorizes exactly one fresh v5 original-idle896 FL2VA grounded happy accent; preserve v3/v4 HOLD and source history. Full107 source A/B and user source gate before alpha; no formal27, server, install or release changes.",
+  "worldPivot": [
+    320,
+    608
+  ],
+  "methodChange": "After v3/v4 prolonged airborne pose HOLD, REMOVE all middle/airborne peak images. Original-idle-only first/last FL2VA; grounded seated weight accent without lifting root/paws. Not a minor airborne prompt retry."
+}

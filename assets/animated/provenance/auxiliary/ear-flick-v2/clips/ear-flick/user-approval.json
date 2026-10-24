@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "status": "USER_APPROVED_EXACT_EAR_FLICK_OUTPUT_FOR_RUNTIME_INTEGRATION",
+  "userApproved": true,
+  "humanAccepted": true,
+  "recordedDate": "2026-10-23",
+  "action": "ear-flick",
+  "version": 2,
+  "userQuote": "可以，接入并继续下一批",
+  "reviewUrl": "http://127.0.0.1:49972/",
+  "reviewEvidenceSha256": "07de2f0a4c2dab26ec72882cc01960605fd7399c8f596e76590f4b767d0748fb",
+  "servedPageSha256": "e00344c6b932e47d27488f54bb51e203d1a14f29a5be920019274050fbc44206",
+  "reviewSnapshotPrecedesHumanDecision": true,
+  "processedVariant": "processed-detail-v1",
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "manifestSha256": "d4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "fee84fe862b6f647e4183ba9db19d20270cf2a41d0b7725590d9142b7ca33e5b",
+  "contractSha256": "e91e6b9695c1ef89f271f393f383427deddd8dadde9da67ae33062f0de088419",
+  "reviewASha256": "8a57173f705b78cb56daa072bb84800c07ba03c3e8ebc11a0143cc45d3831ccf",
+  "reviewBSha256": "59087cfd8dba1e7a5026e3cfb2335841ef736e34e37c435eb6d9ca636a6214bf",
+  "aggregatedReviewSha256": "abe219f12b769a8f8da9f59821060295add4686260f868d6fb2f46473708f3e2",
+  "scope": "Only this exact natural-ear v2 performance/timing/amplitude/loop and displayed transparent edges, with Pi/DSH integration permission. Ear v1 user rejection remains; no approval of old v1, future nuzzle/bounce or sources, installation or publication.",
+  "knownLimitations": [
+    "More-upright ear near-held pose and native line softness accepted as displayed, not exact prompt timing compliance.",
+    "Fine dark-purple fringe/subdued green-gray edge grains remain disclosed; no all107 absence of yellow grains claimed; reliable alpha252 preserved, not claimed all255."
+  ],
+  "previousV1RejectionSha256": "73bfd3aee3434c00dd320e2381c4a86aefc89f14248561c2c3410bd7d55b2218",
+  "integrationConstraints": {
+    "fullCanvas": [
+      640,
+      640
+    ],
+    "paintRect": {
+      "x": 0,
+      "y": 0,
+      "width": 640,
+      "height": 640
+    },
+    "pivot": [
+      320,
+      608
+    ],
+    "worldAnchor": [
+      320,
+      608
+    ],
+    "perFrameFit": false,
+    "nativeHdFrames": 107,
+    "indexedEvenFrames": 54,
+    "periodMs": 4458
+  },
+  "files": [
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\Umi-ear-flick-H3-source.mp4",
+      "sha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\reference.png",
+      "sha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\registered-reference.png",
+      "sha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\prompt.txt",
+      "sha256": "fee84fe862b6f647e4183ba9db19d20270cf2a41d0b7725590d9142b7ca33e5b"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\spec.json",
+      "sha256": "2e2c01f8d4a60d282642635ceffcc622fcd651b4c3a3dfceba753469caa1e6f0"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\motion-contract.json",
+      "sha256": "e91e6b9695c1ef89f271f393f383427deddd8dadde9da67ae33062f0de088419"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\input-preparation.json",
+      "sha256": "26e079b423ab164f534b49683130da16e57c0d8ed5638ef81a1eee6bab5498f7"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-processing-authorization.json",
+      "sha256": "7b73606ddd9b6df6f8846ccc8ef80c8818df34b0a74743ff5921bf059bd277b1"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-review-A.json",
+      "sha256": "6e63ad12d88bf5e386e70e54f3471571d71c41bc17d8f9e1fe87af184c120d92"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-review-B.json",
+      "sha256": "1483c27d2fb4b520b8a12c2d36493c76fa5f2f8a4e00679431e3e30b5b123c8a"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-core-review-A.json",
+      "sha256": "665783fb97c5274bd120689bbcc209a965012e75ebd08679ea41332bb5760643"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-core-review-B.json",
+      "sha256": "d2de774913c494b06564ae27bc621d8942e681e4c3e4463333b0773cb6f0adc0"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-core-preflight.json",
+      "sha256": "d693df633bf32a1ee82e32452ddfa60275d1fac86bed69e7073cbc425515ad78"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\detail-output-review-A.json",
+      "sha256": "8a57173f705b78cb56daa072bb84800c07ba03c3e8ebc11a0143cc45d3831ccf"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\detail-output-review-B.json",
+      "sha256": "59087cfd8dba1e7a5026e3cfb2335841ef736e34e37c435eb6d9ca636a6214bf"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\detail-technical-review.json",
+      "sha256": "0896905149598f67d48650fc39e913574e7bfa1c61749f17162fe53a29c47fa2"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-paw-framing-preflight.json",
+      "sha256": "4264b48a77155ba9da737f4a8c691faeb228d9dc5b49563e8fdd2de659c8dfc4"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\preview-paw-technical-review.json",
+      "sha256": "fe7a2f3a36eca07bd94587a28d98d362972a603ef5ff72b558244bf3168a5c29"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\review.json",
+      "sha256": "abe219f12b769a8f8da9f59821060295add4686260f868d6fb2f46473708f3e2"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\detail-eye-proof.png",
+      "sha256": "3f417ce241e5117178fcf96a9c47527009a0d365db8cba9f4b58ec7b9e10e739"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\source-core-proof.jpg",
+      "sha256": "26c25fdf94db18e91f151926aabb9e63d96d8efca34b9e2b860430272fa6f073"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\served-review-page.html",
+      "sha256": "e00344c6b932e47d27488f54bb51e203d1a14f29a5be920019274050fbc44206"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\processed-detail-v1\\manifest.json",
+      "sha256": "d4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\process-ear-v2-purple.py",
+      "sha256": "d2a4fc2003403b1c374711aadadc4dbe8856623a4d2bfa97de050fdbbcc1d316"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\process-purple-batch10.py",
+      "sha256": "f964a06450750b78757d6daa0a84bddbfd382eadf1fceff19095af22d8714e36"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\apply-ear-headshake-key-edge.py",
+      "sha256": "a586acc171ad9695d0aaf5d111a5493cb30b092562dc178b5ec338fe51421cda"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\restore-ear-flick-v2-face-core.py",
+      "sha256": "b3ad6b587f7b753e5461bf410c5f0e4a7666eabbbd1873c0b8ac47a912172b3b"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\check-ear-flick-v2-detail.py",
+      "sha256": "a3eb7295f1fcfae4e77fb9537a49c204902db8eb6e30ccbbdd65bbf57ae09f61"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\key-color-matte.py",
+      "sha256": "375371fb002b500409cb0673992244e125f3b6802fe971013f6fb133b298b3f2"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\work\\motion-polish-20261023\\repair-key-edge-color.py",
+      "sha256": "3a39d4355063d563fc7f5c0b8620993c8a54479204e2333fd0445dccc197465b"
+    },
+    {
+      "file": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-natural-review-config.json",
+      "sha256": "6dbed0b87fe495ae8fb287a08ea8d13af6d8f9ce67a07fb57f3520af2a49c282"
+    },
+    {
+      "file": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-natural-review-config.evidence.json",
+      "sha256": "b6359b831fe24df8d703e9166ea064b50bf567283c588cbe8e3dd5dba81d3f96"
+    },
+    {
+      "file": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-natural-final-review-evidence.json",
+      "sha256": "07de2f0a4c2dab26ec72882cc01960605fd7399c8f596e76590f4b767d0748fb"
+    },
+    {
+      "file": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear_natural_v2_review_server.py",
+      "sha256": "926765bb26c51d1138202f943f4486fe62d6089d8a849fb179cbc071c24d8392"
+    },
+    {
+      "file": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-natural-page-script.js",
+      "sha256": "46a37e350f3b09e222398375ad3d0f6bb68643c951bcb29db09178c277910b0d"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\processed-detail-v1\\world-black.mp4",
+      "sha256": "53959e399dbc5c98997ac83c1b61aa0a9fb88d1095892eaebf54daebdd601e2c"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\processed-detail-v1\\world-gray.mp4",
+      "sha256": "f87b8a8cd6504129bfd20152978f7889cb22173f51ccf6d527263ab9734ffe9d"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v2\\processed-detail-v1\\world-white.mp4",
+      "sha256": "4d611ad093fd0efadc88b2f8eace10e0e127f806c0ef56d021c3565515de3c58"
+    },
+    {
+      "file": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\sources\\h3-motion-polish-20261023\\ear-flick\\key-purple-pilot-v1\\user-rejection.json",
+      "sha256": "73bfd3aee3434c00dd320e2381c4a86aefc89f14248561c2c3410bd7d55b2218"
+    }
+  ],
+  "runtimeInstalled": false,
+  "published": false
+}

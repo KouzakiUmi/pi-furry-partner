@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { approvedMotionFixture } from './approved-motion-fixture.mjs';
 import { petPaintGeometry, floatingPetGeometry } from '../lib/dsh-presentation.mjs';
 const { catalog, data } = approvedMotionFixture();
+for (const frame of data["indexed/umi/watch.json"].frames) frame.pixels = [2, 0, 2, 1];
 const before = { window: globalThis.window, document: globalThis.document, createImageBitmap: globalThis.createImageBitmap };
 let entry, clock = 0, closed = 0, controller;
 const pending = new Map(), painted = [];
@@ -16,7 +17,6 @@ globalThis.document = { hidden: false, createElement: () => {
 globalThis.createImageBitmap = async blob => ({ width: 896, height: 896, tag: blob.path, close() { closed++; } });
 const flush = async () => { for (let i = 0; i < 80; i++) await Promise.resolve(); };
 const rawSheet = JSON.parse(await readFile(new URL('../assets/reactions/umi/reaction-sheet.json', import.meta.url), 'utf8'));
-const oldPixelSheet = JSON.parse(await readFile(new URL('../assets/reactions/pixel/reaction-sheet.json', import.meta.url), 'utf8'));
 const fetchImpl = async (url, options = {}) => {
   const u = new URL(String(url), 'http://localhost');
   if (u.pathname.endsWith('/animated/catalog')) return { ok: true, json: async () => catalog };
@@ -30,13 +30,14 @@ const fetchImpl = async (url, options = {}) => {
     return { ok: true, blob: async () => ({ path }) };
   }
   if (u.pathname.endsWith('/config')) return { ok: true, json: async () => ({ style: 'umi', language: 'en', companionship: 'off' }) };
-  if (u.pathname.endsWith('/sheet')) return { ok: true, json: async () => ({ ...(u.searchParams.get('style') === 'umi-pixel' ? oldPixelSheet : rawSheet), gestureCatalog: { clips: {} } }) };
+  if (u.pathname.endsWith('/sheet')) return { ok: true, json: async () => ({ ...rawSheet, gestureCatalog: { clips: {} } }) };
   return { ok: false };
 };
 try {
   await import(new URL('../lib/client.js?approved-integration', import.meta.url));
   const plugin = entry.factory(() => ({}));
-  controller = plugin.createMascotController({ fetchImpl, now: () => clock });
+  // Isolate codec/geometry/routing boundaries; production dwell is covered by action-dwell-dsh.
+  controller = plugin.createMascotController({ fetchImpl, now: () => clock, minimumActionMs: 0 });
   await controller.init(); await flush();
   controller.activity.start({ wake: false }); controller.notifyChange(); await flush();
   assert.equal(controller.getSnapshot().approvedMotion.clipId, 'idle');
@@ -64,14 +65,12 @@ try {
   assert.ok(layer.displayKey.endsWith('/think'), 'A missing HD frame paints current indexed think, never held idle');
   controller.applySettingsLocal({ style: 'umi-pixel' }); await controller.ensureSheet('umi-pixel'); await flush();
   for (const resolve of pending.values()) resolve(); pending.clear(); await flush();
-  assert.equal(controller.getRenderLayer().hiRes, false, 'Late illustrated HD cannot take over pixel style');
-  assert.equal(controller.getSnapshot().approvedMotion, null);
-  assert.equal(controller.getSnapshot().visual.approvedMotion, undefined);
-  assert.equal(controller.getSnapshot().approvedMotionReady, false);
-  assert.equal(controller.getSnapshot().visual.sheet.width, 100, 'Pixel returns to its original 100px bank');
+  assert.equal(controller.getSnapshot().settings.style, 'umi', 'Historical pixel input migrates to illustration');
+  assert.equal(controller.getSnapshot().approvedMotion.clipId, 'think');
+  assert.equal(controller.getSnapshot().visual.sheet.width, 2, 'The approved indexed fixture stays selected after alias migration');
   controller.applySettingsLocal({ animation: false });
-  assert.equal(controller.getSnapshot().visual.approvedMotion, undefined, 'Pixel pause cannot latch a new-loop frame');
-  assert.equal(controller.getSnapshot().visual.sheet.width, 100);
+  assert.equal(controller.getSnapshot().visual.approvedMotion, undefined, 'Paused illustration uses its static authored frame');
+  assert.equal(controller.getSnapshot().visual.sheet.width, 240);
   controller.applySettingsLocal({ animation: true });
   controller.applySettingsLocal({ style: 'umi' }); await flush();
   controller.activity.handle('tool_execution_start', { toolCallId: 'edit', toolName: 'edit' });
@@ -82,6 +81,7 @@ try {
   clock = 399; controller.notifyChange(); assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work-enter');
   clock = 400; controller.notifyChange(); await flush(); assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work');
   controller.activity.handle('tool_execution_end', { toolCallId: 'edit' });
+  controller.activity.handle('message_update', { assistantMessageEvent: { type: 'thinking_delta', delta: 'x' } });
   clock = 450; controller.notifyChange(); await flush();
   assert.notEqual(controller.getSnapshot().snapshot.phase, 'editing', 'Actual tool state does not wait for visual exit');
   assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work-exit');
@@ -108,6 +108,40 @@ try {
   clock += 1100; controller.notifyChange();
   assert.notEqual(controller.getSnapshot().snapshot.reaction, 'poked');
   assert.equal(controller.getSnapshot().visual.frame.id, 'idle-open');
+  // Actual controller activity, decoded indexed output and paused static sources
+  // must all use the same reading/execution meaning.
+  controller.applySettingsLocal({ animation: true });
+  clock = 6000; controller.activity.start({ wake: false });
+  controller.activity.handle('agent_start');
+  controller.activity.handle('tool_execution_start', { toolCallId: 'run-routing', toolName: 'bash' });
+  controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().snapshot.phase, 'running');
+  assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work-enter');
+  assert.equal(controller.getSnapshot().visual.approvedMotion.clipId, 'work-enter');
+  clock = 6399; controller.notifyChange(); assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work-enter');
+  clock = 6400; controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().visual.approvedMotion.clipId, 'work');
+  controller.activity.handle('tool_execution_start', { toolCallId: 'read-routing', toolName: 'read' });
+  controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().snapshot.phase, 'reading');
+  assert.equal(controller.getSnapshot().visual.approvedMotion.clipId, 'watch', 'A real read cancels the keyboard immediately');
+  assert.deepEqual(Array.from(controller.getSnapshot().visual.frame.pixels), [2, 0, 2, 1], 'Actual read output contains the distinct magnifier pixels');
+  assert.equal(controller.cacheStats().approved.keyboardStage, null);
+  controller.applySettingsLocal({ animation: false }); controller.notifyChange();
+  assert.equal(controller.getSnapshot().visual.frame.id, 'watch', 'Paused reading keeps the original magnifier pose');
+  controller.activity.handle('tool_execution_end', { toolCallId: 'read-routing' }); controller.notifyChange();
+  assert.equal(controller.getSnapshot().visual.frame.id, 'work', 'Paused execution keeps the original keyboard pose');
+  assert.equal(controller.getRenderLayer().displayKey, 'poses/work', 'The actual paused render layer also selects keyboard, never the old magnifier override');
+  controller.applySettingsLocal({ animation: true });
+  clock = 6800; controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().visual.approvedMotion.clipId, 'work');
+  controller.activity.handle('tool_execution_end', { toolCallId: 'run-routing' });
+  controller.activity.handle('message_update', { assistantMessageEvent: { type: 'thinking_delta', delta: 'x' } });
+  clock = 6850; controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().visual.approvedMotion.clipId, 'work-exit');
+  clock = 7249; controller.notifyChange(); assert.equal(controller.getSnapshot().approvedMotion.clipId, 'work-exit');
+  clock = 7250; controller.notifyChange(); await flush();
+  assert.equal(controller.getSnapshot().approvedMotion.clipId, 'think');
   controller.applySettingsLocal({ animation: true, enabled: false });
   assert.equal(controller.getSnapshot().approvedMotion, null);
   const stats = controller.cacheStats();

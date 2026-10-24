@@ -1,6 +1,14 @@
 # 全动态动作打磨与验收
 
-更新：2026-10-23。当前任务是插件全动态线路；角色印象 PV、四面图及 legacy 的旧资源不在本轮修改范围。
+更新：2026-10-24。当前任务是插件全动态线路；角色印象 PV、四面图及 legacy 的旧资源不在本轮修改范围。
+
+
+## 当前进度快照（后文为按轮次保留的历史）
+
+- 已发布／本机安装基线：main v2.5.1-preview.1（19片），Legacy legacy-v2.4.2；本轮源码候选2.5.1-preview.2尚未重新归档、安装或发布。
+- 用户已分别通过探头、晃脑袋、抖耳v2及开心小弹v5，均按精确批准输出接入Pi/DSH，当前28片；实际集成与stage验证以本轮报告为准。不能以旧包冒充28片版本。
+- 八项辅助动作中，wave/nod/peek/stretch/head-shake/ear-flick/bounce已获批准并接入；仅剩nuzzle。抖耳v1否决保留，v2已通过；辅助新候选先审原生紫底表演源，获源批准后再alpha及最终透明门，不以相近情绪片回退冒充。
+- 随机待机为已通过的idle/idle-center/idle-right，在完整循环边界轮换。已通过动作与已接受的细小局限冻结，不因为继续扩充重开。
 
 ## 基线和本轮顺序
 
@@ -227,3 +235,265 @@ processed-detail-closeout-v1只在上述实心脸区恢复原alpha<252像素为�
 用户要求DSH名称使用dsh-前缀、Legacy独立tag线。未来DSH下载附件为dsh-furry-partner-full-animation-<version>.tgz；Pi为pi-furry-partner-full-animation-<version>-pi-core.tgz。内部package/插件标识为升级兼容保持原值。main使用v2.5.x及后续标签；legacy分支使用legacy-v2.4.x，只接受2.4.2起的稳定修订，明确Legacy标题且latest=false。历史标签与附件保持原样；本次未创建标签或公开Release。
 
 本轮仅构建、归档回读和解包生产读取器验证；实际宿主安装与视觉/性能验收另行记录。19段主动作的接入不代表八个旧辅助手势已获得新连续素材，不能借此宣称所有动作重制完毕。
+
+
+## 辅助动作恢复与随机待机（2026-10-23）
+
+用户已分别通过nod/key-purple-pilot-v1的原速源表演与processed-detail-v1透明边缘，并明确要求接入两端、继续其余辅助动作。正式目录已新增nod作为第20条完整动作，源/透明/量化/完整时间/用户批准与A/B记录冻结在assets/animated/provenance/auxiliary/nod-v1。原19条高清RGBA与解码像素/时序/QA保持；二进制顶层revision随新缓存版本更新。真实Pi1.3加载器、图像传输和DSH控制器验证手动/自动都播放到末帧106，4458ms后结束。尚未构建包含nod的新安装包、安装或公开发布；此前preview.2双包是19片代码修复快照。
+
+用户追加待机只向左看太机械，要求多个动画随机播放或自然循环。新增素材先以center正面放松与right右侧留意两源试点，各用原批准idle640注册、固定pivot320608与原图首尾，避免镜像破坏折耳身份。两片未通过最终透明原速评审前不进入正式idleVariants。
+
+共享播放器只从明确列入idleVariants、QA已通过、同paintRect且可循环的完整素材中选择。一次完整周期内不换片；边界随机选取并避免连续同片，预取下一片；暂停/任务打断和迟到恢复有界处理，不回放后台积压循环。两端不改变帧率、姿态几何或人物尺度。原目录没有variants时完全沿用既有单片时钟。fixture与真实DSH渲染测试仅验证代码行为，不批准新源表演或透明效果。
+
+
+### 三待机与挥爪：用户批准后接入（2026-10-23）
+
+用户在多待机／挥爪原速评审页明确通过「两条新待机都可用，接入随机轮换」与「挥爪可以，接入并继续下一批」。正式目录由20条增加到23条，idleVariants只列原idle、idle-center、idle-right；挥爪按完整辅助动作播放，不以表情回退充数。新三片各107张高清／54张Pi原时间抽样，保持固定640世界与pivot320608。旧20片画面和QA不变，缓存revision随目录更新。
+
+本轮批准冻结原生源、最终透明manifest、A/B实际看图记录以及64533评审页的配置／服务脚本／页面哈希。已披露并获接受的右看三分之四幅度、挥爪短笑／牙与细暗边不再反复重做。两个新待机只在完整周期边界进入随机池，不能每帧重抽、提前截断或镜像旧左看。点头与挥爪已补；探头、伸懒腰、抖耳、蹭蹭、小跳、摇头这六项继续分批制作和用户评审，未批准素材不进入正式目录。
+
+此次为源码接入；本机安装与已归档preview.2双包仍是之前的快照，不含本轮23片更新。下一批探头／伸懒腰只在独立评审页提供候选，不能冒充已安装版本。
+
+
+23片接入验证已完成：work/motion-polish-20261023/idle-wave-integration-validation.json绑定revision animated-idle-wave-v1-982b8e51ea8b21af与catalog SHA5404b3216912fcda6a826c249fc8f058dd55f07a10bc3fa3f8146d3b499a923f。新321张HD完整RGBA与162帧Pi量化重放一致；旧20片HD/QA与索引解码内容除revision保真。真实Pi1.3 loader/editor/image transport和实际DSH控制器均验证三条待机完整4458ms／末帧106后非重复交接，挥爪手动与自动同样完整播放；源仓库两端完整回归通过。
+
+另执行tools/build-editions.py --edition full-animation --platform all --prepare-only --test，独立stage中的Pi和DSH完整测试均exit0；构建stage补齐tools源码审计依赖，实际运行包仍按npm files与发行过滤规则排除生成专用媒体。此检查没有重新生成大tgz、没有安装、提交或发布。stage记录位于dist/releases/auxiliary-23-source-validation/prepared-editions.json；不能用旧19片归档冒充当前23片安装包。
+
+
+### 探头／伸懒腰v1否决与方法调整
+
+用户在53562最终原速页否决两条，并确认原因：探头像另一条普通侧看；伸懒腰只抬肩抬掌，缺少伸展和释放。两片各自user-rejection.json及review.json标为USER_REJECTED，禁止进入正式23片目录。原技术alpha检查通过仍有效，但绝不构成动作表现通过；源检查只查没有明显结构错误仍不足以送片。
+
+新方法先做有明确意图的峰值参考，再生成连续动作。依据Animation Mentor的[可读姿势与承重教程](https://www.animationmentor.com/blog/tutorial-building-appealing-character-poses-for-animation/)及[预备动作原理](https://www.animationmentor.com/blog/anticipation-the-12-basic-principles-of-animation/)，先检查姿势的意义、轮廓和身体重心，再组织准备、动作峰值与自然回落；不机械逐关节排演，也不把全段持续缓慢移动当成流畅。以上是本次设计取法，不声称外部教程直接批准新角色动作。
+
+auxiliary-keypose-v2内保存原idle与爪结构参照、imagegen完整提示词和输出SHA。peek峰值为前掌前移支撑、肩胸一起前探；stretch峰值为两前臂展开上伸、胸背舒展，胸腰截断无新脚。第一张stretch多出下方双脚已HOLD留历史，不用作H3输入。两幅合用峰值经本轮A/B实际看输入，只准作中段意图；身份、固有色和neutral开闭仍原批准idle，不把新近掌透视或白胸腰长度升级成比例许可。
+
+H3改用已经验证的双reference_image Ref2VA构造，而非再用同neutral首尾FL2VA造成微动。提示原idle开闭、峰值在中段，但Ref2VA不提供强制逐像素首尾保证，必须检查真实源的回落与循环。新源先对照峰值看是否确有可读探身／伸展，明显退化成侧看或耸肩即HOLD，不先花工跑完整alpha；通过后仍按紫底蒙版、边缘保护、独立内区guard、A/B最终输出及用户原速关卡执行。正式目录与本机安装不随候选自动改变。
+
+
+伸懒腰v2在源代表姿势材料门后，完整107帧守卫发现039–045及070–077的横展过渡截掌，原生帧复看确认并HOLD_SOURCE_CLIPPED_PAWS；未用alpha修复、加空白外框或弱化守卫冒充找回缺失。以后源门先扫完整时间的最宽过渡，不只看峰值／每六帧接触表。源接触表与材料代表帧PASS不能覆盖构图截断。
+
+v3按同一逻辑世界扩大固定余量：原neutral640与峰值640只做原像素pad(+128,+128)到896，不改变人物比例或颜色；源输入pivot448736对应原world pivot320608，paintRect(-128,-128,896,896)。沿用已有896键盘过渡的固定注册方式；最终也保留整张896，不裁回640。新源完整107帧最小外余量80原生像素／约93.33逻辑像素，无触边；实际起势仍晚于提示词且峰值hold较长，必须原速披露，不能按提示词时长宣称达成。
+
+跨两条评审时，peek640透明输出仅原RGBA数组paste到896的固定offset128；stretch896输出原样使用，原待机640也pad128。两条在同一896评审世界按相同人物尺度比较，视频仍24fps／107帧，PNG裁回与原数组逐像素相等。不能把浏览器按宽度显示不同画布产生的缩小当作人物实际尺寸，也不能用评审pad代替源端补全截掉的掌体。此为固定合成与技术注册，不是局部画改、插帧或重定时。
+
+
+### 伸懒腰通过与完整注册接入
+
+用户在50097原速页明确「伸懒腰可以，探头再调整」，随后确认探头问题是爪子。stretch/key-purple-pilot-v3/processed-detail-v1独立冻结user-approval，绑定manifest80e799989b9aa5cc03f11b68c792dee0f2fd9e0e0e38308c6c15f58413d913cd及页面evidence0d13bbeafae6ad28753569794db27d49356b6540b1fcef3d1760051fad794d56；先前起举/hold/细暗紫颗粒/原生模糊披露保留，不自行校色或重演已批准伸懒腰。
+
+正式目录新增stretch到24条。HD整896直接保真；Pi以336×336保存完整896源，仍为每逻辑像素.375索引采样密度，54个原生偶数源帧与4458ms不变。raw.viewport.worldRect=[-128,-128,896,896]，worldAnchor[320,608]、bitmapPivot[448,736]；原23片HD/QA/解码内容除顶层revision保真。
+
+Pi只对noncanonical注册viewport增加显示映射：身体核心宽高保持，使用既有caption两侧空隙显示横展；窄终端为整个Main稳定保留至少左右10%横余量，避免只切动作时挤动编辑框。不将整336图塞入原核心宽度。保留原336源，只在显示层按固定world坐标采样，实际全107源上下可见范围均在原640世界内。DSH索引回退直接使用同paintRect，与HD定位一致；独立标题继续titleSheets分流，不被辅助动作取代。
+
+新增approved-motion-viewport测试以合成标记验证核心尺度/锚点、原buffer不改、左右越640掌保留与拒绝坏rect，并对实际54帧×3终端宽×4尺寸的648次显示检查前景索引数完整。曾发现compact14列半像素浮点floor造成重复/漏列，已改为source-index affine并固定边界误差；全部648通过。完整宿主与套件证据另由本次集成validation绑定，源码接入不代表本机安装或新归档发布。
+
+探头v2独立否决，实际看原idle/峰值/原生最大承重帧：前掌趾瓣长而分散、有独立侧指感，最终与源一致，不是alpha抠掉。新v3整张keypose改为紧凑短厚承重掌；原idle负责形态/配色，坏v2仅参考前探动作线，不能继承其长趾。实际新源A/B通过后继续技术处理和用户门，未批准前不接入正式24。
+
+
+24片最终验证已完成：stretch-integration-validation.json（SHA3ad617c161ebfd6ce631331d98530a342fef4795ae8c671bafa0f8328084d4f5）绑定revision animated-auxiliary-stretch-v3-679b1c550d4dd9f5，catalogSHAa64ed283774272327533c77e277d469c3b5a9575e02dbc96f8fef56bdc932eb2。107HD/full896与54Pi/full336逐像素量化重放一致，保留1428个旧640窗口外前景索引；真实Pi全54帧图像传输及DSH高清/全部索引回退未丢前景，尺度与待机相同、手动/自动完整4458ms到源106。Pi与DSH完整套均exit0，独立build-editions prepare-only --test两套亦exit0，stage报告在dist/releases/auxiliary-24-source-validation/prepared-editions.json。没有重建tgz、安装或公开发布。
+
+全套另捕获普通/暂停画像命中范围被扩大到整caption的回归，已修为仅实际noncanonical大画布显示时扩大；普通画像仍仅核心16列可点，邻空白不poke。Main窄终端稳定caption至少20列，79列时核心居中offset2；鼠标测试更新明确布局预期但保留所有边缘可点、邻空白不可点、选择输入/草稿/配置不变的严格检查。旧失败日志单独保存，最终Pi全套重跑通过，不以DSH通过替代Pi通过。
+
+探头v3最终manifest8ff214d7aec9f1173fda91ba08ed55e957a67212fe73326202cc0b7df5a27a76经实际A/B与完整107透明守卫通过；659内部误alpha恢复、外边界和原时序不变。52855新旧对照页左为用户退回v2，右为新v3，下方固定世界同帧近掌放大，不自动按帧追踪fit。页面/原始输出/相同896评审pad/三底24fps107视频及A/B绑定于peek-paw-v3-final-review-evidence.json SHAede4eb0a0531e714bd8af5995d0b485e97bfca18c53603cbd7e67612952560d0（本地工作区）；新片仍待用户爪形与原速门，不加入正式24。伸懒腰不再重复征求艺术批准。
+
+
+### 探头v3否决：双爪原位，表现转移到视线与上身
+
+用户对52855的v3明确回复「还是有问题，不要动爪子了吧」。这覆盖此前内部A/B的可送评结论：v3未获艺术批准，不接入正式24片；原源、透明检查和评审页保留为失败历史，不回写成通过。伸懒腰的独立批准与24片验证保持。
+
+下一版收窄为两只原待机爪原位支撑：不前移、不抬、不张开，不另造近掌透视、伸长趾瓣或露出多余指甲。好奇感交给眼神先聚焦、颈部和肩胸真正向前探、随全身呼吸自然回落；不能退回v1仅普通侧看的问题，也不把身体各部机械分段排演。原idle二维registered-reference负责爪形、身份与配色，v2/v3前伸爪不是新动作目标。
+
+两路子代理继续实际分工：A材料/色卡/图案，B支撑/解剖/动作意图。新H3源先查完整107帧爪位与形态、最大前探和边缘余量；源爪明显变形或位移则尽早HOLD，改变提示构造或重生，不先长时间跑alpha。之后才独立紫底蒙版、外围边缘、实心内部误透明守卫和最终A/B，再交用户原速与稳定支撑评审。不得以用户要求“爪子不动”推定允许脚本贴静爪、局部艺术改画、提速或合成遮掩坏源。
+
+
+探头v4已按双爪原位重新生成：仅原idle同首尾FL2VA，单次H3 source be074ea007fd3ecd4f32a1abfc190afb0d2208a4ddfc747280a47ea1a4f4d9a2，不使用v2/v3伸掌参考。B实际完整107固定爪区接触表未见前移/抬掌/张开/长指瓣；颈肩胸正向轻前俯，幅度克制、约1秒后更明显起势、中后hold较长，保留用户原速门。
+
+最终processed-detail-v1 manifest898683f7f1b4d3f87ee0f189b954904e0f5d77c3bd32472d6664a06a47b59a9a，独立本片实心眼框恢复1283误alpha像素；107帧双爪相对edge RGBA精确不变，原时序注册、PNG/WebP和保护守卫通过。A最终a4fb93f80e320d54a813e52c603af445180ee8437f703de7bf711ea0d840fc62实际补看060，明确外缘仍有细绿/黄点及暗紫颗粒，定点与旧edge相同；不声称完全去净。B最终2887d6b7c40f800c9b16f950bdb39c3d8eddcb4e6250dfc1691d329c11c15a6c。当前汇总review7df24eb73106966fe524f15d19f72ee78e92c5f8c7444c24963f45dcd2dc21e0正确绑定最新A，旧聚合cc7da13快照保留，不覆盖历史观察。
+
+原速新旧评审http://127.0.0.1:53460/，固定pad128到896仅评审，全部107原RGBA及24fps保持；黑灰白底和同帧双爪放大可用，原idle旁列。页面证据peek-stationary-v4-final-review-evidence.json SHAa784ba72202848c71095c557bd788e6c281a652a37d1dfdc73549f84626836a9保存在本地工作区。v4艺术/原速门仍待用户，正式24片catalog SHAa64ed283774272327533c77e277d469c3b5a9575e02dbc96f8fef56bdc932eb2不变，未构建归档、安装或发布。
+
+
+### 探头v4双爪部分通过：前倾与微歪头必须一起可读
+
+用户53460先回复「双爪可以，探头表现还要调整」，随后明确「问题是没有往前倾的观感」「好奇探头应该是往前倾、微微歪脑袋」。批准仅限v4双爪形态与原位支撑，表演未过；不将前版技术READY或双爪认可当作整条动作批准，正式目录保持24条。
+
+v5的单一重点为上身前倾＋轻微歪头形成的好奇“凑近看看”。头颈应相对原位双掌前探，肩胸随之压前；用略带侧前方的可读轮廓和自然透视体现靠近，不能以正面低头、只眼动、原位歪头、整图/整头放缩替代真实前倾。两爪继续原位落地，不移、不抬、不打开；白臂灰掌、原短圆趾与小甲不重新设计。整体动作连贯，不机械分解关节，也不将本次问题误归为只需提速或缩短停留。
+
+继续两路实际A/B源门与完整107早期爪稳定/前倾意图/裁边检查；前倾不成立就源HOLD，不先做全套alpha。通过后才紫底蒙版和边缘/必要内区恢复，再原速用户门。不复测无改动的运行时代码，不重开已批准伸懒腰，不安装或发布。
+
+
+探头v5的前倾＋微歪头候选已完成，尚未用户批准。第一张整图峰值仅歪头且前倾不足，B源输入HOLD并保留；第二张只作上身意图辅助，原idle仍爪体/落点与neutral权威。A原材料观察不改，root方法裁定单独绑定auxiliary-keypose-v5/method-authorization.json；不把意图图新掌组或全姿比例升级为用户许可。fresh Ref2VA source bf9eb4946d413f1335a7123b7c08b8c2a9118bac546999a585c4dbac6097e9d4，两路源实际看图后才alpha。
+
+最终processed-detail-v1 manifest db71b64cb187a387af4534c72492915b4f38b62215ee9665c4b1c00966992e69；A9739fa3148da6248776967be272cd537653300c7bc8d5f76784025f125833baf、B85b1f43be194842c2ceb22afd58d60f0c31990350d6efef1add881acf3be0010、汇总4662cfcd51c44e71de20fa7889b92243e44992246188ddf1b776dfcfc13a602e。完整107技术重放/PNG-WebP/原时序注册/内区守卫通过，本片1811内部误alpha恢复，双爪ROI相对edge逐像素不变。旧被拒初框保留，不放宽守卫。A真实披露细绿黄点/暗紫边/掌底颗粒；B与root所见头鼻相对固定掌组侧前探出，但有明显侧转/抬下巴、约1秒起势和较长峰值hold。不能据技术READY写前倾艺术已通过。
+
+55918原速旧新对照左为v4双爪部分认可/表演HOLD，右为v5，保留原idle旁列与固定双爪放大；固定pad128到896保持全部107原RGBA、24fps及世界尺度。页面冻结证据peek-lean-tilt-final-review-evidence.json SHA272dc8cde6384eda2aac20416b5a026c4eddcfe94cb850d750f36dc428722c3b保存在本地工作区。正式24片catalog哈希a64ed283774272327533c77e277d469c3b5a9575e02dbc96f8fef56bdc932eb2不变；未打包安装发布，等待用户专门判断身体前倾＋微歪头是否读得清楚。
+
+
+### 探头v5用户通过并接入下一批
+
+用户55918明确「可以，接入并继续下一批」，批准本页右侧peek/key-purple-pilot-v5/processed-detail-v1原速候选，manifest db71b64cb187a387af4534c72492915b4f38b62215ee9665c4b1c00966992e69，review4662cfcd51c44e71de20fa7889b92243e44992246188ddf1b776dfcfc13a602e与页面证据272dc8cde6384eda2aac20416b5a026c4eddcfe94cb850d750f36dc428722c3b精确对应。保留已披露的侧转/抬下巴、峰值hold与细彩边，不再重演；v4只双爪部分认可及v1–v3拒绝历史不改。A冻结user-approval并完成25片集成与两端实际验证，root维护文档与下批评审，B制作下一批。
+
+下一批为ear-flick＋head-shake，两条保持同一原idle固定支撑。抖耳为可读短促耳部反应，眼神/眉与头肩微跟，不能把硬布帽耳演成软片反复扇动或展开折尖；晃脑袋为轻快恢复精神的小幅左右摆与自然收住，肩胸/围巾有连贯附随，不强行演成负面拒绝、不整图机械摇、不慢悠悠站桩。仍原二维/色卡身份、H3原生时序、全107意图/结构/裁边早门、A独立材料/最终、紫底蒙版及用户原速门，未审不入正式资源。
+
+
+25片源码与隔离stage验证均已通过：catalog revision animated-auxiliary-peek-v5-fa8cc93042dd8f86、SHAa0ad75dd9ed8dc881e4bf478e9278864a26725f2c70d47e54490fb3d2d5c2248；peek-integration-validation.json SHAebed72ff56011b4ae82d8ca7d987276ce2875d116f67dd9f21b79b753133639a记录107HD/54Pi原时间与保留旧24、真实Pi1.3/DSH控制器手动及自动完整4458ms/源106、源仓库两端完整suite exit0。root独立build-editions prepare-only --test在新stage运行Pi/DSH两套均exit0，report为dist/releases/auxiliary-25-source-validation/prepared-editions.json；C工作区auxiliary-25-stage-validation.json SHAc32739bffa62b8e77fed8e6528cca0b840724809a714722d7e8c337e5d6d1b43冻结该轮证据。没有生成新的tgz、安装、提交或发布，已归档旧包不代表25片。下一批两源另在source门，不改变本轮批准目录。
+
+
+### 抖耳与晃脑袋：最终原速待用户门
+
+两条以同原idle注册输入各单次fresh FL2VA，原107帧/24fps/4458ms与640世界/pivot320608不变。每片源全107爪/裁边/主要意图实际B门与独立A材料门后才做紫底alpha与边缘处理；本片独立core恢复眼星误alpha，完整重放/PNG-WebP/时序/保护守卫及掌ROI相对edge不变均通过。两路最终实际看图记录冻结，不以技术READY批准原速表演或循环。
+
+ear-flick final manifest 3f061916612a6f1a82302f43d974d63ea52621001b4998743bf8e7f1f289718a，review e09b4c98b1f60acb197f1bdf48287ff16e4d2832c87e90cbb09ed0ee8efea27d，A e9f34cfc797d6a23939847013c97723297c5e67d7261e296e6b0d223c6485417，B 5df1e8cbed80f7444213ed542f1c98e2681e3bc0b3340dc64ad8ec09a5be6479。
+
+head-shake final manifest 837834bc0997f337a5cc886b75f3e6f4b6e30795b3b1ff178ecfd24cd3f0d1df，review b9309246b3846c4fb1682dbd24e24cb802572da34807360664843659a0d18c77，A d3a1eb8781bc68341b32f74b352c4bee9ffce8c38ab0b34289e95457a56d3919，B 63ad1c49669190104c2d52fbfeb92f5fbf5be91204479971074ebe69b4349278。
+
+实际局限：抖耳极值上部X原生拖糊，披布侧角与围巾外展；晃脑袋两向有近停留、首段约1秒等待。两条均仍有细绿黄/暗紫彩边及底缘颗粒，黑白与放大实际所见已一次披露，不返工掩盖。原速页http://127.0.0.1:60034/可切两片、黑灰白底及无损107帧，左侧原二维idle参照。C工作区ear-head-final-review-evidence.json SHA5d462c220735c954b396905ccd0af3461a0d0a516ad53bad936d8f9e1ea7a67c绑定页面/配置/视频探针与两路报告。尚未用户通过，不进入正式25片；本轮已批准peek的源码接入/两端和stage验证不受影响，未构建大包、安装或发布。
+
+
+### 抖耳v1否决、晃脑袋独立通过
+
+用户60034对ear-flick v1明确反馈「太刻意了」，该片不接入；技术A/B/alpha通过仅保留为历史，不能维持艺术通过结论。head-shake随后经独立问题获用户「晃脑袋可以，接入」，批准仅限head-shake/key-purple-pilot-v1/processed-detail-v1，manifest837834bc0997f337a5cc886b75f3e6f4b6e30795b3b1ff178ecfd24cd3f0d1df、reviewb9309246b3846c4fb1682dbd24e24cb802572da34807360664843659a0d18c77与60034页面证据5d462c220735c954b396905ccd0af3461a0d0a516ad53bad936d8f9e1ea7a67c一致。原生首段等待、两向停留及细彩边已披露，既已通过不重开。A冻结exact批准并25→26两端源码整合，ear不随head通过。
+
+ear v2重做为自然注意力反应：像近处轻响被注意到，耳根短促小调一次，眼神/眉轻微回应，同一呼吸回到放松；不能专门示范扇帽耳、向外大折/飞机耳、长hold异常耳形或夸张披布/围巾外甩。原双掌、折耳身份和硬布体积/X不动，不加音符/道具，不用CSS/全图形变。原idle FL2VA fresh，源不可读或仍刻意即HOLD，不先花工跑alpha；继续真实A/B、原生时间与用户门。
+
+
+26片晃脑袋接入与隔离stage验证已完成：revision animated-auxiliary-head-shake-v1-b01f31ea10dc24c4，catalogSHA0858098c3849e3fd6128da885759d136e3b48426e930a59ecc8245f9ee6bbb0a。head-shake-integration-validation.json SHAb9ac932b0abe76c4745053430ce2368b7373302cb4916b647f10a9a5d3375d27记录新107HD/54Pi原时间、旧25HD/QA/metadata与decoded仅顶层revision变化、真实Pi1.3/DSH manual/auto完整4458ms/源106和两端完整suite exit0。首轮纯测试命令误写peek的失败保留，修正为head-shake后重跑通过，没有runtime修改。38项canonical批准来源独立可校验，ear-flick明确不在正式目录。root独立build-editions prepare-only --test的Pi/DSH两套亦exit0，report为dist/releases/auxiliary-26-source-validation/prepared-editions.json，C工作区auxiliary-26-stage-validation.json SHA8ae080d4ed0badb4b5b21d920d81fea5f17c7d8d13bd9cc5d621fa0f64cca356绑定日志。尚未归档新tgz、安装或发布；ear重做另走原速门。
+
+
+### 抖耳v2自然小反应：旧新原速待评审
+
+v1用户否决「太刻意了」保持，v2重新生成为立耳向内、更竖的小调整，收住原外扇及布巾外甩。两路实际源和完整107爪/裁边早门后才alpha；本片315内部误alpha恢复，完整107原生重放、PNG/WebP、注册/时序/保护与双掌ROI不变通过。最终manifest d4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf，聚合review abe219f12b769a8f8da9f59821060295add4686260f868d6fb2f46473708f3e2；A 8a57173f705b78cb56daa072bb84800c07ba03c3e8ebc11a0143cc45d3831ccf、B 59087cfd8dba1e7a5026e3cfb2335841ef736e34e37c435eb6d9ca636a6214bf冻结。READY仅为可送原速门，不是用户自然性通过。
+
+实际耳峰值及后段仍有停留、线条略软，底缘细暗紫和低饱和绿灰颗粒按本片所见披露，不凭旧例捏造必有亮黄或宣称全片没有。原速对照http://127.0.0.1:49972/左为被拒v1、右为v2，同640世界/24fps107原帧，黑灰白底与固定帽耳眉眼放大可用。C工作区ear-natural-final-review-evidence.json SHA07de2f0a4c2dab26ec72882cc01960605fd7399c8f596e76590f4b767d0748fb绑定页面、配置、视频元数据、最新A/B及26stage证据。正式26不改，晃脑袋批准和接入保持；ear未审不接入，无新大包、安装或发布。
+
+
+### 抖耳v2用户通过：最后两项先审原生表演源
+
+用户49972明确「可以，接入并继续下一批」，批准ear-flick/key-purple-pilot-v2/processed-detail-v1，manifestd4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf、reviewabe219f12b769a8f8da9f59821060295add4686260f868d6fb2f46473708f3e2与C页证据07de2f0a4c2dab26ec72882cc01960605fd7399c8f596e76590f4b767d0748fb对应。旧v1否决保持；v2已披露的耳姿hold和细暗/绿灰边粒不重开。A精确冻结批准并26→27集成，两端实际与canonical来源验证；未归档安装发布。
+
+最后两项nuzzle＋bounce先短核原手势语义：nuzzle为亲昵“蹭一下”，以头颊与肩胸一体侧前轻靠、短柔颊侧蹭弧和满足回正表达；不能退化成探看或左右摇头。bounce原名“开心晃晃/Happy bounce”，坐姿小幅压实承重、头身胸肩整体轻快上弹、落稳与衣料余动，不必大离地，不补新脚、不只爪动或整图缩放。原idle FL2VA试源，原世界尺度、折耳/色卡/紧凑兽爪和最大极值裁边先查；确有需要才whole-image峰值，不局部艺术拼修。
+
+为节省反复alpha处理的LLM额度，本批先内部A源材料与B完整107意图/解剖/支撑/裁边早门；明显不成立直接HOLD重生。合用候选先向用户交原生紫底原速源片，分别确认“蹭感”和“弹起落稳”的整体表演；源艺术获批后才做冻结紫底alpha/边缘、必要独立core和最终透明两路/用户门。原片字节/时序不改，不提前给背景或边缘合格结论。未源批准不跑alpha，未最终通过不进入正式目录。
+
+
+27片抖耳接入与隔离stage验证已完成：revision animated-auxiliary-ear-flick-v2-566b327f9a029cc3，catalogSHA5e782e1ae3da0a3e23e6b123a4d6e33d3b6ca31700e9f6fbfef2582c7c205aa1。ear-flick-integration-validation.json SHAdff82e5a4f42d6e43ad31fc44111c3fadb599aae3f42fc6479a5ac8324b2cfb0绑定原107HD/54Pi、旧26保真、真实Pi/DSH手动及自动完整4458ms/源106与两套fullsuite exit0。root独立build-editions prepare-only --test的Pi/DSH两套亦exit0，C工作区auxiliary-27-stage-validation.json SHA6d6b7c2e8b220355ca209811bdb3bbcc80459108237e6a1c3f662ee3201ab3a7与dist/releases/auxiliary-27-source-validation/prepared-editions.json冻结本轮记录。nuzzle/bounce仍不在正式目录，未源用户批准不alpha；没有新tgz、安装或发布。
+
+
+### 用户暂停检查点（2026-10-23T23:25:28.936664+08:00）
+
+用户明确要求“先暂停并保存工作进度”；root已中断B，A已完成，无后续制作、取片、alpha、构建、安装或发布。正式源码保持27条，catalog SHA 5e782e1ae3da0a3e23e6b123a4d6e33d3b6ca31700e9f6fbfef2582c7c205aa1，Pi/DSH及独立prepare-only stage已通过；已发布/本地安装仍preview.1的19条。
+
+nuzzle v1源A/B通过，待用户紫底原速源表演门，未alpha。bounce v3材料A通过但B因约1.83–3.17秒抬姿近停HOLD，不改记艺术通过。唯一fresh bounce v4已提交H3 task `455540689711421`；暂停后未再查询，远端可能自行完成。恢复时先取回现有任务，禁止直接重提。完整检查点为 `work/motion-polish-20261023/PAUSED-PROGRESS-20261023.json`，C工作区同名JSON另存。
+
+进程审计确认26个旧评审服务器、11个托管runner、74个CUA/REPL相关进程；本次未发现所筛Codex相关进程父PID缺失/复用。用户已批准清25旧服务保留49972，但第一轮精确身份保护全部跳过，修正日期比较后的重试因最新暂停指令被自动审批阻止；没有目标进程被终止。不得绕过暂停继续清理；恢复后也应重新核对进程身份，不能直接复用旧PID列表。
+
+
+### 2026-10-24 用户明确恢复
+
+已按“继续”恢复，两路6.1 Sol high分别负责材料与空间表演；旧agent已不存活，重新建立motion_material_a/motion_source_b。先取既有bounce v4任务455540689711421，不重复提交。nuzzle v1冻结待紫源用户门，v3悬停HOLD不撤回；未批准源表演不alpha。正式27片保持。暂停期间旧85进程身份已全不在，旧49972也已停止；新鲜快照只有1个command-runner/7个CUA相关进程，无旧Node/Python监听服务，不复用旧PID或执行清理。恢复检查点见work/motion-polish-20261023/RESUMED-PROGRESS-20261024.json。
+
+
+### 2026-10-24 恢复后源表演门
+
+bounce v4旧任务455540689711421已取回，源SHAedf968458ebc7b6be03a7dbe75889afb9d0c6d23e0079c6341aaf0c50fa1b4cb。fresh A报告7e77f1a6a55d0f89109ff7c5b085dd0c6e5366646914d3f39f6ad55d441e1c19记录暗面轻灰绿；B报告f3c471f4581d41ee377c5ee943f58749dc819bf60d6e12ae646bfca5c0f32e3a实际全107及峰值/落地后HOLD，约2.25–3.0s仍近抬姿缓降、075–080披布翼展。未alpha，不交用户当合格候选。两版相近失败后改变方法：v5移除airborne中间峰值，用原idle同首尾FL2VA，改掌贴地承重的开心坐姿小弹；不是继续空中跳跃。
+
+nuzzle v1既有双路源审冻结，独立原紫底原速评审页http://127.0.0.1:56083/#nuzzle，已校验原MP4字节、首末无损PNG和页面JS；C证据nuzzle-source-final-review-20261024-evidence.json SHA9c04b7e3f32a60ce24bee6762b6f87631cd5f54dffdcbcf268da43a3c036f9ba。0.75–2.75s闭眼侧靠停留和围巾外扬已披露，仅等待用户源表演批准，不提前alpha或接入。正式27保持，当前仅启动这一评审服务；旧评审服务已退出，无强杀。
+
+
+### 蹭蹭v1用户否决：不是歪头休息
+
+用户56083先答“蹭蹭表演还需要调整”，明确“更像歪头休息，没有蹭的感觉”。v1禁止alpha/接入，旧A/B技术资格仅历史、不冒充艺术批准。原片及页面证据不改，否决记录user-source-review-20261024.json。v2改主动向观看者侧前轻凑，头颊/颈肩胸整体短柔接近、轻顶与擦弧，眯眼小笑再回正；双掌支撑、原脸宽及世界尺度，不靠长闭眼侧歪hold表达。B与bounce v5并行fresh原片，A继续材料门；两条未用户源通过仍不alpha。
+
+
+评审页面进程生命周期（用户明确要求，2026-10-24）：评审完成后立即关闭该页面服务器，不保留历史评审服务常驻。仅root启动当前必要的评审页，登记端口、PID、启动时间、命令行/配置身份和证据文件；用户对该轮给出通过、退回或明确结束后，复核身份再停服务，确认端口释放及专属托管进程结束。需重看时重新启动，不删除素材/评审证据。子代理不得自行启动重复页面服务器；查询、解码、测试等临时helper完成即退出。新评审使用单个服务承载本轮多个动作，不累计旧端口；不得按旧PID直接强杀、不得影响Codex主进程/DSH/其它项目或活跃生成任务。
+
+
+### 轻弹v5源用户通过；蹭蹭v2内部HOLD
+
+用户61015原速门明确“小弹表演可以，继续透明处理”。批准仅source fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6，页证据a55c7bc7480b1367ea818a2a37309a9e001c1c2780cc5d83b28a53b2a954a130，已披露1.58s起势/表情克制/短披布侧展。评审服务会话40912已立即退出，61015端口释放已验证。现许可原动作不变的技术alpha/边缘修复，完整896world不先裁640；最终透明A/B与用户门后方可接入。
+
+nuzzle v2源d00ceb5e6d2bc0e8e9c7edbc11e2ef63e9db0e7733f3573080732e9f4ec8c79f实际双路检查后HOLD：040–078闭眼侧脸停留没有清楚贴擦，近右帽沿有黑紫尖线，禁止alpha。外发先因审批认为授权缺失被拒，root核对会话用户直接H3指示与same reference/prompt/endpoint后同一调用获准，成功task455558411997585；记录保留而非绕过。连续v1/v2蹭语义失败后改查真实接触参考，不继续同提示重试。Cats Protection https://www.cats.org.uk/cats-blog/why-does-my-cat-rub-against-me 有面颊接触/贴擦示例；仅借动作关系，不改变Umi狼角色身份。下一试点改额头轻顶镜头前屏幕平面后顺势颊擦，避免无支点空转脸。
+
+
+### 轻弹v5最终透明门（2026-10-24）
+
+紫底蒙版/边缘恢复后完整107技术复算与实际A/B完成。最终processed-detail-v1 manifest ce50e9baecec18d7ab2b03973044c33080653305b0173231c38951ab82cc0e4c，A bc6e5628a7e7da699e07598c0669e0b1802f9896ab5c712ba7f0268bb6203ede，B42216ca2b77d44f3853969da2fb3c80d2077b312d7ed926f08d576a1f9db3733；汇总review083705b1e00d59550e83ac7c9197336093df9813580a823a0b4ebb88000d0077。3970眼内误alpha恢复，11个非core标记是真袖侧背景缝保留，RGB/掌区/外8/可靠252/眼框边界与框外逐像素受保护，107PNG/WebP解码/原时序/896world/pivot448736一致。
+
+最终透明页http://127.0.0.1:62731/#bounce，仅本页待评审；C证据bounce-v5-transparent-final-review-20261024-evidence.json SHA5e7e24389577cb9fe41b377a7e4401b88ed2d3322789e5cd2b1dc41884a81370。页/黑白MP4/参考/无损PNG HTTP与JS已验；掌毛底缘细暗紫/灰绿暗粒、帽沿暗紫及袖隙细彩边真实披露。用户给结果后立即关session44909并确认端口释放，不留历史服务。未最终批准不接入；正式27不变。
+
+nuzzle v3已取既有task455559701311932，源e586d32df15223c95dd0a7a9e4b3afb848ccd6ac4c4d512eb9696d36a1b0702f。第027帧native左margin2<4，原守卫失败保留；A报告6b7fa15c6c840d1bd57f9b11689cc0d6b90f1b5f626aa0a711b1b74936075049实看材料/侧披布横铺/闭眼脸颊摊宽，root同见动作仍不够擦颊。HOLD，不padding/裁补/alpha，不继续同式v4。下一轮需先收敛能读出接触的构图试点，再交用户设计评审；不消耗重复失败源的alpha校对额度。
+
+
+用户62731最终透明门明确“透明细节可以，接入两端”，仅批准bouncev5/processed-detail-v1，manifest ce50e9baecec18d7ab2b03973044c33080653305b0173231c38951ab82cc0e4c、页面证据5e7e24389577cb9fe41b377a7e4401b88ed2d3322789e5cd2b1dc41884a81370。上述细边限制已披露并按本次批准保留，不重开。session44909立即关闭，62731端口释放已验证。user-final-review-20261024.json冻结精确批准；准许27→28两端源码整合与验证，不由本次评审推定安装发布。nuzzle仍HOLD。
+
+
+### 蹭脸接触姿势整张试点
+
+用户明确选择“朝屏幕凑近，像轻轻蹭你的脸”，root采用内置imagegen以原idle为唯一identity/材料/首尾权威整张重生中段意图，非局部改画。项目Hi-Res/sources/h3-motion-polish-20261023/nuzzle-contact-keypose-v1保存pose.png SHA8366b5298521a6aa77348bd680578cc4813721611c34b9bf9687356cc02386c1、reference.png、完整prompt.txt及provenance。fresh A a17c493b2783d06ff94298218f01110efbd800bf90fc40b8090d1ee988c0fa45、B d1f0a95604280984f11163de739a158c333a8bc8a0035a796ebeaff7a797d0b8实际看图后仅准送用户构图门；头部前近透视显著、竖幅未原世界注册，不能变更原头掌比例/落点authority，也不能据单帧称擦弧通过。直接对话展示，不开评审server；未经用户构图批准不扩展H3。
+
+
+用户退回nuzzle-contact-keypose-v1：“爪子不对”，具体说明“图片模型看不到藏在后面的大拇指，容易画成三指”。该稿不用于H3，A/B可送用户设计门不等于用户爪形通过。下一整张试点增加原设定paw-anatomy结构输入（仅解剖/遮挡角色），原idle仍唯一身份/材料/首尾；内侧后趾掌根厚度/短趾团/合理遮挡需可读，不强迫四根向前摊开的人指、不补长甲。不局部修爪，失败历史保存。
+
+
+28片开心小弹接入与独立stage验证已完成：revision animated-auxiliary-bounce-v5-f89cf872d44db9dc，catalog SHA 535c5ee44d10ac7ab13bcd56310c8e71b3b1ed7fcf6db707a63186ab19805130。bounce-integration-validation.json SHA 06649cd6d91f690ee3f4b5afed575f6333600eefefedae684fae35c30e4ea1d9绑定107HD/54Pi完整896→336、旧27 HD/QA/metadata/decoded保真、真实Pi1.3/DSH manual/auto完整4458ms/source106及两套fullsuite exit0。root独立Pi/DSH prepare-only --test亦exit0，auxiliary-28-stage-validation.json SHA 00b3a1009c62722d1a88c877daee10bb2ae00eb40ba31127671b1183de466bf4与dist/releases/auxiliary-28-source-validation/prepared-editions.json冻结来源。没有生成大包、安装或发布，当前源码候选仍preview.2，已安装/发布仍preview.1。nuzzle尚未用户批准，不在catalog；评审server均已在用户给结果后关闭。
+
+
+最新爪部用户纠正（2026-10-24）：用户退回nuzzle掌部study v1“没那么小。看设定图的样子”。“藏在后面的大拇指”指遮挡关系，不是允许把第四趾缩成小趾根/腕部小狼爪。必须实际回看完整原设定图及paw-anatomy，守住第四趾原有宽厚体量与掌体附着，不强迫四根朝前的人指、不长甲。study v1仅内部可送用户门已被用户推翻，不得当权威或H3输入。
+
+
+原设定复查后整张新生掌部结构study v2：nuzzle-paw-structure-pilot-v2/study.png SHA9e93974e941bc8d34175e07f8ce946a4b7b4a7029f52067692dcf7b2bef8c131，原完整设定/原掌示意为解剖输入，原idle为画风/首尾及支撑职责。第四趾体量改为较完整宽厚、掌侧连接，不能再解释为小腕趾。只作结构门，甲大小/白臂长度/颜色/全身比例不由study升级；不拼回成品，用户未通过不生成pose/H3。无新评审服务器。
+
+
+掌部study v2 fresh A e03c34abd71292077e2eb9a7b5130e339afe866e28a6bc3fbb024453645b0d55、B cad085b3485dcf24e5a5302c8dec282e159b748725be4fc4b3d7cbbe314ecc75均实际对照完整原设定后仅准送用户结构门。第四侧趾有完整体量并连掌侧、非腕上小附趾；甲仍较显，仅结构角色，不升级甲/比例/颜色。已直接对话向用户发结构v2问题，未开服务器。CURRENT-PROGRESS-20261024.json保存28条完整整合/独立stage已过与当前待审点；未经结构批准不whole-pose/H3。
+
+
+最新用户狼爪规则（2026-10-24，覆盖此前拇趾推断）：用户明确“不用那么纠结，用这个画风画一个狼爪子就行了”，并说明“四指是狼爪那种中长长中的稍微对称的关系”。四枚短圆狼趾沿掌缘自然排列，外侧两枚中等、中央两枚稍长，整体略对称，厚掌收拢，短甲露尖。撤回代理此前“三个主要前趾+单独后侧拇趾/腕上狼爪”的解释，不能将其写成用户设定；此前study只留失败历史，不作解剖authority。用原设定和已认可画风画自然狼爪，不再扩展结构图、强行分拆成手指或长甲。
+
+
+用户进一步要求自然狼爪“四指中长长中、稍微对称”，撤回三前趾+后拇趾理论并停止study扩展。内置imagegen keypose v3/v4/v5仍有三趾读感（v4多露尾巴），整张失败图与完整prompt各自保存，均不H3。停止同模型重复whole试错；A仅查用户早前提供Seedream5Pro本机已有harness/模型/载荷，不外发，换流程前核对可审方案。四趾关系仍需自然厚掌与短甲，不用人工补指/局部贴图。当前无评审server，28source/stage通过保持。
+
+
+Seedream替代整张流程准备完成（未生成/未外发）：已找到本机byted-ark-seedream-skill/scripts/generate.js及model-routing.js，model doubao-seedream-5.0-pro /1.5K，AgentPlan plan/v3/images/generations，本地prepareParams/buildRequestBody验证整张prompt与原idle/完整原设定/原掌图三参照。摘要seedream-nuzzle-pilot-request-summary.json，payload SHAa7a63ae9f0ec7b54d287161d9f376e0dfa369dc98522988b5e16263367b5e51f，仅C工作区含dataURI请求未提交。当前Process/User/Machine没有harness认可的Bearer或ARK变量，仅有VOLC_ACCESSKEY/VOLC_SECRETKEY名称，未将其借作Bearer。已向用户询问现有Key变量名或配置路径，不要求聊天中发送密钥。待凭据位置明确再单次fresh全图；无任何评审服务器运行，28源码与stage已通过保持，未安装发布。
+
+
+2026-10-24 用户询问“为什么要调用Seedream?”。root说明该切换只是为反复三趾生图提出的可选模型试验，并非项目依赖；在用户要求自然狼爪后继续扩展换模型/找凭据是不必要的复杂化，root撤回凭据请求及本次切换计划。此为代理自我纠偏，不记为用户禁用某平台。Seedream未上传参考图、未发生成请求，networkRequests=0。接续不再等待AgentPlan Key，回到既有已认可画风与H3流程，保留四狼趾“中长长中”及用户评审门，避免重复无方向试错；28条已过两端/stage结果不变，当前无评审server。
+
+
+## 2026-10-24 subscription whole-pose retry v6
+
+User requested another attempt with included subscription generation. Used built-in image_gen, no API key or Seedream call; exact model is not exposed and is not attributed as GPT Image 2.5. Original idle and recovered full original design were the only image inputs. Saved whole transparent candidate, prompt, provenance and fresh A/B actual visual reviews in Hi-Res/sources/h3-motion-polish-20261023/nuzzle-contact-keypose-v6-subscription. Warm forward/side close-lean intent improved, but three rounded toe masses remain the dominant read; internal HOLD, not human rejection or approval. No H3 expansion, catalog changes, server, install or release. Formal validated source remains 28 clips.
+
+
+## 2026-10-24 user authorizes nuzzle v4 source trial
+
+User explicitly asks to stop focusing on paws, use original idle for first/last and subscription v6 as middle acting reference, and generate a nuzzle video. This overrides the v6 static-paw HOLD only for this single source trial. No static paw reinterpretation, formal asset approval or alpha-before-acting authorization implied. Fresh A/B actual source review and native-speed user acting gate retained.
+
+
+## 2026-10-24 nuzzle v4 rejected; prompting workflow corrected
+
+User rejectedv4 as still not a nuzzle, then requested official H3 prompting research and less precise action prompts. Source remains unchanged/rejected, no alpha. session62990 exited and port62004 released. Read official MiniMax-AI H3 skill, Ref2VA and keyframe guides through native web; Context7 resolver was quota-exhausted. Official sources support clear mode/reference roles and concrete observable action, not a blanket shortest-prompt claim. Next source reuses the same two authorized images with intent-led compact action and essential setup only; remove old long FOOT, numeric body registration and joint choreography from submitted text. Full research distinctions saved beside checkpoint.
+
+
+## 2026-10-24 nuzzlev5 acting approved; natural squint refinement
+
+User at56154 explicitly approvedv5 “这个就对了”, then asked “加上一个蹭的时候眯眼睛更好”. Approved source b221597215514cecf8eb35a85a54016fd01b144b2c4014f9ed386598552a14f0 is frozen as acting baseline; internal earlier static long-hold observations do not override this user acting decision. One freshv6 uses byte-identical two refs and compact prompt, changing only a natural squint phrase, without old FOOT/joint details. Regeneration is not a promise of identical motion: compare and user-review before replacement or alpha. session16460 exited/56154 released immediately after review. Formal28 unchanged.
+
+
+H3首尾帧API核验（2026-10-24，用户纠正）：官方V2支持content中两张image_url分别role=first_frame与last_frame。需要首尾控制时必须实际使用该模式，不得用reference_image加文字首尾要求冒充。官方明确首尾帧与任意reference_*角色互斥，没有middle_frame角色。循环可用同一原待机作真实首尾；若还必须硬约束独立中图，需要有意识地分两段生成，不能静默丢弃中图或伪造混合参数。实际源首尾/尺度/接缝仍应验收，不承诺编码像素完全一致。官方链接和无私有图片载荷示例保存在work/motion-polish-20261023/h3-first-last-api-audit-20261024.json及nuzzle-first-last-request-example.json。
+
+2026-10-24 v7实际首尾FL2VA已解决回正，但中段折耳/披布原生裁边minmargin0，A/B保持HOLD，不alpha。临时65152/session17816在内部发现后关闭，未作为合格源向用户打开。v8仅更改原idle输入固定画布为896（原640内RGB/RGBA逐像素原样，offset128），prompt与v7字节相同，真实first/last，task455589921534267单次提交；不是对已裁原片后补边。用户认可v5冻结。
+
+
+工具间连续播放约束（用户2026-10-24明确）：最后工具完成但下一步未到时，真实phase/toolCount立即更新，显示用pendingNextState安全阶段元数据保留原动作最多2000ms。连续读取／编辑及相同clip映射的调用沿原播放时钟接续，不重播首帧、不重复键盘出入；非空真实思考或回答、新工具、等待／压缩／终态和会话切换接管。step/start、message_start、正常message_end、text/thinking块开始结束与空delta不作为新内容，不取消或续期。超时仍busy则释放回thinking，不伪造idle。业务截止使用墙钟，暂停／隐藏不得冻结截止，不新增计时器；最短可见时长与加载上限独立保留。两端实际宿主回归和同clip playbackMs连续性均须验证。
+
+
+颜色验收尺度（用户2026-10-24最新）：已看五组15代表帧后明确“继续，颜色只要做到不容易一眼看出来即可”。允许同向克制校偏扩展完整循环与现用29动作（含待机基准），以正常桌宠尺寸、原速播放及动作切换不显著跳色为准；保留自然阴影，不追逐像素精确、恒定亮度或色卡平涂。原alpha/轮廓/锚点/时序/道具保持，HD与Pi从同一候选派生。先完整候选两路实际复核+用户观看正常尺寸切换，再覆盖/安装；已通过的造型不重开、不为轻微可接受色差反复返工。
+开场与戳一戳（同日用户新任务）：优先复用已批准连续H3动作，开场自然连贯，戳动按情境有区别并避免连续同一回应；保持真实会话状态、输入与单计时器，不回到简单静图扭曲重复。
+
+
+颜色v1用户终审（2026-10-24）：整套29候选被退回“仍有明显跳色，需要调整”，用户锁定“喜欢affection”。此前A/B技术守恒与静帧通过不等于切换颜色通过；不安装v1。下一轮只针对喜欢与已认可待机核对，重点分离帽/披布、围巾与毛色的色相、饱和、明暗差，不能继续把luma不变当作颜色修好。保持自然阴影、原动作/三心/单层下摆/alpha/锚点/时序，不盲目逐帧或全图均值匹配。先小试点真实原速切换，两路实际复核与用户门保留。原29其他颜色候选未获得整体通过，不擅自推定28条已通过。
+同轮用户已明确“可以，采用这套互动”，批准挥爪开场和闲时bounce/ear-flick、忙碌或等待head-shake/ear-flick的不连续重复方案。代码与两端测试已通过，保留待统一构建安装，不因颜色退回重做互动。评审56130已核验身份关闭并释放端口。
+
+
+用户最终批准混合配色与互动（2026-10-24）：在62191原速idle→喜欢→idle评审后，明确“可以，按这套整合”。批准集合为上轮v1其余28条不变＋喜欢A02（v1输入上固定围巾提亮减饱和、衣料轻微校偏），不是退回v1喜欢又恢复。work/color-consistency-affection-20261024-v2/user-final-approval.json绑定精确输入与两路报告。允许统一接入Pi/DSH、构建并本地安装；开场/戳一戳同轮已通过无需重审。新增颜色导数来源，不重写旧动作批准，不改alpha/锚点/时序/已认可造型；Pi沿原采样和同套共同palette。正式版本目标2.5.1-preview.6，当前安装仍preview.5直到安装报告确认。没有新发布请求。62191服务已核验关闭且端口释放。

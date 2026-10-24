@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "readyForUserReview": true,
+  "humanAcceptedOutput": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "sourceVideoSha256": "68cff5cc15ba0ea4b46a9dcfd3938603c0821287600b8d36cd032a2bd3f944ea",
+  "finalManifestSha256": "80e799989b9aa5cc03f11b68c792dee0f2fd9e0e0e38308c6c15f58413d913cd",
+  "helperSha256": "8c667e4ffbe7941da5b609c431ef1f0ad58d7f444f512ac9ef1d6dfce6916f97",
+  "technicalReviewSha256": "9c469cc2afce32c714416ac5828f5044010c6ca3554dd76c99e99dd71b3469a8",
+  "sourceReviewBSha256": "33938537507051c59caef75ee4d821f66b3fbdbcaa5abbd8afe5514b4e765b97",
+  "sourceCoreReviewASha256": "9f3c926d435a3e289fba0eab8ca2cb981cad5b86ca88e838636ecb389f6b43c3",
+  "sourceCoreReviewBSha256": "377bda20874191d91c89c2721be21d2da2d174db37a2a912e26a727135298ee8",
+  "sourceCorePreflightSha256": "a4c182084222184d607467506361c9265daa724eb3399575440813905b1de0f1",
+  "actualViewedFiles": [
+    {
+      "file": "detail-eye-proof.png",
+      "sha256": "1e79fb7cc3da7b4515b120c1dc7f36d842abe7ac030c35f40434e06d51f6f84d"
+    },
+    {
+      "file": "processed-detail-v1/white/008.png",
+      "sha256": "b58e48f40099ad39454444f0e53a2f28175ff04b683da47ea979afa672d795a6"
+    },
+    {
+      "file": "processed-detail-v1/black/008.png",
+      "sha256": "a5c0c10bd548d497febbdb9e5fe175c9664c6b0f705216a90ca7e357d873359d"
+    },
+    {
+      "file": "processed-detail-v1/white/042.png",
+      "sha256": "99978a021ce1167ab27fd79ee3cb926e7a954804f8de5e38c53da7e164c9816a"
+    },
+    {
+      "file": "processed-detail-v1/black/078.png",
+      "sha256": "e69b32426e792b50e787665d4ca99820de0fdfabe047872a0398bc303ee3cfa2"
+    },
+    {
+      "file": "processed-detail-v1/white/106.png",
+      "sha256": "3afd40fbecb51447418e275f86f9ea467e508d8d71f4e4f4bd4751eb03aefdda"
+    }
+  ],
+  "findings": [
+    "实际008黑白全图及源/旧edge/最终/alpha放大对照：旧右眼星内区误透明恢复，所查眼星完整，未见矩形接缝。",
+    "实际042高V整896图：双灰掌/四短圆趾垫与中央垫可读，厚白臂连到胸肩，两掌与短爪均完整在画布内；单层下摆及下半身底线保留。",
+    "实际078回落和106落掌：078掌缘原生运动模糊保留，106回到短厚落地爪与原待机体量；所查闭眼线/豆眉/脸宽无新增明确硬错。"
+  ],
+  "knownLimitations": [
+    "浅底抬臂外侧与白腹底缘细暗紫颗粒较显眼，毛尖/掌底细边仍有颗粒；不宣称零噪点或整片无瑕。",
+    "源约1s起抬、1.5s高V及较长峰值hold、原生回落模糊均保留。所列静帧不批准原速节拍、伸展感、hold或循环；这些由用户原速判断。",
+    "082[605,549]外软边alpha55原样保留；技术记录脸内封闭红珊瑚低alpha样本0，不能写成全片所有红像素均不透明。",
+    "本轮是原生全896候选，未验证Pi/DSH实际显示；v1用户否决和v2原源截掌HOLD保留。"
+  ],
+  "integrationConstraints": {
+    "preserveFullSourceCanvas": [
+      896,
+      896
+    ],
+    "preservePaintRect": {
+      "x": -128,
+      "y": -128,
+      "width": 896,
+      "height": 896
+    },
+    "preservePivot": [
+      448,
+      736
+    ],
+    "worldAnchor": [
+      320,
+      608
+    ],
+    "forbidWorld640CroppingBeforeIndexedExport": true,
+    "requiresActualPiAndDshFullExtremaDisplayVerificationBeforeIntegration": true,
+    "preventPawClippingInBothRuntimes": true,
+    "perFrameFit": false,
+    "approvedPiDisplaySolution": false,
+    "scope": "候选整896源/透明通过不能代替Pi640world构图通过；必须保留完整paintRect到实际Pi/DSH显示，不能重新截掌。当前仅用户原速候选，不预改正式23或运行时。"
+  },
+  "outputAcceptanceScope": "仅列出的实际无损黑白/局部alpha结构检查及独立完整107技术证据；并非动态艺术验收，不授权正式集成或安装。"
+}

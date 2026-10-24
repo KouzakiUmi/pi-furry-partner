@@ -1,0 +1,31 @@
+{
+  "reviewer": "B",
+  "status": "PASS_FOR_ALPHA_REVIEW_ONLY",
+  "action": "idle-right",
+  "sourceVideoSha256": "db6b775c964c4d309833b55153291671b31cbbe5ccc8d2cd138d8529205e21b2",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "promptSha256": "600fedd93bf3ae25e8cf822a94f8b48a3c80b37c5f9a2e57d962fa8ce1202bf3",
+  "actualViewedFiles": [
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "455438f53b641218ff50412887e169e991008de4463751c52d93877e64ecbf99"
+    },
+    {
+      "file": "early-check/00037.png",
+      "sha256": "e78c57094c5a162582cf7666ddc2217d9dd1274791c019edbd26becbb4154107"
+    },
+    {
+      "file": "early-check/00043.png",
+      "sha256": "94a13158c11763155af59c03d991817a7a6d7bc0d437e1360b03cd3538826fc1"
+    }
+  ],
+  "findings": [
+    "概览1.25至2.75秒多样本呈明确向画面右的三分之四侧看，再回正；并非仅小眼球偏移，方向差异清楚，幅度较tiny glance描述更大，最终原速须交用户。",
+    "原寸00037/00043转头与胸肩/围巾共享方向，短灰掌和厚白臂维持原落地支撑；未见整体平移缩放、掌缩小或细长人手。",
+    "侧转保留原画面左折耳身份，未镜像角色；侧脸双眼透视与深闭眼线/独立豆眉在所查姿态可读，单层下摆无宽翼展。",
+    "概览首末回正，未实际连续播放，不认证真实速度或loop接缝。"
+  ],
+  "scope": "源结构和方向静帧gate，只允许后续alpha；无全107人工图审或原速验收宣称。",
+  "humanAccepted": false,
+  "runtimeInstalled": false
+}

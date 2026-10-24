@@ -34,17 +34,28 @@ def main():
         assert stage.name in specs
         if stage.exists(): shutil.rmtree(stage)
         stage.mkdir(parents=True)
-        for folder in ['lib','assets','prompts','themes','tests','scripts','build']:
+        # Source-only approval tests use the canonical derivation/quantization helpers.
+        # These helpers are copied into the validation stage, not npm runtime files.
+        for folder in ['lib','assets','prompts','themes','tests','scripts','tools','build']:
             ignore=shutil.ignore_patterns('__pycache__','*.pyc','*-validation','*-validation.json','*.log')
             def filtered(directory,files,ignore=ignore):
                 skipped=set(ignore(directory,files))
                 if Path(directory)==ROOT/'assets':
                     if not spec['fullAnimation']:skipped.add('animated')
                     skipped.add('poses') # Generation sources are not runtime dependencies.
+                    skipped.update(name for name in files if name in {'native-frames.json','terminal-frames.json'} or Path(name).suffix.lower() in {'.png','.gif'})
                 if Path(directory)==ROOT/'assets/reactions':
-                    skipped.update(set(files)-{'umi','pixel'})
+                    skipped.update(set(files)-{'umi'})
                 return skipped
             shutil.copytree(ROOT/folder,stage/folder,ignore=filtered)
+        # Historical source-pixel tests use a frozen pre-color source bank.
+        # It belongs to source validation only; npm runtime files exclude Hi-Res.
+        # Copy this dedicated bank for --test without bringing generation history
+        # or old work/staging directories into either platform package.
+        if args.test:
+            historical=Path('Hi-Res/production/color-consistency-20261024/source29')
+            if (ROOT/historical).exists():
+                shutil.copytree(ROOT/historical,stage/historical)
         for filename in ['package.json','index.ts','config.json','install.ps1','uninstall.ps1',
                          'cordis.patch.yml','LICENSE','NOTICE','ASSET_LICENSE.md','README.md','README.en.md']:
             if (ROOT/filename).exists():shutil.copy2(ROOT/filename,stage/filename)

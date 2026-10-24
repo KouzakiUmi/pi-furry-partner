@@ -22,7 +22,7 @@ const render = (snapshot, { style = 'umi', animate = true } = {}) => {
 };
 for (const style of ['umi', 'illustration']) {
   clock = 0;
-  render({ phase: 'reading', face: 'work', bubble: 'real tool' }, { style });
+  render({ phase: 'running', face: 'work', bubble: 'real tool' }, { style });
   assert.equal(captured.sheet.clipId, 'work-enter');
   const entryIdentity = captured.sheet.frames[captured.frameIndex].cacheKey;
   assert.equal(captured.sheet.width, 2); assert.equal(captured.columns, 16); assert.equal(captured.rows, 8);
@@ -44,8 +44,10 @@ for (const style of ['umi', 'illustration']) {
 }
 render({ phase: 'speaking', face: 'talk-closed', bubble: 'speaking' });
 assert.equal(captured.sheet, base); assert.equal(ordinaryCalls, 1, 'Independent mouth/blink stays with the ordinary motion player');
-render({ phase: 'running', face: 'watch', bubble: 'running' }, { animate: false });
+render({ phase: 'reading', face: 'watch', bubble: 'reading' }, { animate: false });
 assert.equal(captured.sheet.frames[captured.frameIndex].id, 'watch', 'Pause ignores a video alias and chooses the actual approved static frame');
+render({ phase: 'running', face: 'watch', bubble: 'executing' }, { animate: false });
+assert.equal(captured.sheet.frames[captured.frameIndex].id, 'work', 'Paused execution uses keyboard artwork even with a stale watch face');
 render({ phase: 'idle', face: 'idle-blink', bubble: 'idle' }, { animate: false });
 assert.equal(captured.sheet.frames[captured.frameIndex].id, 'idle-open', 'Pause cannot select a filmed or blink frame');
 for (const style of ['umi-pixel', 'pixel']) {

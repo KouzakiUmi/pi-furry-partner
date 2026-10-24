@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "action": "ear-flick",
+  "version": 2,
+  "status": "READY_FOR_USER_TECHNICAL_ALPHA_REVIEW",
+  "humanAccepted": false,
+  "humanAcceptedOutput": false,
+  "readyForUserReview": true,
+  "readyForRuntimeIntegration": false,
+  "replacementAllowed": false,
+  "runtimeInstalled": false,
+  "formalBaseline": "26 clips unchanged; head-shake v1 separately accepted/integrated, ear v1 user-rejected and preserved",
+  "finalOutputDirectory": "processed-detail-v1",
+  "finalManifestSha256": "d4a00d6fdce44d46cac334586c8549a6f635d404e342469d73f02d099441bcdf",
+  "sourceVideoSha256": "9c82b27807785706a18c6f3f7962a56245e5530d76b1b107d4294621077724e1",
+  "sourceEvidenceSha256": "fb0f48f139db50402535c7b20cb552c55b9871af1721f81c480db331789b4530",
+  "referenceSha256": "1f068408654c77d634c43c6e599ffee02f926f6b402b07ba1dd747cc96eb6703",
+  "registeredReferenceSha256": "411a1d989cea97b2b4afa92540d0ff289feea63bbb2e5d060ad05c02ef42ab3c",
+  "promptSha256": "fee84fe862b6f647e4183ba9db19d20270cf2a41d0b7725590d9142b7ca33e5b",
+  "motionContractSha256": "e91e6b9695c1ef89f271f393f383427deddd8dadde9da67ae33062f0de088419",
+  "sourceProcessingAuthorizationSha256": "7b73606ddd9b6df6f8846ccc8ef80c8818df34b0a74743ff5921bf059bd277b1",
+  "sourceReviewASha256": "6e63ad12d88bf5e386e70e54f3471571d71c41bc17d8f9e1fe87af184c120d92",
+  "sourceReviewBSha256": "1483c27d2fb4b520b8a12c2d36493c76fa5f2f8a4e00679431e3e30b5b123c8a",
+  "all107PawFramingPreflightSha256": "4264b48a77155ba9da737f4a8c691faeb228d9dc5b49563e8fdd2de659c8dfc4",
+  "sourceCorePreflightSha256": "d693df633bf32a1ee82e32452ddfa60275d1fac86bed69e7073cbc425515ad78",
+  "sourceCoreReviewASha256": "665783fb97c5274bd120689bbcc209a965012e75ebd08679ea41332bb5760643",
+  "sourceCoreReviewBSha256": "d2de774913c494b06564ae27bc621d8942e681e4c3e4463333b0773cb6f0adc0",
+  "outputReviewASha256": "8a57173f705b78cb56daa072bb84800c07ba03c3e8ebc11a0143cc45d3831ccf",
+  "outputReviewBSha256": "59087cfd8dba1e7a5026e3cfb2335841ef736e34e37c435eb6d9ca636a6214bf",
+  "finalTechnicalReviewSha256": "0896905149598f67d48650fc39e913574e7bfa1c61749f17162fe53a29c47fa2",
+  "previewPawTechnicalReviewSha256": "fe7a2f3a36eca07bd94587a28d98d362972a603ef5ff72b558244bf3168a5c29",
+  "edgeHoldEvidenceSha256": "b8c273be54b5bdc615c4db5eff1c84706021de6dfd4492267f3e180be92bf4d5",
+  "finalCanvas": [
+    640,
+    640
+  ],
+  "finalPivot": [
+    320,
+    608
+  ],
+  "finalWorldPaintRect": {
+    "x": 0,
+    "y": 0,
+    "width": 640,
+    "height": 640
+  },
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "inputMethod": "Original approved idle same-first/last FL2VA, one fresh v2 task455531878756633, retries0, no imagegen/part rigs/time edits",
+  "alphaProcessing": "Frozen purple matte/dark-contour/noise + frozen external soft-edge color reconstruction; independently reviewed this-v2 opaque eye core [245275405335] same-source RGB/255 recovery315px, strict ext8/coreborder/reliable252/outside guards",
+  "finalVerification": {
+    "command": "python work/motion-polish-20261023/check-ear-flick-v2-detail.py ear-flick",
+    "exitCode": 0,
+    "verifierSha256": "a3eb7295f1fcfae4e77fb9537a49c204902db8eb6e30ccbbdd65bbf57ae09f61",
+    "logSha256": "282d49025ecb2404aed0553a587451dff9ba782a20b66a98c5fe8f2a39e43314"
+  },
+  "previewVerification": {
+    "command": "python work/motion-polish-20261023/check-ear-v2-preview-paws.py",
+    "exitCode": 0,
+    "verifierSha256": "d5e75b97b653bd653a935f232924b5980aa05ebe4cd3def96484fa5f3fdc23b9",
+    "logSha256": "ccb29e6903d0e00a175b1903fca9a8b118c191c551fc925bd05487e5ad66fe5d"
+  },
+  "softEdgeRunner": {
+    "file": "work\\motion-polish-20261023\\apply-ear-headshake-key-edge.py",
+    "sha256": "a586acc171ad9695d0aaf5d111a5493cb30b092562dc178b5ec338fe51421cda",
+    "command": "python work/motion-polish-20261023/apply-ear-headshake-key-edge.py ear-flick purple --version pilot-v2",
+    "repairFunctionUnchanged": true
+  },
+  "sourceSnapshot": {
+    "file": "review-source-ready-snapshot.json",
+    "sha256": "d162c682af18e8ff03b4086e4c38eb4474ce04c31dfbbd49912f47608127cda9",
+    "supersededScope": "Source-ready progress only, preserved unchanged; current review is final technical candidate, not human acceptance"
+  },
+  "knownLimitations": [
+    "Compared with rejected v1, this source has a single inward/more-upright ear-root orientation change and much quieter cape/scarf. Ear shape near peak and later frames still holds; naturalness, brief response, ordinary speed and loop remain USER native-speed gate, not static-review approval.",
+    "Fine dark-purple and low-saturation green/gray grains observed on selected bottom/paw soft edge. No claim of zero colored fringe/all107 spotless; no source repaint or alpha guard relaxation.",
+    "Native lines somewhat soft; first/last not pixel-identical; technical eye restoration does not improve source acting.",
+    "v1 explicit user rejection 太刻意了 remains binding for v1 only; v2 is unaccepted candidate and cannot replace formal26 until user approval."
+  ]
+}

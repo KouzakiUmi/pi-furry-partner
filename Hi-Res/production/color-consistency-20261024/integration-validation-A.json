@@ -1,0 +1,65 @@
+{
+  "status": "FORMAL_COLOR_INTEGRATION_CURRENT_HISTORY_AND_FULL_REPRODUCTION_PASS",
+  "scope": "assets/animated + source29 + required source/derivative tests/helpers only; no runtime/package/build/install owned by A",
+  "revision": "animated-color-consistency-20261024-521fbc24a412ead0",
+  "catalogSha256": "a3c6d6d06600253a90a43bff3f2e66611c88857700425efcca5964f6499c97b4",
+  "approvalSha256": "521fbc24a412ead022e9d86a49f3acaf1b2769c566342580fb1adb076cc604fc",
+  "derivationSha256": "b0abebdbf275f774c6caf60bab37094313760aaee1756e404c05d4abba30c1ec",
+  "frozenSource29": {
+    "path": "D:\\Software Projects\\pi-furry-partner\\Hi-Res\\production\\color-consistency-20261024\\source29",
+    "catalogSha256": "f8de911e18da73a6d091a9193c667dfcf6350374c0509b5c1c69c82b133150c1",
+    "sourceIndexSha256": "62017f63e1e6651f155a77b3b83472581d002aeb030d129ecb75a350ce78d7b9",
+    "files": 3078,
+    "bytes": 797561889,
+    "notInDistribution": true
+  },
+  "historyRegression": {
+    "allPassed": [
+      "approved-nod",
+      "approved-idle-wave",
+      "approved-stretch",
+      "approved-peek",
+      "approved-head-shake",
+      "approved-ear-flick",
+      "approved-bounce",
+      "approved-nuzzle"
+    ],
+    "originalPixelApprovalAssertionsRetained": true,
+    "helper": "tests/historical-color-source.mjs",
+    "provenanceUnchangedInPlace": true
+  },
+  "currentRegression": {
+    "approved-color-derivative": {
+      "passed": true,
+      "HDWholeRGBAFrames": 3048,
+      "alphaAndAlpha0RGBExact": true,
+      "PiExactReviewedCandidateFrames": 1526,
+      "PiOriginalNoncolorClockMetadataExact": true,
+      "sameReviewedCommonPalette": true,
+      "originalQAMetadataRetained": true,
+      "workInputsRequired": false
+    },
+    "approved-motion-binary-pack": {
+      "passed": true,
+      "physicalFiles": 29,
+      "logicalEntries": 58,
+      "verifiedIndices": 93869568,
+      "packedPaletteMetadataHashExact": true,
+      "decodedPayloadHashExact": true
+    }
+  },
+  "currentDerivativeTestTimeoutMs": 600000,
+  "currentDerivativeTestSha256": "86aa57d08f5840532cfa09e2dfc8e2b2218d12a01dc3a25420eddee173a16a20",
+  "fullReproductionStatus": "PASS_ALL_3048_FIXED_TRANSFORMS_FROM_CANONICAL_SOURCE29",
+  "toolSha256": {
+    "integrate-approved-color-consistency.py": "97f8ceef74d86f360063fe29aea7e10691e9d38059cfabecac160790a4c952c8",
+    "verify-approved-color-consistency.py": "b26360c19e4a8c73a58b8c92c4643e9f1ca6488aad92057d8720fbc0d40ffce7"
+  },
+  "fullReproduction": {
+    "exitCode": 0,
+    "allFixedTransformsReproduced": true,
+    "HDWholeRGBAFrames": 3048,
+    "PiExactReviewedCandidateFrames": 1526,
+    "workInputsRequired": false
+  }
+}

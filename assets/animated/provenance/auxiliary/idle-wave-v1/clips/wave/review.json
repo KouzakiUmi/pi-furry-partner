@@ -1,0 +1,20 @@
+{
+  "status": "A_B_OUTPUT_REVIEW_READY_FOR_USER_TRANSPARENT_NATIVE_SPEED",
+  "sourceSha256": "4e7dde7fcb18fe960cfe2ac7a9fa1abe6bfe249e2f7591441f3939a5d3c0767b",
+  "sourceEvidenceSha256": "1f513b8cc4ac6a45c5d06dda5a855899ff4bd1c43d930c1447b5e17497a6883f",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "alphaProcessing": "complete frozen purple matte/dark contour/noise/soft edge; no face core",
+  "action": "wave",
+  "sourceReviewBSha256": "38e10222d61f4826f93a4f89c0f8b19fc68c43c300787af79f42ca51b181285e",
+  "finalOutputDirectory": "processed-edge-v2",
+  "finalManifestSha256": "67d5ac9781b7535001254e1d7c6ec3bcb211ab2a6322e49a32aacbc265fb44eb",
+  "outputReviewASha256": "360dd043bc122b6dffbad949cd61f07baba663a3dcf14fe17c799fee1452d4aa",
+  "outputReviewBSha256": "967f9551871c7d80d7a86622a2010afc04ab64d0f514c3f8ba31136061bf44fa",
+  "technicalReviewSha256": "8289cfb0f88f1b36a1415a062cf993dd5d7d9cf0435bc88ea37ebbb4d9eae931",
+  "limitations": [
+    "Middle open-mouth small smile/tiny teeth from second reference; source gates passed with disclosure.",
+    "Ref2VA endpoints near neutral, not pixel-identical; native-speed/loop not accepted by still reviews.",
+    "Fine dark-purple forearm tips/bottom edge grain remains; no zero-fringe claim."
+  ]
+}

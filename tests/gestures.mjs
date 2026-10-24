@@ -1,3 +1,4 @@
+import { styleAssetDirectory } from '../lib/styles.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { GESTURES, GESTURE_PERIOD_MS, gestureAt, sampleGestureMotion } from '../lib/gestures.mjs';
@@ -26,7 +27,7 @@ activity.handle('ui_prompt_start');assert.equal(activity.playGesture('wave'),fal
 activity.start({wake:false});activity.playGesture('nod');activity.noteTyping();assert.equal(activity.snapshot().gesture,null);
 
 for(const style of ['umi','umi-pixel','pixel','illustration']){
- const sheet=JSON.parse(await readFile(new URL(`../assets/reactions/${style}/reaction-sheet.json`,import.meta.url),'utf8'));
+ const sheet=JSON.parse(await readFile(new URL(`../assets/reactions/${styleAssetDirectory(style)}/reaction-sheet.json`,import.meta.url),'utf8'));
  const original=JSON.stringify(sheet);let at=0;
  const player=createMotionPlayer({now:()=>at});
  for(const g of GESTURES){

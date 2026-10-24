@@ -83,7 +83,8 @@ try{
  clock=2200;controller.notifyChange();await flush();
  assert.equal(controller.getRenderLayer().display.scale,manifest.approvedStaticRevision?1:1.3,'An internal search frame does not auto-fit or restart display scaling');
  controller.applySettingsLocal({style:'umi-pixel'});
- assert.equal(controller.getRenderLayer().hiRes,false,'Style switch cannot retain the previous illustrated HD image');
+ assert.equal(controller.getSnapshot().settings.style,'umi','Legacy pixel preference migrates to illustration');
+ assert.equal(controller.getRenderLayer().hiRes,true,'A historical alias does not switch to a missing pixel bank');
  const revision=controller.getSnapshot().revision;
  controller.dispose();
  const canvases=created;

@@ -1,0 +1,51 @@
+{
+  "status": "A_B_FINAL_OUTPUT_READY_FOR_USER_TRANSPARENT_NATIVE_SPEED_REVIEW",
+  "sourceSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "sourceEvidenceSha256": "4809d3dc1b80ad85ecbf857d5a065e680b1877b297b2504c03e877bed9a3413c",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "alphaProcessing": "complete: frozen purple matte + edge RGB reconstruction + this-source guarded3970 eye-core alpha recovery",
+  "action": "bounce",
+  "humanAcceptedSource": true,
+  "humanAcceptedOutput": false,
+  "readyForUserReview": true,
+  "readyForRuntimeIntegration": false,
+  "replacementAllowed": false,
+  "finalOutputDirectory": "processed-detail-v1",
+  "finalManifestSha256": "ce50e9baecec18d7ab2b03973044c33080653305b0173231c38951ab82cc0e4c",
+  "sourceVideoSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "outputReviewASha256": "bc6e5628a7e7da699e07598c0669e0b1802f9896ab5c712ba7f0268bb6203ede",
+  "outputReviewBSha256": "42216ca2b77d44f3853969da2fb3c80d2077b312d7ed926f08d576a1f9db3733",
+  "finalTechnicalReviewSha256": "586d460092ddb0ac3fab04c060dc0f56b4b6ed892e272d8831dffe0d49ef23a6",
+  "sourceUserApprovalSha256": "32dfe719795b12c8298ac3eea3084b33b985322ed36d25e0ebe2e66f387b4bf9",
+  "sourceProcessingAuthorizationSha256": "3e9211e9b28e06d36a6cb3ec0481366dd70c2854731b096ad9023195345185b1",
+  "finalCanvas": [
+    896,
+    896
+  ],
+  "finalPivot": [
+    448,
+    736
+  ],
+  "finalWorldPaintRect": {
+    "x": -128,
+    "y": -128,
+    "width": 896,
+    "height": 896
+  },
+  "frameCount": 107,
+  "fps": 24,
+  "periodMs": 4458,
+  "finalVerification": {
+    "verifier": "work/motion-polish-20261023/check-bounce-v5-detail.py",
+    "verifierSha256": "0374a9496ddd4351c862924f5deb2b29e6aca2861ca7e3255fc2979f328601e3",
+    "exitCode": 0,
+    "sameVerifierBytesAsExecutedLocalHelper": true
+  },
+  "disclosedLimits": [
+    "Source accepted1.58s onset, modest happy accent and brief cape/scarf flare preserved.",
+    "Fine dark-purple edge line and gray-green/dark grain at white-fur/paw base remain; no claim of perfectly clean exterior.",
+    "Right sleeve/cape native background slit preserved;11 noncore red heuristic flags unchanged."
+  ],
+  "serverStarted": false
+}

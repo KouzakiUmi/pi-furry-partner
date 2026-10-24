@@ -14,7 +14,7 @@ const read = path => readFileSync(path);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const catalog = JSON.parse(read(catalogPath));
 const normalized = normalizeApprovedMotionCatalog(catalog);
-assert.equal(Object.keys(normalized.clips).length, 19);
+assert.equal(Object.keys(normalized.clips).length, 29);
 assert.deepEqual(catalog.anchor, [320, 608]);
 assert.deepEqual(catalog.logicalCanvas, { width: 640, height: 640 });
 assert.equal(catalog.chain.enterDurationMs, 400);
@@ -34,7 +34,7 @@ for (const [id, clip] of Object.entries(catalog.clips)) {
     files.get(entry.file).push({ clip, style, entry }); logicalEntries++;
   }
 }
-assert.equal(files.size, 19); assert.equal(logicalEntries, 38);
+assert.equal(files.size, 29); assert.equal(logicalEntries, 58);
 for (const [file, refs] of files) {
   const record = provenance.files.find(r => r.file === file);
   assert.ok(record, file);

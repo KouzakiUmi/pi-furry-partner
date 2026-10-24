@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "USER_REJECTED",
+  "action": "ear-flick",
+  "version": 1,
+  "reviewPage": "http://127.0.0.1:60034/",
+  "userFeedback": "太刻意了",
+  "sourceVideoSha256": "9a5442eea786827610a2d05e4abedec4a8305c83c813ee166a3d9c60c20ef637",
+  "finalManifestSha256": "3f061916612a6f1a82302f43d974d63ea52621001b4998743bf8e7f1f289718a",
+  "priorReviewSha256": "e09b4c98b1f60acb197f1bdf48287ff16e4d2832c87e90cbb09ed0ee8efea27d",
+  "priorReviewSnapshot": "review-before-user-rejection.json",
+  "pageEvidenceFile": "C:\\Users\\Fractal\\Documents\\Codex\\2026-10-15\\x20\\ear-head-final-review-evidence.json",
+  "pageEvidenceSha256": "5d462c220735c954b396905ccd0af3461a0d0a516ad53bad936d8f9e1ea7a67c",
+  "outputReviewASha256": "e9f34cfc797d6a23939847013c97723297c5e67d7261e296e6b0d223c6485417",
+  "outputReviewBSha256": "5df1e8cbed80f7444213ed542f1c98e2681e3bc0b3340dc64ad8ec09a5be6479",
+  "humanAcceptedOutput": false,
+  "readyForUserReview": false,
+  "replacementAllowed": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "scope": "只否决ear-flick v1表演；保留源/最终像素/技术A-B和60034页面原样，不影响head-shake独立决定。v2用近处轻声注意力小反应，耳根一次短动，收掉大外折/披布围巾外甩，不以技术PASS当艺术通过。"
+}

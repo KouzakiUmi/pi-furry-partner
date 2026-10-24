@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$WorkDir = (Join-Path (Split-Path -Parent $PSScriptRoot) 'work\installer-tests'),
     [string]$ReportPath
@@ -101,13 +101,13 @@ $v2Raw = @'
 '@
 $withoutPersona = $v2Raw -replace '(?m)^[ \t]*"persona": true,\r?\n', ''
 Save $configPath $withoutPersona
-$withoutPersonaBytes = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath))
+$withoutPersonaBytes = [Convert]::ToBase64String($utf8.GetBytes($withoutPersona.Replace('"headerStyle": "pixel"', '"headerStyle": "illustration"')))
 & $install -AgentDir $agent
 Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)) -ceq $withoutPersonaBytes -and $null -eq (Read $configPath).PSObject.Properties['persona']) 'existing 2.x config without persona is retained without adding a field'
 Save $configPath $v2Raw
-$v2Bytes = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath))
+$v2Bytes = [Convert]::ToBase64String($utf8.GetBytes($v2Raw.Replace('"headerStyle": "pixel"', '"headerStyle": "illustration"')))
 & $install -AgentDir $agent
-Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)) -ceq $v2Bytes) '2.x explicit-layout configuration remains byte-for-byte unchanged'
+Assert ([Convert]::ToBase64String([System.IO.File]::ReadAllBytes($configPath)) -ceq $v2Bytes) '2.x explicit-layout configuration changes only its legacy pixel header'
 Assert ((Read $configPath).persona -eq $true) '2.x user persona selection survives reinstall'
 Assert ((Read $configPath).chineseUI -eq $false -and (Read $configPath).compactPrompt -eq $false) 'disabled Chinese UI and native prompt preferences survive reinstall independently of persona'
 Assert ((Read $configPath).language -ceq 'en') 'an explicit English language choice survives upgrade'
@@ -118,8 +118,10 @@ Assert (-not $manifest.originalTuiModePropertyExisted) 'repeat installation reta
 # Rename only a root legacy style, even with minified/nested/escaped fields and
 # UTF-8 BOM. Keep all other preference bytes and the original recoverable copy.
 foreach ($styleCase in @(
+    @{ Old = '{"layout":"header","style":"pixel","headerStyle":"pixel","custom":{"style":"pixel","headerStyle":"pixel"},"note":"pixel"}'; New = '{"layout":"header","style":"umi","headerStyle":"illustration","custom":{"style":"pixel","headerStyle":"pixel"},"note":"pixel"}' },
+    @{ Old = '{"layout":"editor","style":"umi-pixel"}'; New = '{"layout":"editor","style":"umi"}' },
     @{ Old = '{"layout":"editor","custom":{"style":"wumi","text":"wumi"},"style":"wumi","language":"zh-CN","persona":true}'; New = '{"layout":"editor","custom":{"style":"wumi","text":"wumi"},"style":"umi","language":"zh-CN","persona":true}' },
-    @{ Old = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"wumi-pixel","language":"en","persona":false}'; New = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"umi-pixel","language":"en","persona":false}' }
+    @{ Old = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"wumi-pixel","language":"en","persona":false}'; New = '{"layout":"editor","nested":[{"style":"wumi-pixel"}],"\u0073tyle":"umi","language":"en","persona":false}' }
 )) {
     $rawLegacy = ([char]0xFEFF).ToString() + $styleCase.Old + "`r`n"
     $rawCanonical = ([char]0xFEFF).ToString() + $styleCase.New + "`r`n"
@@ -231,7 +233,7 @@ $originalConfigBytes = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes(
 $migrated = Read $newManifestPath
 Assert (-not (Test-Path -LiteralPath $legacyPath) -and (Test-Path -LiteralPath (Join-Path $newPath 'index.ts'))) 'rename removes the old automatic entry point before installing the new one'
 Assert (-not (Test-Path -LiteralPath $legacyManifestPath) -and (Test-Path -LiteralPath (Join-Path $migrated.lastBackup 'legacy-installation.json'))) 'legacy manifest is archived so the old uninstaller cannot remove the migrated installation'
-Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi-pixel"')) 'rename changes only the legacy style ID and preserves all persona/localization/custom preference text'
+Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi"')) 'rename changes only the legacy style ID and preserves all persona/localization/custom preference text'
 Assert ((Read (Join-Path $newPath 'config.json')).language -ceq 'zh-CN') 'an explicit Chinese language choice survives the renamed installation'
 Assert ($migrated.installationId -ceq 'legacy-first-id' -and $migrated.initialBackup -ceq $baseline -and $migrated.originalTheme -ceq 'original-theme') 'rename keeps the first-install recovery identity, backup and theme baseline'
 Assert ($migrated.recoveryExtensionPath -ceq $legacyPath -and $migrated.recoveryThemePath -ceq $legacyThemePath) 'original pre-plugin files retain their legacy recovery destinations'
@@ -269,7 +271,7 @@ Save $settingsPath '{"theme":"pi-wink-night","tuiMode":"regular","keep":true}'
 Save (Join-Path $agent 'themes\pi-wink-night.json') '{"name":"legacy theme"}'
 & $install -AgentDir $agent
 Assert (-not (Test-Path -LiteralPath $oldPath) -and (Test-Path -LiteralPath $newPath)) 'an unmanaged legacy copy is also archived instead of double-loaded'
-Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi-pixel"')) 'an unmanaged legacy config migrates its style ID while retaining all other text'
+Assert ([System.IO.File]::ReadAllText((Join-Path $newPath 'config.json'), [System.Text.Encoding]::UTF8) -ceq $oldConfig.Replace('"style": "wumi-pixel"', '"style": "umi"')) 'an unmanaged legacy config migrates its style ID while retaining all other text'
 & $uninstall -AgentDir $agent
 Assert ($null -eq (Read $settingsPath).PSObject.Properties['theme'] -and (Read $settingsPath).keep -eq $true) 'without a prior recovery manifest uninstall removes only the renamed theme selection and retains unrelated settings'
 Assert (-not (Test-Path -LiteralPath $oldPath) -and -not (Test-Path -LiteralPath $newPath)) 'uninstall does not reactivate an unmanaged legacy plugin'

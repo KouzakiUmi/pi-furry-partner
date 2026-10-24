@@ -1,3 +1,5 @@
+> 开发候选 **2.5.1-preview.2（未发布）** 仅保留高清插画；像素只在Legacy提供。已接入点头、挥爪、探头、伸懒腰、晃脑袋、抖耳、开心小弹与三条完整待机随机轮换，正式目录共28段；下载附件仍为下述已发布版本。旧视频中的像素画面属于历史演示。
+
 > 当前Main为2.5.1-preview.1预发布；稳定版2.5.0保留。Legacy新版标签为legacy-v2.4.2。
 
 > `main` 发布全动态版 v2.5.1-preview.1，运行 `npm run build:animated` 构建 Pi 与 DSH 包；[legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)维护保留 v2.4.0 原资源的 v2.4.2。详见[构建说明](docs/plugin-lines.md)。
@@ -31,7 +33,7 @@
 
 > 🐾 「我在这儿，把想法慢慢说给我听吧。」
 
-呜咪会待在 [Pi Coding Agent](https://github.com/earendil-works/pi) 输入框左边：想事情时托着下巴，修改文件时敲敲键盘，运行命令时举着放大镜左右看看，找资料时一头钻进纸堆，只留尾巴在外面晃。你需要拿主意时，他会歪头等你；等得久了就悄悄打个盹，回来又被你叫醒。
+呜咪会待在 [Pi Coding Agent](https://github.com/earendil-works/pi) 输入框左边：想事情时托着下巴，修改文件时敲敲键盘，阅读内容时举着放大镜左右看看，找资料时一头钻进纸堆，只留尾巴在外面晃。你需要拿主意时，他会歪头等你；等得久了就悄悄打个盹，回来又被你叫醒。
 
 外观之外，插件也整理了输入框、底部信息和常用操作。角色短句、控件和信息面板默认跟随系统，也可以切换**简体中文或 English**；**原生界面中文、Pi 文档提示精简、可选角色口吻**则各有开关。你可以继续使用熟悉的模型和工作方式。
 
@@ -59,7 +61,7 @@
 
 `main` 的**全动态重做版 v2.5.1-preview.1** 为插画风提供 19 段完整动作（17 段角色动作与两段键盘过渡），Pi 与 DSH 共用动作逻辑。原资源 **legacy v2.4.2** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
-全动态版的像素风保留原始 **100 × 100** 像素画与旧简单帧，不启用插画缩小生成的新版像素动画。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
+主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
 DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠状态切换；加载失败或启用减少动态效果时显示原静态图。输入框里的状态按钮已移除，浮动桌宠继续互动和倾听输入。
 
@@ -93,7 +95,7 @@ DSH 标题使用[独立循环的挥爪图](docs/dsh-branding.md)，不随桌宠�
 
 ![放大镜完整循环：头和握爪跟着镜片移动，角色版与像素版共用连续动作](magnifier-preview.gif)
 
-![同一角色的插画风与像素风对照](style-comparison.png)
+像素画风的历史对照和演示见 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)。
 
 这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#可选展示页)。
 
@@ -143,7 +145,6 @@ dsh plugin --profile desktop add "./dsh-furry-partner-full-animation-2.5.1-previ
 
 ```text
 /mascot style umi           插画风呜咪
-/mascot style umi-pixel     同一造型的像素风
 /mascot menu                打开常用操作
 /mascot poke                轻轻戳一下呜咪
 /mascot language en         切换为英文
@@ -156,9 +157,9 @@ dsh plugin --profile desktop add "./dsh-furry-partner-full-animation-2.5.1-previ
 
 `/mascot demo` 或 `/mascot demo all` 会自动循环一轮一分多钟的动作展示：聆听、思考、说话、工作和戳戳都会出现；放大镜和搜索能完整看一圈，等待阶段也会打盹、再惊醒。演示不请求模型、不改配置和输入草稿，`demo off` 或开始真实任务都会退出。只看某个动作时，仍可使用 `/mascot demo thinking` 或 `/mascot demo running`。
 
-角色英文名为 **Umi**；界面只展示 `umi`、`umi-pixel` 两种风格。旧版 `wumi`、`wumi-pixel`、`illustration`、`pixel` 仍作为兼容别名解析。
+角色英文名为 **Umi**；主线高清／全动态版本仅展示 `umi` 插画。旧像素配置自动迁移为插画，像素画风仅在 Legacy 分支提供。
 
-`umi-pixel` 使用原始 **100 × 100** 像素画与旧简单帧；两条产品线均不把新插画缩小成像素替代品。
+需要原始 **100 × 100** 像素画及旧简单动作，请安装 [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2)。主线两端安装包不再包含像素素材。
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
 

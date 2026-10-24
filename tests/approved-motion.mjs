@@ -19,7 +19,7 @@ wide.palette = Array.from({ length: 320 }, (_, i) => [i % 256, 40, 60]); wide.fr
 const wideDecoded = decodeApprovedMotionIndexed(wide, catalog, catalog.clips.idle, 'umi');
 assert.ok(wideDecoded.frames[0].pixels instanceof Uint16Array);
 assert.equal(wideDecoded.frames[0].pixels[1], 300, 'Independent indexed palettes retain indices above one byte');
-for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening', 'listen'], ['waiting', 'wait'], ['dozing', 'rest'], ['cancelled', 'rest'], ['running', 'watch'], ['searching', 'search'], ['compacting', 'search']]) {
+for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening', 'listen'], ['waiting', 'wait'], ['dozing', 'rest'], ['cancelled', 'rest'], ['reading', 'watch'], ['searching', 'search'], ['compacting', 'search']]) {
   player.reset(); clock = 0;
   const snap = { phase, face: phase === 'waiting' ? 'wait' : 'idle-open' };
   assert.equal(player.sample(snap).clipId, id);
@@ -34,26 +34,31 @@ for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening'
   }
 }
 player.reset(); clock = 0;
-const workSnapshot = { phase: 'reading', tool: 'read', blink: false };
+const workSnapshot = { phase: 'running', tool: 'bash', blink: false };
 assert.equal(player.sample(workSnapshot).clipId, 'work-enter');
 clock = 399; assert.equal(sample('editing', { blink: true }).clipId, 'work-enter');
 assert.equal(player.indexedFrame(sample('editing')).frame.atMs, 350, 'Pi uses the approved 20fps transition samples');
 clock = 400; assert.equal(sample('editing').clipId, 'work');
-clock = 650; assert.equal(sample('reading').elapsedMs, 250, 'Reading/editing share a keyboard epoch');
+clock = 650; assert.equal(sample('running').elapsedMs, 250, 'Execution/editing share a keyboard epoch');
 const truthfulIdle = { phase: 'idle', visualPhase: 'editing', face: 'idle-open', busy: false };
 clock = 750; assert.equal(player.sample(truthfulIdle).clipId, 'work-exit');
 assert.deepEqual(truthfulIdle, { phase: 'idle', visualPhase: 'editing', face: 'idle-open', busy: false }, 'A visual exit cannot mutate activity facts');
 clock = 1149; assert.equal(player.sample(truthfulIdle).clipId, 'work-exit');
 clock = 1150; assert.equal(player.sample(truthfulIdle).clipId, 'idle');
-clock = 1200; assert.equal(sample('reading').clipId, 'work-enter');
+clock = 1200; assert.equal(sample('running').clipId, 'work-enter');
 clock = 1250; assert.equal(sample('idle').clipId, 'work-exit', 'Short work retains a bounded exit');
-clock = 1260; assert.equal(sample('reading').clipId, 'work', 'Reentry during exit reuses the visible keyboard');
+clock = 1260; assert.equal(sample('running').clipId, 'work', 'Reentry during exit reuses the visible keyboard');
 for (const interrupt of ['speaking', 'error', 'poked', 'listening']) {
   const result = sample(interrupt);
   assert.equal(result?.clipId ?? null, interrupt === 'listening' ? 'listen' : null);
   assert.equal(player.stats().keyboardStage, null);
-  assert.equal(sample('reading').clipId, 'work-enter', 'A hard interruption clears the previous chain');
+  assert.equal(sample('running').clipId, 'work-enter', 'A hard interruption clears the previous chain');
 }
+player.reset(); clock = 0;
+assert.equal(sample('running').clipId, 'work-enter');
+clock = 150; assert.equal(sample('reading').clipId, 'watch', 'Reading immediately replaces the keyboard, including a partial entry');
+assert.equal(player.stats().keyboardStage, null);
+assert.equal(sample('running').clipId, 'work-enter', 'Execution starts a new keyboard chain after reading');
 assert.equal(sample('idle', {}, { animate: false }), null);
 assert.equal(player.stats().keyboardStage, null);
 assert.equal(sample('idle', {}, { enabled: false }), null);

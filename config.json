@@ -8,7 +8,7 @@
   "compactPrompt": true,
   "renderer": "auto",
   "style": "umi",
-  "headerStyle": "pixel",
+  "headerStyle": "illustration",
   "layout": "editor",
   "dockSize": "auto",
   "info": "compact",

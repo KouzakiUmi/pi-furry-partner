@@ -1,0 +1,16 @@
+{
+  "status": "AWAITING_ACTUAL_OUTPUT_A_B_AND_USER",
+  "humanAccepted": false,
+  "runtimeInstalled": false,
+  "frameCount": 107,
+  "periodMs": 4458,
+  "sourceTimelineUnchanged": true,
+  "registrationUnchanged": true,
+  "externalSoftRgbaAllFramesExactlyUnchanged": true,
+  "reliable252RgbaAllFramesExactlyUnchanged": true,
+  "outsideDetailRepairAllFramesExactlyUnchanged": true,
+  "changedAlphaInteriorPixels": 875,
+  "minimumAllFramesSourceCoreVsKeyMarginBytes": 58.0,
+  "allCoreBoundaryRgbaUnchanged": true,
+  "knownLimits": "Only this action source and its reviewed independent face/eye trimap; not for other clips. Exterior fine dark/purple rim/grain remains possible. User source-acting approval is separate from this technical output."
+}

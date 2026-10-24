@@ -45,6 +45,6 @@ try {
  const hd=controller.getRenderLayer();assert.equal(hd.registered,true);assert.equal(hd.display.profile,'ordinary');
  controller.activity.noteTyping();clock=300;controller.notifyChange();
  const held=controller.getRenderLayer();assert.equal(held.bitmap,hd.bitmap);assert.equal(held.display.profile,hd.display.profile,'Delayed listening request retains actual idle profile');
- controller.applySettingsLocal({style:'umi-pixel'});const pixel=controller.getRenderLayer();assert.equal(pixel.hiRes,false,'Style switch cannot retain held HD');
+ controller.applySettingsLocal({style:'umi-pixel'});const migrated=controller.getRenderLayer();assert.equal(controller.getSnapshot().settings.style,'umi');assert.equal(migrated.hiRes,true,'Legacy alias keeps the same illustrated HD family');
  controller.dispose();console.log('DSH regular scale: unchanged registered display matrices/support, identical idle/mouth transition group, actual-layer registration, delayed HD/held/style and legacy fallbacks passed.');
 } finally {controller?.dispose();for(const [k,v]of Object.entries(saved))if(v===undefined)delete globalThis[k];else globalThis[k]=v;}

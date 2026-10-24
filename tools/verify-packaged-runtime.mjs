@@ -11,15 +11,23 @@ for (const style of ['umi', 'umi-pixel', 'wumi', 'wumi-pixel', 'illustration', '
   const sheet = loadEncodedSheet(style);
   assert.ok(sheet.frames.length > 1 && sheet.width > 0, `Packaged style alias ${style} resolves to real frames`);
 }
-const header = await read('assets/native-frames.json');
+const { STYLES } = await import(pathToFileURL(join(root, 'lib/styles.mjs')));
+assert.deepEqual(STYLES, ['umi']);
+assert.equal(pkg.umiDistribution.pixelPolicy, 'legacy-only');
+const header = await read('assets/illustration/native-frames.json');
 assert.equal(header.frames.length, 15);
 assert.equal(header.loopDurationMs, 4800);
 let logicalEntries = 0;
 if (pkg.umiDistribution.track === 'full-animation') {
-  const { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed } = await import(pathToFileURL(join(root, 'lib/approved-motion.mjs')));
+  const { normalizeApprovedMotionCatalog, decodeApprovedMotionIndexed, APPROVED_AUXILIARY_IDS, APPROVED_IDLE_VARIANT_IDS } = await import(pathToFileURL(join(root, 'lib/approved-motion.mjs')));
   const { decodeApprovedMotionNodeResource } = await import(pathToFileURL(join(root, 'lib/approved-motion-node.mjs')));
   const catalog = normalizeApprovedMotionCatalog(loadAnimatedCatalog());
-  assert.equal(Object.keys(catalog.clips).length, 19);
+  const required = ['idle','think','listen','wait','rest','work','watch','search','joy','grumpy','sad','cry','shy','flustered','surprise','proud','affection','work-enter','work-exit'];
+  const ids = Object.keys(catalog.clips).sort();
+  for (const id of required) assert.ok(catalog.clips[id], `Required approved clip ${id} remains playable`);
+  assert.ok(ids.every(id => required.includes(id) || APPROVED_AUXILIARY_IDS.includes(id) || APPROVED_IDLE_VARIANT_IDS.includes(id)));
+  assert.deepEqual(ids, pkg.umiDistribution.approvedMotionClipIds);
+  assert.equal(ids.length, pkg.umiDistribution.approvedMotionClipCount);
   for (const clip of Object.values(catalog.clips)) for (const [style, meta] of Object.entries(clip.indexed)) {
     const asset = loadAnimatedAsset(meta.file, catalog.revision);
     assert.ok(asset);

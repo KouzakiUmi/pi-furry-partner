@@ -18,9 +18,9 @@ assert.deepEqual(labels(""), [
 ]);
 assert.deepEqual(labels("st"), ["style"]);
 assert.deepEqual(values("style"), ["style "]);
-assert.deepEqual(values("style "), ["style umi", "style umi-pixel"]);
-assert.deepEqual(values("style um"), ["style umi", "style umi-pixel"]);
-assert.deepEqual(values("STYLE U"), ["style umi", "style umi-pixel"]);
+assert.deepEqual(values("style "), ["style umi"]);
+assert.deepEqual(values("style um"), ["style umi"]);
+assert.deepEqual(values("STYLE U"), ["style umi"]);
 assert.deepEqual(values("language zh"), ["language zh-CN"]);
 assert.deepEqual(values("demo thin"), ["demo thinking"]);
 checks.push("Top-level commands and second-level values complete hierarchically and case-insensitively");
@@ -52,7 +52,6 @@ const valueResult = await request("/mascot style um");
 assert.equal(valueResult.prefix, "style um");
 assert.deepEqual(valueResult.items.map(({ value, label }) => ({ value, label })), [
   { value: "style umi", label: "umi" },
-  { value: "style umi-pixel", label: "umi-pixel" },
 ]);
 assert.deepEqual(provider.applyCompletion(["/mascot style um"], 0, 16, valueResult.items[0], valueResult.prefix), {
   lines: ["/mascot style umi"], cursorLine: 0, cursorCol: 17,

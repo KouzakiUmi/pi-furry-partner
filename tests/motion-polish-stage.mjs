@@ -217,11 +217,14 @@ for (const style of ['pixel', 'umi-pixel']) assert.equal(player.sample({ phase: 
 assert.ok(player.stats().clips <= 2); player.dispose();
 
 const pixelProvenance = json(resolve(baseline, 'build/legacy-pixel-provenance.json'));
-for (const item of pixelProvenance.files) assert.equal(hash(inside(root, item.path)), item.sha256, `${item.path}: exact original pixel bytes`);
+for (const item of pixelProvenance.files) {
+  assert.equal(hash(inside(baseline, item.path)), item.sha256, `${item.path}: baseline historical pixel bytes`);
+  assert.equal(existsSync(resolve(root, item.path)), false, `${item.path}: legacy pixels excluded from main stage`);
+}
 assert.equal(existsSync(resolve(root, 'assets/animated/indexed/pixel')), false);
 assert.equal(existsSync(resolve(root, 'assets/animated/indexed/umi-pixel')), false);
 for (const file of ['assets/branding/title.json', 'assets/branding/umi-title.png',
-  'assets/reactions/umi/reaction-sheet.json', 'assets/reactions/illustration/reaction-sheet.json', 'assets/hires/umi/manifest.json'])
+  'assets/reactions/umi/reaction-sheet.json', 'assets/hires/umi/manifest.json'])
   assert.equal(hash(inside(root, file)), hash(inside(baseline, file)), `${file}: independent static/mouth bank unchanged`);
 const title = host.loadTitleBranding('auto');
 assert.equal(title.animated, false); assert.equal(title.contentType, 'image/png');
@@ -234,4 +237,4 @@ for (const style of ['umi', 'illustration']) {
 console.log(JSON.stringify({ passed: true, stageRoot: root, selectionSha256: hash(selectionPath), baselineCatalogSha256: selection.formalCatalogSha256,
   revision: catalog.revision, newClips: newIds.length, retainedClips: retainedIds.length, physicalIndexedFiles: physicalFiles.size, logicalEntries: physicalFiles.size * 2,
   newHDFramesPixelExact: hdProof.newHDFramesPixelExact, retainedDecodedMetadataPaletteIndicesClockExactExceptRevision: true,
-  originalPixelFilesExact: pixelProvenance.files.length, waitQuestionInBothRenditions: true, staticTitleAndIndependentMouths: true, clips: report }));
+  baselineHistoricalPixelFilesExactAndExcludedFromStage: pixelProvenance.files.length, waitQuestionInBothRenditions: true, staticTitleAndIndependentMouths: true, clips: report }));

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "B",
+  "action": "bounce",
+  "version": 5,
+  "status": "PASS_FOR_USER_NATIVE_SOURCE_REVIEW_WITH_BRIEF_CAPE_SIDE_FLARE_DISCLOSED",
+  "readyForUserSourceReview": true,
+  "allowAlphaProcessing": false,
+  "allowEdgeProcessing": false,
+  "humanAccepted": false,
+  "readyForRuntimeIntegration": false,
+  "runtimeInstalled": false,
+  "sourceVideoSha256": "fda9a64fb785bed16280ebd59df435bdd5ca275540b8b32f7054a15f429a37d6",
+  "referenceSha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf",
+  "promptSha256": "d1e91b867e93c001c04ff2a172855873fc5ce2723d161ee61afda07354669212",
+  "sourceEvidenceSha256": "4809d3dc1b80ad85ecbf857d5a065e680b1877b297b2504c03e877bed9a3413c",
+  "all107PawFramingPreflightSha256": "9bbcd47b2b04fb87113d22bd63ecc0c47b6066e017163c8651aab9aca48d48ac",
+  "fullSourceContactsSha256": "3abddae49d1ab0a395b373ce05573652da6a756f93a542dfd5458b481efd29fa",
+  "actualViewedFiles": [
+    {
+      "file": "reference.png",
+      "sha256": "f82f4b4030ead50c5d798d8bf1f4271122e6b9193a353922d757acf1030597bf"
+    },
+    {
+      "file": "early-check/overview.jpg",
+      "sha256": "3809accc81ee3fa1e9c63b07ba803d6e016fe74a2999507165ef7a8fb867b41a"
+    },
+    {
+      "file": "early-check/paw-contact-01.jpg",
+      "sha256": "163d9fb616adf04fb25a459e77967d03baa1f57a104425f482dacfb7e6963901"
+    },
+    {
+      "file": "early-check/paw-contact-02.jpg",
+      "sha256": "cd6728bb86a40a82774563afa4c90a5b2eb731202a46e55d2d4f9e7ff4f152e7"
+    },
+    {
+      "file": "early-check/paw-contact-03.jpg",
+      "sha256": "cde0b8b37e8c9c327b339940cc55a2962f594455b7a550b5ebb8a3df88079403"
+    },
+    {
+      "file": "early-check/paw-contact-04.jpg",
+      "sha256": "36ca74efa0d8aa5b3f588602c35462afe1ad7f9a5359098fd8de6dba288f2057"
+    },
+    {
+      "file": "early-check/full-contact-01.jpg",
+      "sha256": "ecf4681a740615e6f085dd647883a616a5154f9f7c85f03e9f82c7405a832211"
+    },
+    {
+      "file": "early-check/full-contact-02.jpg",
+      "sha256": "ce44d6ec3b1644c701d9ba963fa4a4d5f48c46d8779b4e2111eda3efe4ac0371"
+    },
+    {
+      "file": "early-check/full-contact-03.jpg",
+      "sha256": "9175da79a6abc961c8098c95df824781fdc4829843e6e301dec4362c536cfd9c"
+    },
+    {
+      "file": "early-check/full-contact-04.jpg",
+      "sha256": "234c1043c1e07423b11a9a3112eaebad966e2e3f3bdc0320969e2eb2cd767338"
+    },
+    {
+      "file": "early-check/00043.png",
+      "sha256": "2b57c3fc4b14a5f84eb2c6ef6ae8233c61ee8ad40911d15299d3c369a3b401a7"
+    },
+    {
+      "file": "early-check/00049.png",
+      "sha256": "8c33a1796b93cb987424c17c7247b386f6ab97c8af29e3cebfbb026ce2211baf"
+    }
+  ],
+  "referenceScope": "Same original idle896 fixed reference actually viewed duringv4 and file identity preserved; original2D paw-anatomy and clothed-character inspected in current resumed round. No airborne middle image is an input.",
+  "structuralFindings": [
+    "完整107固定全幅与原位掌区逐帧表实际看过。两原短厚灰掌始终在同一支撑线上，掌腕/厚白臂相连，未见新后脚、离地整团或长灰腕/白臂。",
+    "约038–045（1.583–1.875s）头颈/胸肩同一小下压，046–050（1.917–2.083s）回弹收住，剩余坐稳/眨眼；没有v3/v4中段抬掌漂浮HOLD。",
+    "全107未切边，最低native margin134px；固定896世界/pivot448736/paintRect[-128,-128,896,896]和原生107/24fps/4458.333ms保留。"
+  ],
+  "actingObservations": [
+    "一小次贴地坐姿承重压实/回弹可读，幅度克制、开心表情很轻，更近原名开心晃晃的轻小重音；是否足够开心/弹感仍是用户原速门，B不据帧表代替审美判断。",
+    "起势仍在约1.58秒，前段以轻呼吸/目光为主；后段约066–069自然眨眼。"
+  ],
+  "clothConcern": [
+    "038–045（原寸042）单层cape两侧明显向外鼓/横展，末端仍向下弯；046–050（原寸048）恢复低下角并短外铺，围巾末端有扬。",
+    "这不是v4原寸078那种两个尖端朝上飞起的双翼，未见新增第二层披片；但不能写全程下垂不侧展或衣料完全通过。源候选送原速门时必须显式披露，由root/用户决定是否可接受。"
+  ],
+  "decisionScope": "B recommends unchanged nativepurple source user review only, with small-amplitude/late accent and brief cape side flare disclosed. This is not user art acceptance, alpha authorization, endpoint exactness certification or runtime approval.",
+  "knownLimitations": [
+    "实际查看完整107顺序静帧接触表与原寸极值，未实际连续播放原速，不冒称完整动态验收。",
+    "源紫底/边缘未处理也未批准；材料以A fresh报告为准。"
+  ]
+}

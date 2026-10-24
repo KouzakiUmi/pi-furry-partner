@@ -1,6 +1,6 @@
 {
   "name": "pi-furry-partner",
-  "version": "2.5.1-preview.1",
+  "version": "2.5.1-preview.6",
   "description": "Umi / 呜咪 — an animated Pi companion with English/中文 UI, quick actions, and an optional character voice.",
   "author": "KouzakiUmi",
   "license": "Apache-2.0",
@@ -67,9 +67,10 @@
     "lib/*.mjs",
     "prompts/*.md",
     "themes/*.json",
-    "assets/*.json",
+    "assets/status-*.json",
+    "assets/ui-*.json",
     "assets/illustration/*.json",
-    "assets/reactions/*/*.json",
+    "assets/reactions/umi/*.json",
     "assets/hires/**",
     "assets/branding/*",
     "assets/animated/**"

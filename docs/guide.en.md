@@ -160,3 +160,7 @@ The preview PNGs/GIFs are offline compositions exported from production state an
 Run `npm test` from the project directory with actual Pi 1.2.0 or 1.3.0 modules; CI uses both releases. The complete suite covers native Chinese UI, prompt boundaries, extension integration, rendering, mouse routing and command completion. Run `node tests/legacy-resources.mjs` to compare original resources and prompts with SHA-256 baselines generated from v2.4.0 Git objects, including in extracted release archives. The earlier NixOS / Kitty session supplements these checks. See [Contributing](../CONTRIBUTING.md) for setup; the tested scope does not cover every terminal, font, window size or extension combination.
 
 Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, photographs, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).
+
+## Original-resource actions and completion
+
+Use `/mascot action reading` for one finite action, `/mascot action all` to cycle, or `/mascot action off` to stop. Tab lists this edition's supported actions: idle, waking, thinking, speaking, reading, editing, running, searching, compacting, waiting, success, error, cancelled and poke. Real work and typing interrupt playback. Pausing ends manual playback. Actions require the enabled editor layout and animation; they do not call a model or save preferences. HD has its own independent action registry.

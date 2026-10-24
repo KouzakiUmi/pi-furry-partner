@@ -17,7 +17,7 @@
 
 [**Download Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
-This repository maintains the **original-resource Pi edition**, preserving the v2.4.0 assets, four styles and action routing with compatibility and rendering fixes. **v2.5.1** is the stable Latest release. DSH is maintained in [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). See [release rules](docs/release-line.md).
+The root package maintains the **original-resource Pi edition**, preserving the v2.4.0 assets, four styles and action routing with compatibility and rendering fixes. **v2.5.1** is the stable Latest release. DSH is maintained in [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). See [release rules](docs/release-line.md).
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 

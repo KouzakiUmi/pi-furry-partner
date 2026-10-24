@@ -1,24 +1,24 @@
 # 更新记录
 
-Pi 现仅维护原资源与简单帧动作逻辑；DSH 已独立。正式版使用 v 标签并设为 Latest。下方旧版记录保留作为历史说明。
+main 根目录维护原资源版，editions/hd/ 维护独立 HD 源码。v 标签发布原版 Latest，hd-v 标签发布 HD 且 latest=false。DSH 独立维护；下方旧版本记录保留历史说明。
 
 ## 2.5.1 · 2026-10-25
 
-- 补齐原资源版 `/mascot action`：14 个实际可用动作、all/off、有限时长、真实任务抢占及中英文分层 Tab 补全；原素材与简单帧保持不变。
-- main 同时维护根目录原资源版与 editions/hd 高清版，独立源码、CI 和打包；v 标签发布原版 Latest，hd-v 发布高清且不占用 Latest。
-
 ### 简体中文
 
-- Pi 回归原资源版：保留全部 507 个 v2.4.0 原文件、四种外观和原有动作路由，清理当前源码中的高清／全动态产品线。
-- 保留 Legacy 2.4.3 已完成的流式工具准备适配、取消与会话清理、Kitty/Sixel 弹层渲染及 Pi 1.2.0／1.3.0 兼容修复。
-- main 与 legacy 统一为 Pi 原资源版；正式发布使用 v2.5.1，附件为 pi-furry-partner-2.5.1.zip，设为 Latest。
-- DSH 继续在 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner) 独立维护。删除此前高清版与 legacy-v2.4.3 的 Release，保留历史 Git 标签。
+- 补齐原资源版 `/mascot action`：14 个实际可用动作、all/off、有限播放、真实任务与输入抢占，以及暂停时退出展示；不调用模型、不保存动作偏好。
+- 将 [PR #5](https://github.com/KouzakiUmi/pi-furry-partner/pull/5) 的通用 action 参数补全适配到原资源版，从自身动作定义生成中英文分层 Tab 补全，不列出未实现的 HD 动作名。
+- 保留全部 507 个 v2.4.0 原文件、四种外观和原动作路由，保留 Legacy 2.4.3 的流式工具准备、取消与会话清理、弹层渲染和 Pi 1.2.0／1.3.0 兼容修复。
+- 两套独立源码只在 main 维护：根目录原版与 editions/hd 高清版使用不同 CI、构建和标签；原版 ZIP、npm 与安装器排除 HD，发布 v2.5.1 并设为 Latest。
+- DSH 在 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner) 维护；旧高清 Release 与 v2.4.5 标签已清理，历史 Legacy 发布及其余标签保留。本次不创建新的 HD Release。
 
 ### English
 
-- Make the original-resource Pi edition the only maintained product, preserving all 507 original resource files, four styles and original action routing.
-- Keep the Legacy 2.4.3 streamed-tool preparation, cancellation/session cleanup, overlay rendering and Pi 1.2.0/1.3.0 compatibility fixes.
-- Unify main and legacy, publish v2.5.1 as Latest with a Pi-only archive, and maintain DSH in its separate repository. Historical Git tags remain available.
+- Add original-resource `/mascot action` with 14 supported actions, finite playback, all/off, real-task and typing preemption, and cancellation when paused. No model requests or saved action preferences.
+- Adapt [PR #5](https://github.com/KouzakiUmi/pi-furry-partner/pull/5)'s hierarchical action completion from this edition's own bilingual action registry.
+- Preserve all 507 original v2.4.0 files, four styles and original action routing, plus the Legacy 2.4.3 compatibility, streamed-tool and overlay fixes.
+- Maintain both independent products on main: the root original edition and editions/hd. Separate CI and v / hd-v releases keep HD out of the original package and out of Latest.
+- Publish original-resource v2.5.1 as Latest. DSH remains separate; historical Legacy releases and remaining tags stay available. No new HD release is created in this update.
 
 ## 2.4.3 · 2026-10-25
 

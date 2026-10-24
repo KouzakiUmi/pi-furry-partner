@@ -428,3 +428,7 @@ Pi 1.2.0 / 1.3.0 均运行完整测试，覆盖真实扩展集成、中文界面
 ## 许可
 
 代码与文档采用 [Apache License 2.0](../LICENSE)。角色设计、照片、插画、像素图、动画、精灵表及含角色的展示图保留全部权利，详见 [ASSET_LICENSE.md](../ASSET_LICENSE.md)。
+
+## 原资源版手动动作与补全
+
+`/mascot action reading` 单次展示，`/mascot action all` 循环，`/mascot action off` 停止。Tab 从原版动作定义列出：idle、waking、thinking、speaking、reading、editing、running、searching、compacting、waiting、success、error、cancelled、poke。真实任务或输入会退出展示，暂停也会停止。需要开启角色、动画和 editor 布局；动作不调用模型、不保存偏好。HD 使用自己独立的动作列表。

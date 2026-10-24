@@ -1,5 +1,5 @@
 > **Pi HD 独立代码线 · 2.5.1-preview.6**：29 个完整动作，仅提供高清插画。Pi 事件适配、状态机与播放器在 `lib/hd/` 独立维护，不调用 Legacy 运行时。
-> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由 main / legacy 维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。当前适配尚未发布新的 HD 标签，源码安装请先进入 `editions/hd/`，运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
+> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。当前适配尚未发布新的 HD 标签，源码安装请先进入 `editions/hd/`，运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载全动态 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) · [原资源 legacy v2.4.2](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载全动态 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) · [原资源 原资源版 v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -56,7 +56,7 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
 
-`hd` 的**全动态重做版 2.5.1-preview.6** 为插画风提供 29 段完整动作，由 Pi 独立调度。原资源 **legacy v2.4.2** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
+`hd` 的**全动态重做版 2.5.1-preview.6** 为插画风提供 29 段完整动作，由 Pi 独立调度。原资源 **原资源版 v2.5.1** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
 主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
@@ -91,7 +91,7 @@
 
 ![放大镜完整循环：头和握爪跟着镜片移动，角色版与像素版共用连续动作](magnifier-preview.gif)
 
-像素画风的历史对照和演示见 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)。
+像素画风的历史对照和演示见 [Legacy 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)。
 
 这些都是离线导出图。本地 `preview.html` 可以切换状态与界面示意，不会发送模型请求；另外保留了一份可选的独立展示页源码，开发预览方式见[贡献指南](CONTRIBUTING.md#可选展示页)。
 
@@ -105,7 +105,7 @@
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关渲染修复和回归测试保留在 HD 独立源码中。
 
-当前 HD 适配尚未创建新的 Release。可以从 [hd 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [legacy v2.4.2 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy)的独立发行说明。同一宿主只安装一版。
+当前 HD 适配尚未创建新的 Release。可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.1 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
 
 | 平台 | 全动态 2.5.1-preview.6 |
 | --- | --- |
@@ -145,7 +145,7 @@ pi
 
 角色英文名为 **Umi**；主线高清／全动态版本仅展示 `umi` 插画。旧像素配置自动迁移为插画，像素画风仅在 Legacy 分支提供。
 
-需要原始 **100 × 100** 像素画及旧简单动作，请安装 [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2)。主线两端安装包不再包含像素素材。
+需要原始 **100 × 100** 像素画及旧简单动作，请安装 [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest)。主线两端安装包不再包含像素素材。
 
 **输入区会适应 Pi 的当前模式。** `fullscreen` 底边显示可点击控件，右侧可选模型、切换思考等级、打开更多操作；`regular` 自动改成快捷键提示。在 `/settings` 切换模式后会即时跟随。两种模式都能按 **Ctrl+Alt+W** 或输入 `/mascot menu`，查看用量、浏览可用工具、复制最近回答、进入会话或对话树等。
 

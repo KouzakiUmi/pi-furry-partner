@@ -1,5 +1,5 @@
 > **Independent Pi HD line · 2.5.1-preview.6**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
-> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. Main / legacy maintain the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. No new HD tag has been published for this adaptation; install from the `editions/hd/` directory. See the [build guide](docs/plugin-lines.md).
+> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. No new HD tag has been published for this adaptation; install from the `editions/hd/` directory. See the [build guide](docs/plugin-lines.md).
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download full-animation 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) · [Original-art legacy v2.4.2](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download full-animation 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) · [Original-art original-resource v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -56,7 +56,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **full-animation remake 2.5.1-preview.6** on `hd` provides 29 complete illustration clips, maintained for Pi. **Legacy v2.4.2** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **full-animation remake 2.5.1-preview.6** on `hd` provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.1** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
@@ -91,7 +91,7 @@ Searching and context compaction share a continuous paper-pile animation: the he
 
 ![Full magnifier loop: the head and gripping paw follow the lens in illustrated and pixel styles](magnifier-preview.gif)
 
-Historical pixel comparisons are retained on the [Legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy).
+Historical pixel comparisons are retained on the [Legacy branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/main).
 
 These are offline exports. The local `preview.html` can demonstrate states and layouts without making model requests. Optional standalone showcase source is also retained; see the [local preview instructions](CONTRIBUTING.md#可选展示页).
 
@@ -105,7 +105,7 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0 and 1.3.
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-This HD adaptation has no new Release yet. Build the package below from the [hd branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [legacy v2.4.2 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/legacy). Install one edition per host.
+This HD adaptation has no new Release yet. Build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.1 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
 
 | Platform | Full-animation 2.5.1-preview.6 |
 | --- | --- |
@@ -145,7 +145,7 @@ Use `/mascot` to inspect your settings. Size, layout, rendering and demo command
 
 The HD/full-animation line exposes only the `umi` illustration. Old pixel settings migrate to illustration; pixel artwork is available only in Legacy.
 
-For the original **100 × 100** pixel artwork and simple animations, install [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/legacy-v2.4.2). HD packages exclude pixel artwork.
+For the original **100 × 100** pixel artwork and simple animations, install [Legacy](https://github.com/KouzakiUmi/pi-furry-partner/releases/latest). HD packages exclude pixel artwork.
 
 **The editor follows Pi's current interface mode.** In `fullscreen`, its lower edge has clickable controls for models, thinking levels and more actions. In `regular`, these become keyboard hints. Switching modes in `/settings` updates the controls immediately. In either mode, press **Ctrl+Alt+W** or enter `/mascot menu` to view usage, inspect tools, copy the latest answer, or access session and conversation-tree actions.
 

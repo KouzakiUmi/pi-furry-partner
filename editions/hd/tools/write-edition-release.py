@@ -60,7 +60,8 @@ def collect_release(root=ROOT, out=OUT):
                          'allArchiveEntriesVerified': True, 'runtimeSmokePassed': True,
                          'runtimeEvidence': audit['runtimeEvidence'],
                          'exactOriginalPixelRuntimeFiles': audit['exactOriginalPixelRuntimeFiles'],
-                         'buildSuitesRecordedPassed': build.get('testsRun') is True})
+                         'buildSuitesRecordedPassed': build.get('testsRun') is True,
+                         'testRuntimeVersions': build.get('testRuntimeVersions', [])})
     summary = {'dateUtc': source_date_utc(),
                'status': 'LOCAL_BUILD_VERIFIED_NOT_INSTALLED', 'sourceRepository': 'source',
                'buildSourcePolicy': 'Shared repository source only; historical worktrees are not build inputs.',

@@ -10,7 +10,7 @@ from reproducibility import logical_path
 
 ROOT=Path(__file__).resolve().parents[1]
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))
-def run(args,cwd): subprocess.run(args,cwd=cwd,check=True)
+def run(args,cwd,env=None): subprocess.run(args,cwd=cwd,env=env,check=True)
 def main():
     configuration=read(ROOT/'build/editions.json')
     specs=configuration['editions']
@@ -23,7 +23,11 @@ def main():
     parser.add_argument('--out',type=Path,default=ROOT/'dist/releases')
     parser.add_argument('--prepare-only',action='store_true')
     parser.add_argument('--test',action='store_true')
+    parser.add_argument('--test-modules',action='append',type=Path,default=[],metavar='DIR',
+                        help='Run the complete suite once for each explicit Pi node_modules directory')
     args=parser.parse_args()
+    if args.test_modules and not args.test:
+        parser.error('--test-modules requires --test')
     targets=list(platforms) if args.platform=='all' else [args.platform] if args.platform else ['pi']
     names=list(specs) if args.edition=='all' else [args.edition]
     build_info=[]
@@ -75,12 +79,21 @@ def main():
         # at repository root, not broken commands inside the install package.
         package['scripts']={'test':'node tests/run.mjs'}
         (stage/'package.json').write_text(json.dumps(package,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        test_runtime_versions=[]
         if args.test:
-            run(['node','tests/run.mjs'],stage)
+            for modules in args.test_modules or [None]:
+                environment=os.environ.copy()
+                if modules is not None:
+                    package=modules/'@earendil-works/pi-coding-agent/package.json'
+                    assert package.is_file(), f'Pi test runtime is missing: {package}'
+                    test_runtime_versions.append(read(package)['version'])
+                    environment['PI_TEST_MODULES']=str(modules)
+                run(['node','tests/run.mjs'],stage,environment)
         for platform in targets:
             profile=platforms[platform]['resourceProfile'] if args.platform else args.profile
             row={'edition':edition,'platform':platform,'version':spec['version'],'stage':logical_path(stage, ROOT),'profile':profile,
-                 'sourceRepository':'source','newPixelAnimation':False,'testsRun':args.test}
+                 'sourceRepository':'source','newPixelAnimation':False,'testsRun':args.test,
+                 'testRuntimeVersions':test_runtime_versions}
             if not args.prepare_only:
                 run([sys.executable,str(ROOT/'tools/build-local-distribution.py'),'--source',str(stage),
                      '--out',str(args.out.resolve()),'--track',edition,'--profile',profile,'--version',spec['version']],ROOT)

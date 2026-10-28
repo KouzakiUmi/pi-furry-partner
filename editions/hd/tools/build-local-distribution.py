@@ -7,8 +7,9 @@ import json
 import re
 import subprocess
 import tarfile
-from datetime import datetime, timezone
 from pathlib import Path
+
+from reproducibility import source_date_utc
 
 
 def digest(path):
@@ -124,8 +125,8 @@ Legacy分支保留原版资源与简单帧；本main全动态包不混装为另�
         files['LICENSE'] = source / 'LICENSE'
     output = args.out / filename
     assert not output.exists(), 'Preserve earlier bundles; choose a new output directory/version.'
-    report = {'createdUtc': datetime.now(timezone.utc).isoformat(), 'source': str(source), 'capabilities': capability,
-              'archive': str(output), 'excluded': excluded, 'files': [], 'installed': False, 'published': False}
+    report = {'createdUtc': source_date_utc(), 'source': 'source', 'capabilities': capability,
+              'archive': output.name, 'excluded': excluded, 'files': [], 'installed': False, 'published': False}
     with output.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=6, mtime=0) as zipped, tarfile.open(fileobj=zipped, mode='w|', format=tarfile.USTAR_FORMAT) as archive:
         for name in sorted(set(files) | set(overrides)):
             data = overrides.get(name)

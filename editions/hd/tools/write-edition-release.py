@@ -1,7 +1,8 @@
 """Write a configured-platform local index using observed build/audit evidence only."""
 from pathlib import Path
-from datetime import datetime, timezone
 import json
+
+from reproducibility import logical_path, source_date_utc
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'dist/releases'
@@ -25,36 +26,50 @@ def collect_release(root=ROOT, out=OUT):
     packages = []
     for build in builds:
         edition, platform = build['edition'], build['platform']
-        report = read(Path(build['report']))
+        report_path = Path(build['report'])
+        if not report_path.is_absolute():
+            report_path = root / report_path
+        report = read(report_path)
         audit = by_key[(edition, platform)]
         profile = platforms[platform]['resourceProfile']
         assert build['version'] == specs[edition]['version'] == audit['version']
         assert build['profile'] == profile == audit['profile']
         assert audit['runtimeSmokePassed'] is True and audit['newPixelResourcesAbsent'] is True
         assert report['allArchiveEntriesVerified'] is True
-        assert Path(build['archive']).resolve() == Path(report['archive']).resolve() == Path(audit['archive']).resolve()
+        archive_path = Path(build['archive'])
+        if not archive_path.is_absolute():
+            archive_path = root / archive_path
+        report_archive = Path(report['archive'])
+        if not report_archive.is_absolute():
+            report_archive = report_path.parent / report_archive
+        audit_archive = Path(audit['archive'])
+        if not audit_archive.is_absolute():
+            audit_archive = root / audit_archive
+        assert archive_path.resolve() == report_archive.resolve() == audit_archive.resolve()
         assert build['archiveSha256'] == report['archiveSha256'] == audit['archiveSha256']
         assert report['archiveBytes'] == build['archiveBytes'] == audit['archiveBytes']
         assert report['fileCount'] == audit['allEntriesReverified']
         assert report['capabilities']['track'] == edition
         assert report['capabilities']['targetPlatform'] == platform
         assert report['capabilities']['resourceProfile'] == profile
-        packages.append({key: report[key] for key in ['archive', 'archiveBytes', 'unpackedBytes', 'fileCount', 'archiveSha256', 'capabilities']} |
+        package = {key: report[key] for key in ['archive', 'archiveBytes', 'unpackedBytes', 'fileCount', 'archiveSha256', 'capabilities']}
+        package['archive'] = build['archive']
+        packages.append(package |
                         {'edition': edition, 'platform': platform, 'profile': profile, 'version': build['version'],
                          'label': f"{specs[edition]['label']} · {platforms[platform]['label']}",
                          'allArchiveEntriesVerified': True, 'runtimeSmokePassed': True,
                          'runtimeEvidence': audit['runtimeEvidence'],
                          'exactOriginalPixelRuntimeFiles': audit['exactOriginalPixelRuntimeFiles'],
                          'buildSuitesRecordedPassed': build.get('testsRun') is True})
-    summary = {'dateUtc': datetime.now(timezone.utc).isoformat(),
-               'status': 'LOCAL_BUILD_VERIFIED_NOT_INSTALLED', 'sourceRepository': str(root),
+    summary = {'dateUtc': source_date_utc(),
+               'status': 'LOCAL_BUILD_VERIFIED_NOT_INSTALLED', 'sourceRepository': 'source',
                'buildSourcePolicy': 'Shared repository source only; historical worktrees are not build inputs.',
                'packages': packages,
                'pixel': {'policy': 'legacy-only', 'shippedInMain': False},
                'verification': {'packageCount': len(packages),
                                 'allPackageBuildSuitesRecordedPassed': all(p['buildSuitesRecordedPassed'] for p in packages),
                                 'realArchivesAllEntriesReverified': True, 'unpackedProductionReadersPassed': True,
-                                'auditReport': str(out / 'edition-audit.json'),
+                                'auditReport': logical_path(out / 'edition-audit.json', root),
                                 'scope': 'Build suite status comes from testsRun; package entry and runtime checks come from matching audit records. No website or external-platform test result is inferred.'},
                'installed': False, 'published': False, 'pushed': False, 'userAcceptance': False,
                'history': 'Earlier packages remain historical; only the matched builds listed here are current.'}

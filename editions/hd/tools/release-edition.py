@@ -77,8 +77,14 @@ def release_assets(root, plan, releases):
         platform = build['platform']
         profile = platforms[platform]['resourceProfile']
         audit = by_key[(edition, platform)]
-        archive = Path(build['archive']).resolve()
-        report_file = Path(build['report']).resolve()
+        archive = Path(build['archive'])
+        if not archive.is_absolute():
+            archive = root / archive
+        archive = archive.resolve()
+        report_file = Path(build['report'])
+        if not report_file.is_absolute():
+            report_file = root / report_file
+        report_file = report_file.resolve()
         report = read(report_file)
         suffix = '-pi-core' if profile == 'pi-core' else ''
         prefix = platforms[platform].get('artifactPrefix', f'{platform}-furry-partner')
@@ -87,7 +93,13 @@ def release_assets(root, plan, releases):
         assert archive.parent == releases.resolve() and report_file.parent == releases.resolve()
         assert build['version'] == audit['version'] == version
         assert build['profile'] == audit['profile'] == profile
-        assert Path(audit['archive']).resolve() == Path(report['archive']).resolve() == archive
+        audit_archive = Path(audit['archive'])
+        if not audit_archive.is_absolute():
+            audit_archive = releases / audit_archive
+        report_archive = Path(report['archive'])
+        if not report_archive.is_absolute():
+            report_archive = report_file.parent / report_archive
+        assert audit_archive.resolve() == report_archive.resolve() == archive
         assert report['capabilities']['track'] == edition
         assert report['capabilities']['targetPlatform'] == platform
         assert report['capabilities']['resourceProfile'] == profile

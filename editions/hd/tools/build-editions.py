@@ -6,6 +6,8 @@ differ. No historical worktree or absolute user path is a build dependency.
 import argparse, hashlib, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 
+from reproducibility import logical_path
+
 ROOT=Path(__file__).resolve().parents[1]
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))
 def run(args,cwd): subprocess.run(args,cwd=cwd,check=True)
@@ -77,19 +79,21 @@ def main():
             run(['node','tests/run.mjs'],stage)
         for platform in targets:
             profile=platforms[platform]['resourceProfile'] if args.platform else args.profile
-            row={'edition':edition,'platform':platform,'version':spec['version'],'stage':str(stage),'profile':profile,
-                 'sourceRepository':str(ROOT),'newPixelAnimation':False,'testsRun':args.test}
+            row={'edition':edition,'platform':platform,'version':spec['version'],'stage':logical_path(stage, ROOT),'profile':profile,
+                 'sourceRepository':'source','newPixelAnimation':False,'testsRun':args.test}
             if not args.prepare_only:
                 run([sys.executable,str(ROOT/'tools/build-local-distribution.py'),'--source',str(stage),
                      '--out',str(args.out.resolve()),'--track',edition,'--profile',profile,'--version',spec['version']],ROOT)
                 prefix=platforms[platform].get('artifactPrefix',f'{platform}-furry-partner')
                 stem=f'{prefix}-{edition}-{spec["version"]}'+('-pi-core' if profile=='pi-core' else '')
-                row['report']=str(args.out.resolve()/f'{stem}.report.json')
-                report=read(Path(row['report']))
-                row.update({k:report[k] for k in ['archive','archiveBytes','archiveSha256','allArchiveEntriesVerified']})
+                report_path=args.out.resolve()/f'{stem}.report.json'
+                row['report']=logical_path(report_path, ROOT)
+                report=read(report_path)
+                row.update({k:report[k] for k in ['archiveBytes','archiveSha256','allArchiveEntriesVerified']})
+                row['archive']=logical_path(args.out.resolve()/report['archive'], ROOT)
             build_info.append(row)
     args.out.mkdir(parents=True,exist_ok=True)
     result=args.out/('prepared-editions.json' if args.prepare_only else 'built-editions.json')
     result.write_text(json.dumps({'schemaVersion':1,'source':'single repository','builds':build_info},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps({'report':str(result),'editions':names},ensure_ascii=False))
+    print(json.dumps({'report':logical_path(result, ROOT),'editions':names},ensure_ascii=False))
 if __name__=='__main__':main()

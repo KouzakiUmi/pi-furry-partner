@@ -77,19 +77,39 @@ def collect_release(root=ROOT, out=OUT):
     return summary
 
 
-def main():
-    summary = collect_release()
-    (OUT / 'release-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    lines = ['# 呜咪 · 同仓构建产物', '', '当前分支提供 Pi 与 DSH 包；按宿主选择一个安装。', '',
+HOST_LABELS = {'pi': 'Pi', 'dsh': 'DSH'}
+
+
+def release_readme(summary):
+    """Describe the platforms that were actually built, not a fixed host list."""
+    packages = summary['packages']
+    hosts = [host for host in HOST_LABELS
+             if any(package['platform'] == host for package in packages)]
+    if hosts:
+        heading = f"当前分支提供 {' 与 '.join(HOST_LABELS[host] for host in hosts)} 包；按宿主选择一个安装。"
+    else:
+        heading = '当前分支尚未构建安装包。'
+    lines = ['# 呜咪 · 同仓构建产物', '', heading, '',
              '| 产品 | 平台 | 资源 | 版本 | 安装包大小 |', '| --- | --- | --- | --- | ---: |']
-    for package in summary['packages']:
+    for package in packages:
         lines.append(f"| {package['label']} | {package['platform']} | {package['profile']} | {package['version']} | {package['archiveBytes']/1048576:.2f} MiB |")
-    lines += ['', 'Pi 使用 pi-core 包；DSH 使用 full 包。完整包也保留 Pi 入口。',
-              '构建命令与资源策略见仓库 docs/plugin-lines.md。',
+    notes = [f"{HOST_LABELS[host]} 使用 {'、'.join(dict.fromkeys(package['profile'] for package in packages if package['platform'] == host))} 包。"
+             for host in hosts]
+    if 'dsh' in hosts and any(package['profile'] == 'full' for package in packages):
+        notes.append('完整包也保留 Pi 入口。')
+    if notes:
+        lines += ['', ''.join(notes)]
+    lines += ['构建命令与资源策略见仓库 docs/plugin-lines.md。',
               '各包分别完成实际归档条目回读与解包后的生产读取器验证；main不含像素资源，原像素仅在Legacy保留。',
               '完整构建测试是否运行以各包 buildSuitesRecordedPassed 为准；此处不推断网站或额外平台的测试结果。',
               '未代为安装、推送或公开发布；旧包仅作历史记录。']
-    (OUT / 'README.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    return '\n'.join(lines) + '\n'
+
+
+def main():
+    summary = collect_release()
+    (OUT / 'release-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (OUT / 'README.md').write_text(release_readme(summary), encoding='utf-8')
     print(json.dumps({'packages':
                      [{'label': p['label'], 'platform': p['platform'], 'MiB': round(p['archiveBytes']/1048576, 2)}
                       for p in summary['packages']]}, ensure_ascii=False))

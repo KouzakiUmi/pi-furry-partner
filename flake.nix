@@ -20,6 +20,10 @@
         let
           pkgs = import nixpkgs { inherit system; };
           node = pkgs.nodejs_24;
+          pythonWithValidation = pkgs.python3.withPackages (pythonPackages: [
+            pythonPackages.numpy
+            pythonPackages.pillow
+          ]);
           sourceRoot = toString self;
           relativeSourcePath =
             path:
@@ -79,6 +83,33 @@
             ])
           );
           hdSource = sourceFor [ "editions/hd" ];
+          mkPiTestRuntime =
+            {
+              runtimeName,
+              version,
+              npmDepsHash,
+            }:
+            pkgs.buildNpmPackage {
+              pname = "pi-furry-partner-pi-test-runtime";
+              inherit version npmDepsHash;
+              src = self + "/editions/hd/test-runtimes/${runtimeName}";
+              dontNpmBuild = true;
+              npmRebuildFlags = [ "--ignore-scripts" ];
+              installPhase = ''
+                mkdir -p "$out"
+                cp -R node_modules "$out/node_modules"
+              '';
+            };
+          piTestRuntime12 = mkPiTestRuntime {
+            runtimeName = "pi-1.2";
+            version = "1.2.0";
+            npmDepsHash = "sha256-7cN1q36ijhAxwiUcQzb7+WPWKJU3Al6tpkPV6pz6pI4=";
+          };
+          piTestRuntime13 = mkPiTestRuntime {
+            runtimeName = "pi-1.3";
+            version = "1.3.0";
+            npmDepsHash = "sha256-BSJT7Vj4ag8EJ+qnV49pM+SOV3iIeTjyXk/ykTcPDE0=";
+          };
           mkSitePackage =
             {
               pname,
@@ -181,6 +212,44 @@
                 runHook postInstall
               '';
             };
+
+          pi-hd-test-runtime-1_2 = piTestRuntime12;
+          pi-hd-test-runtime-1_3 = piTestRuntime13;
+
+          pi-hd-bundle = pkgs.stdenvNoCC.mkDerivation {
+            pname = "pi-furry-partner-hd-bundle";
+            version = "2.5.1-preview.6";
+            src = hdSource;
+            nativeBuildInputs = [
+              node
+              pythonWithValidation
+              piTestRuntime12
+              piTestRuntime13
+            ];
+            dontConfigure = true;
+
+            buildPhase = ''
+              runHook preBuild
+              export HOME="$NIX_BUILD_TOP/home"
+              mkdir -p "$HOME"
+              sourceDir="$NIX_BUILD_TOP/$sourceRoot/editions/hd"
+              rm -rf "$sourceDir/dist"
+              cd "$sourceDir"
+              python tools/build-editions.py --edition full-animation --platform pi --test \
+                --test-modules "${piTestRuntime12}/node_modules" \
+                --test-modules "${piTestRuntime13}/node_modules"
+              python tools/audit-edition-bundles.py
+              python tools/write-edition-release.py
+              runHook postBuild
+            '';
+
+            installPhase = ''
+              runHook preInstall
+              mkdir -p "$out"
+              cp -R "$NIX_BUILD_TOP/$sourceRoot/editions/hd/dist/releases/." "$out/"
+              runHook postInstall
+            '';
+          };
 
           site-original = mkSitePackage {
             pname = "pi-furry-partner-site-original";

@@ -247,6 +247,8 @@
               runHook preInstall
               mkdir -p "$out"
               cp -R "$NIX_BUILD_TOP/$sourceRoot/editions/hd/dist/releases/." "$out/"
+              python "$NIX_BUILD_TOP/$sourceRoot/editions/hd/tools/rebase-release-report-paths.py" \
+                --directory "$out"
               runHook postInstall
             '';
           };

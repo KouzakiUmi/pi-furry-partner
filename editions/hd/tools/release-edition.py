@@ -57,6 +57,20 @@ def file_digest(path):
     return digest.hexdigest()
 
 
+def release_path(root, releases, value):
+    """Resolve either a source-tree logical path or a flat Nix bundle path."""
+    path = Path(value)
+    if path.is_absolute():
+        assert path.is_file(), f'Missing release output: {path}'
+        return path
+    source_path = root / path
+    if source_path.is_file():
+        return source_path
+    bundle_path = releases / path
+    assert bundle_path.is_file(), f'Missing release output: {path}'
+    return bundle_path
+
+
 def release_assets(root, plan, releases):
     expected_plan, notes = release_target(root, plan['tag'])
     for key, value in expected_plan.items():
@@ -77,14 +91,8 @@ def release_assets(root, plan, releases):
         platform = build['platform']
         profile = platforms[platform]['resourceProfile']
         audit = by_key[(edition, platform)]
-        archive = Path(build['archive'])
-        if not archive.is_absolute():
-            archive = root / archive
-        archive = archive.resolve()
-        report_file = Path(build['report'])
-        if not report_file.is_absolute():
-            report_file = root / report_file
-        report_file = report_file.resolve()
+        archive = release_path(root, releases, build['archive']).resolve()
+        report_file = release_path(root, releases, build['report']).resolve()
         report = read(report_file)
         suffix = '-pi-core' if profile == 'pi-core' else ''
         prefix = platforms[platform].get('artifactPrefix', f'{platform}-furry-partner')
@@ -93,13 +101,9 @@ def release_assets(root, plan, releases):
         assert archive.parent == releases.resolve() and report_file.parent == releases.resolve()
         assert build['version'] == audit['version'] == version
         assert build['profile'] == audit['profile'] == profile
-        audit_archive = Path(audit['archive'])
-        if not audit_archive.is_absolute():
-            audit_archive = releases / audit_archive
-        report_archive = Path(report['archive'])
-        if not report_archive.is_absolute():
-            report_archive = report_file.parent / report_archive
-        assert audit_archive.resolve() == report_archive.resolve() == archive
+        audit_archive = release_path(root, releases, audit['archive']).resolve()
+        report_archive = release_path(root, releases, report['archive']).resolve()
+        assert audit_archive == report_archive == archive
         assert report['capabilities']['track'] == edition
         assert report['capabilities']['targetPlatform'] == platform
         assert report['capabilities']['resourceProfile'] == profile

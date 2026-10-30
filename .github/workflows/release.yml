@@ -35,6 +35,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
       - name: Validate version and extract release notes
         env:
           RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
@@ -47,12 +48,22 @@ jobs:
           RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
         run: |
           archive="pi-furry-partner-${RELEASE_TAG#v}.zip"
-          python scripts/package-pi-release.py --tag "$RELEASE_TAG" --out "$archive"
+          if [[ -f flake.nix ]]; then
+            # New release tags publish the same deterministic Nix output CI
+            # already built. Historical tags predate the flake and use the
+            # original git-archive path below.
+            nix build --print-build-logs --out-link release-package .#pi-original-zip
+            cp "release-package/$archive" "$archive"
+            cp "release-package/$archive.sha256" "$archive.sha256"
+          else
+            python scripts/package-pi-release.py --tag "$RELEASE_TAG" --out "$archive"
+            sha256sum "$archive" > "$archive.sha256"
+          fi
+          sha256sum --check "$archive.sha256"
           unzip -t "$archive"
           mkdir -p work/release-archive-check
           unzip -q "$archive" -d work/release-archive-check
           node work/release-archive-check/pi-furry-partner/tests/legacy-resources.mjs
-          sha256sum "$archive" > "$archive.sha256"
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

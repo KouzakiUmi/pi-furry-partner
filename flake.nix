@@ -212,6 +212,11 @@
               cp -R "$NIX_BUILD_TOP/$sourceRoot/editions/hd/dist/releases/." "$bundle/"
               python "$NIX_BUILD_TOP/$sourceRoot/editions/hd/tools/rebase-release-report-paths.py" \
                 --directory "$bundle"
+              # Rebase first, then add the selected-edition alias consumed by
+              # release-edition.py. Both audit files must resolve the flat
+              # bundle's archive path rather than the sandbox's dist path.
+              cp "$bundle/edition-audit.json" \
+                "$bundle/edition-audit-full-animation.json"
               cp -R "$NIX_BUILD_TOP/$sourceRoot/editions/hd/dist/verified/full-animation-pi/package/." \
                 "$out/"
               test -f "$out/package.json"

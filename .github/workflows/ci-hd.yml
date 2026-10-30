@@ -36,6 +36,10 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
       - name: Build the verified HD bundle
         run: nix build --print-build-logs ../..#pi-hd-bundle
+      # Same derivation and same runner store as the bundle above, so this step
+      # asserts the user-facing output without paying for a second build.
+      - name: Build the installable HD extension package
+        run: nix build --print-build-logs ../..#pi-hd-extension
 
   optional-site:
     runs-on: ubuntu-latest

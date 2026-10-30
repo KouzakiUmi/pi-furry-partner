@@ -115,6 +115,19 @@
 
 GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运行 `npm run build:animated`，再安装生成的对应平台包；HD 独立构建，不调用 Legacy 源码。
 
+### Nix 安装
+
+Nix 用户可构建经双 Pi 运行时测试、归档审计和解包读取器验证的 HD Pi 包，再让 Pi 从稳定的 GC root 加载它：
+
+```sh
+extension_link="${XDG_DATA_HOME:-$HOME/.local/share}/pi-furry-partner/hd-extension"
+mkdir -p "$(dirname "$extension_link")"
+nix build --out-link "$extension_link" github:KouzakiUmi/pi-furry-partner#pi-hd-extension
+pi install "$extension_link"
+```
+
+`--out-link` 保留 store 输出的 GC root；不要只把 `nix build --print-out-paths` 的临时 store 路径写进 Pi 设置。升级时以同一路径重新运行 `nix build`，再重启 Pi。同一宿主只安装 HD、原资源版、Git 包或 PowerShell 脚本中的一种来源，避免重复加载。
+
 ### Pi 终端安装
 
 下载所选 `-pi-core.tgz`，解压后进入内层 **`package` 目录**（含 `install.ps1`）。关闭 Pi，在该目录打开 PowerShell：

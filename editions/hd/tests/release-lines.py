@@ -51,7 +51,7 @@ class ReleaseLines(unittest.TestCase):
   for row in audit:row['archive']=Path(row['archive']).name
   write(out/'edition-audit-full-animation.json',audit)
   paths=release.release_assets(self.root,plan,out);self.assertEqual(len(paths),6)
-  self.assertTrue(all(Path(path).parent==out for path in paths))
+  self.assertTrue(all(Path(path).parent.resolve()==out.resolve() for path in paths))
  def test_readme_describes_only_built_hosts(self):
   def summary(*hosts):return {'packages':[{'label':host.upper(),'platform':host,'profile':'pi-core' if host=='pi' else 'full','version':'2.5.1','archiveBytes':1048576} for host in hosts]}
   only_pi=doc.release_readme(summary('pi'));self.assertIn('提供 Pi 包',only_pi);self.assertNotIn('DSH',only_pi)

@@ -30,6 +30,12 @@ assert.deepEqual(pixels, original, 'No source mutation');
 const staticFrame = approvedMotionStaticFrame(sheet, 1, { phase: 'idle' });
 assert.equal(staticFrame.frame.id, 'idle-open'); assert.deepEqual(staticFrame.frame.pixels, pixels);
 const legacy = { ...first, sheet: { ...first.sheet, motion: {} } };
-assert.equal(approvedMotionPokeFrame(legacy, 100), legacy, 'Ordinary legacy poke keeps its existing animation');
+const poseFeedback = approvedMotionPokeFrame(legacy, 100);
+// The HD pose stage is one static cel without approved-motion metadata. It
+// receives the same rigid feedback so a poke never stalls on an inert image.
+assert.notDeepEqual(poseFeedback.frame.pixels, legacy.frame.pixels, 'The HD pose stage moves instead of staying inert');
+assert.equal(poseFeedback.sheet.width, width); assert.equal(poseFeedback.motion.y, 0); assert.equal(poseFeedback.motion.scale, 1);
+for (const color of [0, 1, 2]) assert.equal(poseFeedback.frame.pixels.filter(p => p === color).length, legacy.frame.pixels.filter(p => p === color).length);
+assert.deepEqual(pixels, original, 'Pose feedback leaves the source array untouched');
 player.dispose();
-console.log('Approved paused poke: actual complete-frame feedback, bounded rigid translation, every color/alpha pixel preserved, no source mutation, finite return/static and legacy pass-through passed.');
+console.log('Approved paused poke: actual complete-frame feedback, bounded rigid translation, every color/alpha pixel preserved, no source mutation, finite return and HD pose-cel feedback passed.');

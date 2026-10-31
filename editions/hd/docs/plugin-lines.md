@@ -21,6 +21,6 @@ npm run build:animated
 python tools/audit-edition-bundles.py --edition full-animation
 ```
 
-当前源码版本为 2.5.1-preview.6。HD 标签必须为 `hd-v<package版本>`，正式版与预览版均为 `latest=false`，标签必须属于 main 分支。附件为 `pi-furry-partner-hd-full-animation-<版本>-pi-core.tgz`、校验文件和逐项报告。当前改造未自动创建新的 HD Release。
+当前源码版本为 2.5.1-preview.6。HD 标签必须为 `hd-v<package版本>`，正式版与预览版均为 `latest=false`，标签必须属于 main 分支。附件为 `pi-furry-partner-hd-full-animation-<版本>-pi-core.tgz`、校验文件和逐项报告。当前已发布 `hd-v2.5.1-preview.6`，Release 附 Pi 专用 tgz、校验文件与逐项报告，`latest=false`。
 
-HD CI 只处理 main 分支的 HD 目录和对应 workflow 改动，分别验证 Pi 1.2.0 / 1.3.0、独立适配、29 个动作 / 58 个索引资源及安装恢复。资源哈希、来源与已批准素材保持不变，其余历史标签保留；v2.4.5 已按用户要求清理。
+HD CI 只处理 main 分支的 HD 目录和对应 workflow 改动，分别验证 Pi 1.2.0 / 1.3.0 / 1.4.0、独立适配、29 个动作 / 58 个索引资源及安装恢复。资源哈希、来源与已批准素材保持不变，其余历史标签保留；v2.4.5 已按用户要求清理。

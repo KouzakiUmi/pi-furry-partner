@@ -1,8 +1,8 @@
 // Pure, per-run localization of verified Pi defaults. Never edits vendor files,
 // user SYSTEM.md, project instructions, tool guidelines, skills or addenda.
-// Pi 1.2.0 and 1.3.0 render byte-identical default preamble, rules and docs
-// sections, so one reviewed fixture covers both releases.
-export const SUPPORTED_PROMPT_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0"]);
+// Pi 1.2.0, 1.3.0 and 1.4.0 render byte-identical default preamble, rules and
+// docs sections, so one reviewed fixture covers all three releases.
+export const SUPPORTED_PROMPT_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0"]);
 export const NATIVE_PROMPT_PI_VERSION = SUPPORTED_PROMPT_PI_VERSIONS[0];
 export const DEFAULT_PI_PREAMBLE = "You are an expert coding assistant operating inside pi, a coding agent harness. You help users by reading files, executing commands, editing code, and writing new files.";
 export const DEFAULT_ZH_PREAMBLE = "你是运行在 Pi 编程代理环境中的专业助手。通过读取文件、执行命令、编辑代码和创建文件帮助用户完成任务。必须使用中文思考和回复。";
@@ -84,7 +84,7 @@ function englishDocs(readme, docs, examples) {
 }
 
 /**
- * Localize only the verified Pi 1.2.0/1.3.0 defaults proven by the current
+ * Localize only the verified Pi 1.2.0/1.3.0/1.4.0 defaults proven by the current
  * event options and exact prefix content. The untouched suffix is copied
  * byte-for-byte and in order.
  * Unknown/custom/forced prompts fail closed. This function is independent of

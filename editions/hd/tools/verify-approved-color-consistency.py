@@ -1,8 +1,14 @@
 """Verify current approved color derivatives without work inputs.
-Every current HD RGBA is checked against its independently frozen reviewed candidate
-hash and directly compared with source29 alpha/alpha0RGB. Pi payloads/palette/clock
-are checked against approved color candidates and the immutable original metadata.
---reproduce additionally recalculates every HD transform from frozen source29.
+
+Alpha stays byte-identical to the frozen source29 baseline, so outlines and soft edges
+keep their approved bytes. The approved RGB is reproduced from frozen source29
+(frozen-v1, plus frozen-a02 for affection) and compared with the shipped frames through
+alpha-weighted PSNR / CIELAB dE76, because the shipped hi-res frames are lossy q90 WebP
+(docs/lossy-hd-frame-reencode.md). The pre-compression bytes stay bound via
+provenance/lossy-q90-reencode.json, which must match the frozen derivation record for
+every frame. Pi payloads/palette/clock are checked against approved color candidates and
+the immutable original metadata. --reproduce additionally rebuilds every frame from frozen
+source29 and checks it against the same alpha-weighted bounds.
 """
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -16,7 +22,7 @@ def canonical(v):return json.dumps(v,ensure_ascii=False,sort_keys=True,separator
 def read(p):return json.loads(Path(p).read_text(encoding='utf8'))
 def mod(p,n):
  s=importlib.util.spec_from_file_location(n,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-ST=mod(R/'tools/stage-motion-polish.py','verify_color_stage')
+ST=mod(R/'tools/stage-motion-polish.py','verify_color_stage');RE=mod(R/'tools/reencode-approved-hires.py','verify_color_reencode');REC=read(A/'provenance/lossy-q90-reencode.json')['frames']
 def noncolor(raw):
  raw=copy.deepcopy(raw);raw.pop('palette');raw.pop('revision')
  for f in raw['frames']:f.pop('pixels')
@@ -50,15 +56,26 @@ def run(reproduce=False):
     if k not in ['sha256','sourceJsonSha256']:assert entry[k]==v
   pi+=len(raw['frames'])
  def one(t):
-  cid,rect,f,of,rr=t;current=A/'hires'/cid/f['file'];original=S/'hires'/cid/f['file'];assert sha(current)==f['webpSha256']==rr['approvedWebpSha256'];assert sha(original)==rr['originalWebpSha256']
-  a=np.array(Image.open(original).convert('RGBA'));b=np.array(Image.open(current).convert('RGBA'));assert a.shape==b.shape==(rect['height'],rect['width'],4);assert bh(b.tobytes())==f['decodedRgbaSha256']==rr['approvedDecodedRgbaSha256'];assert bh(a.tobytes())==rr['originalDecodedRgbaSha256'];assert np.array_equal(a[:,:,3],b[:,:,3]);assert np.array_equal(a[a[:,:,3]==0],b[a[:,:,3]==0]);assert bh(a[:,:,3].tobytes())==rr['alphaSha256'];assert bh(a[a[:,:,3]==0,:3].tobytes())==rr['alpha0RgbSha256'];assert f['sourceAsset']=={'path':current.relative_to(R).as_posix(),'webpSha256':sha(current),'decodedRgbaSha256':bh(b.tobytes())}
-  if reproduce:
+  cid,rect,f,of,rr=t;current=A/'hires'/cid/f['file'];original=S/'hires'/cid/f['file'];lossy=REC[f'{cid}/{f["file"]}']
+  assert sha(current)==f['webpSha256']==lossy['afterWebpSha256'];assert lossy['beforeWebpSha256']==rr['approvedWebpSha256'];assert sha(original)==rr['originalWebpSha256']
+  a=np.array(Image.open(original).convert('RGBA'));b=np.array(Image.open(current).convert('RGBA'));assert a.shape==b.shape==(rect['height'],rect['width'],4)
+  assert bh(b.tobytes())==f['decodedRgbaSha256']==lossy['afterDecodedRgbaSha256'];assert lossy['beforeDecodedRgbaSha256']==rr['approvedDecodedRgbaSha256'];assert bh(a.tobytes())==rr['originalDecodedRgbaSha256']
+  assert np.array_equal(a[:,:,3],b[:,:,3]);assert bh(a[:,:,3].tobytes())==rr['alphaSha256']
+  assert f['sourceAsset']=={'path':current.relative_to(R).as_posix(),'webpSha256':sha(current),'decodedRgbaSha256':bh(b.tobytes())}
+  if reproduce or f'{cid}/{f["file"]}' in sampled:
    expected,_=v1.transform(a,cid,rect)
    if cid=='affection':expected=a02.transform_v1_affection(expected)
-   assert np.array_equal(expected,b),(cid,f['file'],'fixed transform reproduction')
-  return True
- with ThreadPoolExecutor(max_workers=4)as pool:assert all(pool.map(one,tasks))
+   # --reproduce rebuilds every frame from frozen source29, but the shipped
+   # bytes are q90, so the comparison must stay in the acceptance metrics.
+   psnr,de=RE.metrics(expected,b);assert psnr>=RE.MIN_PSNR and de<=RE.MAX_DE,(cid,f['file'],round(psnr,2),round(de,3))
+   return psnr,de
+  return None
+ sampled={f'{t[0]}/{t[2]["file"]}' for t in tasks[::11]}
+ assert {t[0] for t in tasks if f'{t[0]}/{t[2]["file"]}' in sampled}==set(c['clips']),'every clip contributes a sampled RGB frame'
+ with ThreadPoolExecutor(max_workers=4)as pool:
+  measured=[v for v in pool.map(one,tasks) if v]
+ assert measured,'no sampled frame was measured'
  assert len(tasks)==proof['hdFrameCount']==3048 and pi==proof['piFrameCount']
- result={'passed':True,'clipCount':29,'HDWholeRGBAFrames':len(tasks),'HDAlphaAndAlpha0RGBExact':True,'PiExactReviewedCandidateFrames':pi,'PiOriginalNoncolorMetadataExact':True,'sameReviewedCommonPalette':True,'allOriginalQAMetadataRetained':True,'workInputsRequired':False,'allFixedTransformsReproduced':reproduce,'catalogRevision':c['revision'],'catalogSha256':sha(A/'catalog.json')};print(json.dumps(result),flush=True);return result
+ result={'passed':True,'clipCount':29,'HDWholeRGBAFrames':len(tasks),'HDAlphaExact':True,'HDAlphaWeightedPsnrMin':round(min(v[0] for v in measured),2),'HDAlphaWeightedDe76Max':round(max(v[1] for v in measured),3),'HDRgbSampledFrames':len(measured),'lossyRecordBoundToApproval':True,'PiExactReviewedCandidateFrames':pi,'PiOriginalNoncolorMetadataExact':True,'sameReviewedCommonPalette':True,'allOriginalQAMetadataRetained':True,'workInputsRequired':False,'allFramesWithinAcceptanceBounds':reproduce,'catalogRevision':c['revision'],'catalogSha256':sha(A/'catalog.json')};print(json.dumps(result),flush=True);return result
 if __name__=='__main__':
  ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--reproduce',action='store_true');args=ap.parse_args();run(args.reproduce)

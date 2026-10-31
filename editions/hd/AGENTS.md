@@ -2,7 +2,7 @@
 
 本目录是 main 的 editions/hd/，不是独立产品分支。相对源码路径与构建命令均以此为根；根目录原资源版在另一套运行时代码中维护。HD 的 Pi 适配、状态机与播放器位于 lib/hd/，不导入原资源版或 DSH 的可变运行时。当前 HD 源码 2.5.1-preview.6，17 项手动动作、29 个完整片段与 58 个索引入口；只提供插画。
 
-HD 只用 hd-v<HD版本> 从 main 发布，附件前缀 pi-furry-partner-hd，latest=false；原资源版使用根目录 v 标签和 Latest。当前没有新的独立 HD Release。旧分支、四种分发组合、两端共用源码及 v2.4.5 保留要求属于已被后续用户决定替代的历史产品描述；v2.4.5 已按明确要求清理，其余历史标签不移动。DSH 的构建、Host／Client、安装与测试到其独立仓库执行，本目录不要求存在 DSH 测试入口。
+HD 只用 hd-v<HD版本> 从 main 发布，附件前缀 pi-furry-partner-hd，latest=false；原资源版使用根目录 v 标签和 Latest。当前已发布 hd-v2.5.1-preview.6。旧分支、四种分发组合、两端共用源码及 v2.4.5 保留要求属于已被后续用户决定替代的历史产品描述；v2.4.5 已按明确要求清理，其余历史标签不移动。DSH 的构建、Host／Client、安装与测试到其独立仓库执行，本目录不要求存在 DSH 测试入口。
 
 缺失或暂停完整动作时只显示 HD 原画静态姿态，不恢复旧局部形变播放器。全部已批准素材、时序与来源哈希保持；制作和评审要求仍受下方用户记录、docs/production/AGENTS.md 与 PRODUCTION-SPEC 约束。技术检查不能冒充两路实际看图或用户评审。全部文档入口为 ../../docs/README.md。
 
@@ -55,3 +55,12 @@ H3首尾帧API核验（2026-10-24，用户纠正）：官方V2支持content中�
 
 
 用户最终批准混合配色与互动（2026-10-24）：在62191原速idle→喜欢→idle评审后，明确“可以，按这套整合”。批准集合为上轮v1其余28条不变＋喜欢A02（v1输入上固定围巾提亮减饱和、衣料轻微校偏），不是退回v1喜欢又恢复。work/color-consistency-affection-20261024-v2/user-final-approval.json绑定精确输入与两路报告。允许统一接入Pi/DSH、构建并本地安装；开场/戳一戳同轮已通过无需重审。新增颜色导数来源，不重写旧动作批准，不改alpha/锚点/时序/已认可造型；Pi沿原采样和同套共同palette。正式版本目标2.5.1-preview.6，当前安装仍preview.5直到安装报告确认。没有新发布请求。62191服务已核验关闭且端口释放。
+
+
+戳一戳改为两段式与 demo 时长对齐（2026-10-30 用户决定，替代 2026-10-24“闲时bounce/ear-flick、忙碌或等待head-shake/ear-flick”的单段互动描述；旧记录保留为历史）：用户先质疑“插件的动作逻辑和资源匹配似乎有问题，比如戳一戳”，并确认现象是“不是被戳的反应”，范围是 HD 版。随后选择“两段式：先被戳，再接一小段动作”，并要求“一起修 demo 时长不匹配”。现行实现：第一段显示 HD 原画 poke 挤眼静态姿态（reaction-sheet 的 poke-patch 帧），整帧刚性位移回弹，不恢复旧局部形变播放器、不做形变，时长 POKE_FACE_MS=1200；第二段从已批准的 bounce／ear-flick／head-shake 里按 idle／busy／waiting 情境选一段，截取 POKE_CLIP_MS=1200 的短段而不是整段 4458ms，仍按情境池避免连续重复。抢占、连点不重置、真实事件／回答／取消即时接管、首帧未出现有界过期、单计时器与有界缓存全部保留；演示（demo）期间只演第一段姿态，不建立片段，避免与巡演状态互相干扰。/mascot demo 巡演按实际片段周期 4458ms 重排（DEMO_CLIP_MS），等待段为 10 秒加一个完整片段，总时长由约 70.9 秒变为约 73.4 秒，不再使用与素材不一致的固定 7.2／7.4 秒；单动作 demo 的 poke 步仍只占姿态段。HD 不新增 poke 片段素材，29 个已批准动作、来源哈希与全部时序记录不变。
+
+
+已批准高清帧有损重编码（2026-10-31，按 docs/lossy-hd-frame-reencode.md 执行）：用户要求“按照指引执行压缩”，即对 assets/animated/hires 的 3048 帧无损 WebP 执行该文档记录的有损 q90 方案。实测 752,817,100 B → 198,729,204 B（3.788×），alpha 3048/3048 逐字节不变（编码脚本逐帧断言），alpha 加权 PSNR 全量最低 36.22 dB、均值 38.28，ΔE76 全量最大 2.03、均值 1.737；npm pack 由约 990 MB 降到 302.6 MB（tgz），解包 436.2 MB。只改 webpSha256、decodedRgbaSha256 与 sourceAsset 两个字段，rgbaSha256、approvedPngSha256、批准证据文件与 catalog.revision 全部不变，catalog 仍为紧凑单行序列化；压缩前字节哈希逐帧写入 assets/animated/provenance/lossy-q90-reencode.json，并与 derivation.json 的 approvedWebpSha256／approvedDecodedRgbaSha256 绑定。新增 tools/reencode-approved-hires.py（--check／--apply，已有记录时拒绝二次压缩）与 tools/sync-lossy-frame-hashes.py；verify-approved-color-consistency.py 的 HD 验收由“整幅 RGBA 精确相等”改为 alpha 逐字节 + 抽样 278 帧重建批准像素后的加权 PSNR≥35／ΔE76≤2.2，并新增 lossyRecordBoundToApproval 绑定断言；alpha=0 处 RGB 精确断言按该方案移除。29 段动作、原生时序、索引载荷、调色板与全部 QA 元数据未改动，未改 Hi-Res 冻结基线，未新建 Release。
+
+
+发布前交叉核验修复（2026-10-31）：发布 hd-v2.5.1-preview.6 前做了一次独立只读核验，修掉四类问题并补测试。(1) 真实任务接管：工具执行开始、assistant message_start、thinking/toolcall 内容事件现在都会清掉戳一戳的姿态段与片段段，不再出现工具已跑而界面仍停在局部反应约 2.4 秒的情况；测试改回在姿态段内触发事件并断言即时接管。(2) 姿态段首帧计时：pokeFaceAt 只记录点击，另记 pokeFaceShownAt，在第一次 snapshot 呈现时才开始 1200ms 计时，未呈现不推进、也不吞掉原画姿态；新增“未呈现不推进 / 呈现后满 1200ms 才接片段”断言。(3) 演示巡演时长：DEMO_SEQUENCE 用 clip:true 标记完整片段步，运行时按 catalog 的 periodMs 取 4833/6583/4458，不再把 watch/work/search 截在 4458ms，总长约 80.5 秒；新增逐片段周期断言。(4) 工具链：catalog 改用 write_bytes 写盘（.gitattributes 对 assets/**/*.json 设 -text，write_text 会把 LF 变 CRLF 并原样提交），reencode 先验收后写盘避免半成品，verify-approved-color-consistency.py 的 --reproduce 改为全量 3048 帧重建后按加权阈值校验（出厂帧已是有损，不能再要求字节相等），并补“每个片段至少一帧抽样”断言。修复后 HD 全量测试 exit 0，常规校验与 --reproduce（12m44s）均 passed。

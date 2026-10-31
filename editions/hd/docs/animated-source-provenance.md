@@ -2,7 +2,7 @@
 
 `assets/animated/catalog.json` 的每个 `hires.frames[]` 现在提供 `sourceAsset`：
 
-- `path` 以 HD 源码根 `editions/hd/` 为相对根，指向该帧已经发布的无损 WebP。
+- `path` 以 HD 源码根 `editions/hd/` 为相对根，指向该帧已经发布的有损 q90 WebP（见 `docs/lossy-hd-frame-reencode.md`）。
 - `webpSha256` 绑定文件字节；`decodedRgbaSha256` 绑定解码后的 RGBA 像素字节。
 - 两个哈希沿用现有帧记录，未重新定义批准像素、帧顺序、时间或 QA。
 
@@ -18,6 +18,7 @@
 |---|---|
 | `assets/animated/provenance/approved-color-map.json` | `dc7cf52f738f5a73461fe1d76d9ffcd658f692b4248e6454f01bef7e4c5f9cd2` |
 | `assets/animated/provenance/lossless-codec.json` | `bd1af6e8d46b746d3b2b203980d0350cd0230e0281dc004beb8b6f9cea638956` |
+| `assets/animated/provenance/lossy-q90-reencode.json` | 逐帧记录压缩前后 WebP／解码哈希，与 `derivation.json` 的批准字节绑定 |
 
 已有 `assets/animated/provenance/indexed-binary.json` 继续由原 catalog 哈希绑定。证据内的历史路径只描述原处理环境；不要为了迁移修改证据字节，否则会破坏原批准记录的哈希绑定。
 
@@ -29,4 +30,4 @@
 python tools/verify-animated-provenance.py
 ```
 
-脚本只读验证三份证据文件、所有帧的仓库内路径、WebP 文件 SHA 和解码 RGBA SHA。它拒绝绝对路径与目录穿越，不访问 regular 工作树、旧动画 stage 或 x20，且不修改文件。
+脚本只读验证三份证据文件、所有帧的仓库内路径、WebP 文件 SHA 和解码 RGBA SHA；`tools/verify-approved-color-consistency.py` 另外校验 alpha 逐字节不变与有损 RGB 的加权 PSNR／ΔE 门槛。它拒绝绝对路径与目录穿越，不访问 regular 工作树、旧动画 stage 或 x20，且不修改文件。

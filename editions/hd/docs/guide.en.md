@@ -2,7 +2,7 @@
 
 [简体中文](guide.zh-CN.md) · [HD home](../README.en.md) · [Documentation index](../../../docs/README.md) · [Release rules](../../../docs/release-line.md)
 
-This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.6**, illustration only; no new independent HD Release has been published. Repository Latest is the original-resource v2.5.1. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
+This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.6**, illustration only; `hd-v2.5.1-preview.6` (latest=false) is published with the package attached. Repository Latest is the original-resource v2.5.1. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
 
 ## Installation and updates
 
@@ -30,11 +30,11 @@ npm run build:animated
 python tools/audit-edition-bundles.py --edition full-animation
 ```
 
-The artifact is `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz`, with checksum and audit files. Builds do not install or publish. For a future dedicated HD release, extract its tgz, enter the inner `package/` and use that installer's script, or load the local package through Pi.
+The artifact is `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz`, with checksum and audit files. Builds do not install or publish. Download the dedicated HD tgz, extract it, enter the inner `package/` and use that installer's script, or load the local package through Pi.
 
 ## Supported runtime and display
 
-Automated coverage includes Windows, Pi **1.2.0 / 1.3.0**, Windows PowerShell **5.1 / 7**. Native Chinese UI and compact documentation prompts are guarded by reviewed versions and structures; unknown versions keep native behavior. Configure Pi and its model provider first.
+Automated coverage includes Windows, Pi **1.2.0 / 1.3.0 / 1.4.0**, Windows PowerShell **5.1 / 7**. Native Chinese UI and compact documentation prompts are guarded by reviewed versions and structures; unknown versions keep native behavior. Configure Pi and its model provider first.
 
 Use `/mascot render auto|kitty|sixel|blocks`; the terminal must support the selected protocol. Full reactions use `/mascot layout editor`; header layout has its own title portrait. Narrow windows may collapse the dock. Fullscreen uses Pi's native mouse routing; regular mode retains terminal mouse behavior and shows key hints. Automated rendering checks do not establish visual acceptance in every terminal.
 
@@ -53,7 +53,7 @@ The 17 selectable gestures/expressions are distinct from the **29 approved compl
 
 Reading uses watch/magnifier. Editing and execution use `work-enter → work → work-exit`, with 400ms entry and exit. Ordinary short actions have a 1200ms minimum starting when the first frame becomes visible; short work includes at least 800ms of keyboard loop. A completed tool may retain only a safe visual phase for up to 2000ms; real phase/toolCount end immediately. Answer, prompt, error, cancellation and explicit interaction may preempt presentation.
 
-Pause stops loops while real state keeps updating; an explicit poke may still play once. Missing complete motion and paused display use authored HD static poses, without the original edition's deformation player. Only umi illustration is exposed; historical pixel settings migrate to illustration.
+Pause stops loops while real state keeps updating; an explicit poke may still play once. A poke answers in two stages: the authored HD squeeze-eye pose with a gentle full-frame rebound for 1.2 s, then a 1.2 s segment (bounce, ear-flick or head-shake) chosen for idle, busy or waiting context without repeating the same answer back to back. Missing complete motion and paused display use authored HD static poses, without the original edition's deformation player. Only umi illustration is exposed; historical pixel settings migrate to illustration.
 
 ## Controls and independent preferences
 

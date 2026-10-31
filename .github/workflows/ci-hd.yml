@@ -54,6 +54,7 @@ jobs:
         run: |
           npm install --prefix work/pi-runtime-1.2 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.2.0 @earendil-works/pi-tui@1.2.0
           npm install --prefix work/pi-runtime-1.3 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.3.0 @earendil-works/pi-tui@1.3.0
+          npm install --prefix work/pi-runtime-1.4 --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.4.0 @earendil-works/pi-tui@1.4.0
       - name: Verify release line isolation and platform archive names
         run: python tests/release-lines.py
       - name: Validate configured editions and Pi package (Pi 1.2.0)
@@ -65,6 +66,11 @@ jobs:
         shell: pwsh
         run: |
           $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.3/node_modules'
+          npm test
+      - name: Run runtime and integration suites (Pi 1.4.0)
+        shell: pwsh
+        run: |
+          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime-1.4/node_modules'
           npm test
       - name: Verify PowerShell 7 install, upgrade and recovery
         shell: pwsh

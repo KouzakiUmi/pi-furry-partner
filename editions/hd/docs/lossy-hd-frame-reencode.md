@@ -1,6 +1,6 @@
 # 已批准高清帧的有损重编码方案
 
-> 本文记录 DSH 仓库（dsh-furry-partner 2.5.1-preview.8）2026-10-27 实际执行的流程与实测数据，供 Pi HD 参考。Pi HD 的 `assets/animated/catalog.json`、`indexed/umi/*.uix.gz`、`verify-approved-color-consistency.py` 与 DSH 同构，字段名与批准链结构一致，方案可直接套用；下面的数字来自 DSH，Pi HD 需自行测量。
+> 本文先记录 DSH 仓库（dsh-furry-partner 2.5.1-preview.8）2026-10-27 实际执行的流程与实测数据；Pi HD 的 `assets/animated/catalog.json`、`indexed/umi/*.uix.gz`、`tools/verify-approved-color-consistency.py` 与 DSH 同构，字段名与批准链结构一致，方案已直接套用。Pi HD 于 2026-10-31 完成同一流程，本目录实测数据见文末「Pi HD 实测」。
 >
 > 适用范围：仅 `assets/animated/hires`（运行时实际服务的高清帧）。`Hi-Res/` 是冻结基线，不动。
 
@@ -55,7 +55,7 @@ Image.save(out, 'WEBP', lossless=False, quality=90, method=6, exact=True, alpha_
 
 **`catalog.revision` 也不要动。** 运行时用 `raw.revision === catalog.revision` 校验 indexed 载荷，改 revision 会强制重建 29 个 `.uix.gz`（每个内嵌 revision）并重写批准记录。代价远大于收益，唯一影响是老用户的 `cache-control: immutable` 高清帧不会被刷新，仍是更高画质的无损版本——不是正确性问题。
 
-序列化必须保持原样：`json.dumps(obj, ensure_ascii=False, separators=(',',':')) + '\n'`。用 `indent=1` 会产生 5 万行无意义 diff。
+序列化必须保持原样：`json.dumps(obj, ensure_ascii=False, separators=(',',':'))` 加一个换行，并用 `Path.write_bytes` 写盘。`editions/hd/.gitattributes` 对 `assets/**/*.json` 设了 `-text`，Git 不会归一化换行；若用 `Path.write_text`，Windows 会把 LF 变成 CRLF 并原样提交。用 `indent=1` 会产生 5 万行无意义 diff。
 
 ### 3. 验收断言
 
@@ -114,7 +114,8 @@ DSH 在这上面踩过坑。校验器总耗时 129 s，其中 96 s 花在**与�
 4. 若改过任何已登记在 `localAdaptations` 的文件，重跑哈希同步脚本。建议把这一步做成脚本而不是手工改，否则每次改代码都会卡在同一个断言上。
 5. `node scripts/sync-adapted-hashes.mjs`（或等价物）。
 6. 全量测试；注意无 GPU 环境的路径要单独验证，本机有 GPU 会掩盖超时问题。
-7. 打包核实体积，逐项回读校验。
+7. `python tools/verify-approved-color-consistency.py --reproduce` 从冻结 source29 重建全部 3048 帧，按加权阈值校验（不能要求字节相等，出厂帧已是有损）。
+8. 打包核实体积，逐项回读校验。
 
 ## 不要做的事
 
@@ -123,3 +124,24 @@ DSH 在这上面踩过坑。校验器总耗时 129 s，其中 96 s 花在**与�
 - 不要把 uint8 回绕"修复"掉。
 - 不要用未加权的 PSNR/ΔE 做验收。
 - 不要因为本机通过就认为 CI 能过——无 GPU 环境的耗时必须实测。
+
+## Pi HD 实测（2026-10-31）
+
+同一流程在本目录执行，脚本与 DSH 同构但独立实现：
+
+| 项 | 结果 |
+| --- | --- |
+| 帧数 | 3048（29 片段） |
+| 体积 | 752,817,100 B → 198,729,204 B，3.788× |
+| alpha 相等 | 3048/3048 逐字节相同（编码时逐帧断言） |
+| alpha 加权 PSNR | 全量最低 36.22 dB、均值 38.28；抽样 278 帧最低 36.51 |
+| alpha 加权 ΔE76 | 全量最大 2.03、均值 1.737；抽样 278 帧最大 2.025 |
+| `npm pack` | 打包前约 990 MB → 302.6 MB（tgz），解包 436.2 MB |
+| 编码耗时 | `--apply --workers 6` 约 34 分钟（本机 6 核满载） |
+
+新增文件与职责：
+
+- `tools/reencode-approved-hires.py`：`--check` 抽样只看收益，`--apply` 全量落盘并写 `assets/animated/provenance/lossy-q90-reencode.json`；内置逐帧 alpha 相等断言与加权 PSNR/ΔE 门槛，已有记录时拒绝二次压缩。
+- `tools/sync-lossy-frame-hashes.py`：只改 `webpSha256`、`decodedRgbaSha256` 与 `sourceAsset` 两个字段，断言 `rgbaSha256`／`approvedPngSha256`／`revision` 及其余字段零变化，写回保持紧凑单行序列化。
+- `tools/verify-approved-color-consistency.py`：HD 侧改为 alpha 逐字节 + 抽样 278 帧重建批准像素后比较加权 PSNR/ΔE；并把 `lossy-q90-reencode.json` 的压缩前字节哈希绑定到 `derivation.json` 的批准记录（`lossyRecordBoundToApproval`）。
+- 无法再从 `Hi-Res` 重建的 `alpha=0` RGB 精确断言按本方案移除，改由压缩前字节哈希与该来源记录共同承担。

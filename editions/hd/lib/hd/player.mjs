@@ -128,8 +128,9 @@ export function approvedMotionKeyboardClip(id) { return ['work-enter', 'work', '
 // A user poke is a finite interaction even while ordinary animation is paused.
 // Whole-frame sources disable the legacy squash/cheek rig; translate the intact
 // approved pose by a few pixels instead, keeping every silhouette pixel intact.
+// The same rigid feedback covers the HD pose stage, which is one static cel.
 export function approvedMotionPokeFrame(visual, elapsedMs = 0, strength = 1) {
-  if (!visual?.sheet?.motion?.approvedWholeFrames || !visual.frame?.pixels) return visual;
+  if (!visual?.frame?.pixels || !(visual.sheet?.width > 0)) return visual;
   const sheet = visual.sheet, source = visual.frame.pixels, transparent = sheet.transparentIndex ?? 0;
   const t = Math.max(0, Math.floor((Number(elapsedMs) || 0) / 50) * 50);
   const amount = Math.max(.3, Math.min(1, Number(strength) || 1));

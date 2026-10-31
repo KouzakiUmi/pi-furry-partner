@@ -1,6 +1,6 @@
 {
   "locale": "zh-CN",
-  "compatibility": "Pi 1.2.0 and 1.3.0 native TUI display only",
+  "compatibility": "Pi 1.2.0, 1.3.0 and 1.4.0 native TUI display only",
   "settings": {
     "autocompact": ["Auto-compact", "自动压缩上下文"],
     "steering-mode": ["Steering mode", "执行中消息投递"],
@@ -116,7 +116,7 @@
   },
   "thinkingLevels": { "off": "关闭", "minimal": "极简", "low": "低", "medium": "中", "high": "高", "xhigh": "极高", "max": "最高" },
   "coverageLimits": [
-    "只翻译已识别的 Pi 1.2/1.3 原生界面显示文字；内部枚举值保留英文。",
+    "只翻译已识别的 Pi 1.2/1.3/1.4 原生界面显示文字；内部枚举值保留英文。",
     "原生设置主列表支持中文名称与说明关键词及原英文搜索；模型、会话、主题等其它列表保留原生搜索规则。",
     "模型与提供商名称、主题名称、会话名、搜索文字、路径、URL、认证码、正文与工具输出保持原文。",
     "动态认证说明、提供商错误、会话状态错误和未识别的第三方界面不翻译。",

@@ -2,7 +2,7 @@
 
 [English](guide.en.md) · [HD 首页](../README.md) · [全部文档](../../../docs/README.md) · [发布规则](../../../docs/release-line.md)
 
-本指南只适用于 main 的 `editions/hd/`。当前 HD 源码版本为 **2.5.1-preview.6**，仅提供高清插画；当前没有新的独立 HD Release。仓库 Latest 是根目录原资源版 v2.5.1，不是 HD 下载入口。DSH 的安装与设置请查 [DSH 独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)。
+本指南只适用于 main 的 `editions/hd/`。当前 HD 源码版本为 **2.5.1-preview.6**，仅提供高清插画；已发布 `hd-v2.5.1-preview.6`（latest=false），安装包附在该 Release。仓库 Latest 是根目录原资源版 v2.5.1，不是 HD 下载入口。DSH 的安装与设置请查 [DSH 独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)。
 
 ## 安装与更新
 
@@ -30,11 +30,11 @@ npm run build:animated
 python tools/audit-edition-bundles.py --edition full-animation
 ```
 
-产物为 `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz` 及校验／审计文件。构建不安装、不推送、不发布。将来下载专用 tgz 后解压，进入内层 `package/` 再运行其安装脚本，或交由 Pi 包管理器加载该本地包。
+产物为 `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz` 及校验／审计文件。构建不安装、不推送、不发布。下载专用 tgz 后解压，进入内层 `package/` 再运行其安装脚本，或交由 Pi 包管理器加载该本地包。
 
 ## 版本、终端与布局
 
-自动化覆盖 Windows、Pi **1.2.0 / 1.3.0**、Windows PowerShell **5.1 / 7**。中文界面与文档提示精简只启用已审阅版本和结构，未知版本保留 Pi 原行为。先安装并配置 Pi 和模型服务。
+自动化覆盖 Windows、Pi **1.2.0 / 1.3.0 / 1.4.0**、Windows PowerShell **5.1 / 7**。中文界面与文档提示精简只启用已审阅版本和结构，未知版本保留 Pi 原行为。先安装并配置 Pi 和模型服务。
 
 `/mascot render auto|kitty|sixel|blocks` 选择图像后端；协议支持由实际终端决定。`/mascot layout editor` 显示完整侧边动作，`layout header` 使用独立标题头像。窄窗口可能收起侧边图像以保留输入空间。`fullscreen` 使用 Pi 原生鼠标路由，`regular` 保留终端鼠标并显示快捷键提示。自动化绘制检查不等同于所有终端的目视验收。
 
@@ -53,7 +53,7 @@ Tab 补全、动作菜单与 `lib/gestures.mjs` 的 17 项定义一致：wave, n
 
 阅读使用放大镜 `watch`；编辑和执行使用 `work-enter → work → work-exit`，完整进入和退出各 400ms。普通短动作从真实首帧可见起保留至少 1200ms；短工作包含至少 800ms 键盘循环。最后工具结束后只可保留安全视觉阶段最多 2000ms，真实 phase/toolCount 即时结束，不排过期动作队列。回答、等待、报错、取消与主动互动可以抢占。
 
-`/mascot pause` 暂停循环，真实状态继续更新；显式戳戳仍可有限播放。资源缺失或暂停使用 HD 自己的原画静态姿态，不启用原资源版形变播放器。HD 仅支持 `umi` 插画，旧像素配置迁移到插画，不提供第二套像素素材。
+`/mascot pause` 暂停循环，真实状态继续更新；显式戳戳仍可有限播放。戳一戳分两段：先显示 HD 原画挤眼姿态并整帧轻轻回弹 1.2 秒，再按闲时、忙碌或等待情境接一段 1.2 秒的轻弹、抖耳或晃脑袋，不连续重复同一回应。资源缺失或暂停使用 HD 自己的原画静态姿态，不启用原资源版形变播放器。HD 仅支持 `umi` 插画，旧像素配置迁移到插画，不提供第二套像素素材。
 
 ## 语言、控件与独立设置
 

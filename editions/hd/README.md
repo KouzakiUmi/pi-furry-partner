@@ -1,5 +1,5 @@
 > **Pi HD 独立代码线 · 2.5.1-preview.6**：29 个完整动作，仅提供高清插画。Pi 事件适配、状态机与播放器在 `lib/hd/` 独立维护，不调用 Legacy 运行时。
-> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。当前适配尚未发布新的 HD 标签，源码安装请先进入 `editions/hd/`，运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
+> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。已发布 `hd-v2.5.1-preview.6`（latest=false），安装包附在该 Release；源码安装也可先进入 `editions/hd/` 运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
 > [全部文档](../../docs/README.md) · [HD 使用指南](docs/guide.zh-CN.md) · [统一发布规则](../../docs/release-line.md)。29 个完整片段不等于 17 个可点选小动作；原资源版的 action 列表独立。直接安装远程仓库 Git URL 会读取根目录清单，HD 请使用本地子目录或专用包。
 
 
@@ -15,12 +15,12 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release 2.5.1-preview.6](https://img.shields.io/badge/HD-2.5.1-preview.6-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)
-[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
+[![Release 2.5.1-preview.6](https://img.shields.io/badge/HD-2.5.1-preview.6-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6)
+[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载全动态 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) · [原资源 原资源版 v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载全动态 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6) · [原资源 原资源版 v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -103,11 +103,11 @@
 
 **高清头像支持 Kitty Graphics Protocol 或 Sixel。** 默认 `render auto` 优先采用 Pi 检测到的 Kitty 图片能力；否则在 Windows Terminal 且未经过 tmux 时选择 Sixel，再回退字符块。也可使用 `/mascot render kitty`、`sixel` 或 `blocks`。Windows 用户建议使用 **Windows Terminal 1.22 或更新版本**（设置 → 关于查看版本）。插件自行编码图片，无需安装 libsixel、chafa 或图片转换工具。详见[高清显示与终端要求](docs/guide.zh-CN.md#版本终端与布局)。
 
-需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 与 1.3.0、Windows PowerShell 5.1 / PowerShell 7**；这两个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对两者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮全动态构建已在该环境重新验收。终端支持会影响清晰度。
+需要先安装并配置 Pi。本项目的完整验证环境是 **Windows、Pi 1.2.0 / 1.3.0 / 1.4.0、Windows PowerShell 5.1 / PowerShell 7**；这三个版本的完整测试均已通过，原生中文界面与 Pi 文档提示精简对三者同样启用，其他版本保留 Pi 原有行为。上游还记录了 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1** 的实机验证，覆盖角色显示、实时动画、`auto`/`kitty`/`blocks` 切换和日常交互；这是当时版本的补充验证，不代表本轮全动态构建已在该环境重新验收。终端支持会影响清晰度。
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关渲染修复和回归测试保留在 HD 独立源码中。
 
-当前 HD 适配尚未创建新的 Release。可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.1 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
+已发布 `hd-v2.5.1-preview.6`（latest=false），安装包见 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6)；也可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)自行构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.1 分支](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
 
 | 平台 | 全动态 2.5.1-preview.6 |
 | --- | --- |
@@ -157,7 +157,7 @@ pi
 
 紧凑 footer 显示模型与 provider、思考等级、上下文和实际提供的 token / 缓存 / 费用数据。窄窗口优先保留编辑空间，空间不足时收起大头像。输入、补全和发送继续沿用 Pi 原生编辑器。
 
-想逗逗呜咪，可以在 `fullscreen` 点击头像，或在任意模式输入 `/mascot poke`。他会短暂露出 `>w<` 表情、缩缩身子再轻轻晃一下，用当前语言随机回你一句。忙着工作时轻轻一晃，回一句还在认真干活的小回应；空闲时就放松一点闹一小下，然后接着做手头的事。
+想逗逗呜咪，可以在 `fullscreen` 点击头像，或在任意模式输入 `/mascot poke`。他会先眯起眼睛轻轻一弹，再从轻弹、抖耳、晃脑袋里挑一个当下合适的动作演一小段，用当前语言随机回你一句。忙着工作时回应更收敛，回一句还在认真干活的小提醒；空闲时就放松闹一小下，然后接着做手头的事。
 
 输入框里的 **`表情：开` / `表情：关`** 显示当前状态。关闭后停止循环微动，静态姿态仍跟随 agent 状态更新；主动戳戳仍会播放短暂回应。也可以用 `/mascot pause` / `/mascot play` 切换。
 
@@ -188,7 +188,7 @@ pi
 
 三者都支持 `status`。`/mascot off` 关闭界面角色；这些开关各自保留，需要分别关闭。
 
-- **界面中文**：中文模式下，兼容 Pi **1.2.0 / 1.3.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
+- **界面中文**：中文模式下，兼容 Pi **1.2.0 / 1.3.0 / 1.4.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
 - **Pi 文档提示精简**：下一轮请求中，仅将精确识别的 Pi 文档提示章节改成简洁中文或英文，保留文档路径、完整阅读和交叉引用要求。身份说明、工具清单与规则保持原生；自定义 `SYSTEM.md`、项目 `AGENTS.md`、技能和后续扩展加入的动态内容继续沿用。关闭后不替换该文档章节。表达更短不代表所有模型的 token 都按相同比例减少。
 - **角色口吻**：温柔、可爱、活泼，带一点俏皮；关键事情认真稳重。中英文各有独立模板，随当前语言选用；只调整表达，技术准确性、代码和结构化输出优先。
 
@@ -204,7 +204,7 @@ pi
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0 与 1.3.0 的完整测试均已通过，CI 分别用这两个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#排错与开发)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容和提示词边界，并在隔离目录验证安装、迁移与恢复。Pi 1.2.0、1.3.0 与 1.4.0 的完整测试均已通过，CI 分别用这三个版本运行。环境准备和执行方式见贡献指南，验证范围与终端限制见[使用指南](docs/guide.zh-CN.md#排错与开发)。
 
 ## 许可与致谢
 

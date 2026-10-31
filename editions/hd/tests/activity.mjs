@@ -301,15 +301,17 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
     offset+=step.durationMs;
   }
   assert.ok(DEMO_STATES.every(phase=>phases.has(phase)));assert.ok(reactions.has("listening")&&reactions.has("poked")&&reactions.has("startled"));
-  assert.ok(DEMO_SEQUENCE.find(step=>step.phase==="running").durationMs>=7000);
-  assert.ok(DEMO_SEQUENCE.find(step=>step.phase==="waiting").durationMs>=12000);
+  // Every HD complete-frame clip shares one authored 4458ms period, so a tour
+  // step holds at least a whole loop instead of the old legacy lengths.
+  assert.ok(DEMO_SEQUENCE.every(step=>!["running","searching","compacting","reading","editing"].includes(step.phase)||step.durationMs>=4458));
+  assert.ok(DEMO_SEQUENCE.find(step=>step.phase==="waiting").durationMs>=14000);
   assert.equal(offset,DEMO_PERIOD_MS);assert.equal(state.randomCalls,randomBefore,"The pure preview never rerolls real-run randomness");
   activity.setDemo("all");const first=advance(1000),lap=advance(DEMO_PERIOD_MS);
   assert.equal(lap.phase,"waking");assert.equal(lap.phaseElapsedMs,1000);assert.notEqual(lap.demoEpoch,first.demoEpoch);
   const waitAt=DEMO_SEQUENCE.slice(0,DEMO_SEQUENCE.findIndex(step=>step.phase==="waiting")).reduce((sum,step)=>sum+step.durationMs,0);
   activity.setDemo("all");assert.equal(advance(waitAt+9999).drowsy,false);
   assert.equal(advance(1).drowsy,true);assert.equal(activity.snapshot().face,"rest");
-  assert.equal(advance(2500).reaction,"startled");assert.equal(advance(650).reaction,undefined);
+  assert.equal(advance(4458).reaction,"startled");assert.equal(advance(650).reaction,undefined);
   activity.setDemo("off");const actual=activity.snapshot();assert.equal(actual.phase,"idle");assert.equal(actual.drowsy,false);assert.equal(actual.reaction,undefined);
   activity.setDemo("waiting");advance(12000);activity.handle("agent_start");
   assert.equal(activity.snapshot().demo,false);assert.equal(activity.snapshot().reaction,undefined,"A dozing demo cannot fake a wake reaction on real agent_start");
@@ -353,6 +355,31 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   assert.equal(advance(6499).phrase, waiting);
   assert.notEqual(advance(1).phrase, waiting);
   checks.push("Phrase selection is deterministic and stable for 6.5s from each effective phase transition, including late tools and prompt overrides");
+}
+
+{
+  // The tour reads each clip's authored period instead of assuming one loop.
+  // search is 4833ms and watch/work are 6583ms; cutting them at 4458ms would
+  // truncate the approved motion mid-action.
+  const clips = { idle: { periodMs: 4458 }, listen: { periodMs: 4458 }, think: { periodMs: 4458 },
+    watch: { periodMs: 6583 }, work: { periodMs: 6583 }, search: { periodMs: 4833 },
+    wait: { periodMs: 4458 }, rest: { periodMs: 4458 } };
+  const span = (phase) => ({ reading: 6583, editing: 6583, running: 6583, searching: 4833, compacting: 4833 }[phase] || 4458);
+  let start = 0;
+  for (const step of DEMO_SEQUENCE) {
+    const length = (step.clip ? span(step.phase) : step.durationMs) + (step.padMs || 0);
+    if (step.clip) {
+      let time = 0;
+      const activity = createActivity({ now: () => time, random: () => 0.25, interactionClips: () => clips });
+      activity.setDemo("all");
+      const at = (ms) => { time = ms; return activity.snapshot(); };
+      const index = DEMO_SEQUENCE.indexOf(step);
+      assert.equal(at(start + length - 1).demoStep, index, `tour step ${step.phase} keeps its authored period`);
+      assert.notEqual(at(start + length).demoStep, index, `tour step ${step.phase} ends on its authored period`);
+    }
+    start += length;
+  }
+  checks.push("Demo tour reads authored clip periods (search 4833ms, watch/work 6583ms) instead of truncating at 4458ms");
 }
 
 const report = { testedAt: new Date().toISOString(), modelRequests: 0, passed: true, verification: "Product activity controller with deterministic injected clock and randomness", checks };

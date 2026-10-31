@@ -1,23 +1,29 @@
 # 更新记录
 
-本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.6，尚未创建新的独立 HD Release；同一 main 的根目录原资源版已发布 v2.5.1。HD 后续使用 hd-v 标签且 latest=false，当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.6，已随 `hd-v2.5.1-preview.6` 发布且 latest=false；同一 main 的根目录原资源版另行发布 v2.5.2（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
 
-## 2.5.1-preview.6 · 未发布
+## 2.5.1-preview.6 · 2026-10-31
 
 ### 简体中文
 
 - 统一用户通过的29段动作配色，保留自然阴影、透明度、原生时序、画布和支点。喜欢使用单独复核后的围巾提亮、减饱和与轻微衣料校偏，不改原动作、三颗爱心或单层下摆。
-- 开场复用完整挥爪招呼；戳一戳按闲时、忙碌和等待情境选择已通过的轻弹、抖耳或晃脑袋，避免连续重复。连点不重置或排队，真实任务与回答能及时接管。
+- 开场复用完整挥爪招呼；戳一戳改为两段式：先显示 HD 原画挤眼姿态并做整帧刚性回弹，再按闲时、忙碌和等待情境接一段已通过的轻弹、抖耳或晃脑袋，避免连续重复。连点不重置或排队，真实任务与回答能及时接管；被戳片段按 1.2 秒短段截取，不整段播满 4458 毫秒。
 - 互动从真实首帧可见后计时；暂停自动动画时，主动戳一戳仍可播放一次，结束后恢复静止。继续使用单个计时器与有界缓存。
+- `/mascot demo` 巡演改为读取每个片段的真实周期：搜索 4833 毫秒、阅读与工作 6583 毫秒，其余 4458 毫秒；等待段为 10 秒加一个完整片段。总长约 81 秒，不再用与素材不一致的固定 7.2／7.4 秒时长，也不再把这些长片段截在 4458 毫秒。
+- 已批准高清帧按 `docs/lossy-hd-frame-reencode.md` 重编码为有损 q90 WebP：alpha 逐字节不变，体积 752.8 MB → 198.7 MB（3.79×），加权 PSNR 最低 36.22 dB、ΔE76 最大 2.03。只同步 `webpSha256`／`decodedRgbaSha256`／`sourceAsset`，`rgbaSha256`、批准证据与 `revision` 不变；压缩前字节哈希记入 `assets/animated/provenance/lossy-q90-reencode.json` 并与批准记录绑定。29 段动作、时序、索引载荷与调色板均未改动。
 - 高清与Pi索引素材从同一批已批准候选派生，保留原采样和共同调色板；冻结旧29源供历史原像素验证，源档不进入Pi或DSH安装包。
 - 保留preview.5的错误反应、连续工具接续、2秒状态等待和动作最短可见时长。本目录只构建 Pi HD，DSH 在独立仓库维护；HD 仅含插画，原像素位于根目录原资源版。
+- 原生中文界面与 Pi 文档提示精简扩展到 Pi 1.4.0：三个版本的原生设置组件、命令补全说明与默认提示章节结构一致，白名单与 CI 同步，未知版本或改变的结构仍回退原生行为。
 
 ### English
 
 - Unify the reviewed29 motion colors while retaining native lighting, alpha, geometry, anchors and timing. Affection uses its separately approved scarf/material correction, preserving the original acting, hearts and cape.
-- Reuse the accepted wave for startup and vary native poke responses by idle, busy or waiting context. Repeated clicks do not restart or queue a reaction, and real task updates can interrupt it.
+- Reuse the accepted wave for startup; a poke now plays in two stages: the authored HD squeeze-eye pose with a rigid full-frame rebound, then one accepted segment (bounce, ear-flick or head-shake) chosen for idle, busy or waiting context without consecutive repeats. The follow-up segment is cut to a 1.2 s beat instead of its full 4458 ms period. Repeated clicks do not restart or queue a reaction, and real task updates can interrupt it.
 - Start finite interactions at actual presentation. Explicit pokes can play once while automatic animation is paused, then return to a static state with the existing single timer.
+- The `/mascot demo` tour now reads each clip's authored period (search 4833 ms, reading and work 6583 ms, the rest 4458 ms), with a 10-second wait plus one full clip and about 81 seconds in total. It no longer uses the unmatched fixed 7.2/7.4-second timings or cuts the long clips at 4458 ms.
+- Re-encode the approved hi-res frames to lossy q90 WebP as described in `docs/lossy-hd-frame-reencode.md`: alpha is byte-identical, size drops from 752.8 MB to 198.7 MB (3.79×), with a worst alpha-weighted PSNR of 36.22 dB and dE76 of 2.03. Only `webpSha256`, `decodedRgbaSha256` and `sourceAsset` move; `rgbaSha256`, the approval evidence and `revision` stay untouched, and the pre-compression bytes are recorded in `assets/animated/provenance/lossy-q90-reencode.json` and bound to the frozen approval record. The 29 clips, their timing, indexed payloads and palette are unchanged.
 - Derive both host resources from the same approved candidates and common indexed palette. Retain a source-only pre-color bank for historical pixel checks without including it in either installer.
+- Extend the native Chinese UI and concise Pi documentation prompt to Pi 1.4.0: the three releases share native settings components, command descriptions and default prompt section structure, so the reviewed version list and CI follow suit while unknown versions or altered shapes fall back to native behavior.
 
 ## 2.5.1-preview.5 · 未发布
 

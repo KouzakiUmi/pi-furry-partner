@@ -1,10 +1,10 @@
 import { readFileSync } from "node:fs";
 
 // Pi does not currently expose locale hooks. This deliberately narrow adapter
-// for the reviewed 1.2.0 and 1.3.0 releases translates native UI display views,
-// before their normal width/layout calculations. It never changes terminal
-// bytes, native input or saved values.
-export const SUPPORTED_UI_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0"]);
+// for the reviewed 1.2.0, 1.3.0 and 1.4.0 releases translates native UI display
+// views, before their normal width/layout calculations. It never changes
+// terminal bytes, native input or saved values.
+export const SUPPORTED_UI_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0"]);
 const catalogue = JSON.parse(readFileSync(new URL("../assets/ui-zh-CN.json", import.meta.url), "utf8"));
 const routers = new WeakMap();
 const CSI = /\x1b\[[0-?]*[ -/]*[@-~]/g;

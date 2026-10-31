@@ -1,5 +1,10 @@
 // A local reaction must never submit a message or modify the real agent state.
+// The HD timeline answers a poke in two readable stages: the authored poke
+// pose first, then one short situational action segment. Legacy sparse-face
+// packs keep their original single-frame reaction.
 export const POKE_DURATION_MS = 1100;
+export const POKE_FACE_MS = 1200;
+export const POKE_CLIP_MS = 1200;
 
 export function withPokeFrame(sheet, patch) {
   // Complete approved poses take precedence over legacy sparse face patches.

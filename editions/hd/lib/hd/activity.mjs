@@ -1,22 +1,26 @@
-import { POKE_DURATION_MS } from "../poke.mjs";
+import { POKE_DURATION_MS, POKE_FACE_MS, POKE_CLIP_MS } from "../poke.mjs";
 import { LISTEN_DURATION_MS } from "../listen.mjs";
 import { GESTURE_IDS, AUTO_GESTURE_IDS, gestureAt } from "../gestures.mjs";
+import { APPROVED_MOTION_STATES } from "./player.mjs";
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 const LABELS = { idle: "我在呢", waking: "我醒啦", thinking: "我想想呀", speaking: "我讲给你听", reading: "我仔细瞧瞧", editing: "我改改这儿", running: "我看着这一步呢", searching: "我找找线索", waiting: "我再等一会儿", success: "我先收笔啦", error: "我这步卡住啦", cancelled: "我先停下啦", compacting: "我理理前面聊的" };
 export const DEMO_STATES = Object.keys(LABELS);
-// Display-only tour. Durations leave gestures readable, show a complete
-// magnifier loop, and let the waiting pose doze before its wake-up reaction.
+// Display-only tour. Every complete-frame clip shares one authored period, so
+// dynamic steps hold a whole loop instead of cutting it off mid-action; static
+// poses keep their readable lengths. The waiting pose still dozes after ten
+// seconds and wakes with a startled beat.
+const DEMO_CLIP_MS = 4458;
 export const DEMO_SEQUENCE = Object.freeze([
-  { phase: "waking", durationMs: 6000 }, { phase: "idle", durationMs: 3000 },
-  { phase: "idle", reaction: "listening", durationMs: 2400 },
-  { phase: "thinking", durationMs: 3500 }, { phase: "speaking", durationMs: 4000 },
-  { phase: "reading", durationMs: 3500 }, { phase: "editing", durationMs: 3500 },
-  { phase: "running", durationMs: 7400 }, { phase: "searching", durationMs: 7200 },
-  { phase: "compacting", durationMs: 7200 }, { phase: "waiting", durationMs: 12500 },
+  { phase: "waking", durationMs: 6000 }, { phase: "idle", durationMs: DEMO_CLIP_MS, clip: true },
+  { phase: "idle", reaction: "listening", durationMs: DEMO_CLIP_MS, clip: true },
+  { phase: "thinking", durationMs: DEMO_CLIP_MS, clip: true }, { phase: "speaking", durationMs: 4000 },
+  { phase: "reading", durationMs: DEMO_CLIP_MS, clip: true }, { phase: "editing", durationMs: DEMO_CLIP_MS, clip: true },
+  { phase: "running", durationMs: DEMO_CLIP_MS, clip: true }, { phase: "searching", durationMs: DEMO_CLIP_MS, clip: true },
+  { phase: "compacting", durationMs: DEMO_CLIP_MS, clip: true }, { phase: "waiting", durationMs: 10000 + DEMO_CLIP_MS, padMs: 10000, clip: true },
   { phase: "thinking", reaction: "startled", durationMs: 1600 },
-  { phase: "success", durationMs: 3000 }, { phase: "idle", reaction: "poked", durationMs: 1100 },
-  { phase: "error", durationMs: 3000 }, { phase: "cancelled", durationMs: 2000 },
+  { phase: "success", durationMs: 3000 }, { phase: "idle", reaction: "poked", durationMs: POKE_FACE_MS },
+  { phase: "error", durationMs: 3000 }, { phase: "cancelled", durationMs: DEMO_CLIP_MS, clip: true },
 ].map(Object.freeze));
 export const DEMO_PERIOD_MS = DEMO_SEQUENCE.reduce((sum, step) => sum + step.durationMs, 0);
 const clean = (s) => String(s ?? "").replace(/[\x00-\x1f\x7f-\x9f]/g, " ");
@@ -86,23 +90,33 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
   const clearGap = () => { stateGap = null; visualWorkUntil = -Infinity; };
   let effectiveKey = "", effectiveSince = now(), demoRevision = 0, demoStartedAt = 0;
   let pokeAt = -Infinity, pokeContext = "idle", pokeIndex = 0;
+  // The poke answer is two stages: the authored poke pose, then one readable
+  // segment of a situational action. Both are finite and independent of tasks.
+  let pokeFaceAt = -Infinity, pokeFaceShownAt = null, pendingPokeClip = null;
   let interaction = null, interactionSerial = 0, lastPokeClip = null;
   const lastContextClip = {};
   const nativeInteractions = typeof interactionClips === "function";
   function clearInteraction(kind) {
+    // Real task events, prompts and cancels also drop the pending poke pose;
+    // an explicit kind keeps unrelated interactions alive.
+    if (!kind || kind === "poke") { pokeFaceAt = -Infinity; pokeFaceShownAt = null; pendingPokeClip = null; }
     if (!interaction || kind && interaction.kind !== kind) return;
     if (interaction.kind === "welcome") wakeAt = -Infinity;
     if (interaction.kind === "poke") pokeAt = -Infinity;
     interaction = null;
   }
-  function beginInteraction(id, kind) {
-    interaction = { id, kind, epoch: ++interactionSerial, startedAt: gapNow(), presentedAt: null };
+  function beginInteraction(id, kind, startedAt = gapNow()) {
+    interaction = { id, kind, epoch: ++interactionSerial, startedAt, presentedAt: null };
   }
   function interactionView() {
     if (!interaction) return null;
     if (interaction.kind === "welcome" && !canWelcome()) { clearInteraction(); return null; }
     const clip = interactionClips?.()?.[interaction.id];
-    const durationMs = Number(clip?.periodMs), age = gapNow() - (interaction.presentedAt ?? interaction.startedAt);
+    // A poke answers with one short readable segment of a full situational
+    // action; other interactions keep their complete authored period.
+    const authoredMs = Number(clip?.periodMs);
+    const durationMs = interaction.kind === "poke" ? Math.min(POKE_CLIP_MS, authoredMs) : authoredMs;
+    const age = gapNow() - (interaction.presentedAt ?? interaction.startedAt);
     // A missing/cold resource may wait briefly for its first actual frame,
     // then expires instead of reviving later or queuing behind real work.
     if (interaction.presentedAt === null && age >= 1200 || interaction.presentedAt !== null && age >= durationMs) { clearInteraction(); return null; }
@@ -116,17 +130,29 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
   const tools = new Map();
   const setPhase = (next) => { if (phase !== next) { phase = next; phaseSince = now(); } };
   const wasDozing = () => lastCurrent === "waiting" && now() - waitingAt >= 10000;
+  // The tour never cuts a complete-frame clip short. Search, reading and work
+  // have their own authored periods (4833/6583 ms), so each in-tour step reads
+  // the catalog period rather than assuming the common 4458 ms loop.
+  const demoSpans = () => DEMO_SEQUENCE.map((step) => {
+    if (!step.clip) return step.durationMs;
+    const id = step.reaction === "listening" ? "listen" : APPROVED_MOTION_STATES[step.phase];
+    const authored = Number(interactionClips?.()?.[id]?.periodMs);
+    const clipMs = Number.isFinite(authored) && authored >= 80 ? authored : DEMO_CLIP_MS;
+    return clipMs + (step.padMs || 0);
+  });
   const reset = () => { clearGap(); clearToolError(); clearInteraction(); gestureMode = undefined; tools.clear(); promptDepth = 0; compacting = false; streamOpen = false; outcome = undefined; terminalUntil = 0; toolWarningUntil = 0; lastTextAt = -Infinity; demo = undefined; wakeAt = -Infinity; effectiveKey = ""; waitingAt = -Infinity; lastCurrent = undefined; startleAt = -Infinity; visualWorkUntil = -Infinity; typingUntil = -Infinity; listeningActive = false; };
   const demoView = (time) => {
     if (!demo) return undefined;
     const age = Math.max(0, time - demoStartedAt);
     if (demo !== "all") return { phase: demo, elapsed: demo === "waking" ? age % 6000 : age,
       epoch: `${demoRevision}:${demo === "waking" ? Math.floor(age / 6000) : 0}:0`, step: 0 };
-    const cycle = Math.floor(age / DEMO_PERIOD_MS);
-    let elapsed = age % DEMO_PERIOD_MS;
+    const spans = demoSpans();
+    const period = spans.reduce((sum, span) => sum + span, 0);
+    const cycle = Math.floor(age / period);
+    let elapsed = age % period;
     for (const [step, value] of DEMO_SEQUENCE.entries()) {
-      if (elapsed < value.durationMs) return { ...value, elapsed, epoch: `${demoRevision}:${cycle}:${step}`, step };
-      elapsed -= value.durationMs;
+      if (elapsed < spans[step]) return { ...value, elapsed, epoch: `${demoRevision}:${cycle}:${step}`, step };
+      elapsed -= spans[step];
     }
   };
 
@@ -151,7 +177,9 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       const state = this.snapshot();
       pokeContext = state.phase === "waiting" ? "waiting" : state.busy || ["thinking", "speaking", "reading", "editing", "running", "searching", "compacting"].includes(state.phase) ? "busy" : "idle";
       if (nativeInteractions) {
-        if (interactionView()?.kind === "poke") return false; // One finite response, no click backlog.
+        // One finite answer at a time: the pose stage or its follow-up clip.
+        if (pokeFaceAt !== -Infinity && (pokeFaceShownAt === null || now() - pokeFaceShownAt < POKE_FACE_MS)) return false;
+        if (interactionView()?.kind === "poke") return false;
         if (["speaking", "error", "cancelled", "compacting"].includes(state.phase) || state.reaction === "error") return false;
         const pools = { idle: ["bounce", "ear-flick"], busy: ["head-shake", "ear-flick"], waiting: ["ear-flick", "head-shake"] };
         const clips = interactionClips() || {};
@@ -160,7 +188,10 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         const choices = different.length ? different : pool.filter(id => id !== lastContextClip[pokeContext]);
         const selected = (choices.length ? choices : pool)[Math.floor(Math.max(0, Math.min(.999999, random())) * (choices.length || pool.length))];
         if (selected) {
-          clearInteraction(); beginInteraction(selected, "poke");
+          // The pose stage owns the first beat; snapshot() rolls into the
+          // action segment, so a skipped render never skips the poke pose.
+          clearInteraction();
+          pokeFaceAt = now(); pokeFaceShownAt = null; pendingPokeClip = selected;
           lastPokeClip = lastContextClip[pokeContext] = selected;
           pokeIndex = Math.floor(random() * 0x7fffffff); pokeAt = -Infinity; return true;
         }
@@ -168,7 +199,11 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       pokeIndex = Math.floor(random() * 0x7fffffff);
       pokeAt = now(); return true;
     },
-    isPoked() { return interactionView()?.kind === "poke" || now() - pokeAt >= 0 && now() - pokeAt < POKE_DURATION_MS; },
+    isPoked() {
+      const time = now();
+      return interactionView()?.kind === "poke" || pokeFaceAt !== -Infinity && (pokeFaceShownAt === null || time - pokeFaceShownAt < POKE_FACE_MS) ||
+        time - pokeAt >= 0 && time - pokeAt < POKE_DURATION_MS;
+    },
     noteTyping() {
       if (demo === "all") return false;
       const state = this.snapshot();
@@ -215,7 +250,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         } else setPhase(busy ? "thinking" : "idle");
         return;
       }
-      if (type === "message_start" && event.message?.role === "assistant") { streamOpen = false; setPhase("thinking"); return; }
+      if (type === "message_start" && event.message?.role === "assistant") { clearInteraction(); streamOpen = false; setPhase("thinking"); return; }
       if (type === "message_update") {
         const part = event.assistantMessageEvent?.type || "";
         const delta = event.assistantMessageEvent?.delta;
@@ -227,14 +262,16 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
           clearInteraction(); clearToolError();
           streamOpen = true; lastTextAt = now(); setPhase("speaking");
         } else if (part === "text_end") { streamOpen = false; setPhase("thinking"); }
-        else if ((part.startsWith("thinking_") && (part !== "thinking_delta" || hasContent)) || part.startsWith("toolcall_")) { streamOpen = false; setPhase("thinking"); }
+        else if ((part.startsWith("thinking_") && (part !== "thinking_delta" || hasContent)) || part.startsWith("toolcall_")) { clearInteraction(); streamOpen = false; setPhase("thinking"); }
         return;
       }
       if (type === "tool_execution_start") {
         clearGap();
         const nextPhase = toolPhase(event.toolName || "");
-        if (nextPhase === "waiting") { clearInteraction(); clearToolError(); }
-        else if (interaction?.kind === "welcome") clearInteraction();
+        // A real tool run owns the display: it ends a welcome or either poke
+        // stage instead of letting the local reaction mask progress.
+        clearInteraction();
+        if (nextPhase === "waiting") clearToolError();
         tools.set(event.toolCallId, { name: clean(event.toolName), phase: nextPhase, object: toolObject(event.args), started: now() });
         if (["editing", "running"].includes(nextPhase)) { visualWorkUntil = now() + 1200; visualWorkPhase = nextPhase; }
         streamOpen = false; return;
@@ -279,6 +316,19 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
     snapshot() {
       const time = now();
       const gapTime = gapNow();
+      // The pose beat rolls into its action segment exactly once. The segment
+      // keeps the real clock so a late render cannot stretch the answer.
+      if (pokeFaceAt !== -Infinity) {
+        // The pose beat is a readable cel, so its clock starts when the cel is
+        // actually sampled: a late or skipped first render cannot swallow it.
+        if (pokeFaceShownAt === null) pokeFaceShownAt = time;
+        if (time - pokeFaceShownAt >= POKE_FACE_MS) {
+          const nextClip = pendingPokeClip;
+          pokeFaceAt = -Infinity; pokeFaceShownAt = null; pendingPokeClip = null;
+          // The tour previews appearance only; it never plays a task-time clip.
+          if (nextClip && !demo) beginInteraction(nextClip, "poke", time);
+        }
+      }
       const nativeInteraction = interactionView();
       if (stateGap && gapTime >= stateGap.until) stateGap = null;
       if (!busy && terminalUntil && time >= terminalUntil) { terminalUntil = 0; setPhase("idle"); }
@@ -354,7 +404,9 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       const color = toolError || current === "error" ? "error" : current === "success" ? "success" : current === "waiting" || current === "cancelled" ? "warning" : "accent";
       const moving = !["idle", "error", "success", "cancelled"].includes(current);
       const glyph = toolError ? "!" : moving ? SPINNER[Math.floor(elapsed / 160) % SPINNER.length] : current === "success" ? "✓" : current === "error" ? "!" : current === "cancelled" ? "Ⅱ" : "🐾";
-      const poked = demo === "all" ? view.reaction === "poked" : nativeInteraction?.kind === "poke" || time - pokeAt >= 0 && time - pokeAt < POKE_DURATION_MS;
+      const pokeFaceAge = pokeFaceShownAt !== null ? time - pokeFaceShownAt : pokeFaceAt === -Infinity ? -Infinity : 0;
+      const pokePose = pokeFaceAge >= 0 && pokeFaceAge < POKE_FACE_MS;
+      const poked = demo === "all" ? view.reaction === "poked" : nativeInteraction?.kind === "poke" || pokePose || time - pokeAt >= 0 && time - pokeAt < POKE_DURATION_MS;
       const reactionContext = demo === "all" ? "idle" : pokeContext;
       const listenEligible = demo && demo !== "all" ? current === "idle" || awaitingUser : actual === "idle" || actualAwaitingUser;
       const canListen = listenEligible && ![...tools.values()].some((tool) => tool.phase !== "waiting");
@@ -394,7 +446,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         phase: current, label: toolError ? labelFor("error") : label, phrase, face, bubble, color, glyph, awaitingUser, blink: toolError || startled || poked ? false : blink,
         drowsy: drowsy && !listening, reaction: poked ? "poked" : listening ? "listening" : toolError ? "error" : startled ? "startled" : undefined, visualPhase: toolError ? "error" : pendingNextState?.visualPhase || (holdingWork ? visualWorkPhase : current),
         pendingNextState,
-        pokeContext: poked ? reactionContext : undefined, reactionElapsedMs: poked ? demo === "all" ? elapsed : nativeInteraction?.kind === "poke" ? nativeInteraction.elapsedMs : time - pokeAt : undefined, reactionStrength: poked ? reactionContext === "busy" ? .55 : reactionContext === "waiting" ? .8 : 1 : undefined,
+        pokeContext: poked ? reactionContext : undefined, reactionElapsedMs: poked ? demo === "all" ? elapsed : nativeInteraction?.kind === "poke" ? nativeInteraction.elapsedMs : pokePose ? pokeFaceAge : time - pokeAt : undefined, reactionStrength: poked ? reactionContext === "busy" ? .55 : reactionContext === "waiting" ? .8 : 1 : undefined,
         busy, demo: Boolean(demo), toolCount: tools.size, toolName: active?.name || "", toolObject: active?.object || "",
         demoMode: demo, demoEpoch: view?.epoch, demoStep: view?.step,
         elapsedMs: busy ? Math.max(0, time - started) : 0, phaseElapsedMs: elapsed,

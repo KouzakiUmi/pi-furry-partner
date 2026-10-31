@@ -12,7 +12,7 @@ import { createPiHdActivity as createActivity, DEMO_STATES, HD_PI_ACTIVITY_EVENT
 import { DOCK_CAPTION_ROWS, dockGeometry, renderDock, joinEditor, activityBorder, editorFrameGeometry, frameEditorLines } from "./lib/editor-layout.mjs";
 import { createStatusFooter } from "./lib/footer.mjs";
 import { GESTURE_IDS } from "./lib/gestures.mjs";
-import { approvedMotionIndexedRect, approvedMotionKeyboardClip, approvedMotionPokeFrame, normalizeApprovedMotionCatalog } from "./lib/hd/player.mjs";
+import { APPROVED_MOTION_STATES, approvedMotionIndexedRect, approvedMotionKeyboardClip, approvedMotionPokeFrame, normalizeApprovedMotionCatalog } from "./lib/hd/player.mjs";
 import { createPiHdMotionPlayer, piHdStaticFrame as approvedMotionStaticFrame } from "./lib/hd/pi-adapter.mjs";
 import { decodeApprovedMotionNodeResource } from "./lib/approved-motion-node.mjs";
 import { FULL_ANIMATION_EDITION, approvedMotionStyle } from "./lib/build-profile.mjs";
@@ -90,6 +90,9 @@ export default function (pi: ExtensionAPI) {
   }
   const activity = createActivity({ autoGestures: true,
     interactionClips: () => FULL_ANIMATION_EDITION && approvedMotionStyle(settings.style) ? approvedCatalog?.clips : null,
+    // The tour holds each authored clip for its own period; the mapping stays
+    // with the player so the site bundle can still load activity alone.
+    demoClipId: (step) => step.reaction === "listening" ? "listen" : APPROVED_MOTION_STATES[step.phase],
     canWelcome: () => settings.enabled && settings.animation, gestureDurations: () => ({ clips: { ...reactionCatalog().clips,
     ...(approvedMotionStyle(settings.style) ? approvedCatalog?.clips : {}) } }), ...voice, rotationMs: voices["zh-CN"].phrases.rotationMs });
   const responseLatency = createResponseLatency();

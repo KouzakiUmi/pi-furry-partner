@@ -1,7 +1,6 @@
 import { POKE_DURATION_MS, POKE_FACE_MS, POKE_CLIP_MS } from "../poke.mjs";
 import { LISTEN_DURATION_MS } from "../listen.mjs";
 import { GESTURE_IDS, AUTO_GESTURE_IDS, gestureAt } from "../gestures.mjs";
-import { APPROVED_MOTION_STATES } from "./player.mjs";
 
 const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 const LABELS = { idle: "我在呢", waking: "我醒啦", thinking: "我想想呀", speaking: "我讲给你听", reading: "我仔细瞧瞧", editing: "我改改这儿", running: "我看着这一步呢", searching: "我找找线索", waiting: "我再等一会儿", success: "我先收笔啦", error: "我这步卡住啦", cancelled: "我先停下啦", compacting: "我理理前面聊的" };
@@ -77,7 +76,7 @@ export function toolResultFailed({ toolName = "", isError = false, result } = {}
   return marker !== null && Number(marker[1]) !== 0;
 }
 
-export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotationMs = 6500, now = Date.now, random = Math.random, autoGestures = false, gestureDurations = () => ({}), gapTimeoutMs = 2000, gapNow = now, interactionClips, canWelcome = () => true } = {}) {
+export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotationMs = 6500, now = Date.now, random = Math.random, autoGestures = false, gestureDurations = () => ({}), gapTimeoutMs = 2000, gapNow = now, interactionClips, demoClipId, canWelcome = () => true } = {}) {
   const labelFor = (state) => labels[state] || LABELS[state] || "我在呢";
   let seed = Math.floor(random() * 0x7fffffff), phase = "idle", phaseSince = now(), started = now();
   let busy = false, lastTextAt = -Infinity, streamOpen = false, outcome, terminalUntil = 0;
@@ -135,8 +134,8 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
   // the catalog period rather than assuming the common 4458 ms loop.
   const demoSpans = () => DEMO_SEQUENCE.map((step) => {
     if (!step.clip) return step.durationMs;
-    const id = step.reaction === "listening" ? "listen" : APPROVED_MOTION_STATES[step.phase];
-    const authored = Number(interactionClips?.()?.[id]?.periodMs);
+    const id = demoClipId?.(step);
+    const authored = Number(id && interactionClips?.()?.[id]?.periodMs);
     const clipMs = Number.isFinite(authored) && authored >= 80 ? authored : DEMO_CLIP_MS;
     return clipMs + (step.padMs || 0);
   });

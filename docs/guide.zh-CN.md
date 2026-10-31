@@ -1,10 +1,10 @@
 # pi-furry-partner · 完整使用指南
 
-> 当前原资源版：**2.5.1 / Latest**。本指南对应 main 根目录。HD 使用同一 main 的独立目录，见 [HD 指南](../editions/hd/docs/guide.zh-CN.md)；两者择一安装。全部文档见[文档入口](README.md)。
+> 当前原资源版：**2.5.2 / Latest**。本指南对应 main 根目录。HD 使用同一 main 的独立目录，见 [HD 指南](../editions/hd/docs/guide.zh-CN.md)；两者择一安装。全部文档见[文档入口](README.md)。
 
 [**简体中文**](guide.zh-CN.md) | [**English**](guide.en.md)
 
-[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [架构说明](architecture.md)
+[返回项目首页](../README.md) · [GitHub 仓库](https://github.com/KouzakiUmi/pi-furry-partner#readme) · [下载 v2.5.2](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2) · [架构说明](architecture.md)
 
 本指南针对 **pi-furry-partner 2.4.1**。项目原名为 `pi-wink-companion`，命令 `/mascot` 保持兼容。代码和文档采用 Apache-2.0；呜咪角色素材保留全部版权，详见文末许可。
 
@@ -32,9 +32,9 @@
 
 ## 安装与启动
 
-完整自动化验证环境覆盖 Windows、Pi 1.2.0 / 1.3.0、Windows PowerShell 5.1 / PowerShell 7，包含原生中文界面与文档提示精简。未知 Pi 版本继续安全回退。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用；它不替代 Windows 安装脚本检查。请先安装并配置好 Pi。
+完整自动化验证环境覆盖 Windows、Pi 1.2.0 / 1.3.0 / 1.4.0、Windows PowerShell 5.1 / PowerShell 7，包含原生中文界面与文档提示精简。未知 Pi 版本继续安全回退。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用；它不替代 Windows 安装脚本检查。请先安装并配置好 Pi。
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2) 下载 ZIP 并解压。关闭 Pi，在解压后的**项目根目录**（有 `install.ps1` 的目录）打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -83,7 +83,7 @@ Kitty 使用 Pi 的原生图片编码与生命周期；插件自行编码 Sixel�
 也可以通过 [Pi 官方包管理器](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)安装固定版本：
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.2
 ```
 
 该路线加载 `package.json` 声明的扩展和主题，**不运行 `install.ps1`，不迁移旧脚本目录，也不设置上表中的四个 Pi UI 选项**。重启后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。此路线的源码与 `config.json` 位于 Pi 管理的 Git 包目录，不在上文的手动扩展目录；用 `/mascot` 命令调整偏好即可。
@@ -287,13 +287,13 @@ regular 模式中的居中提问框不会隐藏左下方未被覆盖的头像；
 
 这两项功能分别默认开启，与角色显示、`language` 和 `persona` 语气开关独立。中文模式下，`locale` 只处理界面文字；英文模式暂停中文补丁并保留其开关偏好。`prompt` 只精简下一轮请求中已确认的 Pi 原生文档提示章节，按实际语言使用精简中文或精简英文；身份说明、工具清单和规则继续由 Pi 原生流程构建。可以单独开启其中任何一项，无需启用呜咪语气，也不改变模型、工具权限或现有任务要求。
 
-原生界面中文使用 **Pi 1.2.0 / 1.3.0 兼容层**，覆盖已识别的原生组件中的固定标题、设置标签、说明和操作提示，包括设置、思考等级、模型、会话、对话树、主题、登录，以及部分选择框、输入框和编辑框提示；另外翻译 24 个内置斜杠命令的补全说明。命令名、参数提示、补全值和实际执行逻辑保持原样。补全翻译同时核对内置命令名、原始英文说明和命令输入位置，因此同名文件、技能及说明不同的第三方命令不会被套用翻译。
+原生界面中文使用 **Pi 1.2.0 / 1.3.0 / 1.4.0 兼容层**，覆盖已识别的原生组件中的固定标题、设置标签、说明和操作提示，包括设置、思考等级、模型、会话、对话树、主题、登录，以及部分选择框、输入框和编辑框提示；另外翻译 24 个内置斜杠命令的补全说明。命令名、参数提示、补全值和实际执行逻辑保持原样。补全翻译同时核对内置命令名、原始英文说明和命令输入位置，因此同名文件、技能及说明不同的第三方命令不会被套用翻译。
 
 `/settings` 主列表支持搜索中文名称和说明，例如“界面模式”或“原生滚动记录”；英文 `TUI`、`mode` 继续使用原生匹配顺序。输入文字和筛选后的设置项保持原样，选中后仍保存 Pi 原始值。模型、会话、主题及独立思考选择器的搜索沿用 Pi 原生规则。
 
 这是部分界面覆盖。模型与 provider 名称、主题名、会话名、用户输入、路径、URL、认证码、正文和工具输出保留原文；动态认证说明、服务商错误、会话状态错误及未识别的第三方界面也不翻译。会话与对话树的列表正文保持原样，扩展弹窗的动态标题和选项保留原文，只处理已知的固定提示。`regular`、`fullscreen`、布尔值及思考等级等内部保存值不变。兼容层不改 Pi 安装文件；其他版本（包括未来补丁版本）或未匹配的文字会保留原文。`/mascot locale on` 或 `off` 在下一次绘制或打开原生菜单时生效，不需要重新发送当前请求。
 
-文档提示精简当前按 Pi **1.2.0 / 1.3.0** 的原生默认结构核对，只替换精确识别的文档提示 `docs` 章节；文档与示例路径、完整阅读和交叉引用要求保留。身份前言、工具清单和规则保持原生，后续扩展新增的工具、片段与指南仍可动态参与构建。自定义 `SYSTEM.md`、显式强制系统提示词、自定义文档章节、项目 `AGENTS.md`、技能及其它动态上下文保持原样。遇到未知版本或结构时跳过，不进行整段猜译，也不强制返回整串系统提示词。表达更短不保证不同模型中的 token 数按固定比例减少。
+文档提示精简当前按 Pi **1.2.0 / 1.3.0 / 1.4.0** 的原生默认结构核对，只替换精确识别的文档提示 `docs` 章节；文档与示例路径、完整阅读和交叉引用要求保留。身份前言、工具清单和规则保持原生，后续扩展新增的工具、片段与指南仍可动态参与构建。自定义 `SYSTEM.md`、显式强制系统提示词、自定义文档章节、项目 `AGENTS.md`、技能及其它动态上下文保持原样。遇到未知版本或结构时跳过，不进行整段猜译，也不强制返回整串系统提示词。表达更短不保证不同模型中的 token 数按固定比例减少。
 
 `/mascot prompt on` 或 `off` 从 Pi 交互终端的下一轮请求生效，不重写历史。精简内容由 `lib/native-prompt.mjs` 按已确认的文档章节结构生成，关闭后撤掉该章节替换，与角色口吻分开控制。仓库保留的 `prompts/pi-system-zh.md`、`prompts/pi-system-en.md` 及完整提示词格式化纯函数用于离线开发，不会在运行时整段覆盖 Pi 的系统提示词。界面中文和文档提示精简均不额外请求翻译模型；卸载扩展后，后续启动使用 Pi 原生界面与提示词行为。
 
@@ -380,7 +380,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 ### 界面仍有英文
 
-中文兼容层只匹配 Pi 1.2.0 / 1.3.0 已知的固定界面文案。模型名、主题名、会话正文、路径、服务商信息和第三方插件动态内容本来就保留原文。先用 `/mascot locale status` 查看开关，再核对 Pi 版本。
+中文兼容层只匹配 Pi 1.2.0 / 1.3.0 / 1.4.0 已知的固定界面文案。模型名、主题名、会话正文、路径、服务商信息和第三方插件动态内容本来就保留原文。先用 `/mascot locale status` 查看开关，再核对 Pi 版本。
 
 ### 关闭头像后仍是可爱口吻
 
@@ -419,7 +419,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\installer.ps1 -W
 
 `npm test` 的单元与素材测试覆盖活动状态、说话节奏、短句轮换、输入区几何、footer 数据来源与宽度、渲染传输、鼠标控件和透明帧，也验证原生组件中文的显示与原始数据还原、中文开关、24 个内置命令补全说明及文件和第三方补全不变，以及精简提示词对原生默认段落的识别、自定义和动态内容保留、关闭与不兼容结构回退。补全测试使用真实 `CombinedAutocompleteProvider` 检查补全应用结果保持一致。
 
-Pi 1.2.0 / 1.3.0 均运行完整测试，覆盖真实扩展集成、中文界面、提示词边界、Sixel、Kitty、鼠标、输入、布局及命令补全。CI 使用两版运行时矩阵。`node tests/legacy-resources.mjs` 按 v2.4.0 Git 对象生成的 SHA-256 清单核对所有原始素材与提示词，也可用于解压后的发行包。此前 NixOS / Kitty 实机检查是补充验证，不能覆盖所有终端、字体、窗口尺寸或扩展组合。
+Pi 1.2.0 / 1.3.0 / 1.4.0 均运行完整测试，覆盖真实扩展集成、中文界面、提示词边界、Sixel、Kitty、鼠标、输入、布局及命令补全。CI 使用三个版本的运行时矩阵。`node tests/legacy-resources.mjs` 按 v2.4.0 Git 对象生成的 SHA-256 清单核对所有原始素材与提示词，也可用于解压后的发行包。此前 NixOS / Kitty 实机检查是补充验证，不能覆盖所有终端、字体、窗口尺寸或扩展组合。
 
 隔离安装测试使用临时 `AgentDir`，覆盖首次安装、1.x 配置迁移、2.x 配置除旧风格 ID 外逐字节保留、角色模板部署与 `persona` 偏好保留、中文 UTF-8、四个 UI 字段备份与恢复，以及 `tuiMode` 缺失、原先为 `regular`、旧 manifest 升级和用户后续改值的情况。运行后由测试脚本生成本地验证报告，不会更改真实 `~/.pi`。这些检查不等同于对所有终端、字体、窗口大小和其他扩展组合的实机验证；实际图像显示效果也取决于终端支持。
 

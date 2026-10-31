@@ -56,7 +56,7 @@ const request = (provider) => provider.getSuggestions(["/settings"], 0, 9, { sig
 const englishDescription = "Open settings menu", chineseDescription = "打开设置菜单";
 function createHost() {
   const host = {
-    autocompleteProviderWrappers: [], editorComponentFactory: undefined,
+    autocompleteProviderWrappers: [], extensionDialogs: [], editorComponentFactory: undefined,
     defaultEditor: { setAutocompleteProvider(provider) { this.provider = provider; } },
     createBaseAutocompleteProvider: baseCompletion,
     setupAutocompleteProvider: InteractiveMode.prototype.setupAutocompleteProvider,

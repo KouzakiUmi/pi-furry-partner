@@ -21,7 +21,7 @@ const baseOptions = {
   sections: { date: "Current date: 2026-10-16", extra_extension: "EXTRA EXTENSION EXACT\n<docs>Do not match me</docs>" },
 };
 const apply = (options = baseOptions, extra = {}) => compactNativePrompt({ systemPrompt: buildSystemPrompt(options), piVersion: version, systemPromptOptions: options, ...extra });
-assert.deepEqual(SUPPORTED_PROMPT_PI_VERSIONS, ["1.2.0", "1.3.0"]);
+assert.deepEqual(SUPPORTED_PROMPT_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0"]);
 assert.ok(SUPPORTED_PROMPT_PI_VERSIONS.includes(version), "This offline fixture requires an explicitly reviewed Pi runtime");
 
 const original = buildSystemPrompt(baseOptions), localized = apply();
@@ -121,7 +121,7 @@ for (const forceSystemPrompt of ["", original]) {
 }
 checks.push("User/project SYSTEM.md and forced prompts remain opaque and exact, even if they happen to begin with the native sentence");
 
-for (const piVersion of ["1.2.1", "1.4.0", "2.0.0", undefined, ""]) {
+for (const piVersion of ["1.2.1", "1.3.1", "1.5.0", "2.0.0", undefined, ""]) {
   const result = apply(baseOptions, { piVersion });
   assert.equal(result.systemPrompt, original); assert.equal(result.reason, "unsupported-version");
 }

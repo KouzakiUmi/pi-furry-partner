@@ -1,6 +1,6 @@
 # 文档入口
 
-当前维护结构：只维护 `main`。根目录为原资源版 **2.5.1**，`editions/hd/` 为独立 HD 源码 **2.5.1-preview.6**；HD 当前没有新的独立 Release。两套运行时代码、动作定义、测试和包互不导入。DSH 在 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner) 独立维护。
+当前维护结构：只维护 `main`。根目录为原资源版 **2.5.2**（Latest），`editions/hd/` 为独立 HD 源码 **2.5.1-preview.6**，以 `hd-v2.5.1-preview.6` 发布且不设 Latest。两套运行时代码、动作定义、测试和包互不导入。DSH 在 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner) 独立维护。
 
 | 用途 | 原资源版 | HD |
 | --- | --- | --- |

@@ -2,6 +2,22 @@
 
 main 根目录维护原资源版，editions/hd/ 维护独立 HD 源码。v 标签发布原版 Latest，hd-v 标签发布 HD 且 latest=false。DSH 独立维护；下方旧版本记录保留历史说明。
 
+## 2.5.2 · 2026-10-31
+
+### 简体中文
+
+- 中文界面适配扩展到 Pi 1.4.0：原生设置组件、命令补全说明与默认提示章节结构与 1.2.0／1.3.0 共用同一套已复核结构，版本白名单与 CI 同步。
+- 新增 Pi 1.4.0 的 `/share` 会话分享目标设置及说明的中文本地化，通过适配层常量补充，不改动已冻结的 v2.4.0 界面资源字节；未知版本或结构变化仍回退原生行为。
+- 保留全部 507 个 v2.4.0 原资源文件、四种外观与原有动作路由，以及 2.5.1 的 `/mascot action`、任务抢占和分层补全。
+- 同一 main 的 `editions/hd/` 另行发布 `hd-v2.5.1-preview.6`（latest=false），本版本不包含 HD 素材或运行时。
+
+### English
+
+- Extend the Chinese interface adaptation to Pi 1.4.0: native settings components, command descriptions and default prompt section structure are reviewed alongside 1.2.0/1.3.0, with the version allow-list and CI updated together.
+- Localize Pi 1.4.0's `/share` session-share destination setting and description through adapter constants, without changing the frozen v2.4.0 interface asset bytes; unknown versions or changed shapes still fall back to native behavior.
+- Preserve all 507 original v2.4.0 files, the four styles and original action routing, plus 2.5.1's `/mascot action`, task preemption and hierarchical completion.
+- `editions/hd/` on the same main ships separately as `hd-v2.5.1-preview.6` (latest=false); this release contains no HD artwork or runtime.
+
 ## 2.5.1 · 2026-10-25
 
 ### 简体中文

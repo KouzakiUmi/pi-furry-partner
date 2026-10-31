@@ -10,14 +10,14 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Pi 2.5.1](https://img.shields.io/badge/Pi-2.5.1-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1)
-[![Pi](https://img.shields.io/badge/Pi-1.2.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
+[![Pi 2.5.2](https://img.shields.io/badge/Pi-2.5.2-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2)
+[![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 Pi 2.5.1**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
+[**下载 Pi 2.5.2**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
 
-本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.1**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
+本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.2**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -95,13 +95,13 @@
 
 ## 安装
 
-需要先安装并配置 Pi。完整自动化验证覆盖 **Windows、Pi 1.2.0 / 1.3.0、Windows PowerShell 5.1 / PowerShell 7**。原生中文界面与 Pi 文档提示精简仅启用明确审阅过的 1.2.0 / 1.3.0，未知版本保留 Pi 原有行为。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用。图片使用 Kitty PNG、Sixel 或真彩色半块字符；终端支持会影响清晰度。
+需要先安装并配置 Pi。完整自动化验证覆盖 **Windows、Pi 1.2.0 / 1.3.0 / 1.4.0、Windows PowerShell 5.1 / PowerShell 7**。原生中文界面与 Pi 文档提示精简仅启用明确审阅过的 1.2.0 / 1.3.0 / 1.4.0，未知版本保留 Pi 原有行为。此前在 **NixOS 26.05 (Yarara)、Pi 1.3.0、Kitty 0.49.1**（`TERM=xterm-kitty`）完成的实机补充验证继续适用。图片使用 Kitty PNG、Sixel 或真彩色半块字符；终端支持会影响清晰度。
 
 两种安装方式选一种，避免把同一插件加载两次。
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.1) 下载 `pi-furry-partner-2.5.1.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2) 下载 `pi-furry-partner-2.5.2.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -115,7 +115,7 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.2
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
@@ -182,7 +182,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
 
 三者都支持 `status`。`/mascot off` 关闭界面角色；这些开关各自保留，需要分别关闭。
 
-- **界面中文**：中文模式下，兼容 Pi **1.2.0 / 1.3.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
+- **界面中文**：中文模式下，兼容 Pi **1.2.0 / 1.3.0 / 1.4.0** 的已知固定界面文字，以及 24 个内置命令补全说明。设置主列表可搜索中文标签。英文模式保留原生英文，其他版本或未知内容保留原文。
 - **Pi 文档提示精简**：下一轮请求中，仅将精确识别的 Pi 文档提示章节改成简洁中文或英文，保留文档路径、完整阅读和交叉引用要求。身份说明、工具清单与规则保持原生；自定义 `SYSTEM.md`、项目 `AGENTS.md`、技能和后续扩展加入的动态内容继续沿用。关闭后不替换该文档章节。表达更短不代表所有模型的 token 都按相同比例减少。
 - **角色口吻**：温柔、可爱、活泼，带一点俏皮；关键事情认真稳重。中英文各有独立模板，随当前语言选用；只调整表达，技术准确性、代码和结构化输出优先。
 
@@ -198,7 +198,7 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.1
 | 查看这次发布的变化 | [更新记录](CHANGELOG.md) |
 | 报告问题或提出建议 | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容、提示词边界及分级命令补全；Pi 1.2.0 / 1.3.0 均运行完整套件。安装、迁移与恢复使用隔离目录。原始资源 SHA-256 基线取自 v2.4.0 Git 对象，`node tests/legacy-resources.mjs` 也可验证解压后的发行包。环境准备见[贡献指南](CONTRIBUTING.md)。
+测试覆盖状态节奏、输入区布局、鼠标路由、Kitty PNG/Sixel 数据流、中文兼容、提示词边界及分级命令补全；Pi 1.2.0 / 1.3.0 / 1.4.0 均运行完整套件。安装、迁移与恢复使用隔离目录。原始资源 SHA-256 基线取自 v2.4.0 Git 对象，`node tests/legacy-resources.mjs` 也可验证解压后的发行包。环境准备见[贡献指南](CONTRIBUTING.md)。
 
 ## 许可与致谢
 

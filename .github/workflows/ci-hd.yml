@@ -26,21 +26,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
-        with:
-          node-version: '24'
-      - run: node scripts/verify-pi-line.mjs
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Verify the HD product line
+        run: nix develop ../..#hd --command node scripts/verify-pi-line.mjs
   optional-site:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '24'
-      - name: Build and verify the preserved static website
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Build and verify the preserved static website package
         run: |
-          npm run build:site
-          npm run test:site
+          if [[ -f ../../flake.nix ]]; then
+            nix build ../..#site-hd
+          else
+            npm run build:site
+            npm run test:site
+          fi
   windows:
     runs-on: windows-latest
     steps:

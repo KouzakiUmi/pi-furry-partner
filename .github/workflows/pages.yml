@@ -15,13 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '24'
-      - name: Build static homepage
-        run: node scripts/build-site.mjs
-      - name: Validate site and links
-        run: node scripts/test-site.mjs
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Build and verify the static homepage package
+        run: |
+          if [[ -f flake.nix ]]; then
+            nix build .#site-original
+            rm -rf dist
+            mkdir -p dist
+            cp -R result/. dist/
+          else
+            node scripts/build-site.mjs
+            node scripts/test-site.mjs
+          fi
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:

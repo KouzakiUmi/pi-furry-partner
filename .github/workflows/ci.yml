@@ -25,25 +25,41 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ inputs.ref || github.ref }}
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7; fallback for historical tag reruns without flake.nix
         with:
           node-version: '24'
-      - run: node scripts/verify-legacy-line.mjs
-      - run: node tests/legacy-release.mjs
-      - run: node tests/legacy-resources.mjs
+      - name: Verify the original-resource release line
+        run: |
+          if [[ -f flake.nix ]]; then
+            nix develop .#default --command bash -euo pipefail -c '
+              node scripts/verify-legacy-line.mjs
+              node tests/legacy-release.mjs
+              node tests/legacy-resources.mjs
+            '
+          else
+            node scripts/verify-legacy-line.mjs
+            node tests/legacy-release.mjs
+            node tests/legacy-resources.mjs
+          fi
   optional-site:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ inputs.ref || github.ref }}
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7; fallback for historical tag reruns without flake.nix
         with:
           node-version: '24'
-      - name: Build and verify the preserved static website
+      - name: Build and verify the preserved static website package
         run: |
-          npm run build:site
-          npm run test:site
+          if [[ -f flake.nix ]]; then
+            nix build .#site-original
+          else
+            npm run build:site
+            npm run test:site
+          fi
   windows:
     runs-on: windows-latest
     strategy:

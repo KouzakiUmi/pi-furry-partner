@@ -3,10 +3,10 @@ name: CI · Pi HD
 on:
   push:
     branches: [main]
-    paths: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+    paths: ['editions/hd/**', 'flake.nix', 'flake.lock', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
   pull_request:
     branches: [main]
-    paths: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+    paths: ['editions/hd/**', 'flake.nix', 'flake.lock', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
   workflow_dispatch:
   workflow_call:
 

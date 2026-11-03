@@ -18,7 +18,11 @@
         let
           pkgs = import nixpkgs { inherit system; };
           node = pkgs.nodejs_24;
-          mkSitePackage = { pname, version, projectDir }:
+          mkSitePackage = { pname, versionFile, projectDir }:
+            let
+              # Keep the package version aligned with the edition's own manifest.
+              version = (builtins.fromJSON (builtins.readFile versionFile)).version;
+            in
             pkgs.stdenvNoCC.mkDerivation {
               inherit pname version;
               src = self;
@@ -46,13 +50,13 @@
         {
           site-original = mkSitePackage {
             pname = "pi-furry-partner-site-original";
-            version = "2.5.1";
+            versionFile = ./package.json;
             projectDir = ".";
           };
 
           site-hd = mkSitePackage {
             pname = "pi-furry-partner-site-hd";
-            version = "2.5.1-preview.6";
+            versionFile = ./editions/hd/package.json;
             projectDir = "editions/hd";
           };
         });

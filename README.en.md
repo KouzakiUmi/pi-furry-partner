@@ -10,14 +10,14 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Pi 2.5.2](https://img.shields.io/badge/Pi-2.5.2-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2)
+[![Pi 2.5.3](https://img.shields.io/badge/Pi-2.5.3-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.3)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download Pi 2.5.2**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md) · [All documentation](docs/README.md)
+[**Download Pi 2.5.3**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.3) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md) · [All documentation](docs/README.md)
 
-The root package maintains the **original-resource Pi edition**, preserving the v2.4.0 assets, four styles and action routing with compatibility and rendering fixes. **v2.5.2** is the stable Latest release. DSH is maintained in [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). See [release rules](docs/release-line.md).
+The root package maintains the **original-resource Pi edition**, preserving the v2.4.0 assets, four styles and action routing with compatibility and rendering fixes. **v2.5.3** is the stable Latest release. DSH is maintained in [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner). See [release rules](docs/release-line.md).
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -101,7 +101,7 @@ Choose one installation route to avoid loading the extension twice.
 
 ### Complete Windows installation
 
-Download `pi-furry-partner-2.5.2.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.2), extract it, close Pi, and open PowerShell in the extracted directory:
+Download `pi-furry-partner-2.5.3.zip` from [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.3), extract it, close Pi, and open PowerShell in the extracted directory:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -115,7 +115,7 @@ If you used **pi-wink-companion**, run the new installer directly: it backs up a
 ### Pi package manager
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.2
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.3
 ```
 
 This loads the extension and theme through the package manifest. It **does not run the PowerShell installer or configure Pi's four UI options**. Restart Pi, select `pi-furry-night` with `/theme`, and choose your interface mode in `/settings`. The Git tag pins your version; choose a newer release tag when updating. See [Pi's package documentation](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md).

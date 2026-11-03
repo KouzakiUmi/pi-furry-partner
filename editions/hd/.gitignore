@@ -19,6 +19,9 @@ assets/poses/*.before-*.png
 Thumbs.db
 *.tgz
 
+# Nix build output for `nix build ../..#site-hd` run from this directory.
+result
+
 # Keep reviewed production references in Git; large generation sessions stay
 # locally available for history and are not build inputs.
 /Hi-Res/sources/*

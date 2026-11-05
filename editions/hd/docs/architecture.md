@@ -39,8 +39,8 @@ flowchart TD
 
 ## UI、安装与验证
 
-只有 umi 插画风格，历史像素设置迁移为插画。language、locale、prompt 和 persona 偏好彼此独立；原生中文与提示精简仅启用审阅过的 Pi 1.2.0 / 1.3.0 / 1.4.0，未知版本与用户动态内容保留原样。
+只有 umi 插画风格，历史像素设置迁移为插画。language、locale、prompt 和 persona 偏好彼此独立；原生中文与提示精简仅启用审阅过的 Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0，未知版本与用户动态内容保留原样。
 
 Kitty / Sixel / blocks 的选择由实际终端能力决定。fullscreen 使用原生鼠标路由，regular 使用快捷键提示；编辑、选区、IME 和发送不被动画接管。协议与本地模拟检查不等于所有终端目视验收。
 
-安装器只部署所选产品的 index/lib/assets/prompts，保持备份和用户后续设置；包管理与脚本安装择一。CI 在本目录分别运行 Pi 1.2.0 / 1.3.0 / 1.4.0、原始像素与来源校验，以及 PowerShell 5.1 / 7 安装恢复。发布只从 main 的 hd-v 标签构建本目录包，不设 Latest。
+安装器只部署所选产品的 index/lib/assets/prompts，保持备份和用户后续设置；包管理与脚本安装择一。CI 在本目录分别运行 Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0、原始像素与来源校验，以及 PowerShell 5.1 / 7 安装恢复。发布只从 main 的 hd-v 标签构建本目录包，不设 Latest。

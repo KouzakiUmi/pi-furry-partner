@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
 import { installChineseUi, SUPPORTED_UI_PI_VERSIONS } from "../lib/ui-chinese.mjs";
 
-assert.deepEqual(SUPPORTED_UI_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0"],
+assert.deepEqual(SUPPORTED_UI_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0", "1.5.0"],
   "Only the explicitly reviewed releases are enabled");
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");

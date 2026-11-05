@@ -1,8 +1,9 @@
-// Pi 1.2/1.3 built-in command descriptions only. The two English forms account
-// for a SlashCommand's optional argumentHint, which CombinedAutocompleteProvider
-// prepends to its description. Pi 1.3 changed the /share wording, so both the
-// reviewed 1.2 and 1.3 descriptions are translated. Command names and argument
-// syntax stay intact.
+// Pi 1.2/1.3/1.4/1.5 built-in command descriptions only. The two English forms
+// account for a SlashCommand's optional argumentHint, which
+// CombinedAutocompleteProvider prepends to its description. Pi 1.3 changed the
+// /share wording and Pi 1.5 changed the /import and /resume wording, so every
+// reviewed description is translated. Command names and argument syntax stay
+// intact.
 import { mascotDescription } from "./language.mjs";
 const BUILTINS = [
   ["settings", "Open settings menu", "打开设置菜单"],
@@ -12,6 +13,7 @@ const BUILTINS = [
   ["scoped-models", "Enable/disable models for Ctrl+P cycling", "启用或停用 Ctrl+P 轮换的模型"],
   ["export", "Export session (HTML default, or specify path: .html/.jsonl)", "导出会话（默认 HTML，也可指定 .html/.jsonl 路径）"],
   ["import", "Import and resume a session from a JSONL file", "从 JSONL 文件导入并恢复会话"],
+  ["import", "Import a JSONL session, preserving its ID and working directory", "导入 JSONL 会话，保留其 ID 与工作目录"],
   ["share", "Share session as a secret GitHub gist", "创建未公开列出的 GitHub Gist 来分享会话"],
   ["share", "Share session via a Radius artifact or a GitHub gist", "通过 Radius 制品或 GitHub Gist 分享会话"],
   ["bug", "Report a bug to the Pi developers", "向 Pi 开发者报告问题", "<description>"],
@@ -28,6 +30,7 @@ const BUILTINS = [
   ["new", "Start a new session", "开始新会话"],
   ["compact", "Manually compact the session context", "手动压缩会话上下文"],
   ["resume", "Resume a different session", "恢复另一个会话"],
+  ["resume", "Resume another session", "恢复另一个会话"],
   ["reload", "Reload keybindings, extensions, skills, prompts, themes, and context files", "重新加载快捷键、扩展、技能、提示词、主题和上下文文件"],
   ["quit", "Quit pi", "退出 pi"],
 ];

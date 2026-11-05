@@ -1,6 +1,6 @@
 {
   "locale": "zh-CN",
-  "compatibility": "Pi 1.2.0, 1.3.0 and 1.4.0 native TUI display only",
+  "compatibility": "Pi 1.2.0, 1.3.0, 1.4.0 and 1.5.0 native TUI display only",
   "settings": {
     "autocompact": ["Auto-compact", "自动压缩上下文"],
     "steering-mode": ["Steering mode", "执行中消息投递"],

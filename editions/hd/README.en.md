@@ -1,5 +1,5 @@
-> **Independent Pi HD line · 2.5.1-preview.6**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
-> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. `hd-v2.5.1-preview.6` (latest=false) is published with the package attached; installation from the `editions/hd/` directory still works. See the [build guide](docs/plugin-lines.md).
+> **Independent Pi HD line · 2.5.1-preview.7**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
+> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. `hd-v2.5.1-preview.7` (latest=false) is published with the package attached; installation from the `editions/hd/` directory still works. See the [build guide](docs/plugin-lines.md).
 > [All documentation](../../docs/README.md) · [HD guide](docs/guide.en.md) · [Release rules](../../docs/release-line.md). The 29 complete clips are distinct from 17 selectable gestures. A remote Git install reads the root manifest; select HD through its local subdirectory or a dedicated package.
 
 
@@ -15,12 +15,12 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release 2.5.1-preview.6](https://img.shields.io/badge/HD-2.5.1-preview.6-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6)
+[![Release 2.5.1-preview.7](https://img.shields.io/badge/HD-2.5.1-preview.7-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download full-animation 2.5.1-preview.6**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6) · [Original-art original-resource v2.5.1](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download full-animation 2.5.1-preview.7**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7) · [Original-art original-resource v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -58,7 +58,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **HD full-animation remake 2.5.1-preview.6** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.1** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **HD full-animation remake 2.5.1-preview.7** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.4** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
@@ -103,15 +103,15 @@ These are offline exports. The local `preview.html` can demonstrate states and l
 
 **High-resolution portraits support Kitty Graphics Protocol or Sixel.** With `render auto`, Pi's detected Kitty image capability takes priority, followed by Sixel in Windows Terminal outside tmux, then character blocks. You can also select `/mascot render kitty`, `sixel` or `blocks`. On Windows, use **Windows Terminal 1.22 or newer** (Settings → About). Images are encoded by the plugin; no libsixel, chafa or image conversion tool is needed. See [terminal requirements and high-resolution display](docs/guide.en.md#terminal-requirements-and-high-resolution-display).
 
-Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, 1.3.0 and 1.4.0, Windows PowerShell 5.1 and PowerShell 7**; the full suite passes on all three releases, and the native Chinese UI patch and concise Pi documentation hints are enabled for all three. Other versions keep Pi's original behavior. Upstream also records a native check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1**, covering portrait display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction. That historical check does not establish a fresh validation of the current full-animation release on NixOS. Terminal support affects visual quality.
+Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, 1.3.0, 1.4.0 and 1.5.0, Windows PowerShell 5.1 and PowerShell 7**; the full suite passes on all four releases, and the native Chinese UI patch and concise Pi documentation hints are enabled for all four. Other versions keep Pi's original behavior. Upstream also records a native check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1**, covering portrait display, live animation, `auto`/`kitty`/`blocks` switching and ordinary interaction. That historical check does not establish a fresh validation of the current full-animation release on NixOS. Terminal support affects visual quality.
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-`hd-v2.5.1-preview.6` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.6); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.1 branch](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
+`hd-v2.5.1-preview.7` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
 
-| Platform | Full-animation 2.5.1-preview.6 |
+| Platform | Full-animation 2.5.1-preview.7 |
 | --- | --- |
-| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.6-pi-core.tgz` |
+| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.7-pi-core.tgz` |
 
 GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. HD builds independently of Legacy source.
 
@@ -188,7 +188,7 @@ English mode uses Pi's native English interface. The `locale` preference is reta
 
 All three accept `status`. `/mascot off` hides the companion; the independent switches retain their settings and can be disabled separately.
 
-- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0, 1.3.0 and 1.4.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
+- **Native Chinese UI:** in Chinese mode, translates known fixed UI labels in **Pi 1.2.0, 1.3.0, 1.4.0 and 1.5.0** and 24 built-in command descriptions. Chinese labels are searchable in the main settings list. English mode uses native English; unknown versions and unmatched content retain their original text.
 - **Concise Pi documentation hints:** condenses only the precisely recognized documentation-hint section into Chinese or English for the next request, retaining documentation paths, complete-file reading and cross-reference requirements. Pi's identity, tool list and rules stay native. Custom `SYSTEM.md`, project `AGENTS.md`, skills and dynamic content added by later extensions remain live. Disabling it removes this documentation-section replacement. Shorter wording does not imply the same token reduction for every model.
 - **Character voice:** gentle, cute, lively and a little playful, while serious and steady where it matters. Separate Chinese and English templates follow your language choice. They adjust expression; technical accuracy, code and structured output take priority.
 
@@ -204,7 +204,7 @@ Animations, local language processing, read-only panels and previews do not make
 | Release changes | [Changelog](CHANGELOG.md) |
 | Bug reports and ideas | [GitHub Issues](https://github.com/KouzakiUmi/pi-furry-partner/issues) |
 
-Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0, 1.3.0 and 1.4.0, and CI runs all three releases. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
+Tests cover activity timing, editor layout, mouse routing, Kitty PNG/Sixel data, Chinese compatibility and prompt boundaries. Installer checks use isolated directories for installation, migration and recovery. The full suite passes against Pi 1.2.0, 1.3.0, 1.4.0 and 1.5.0, and CI runs all four releases. See the contributing guide for setup. These checks do not establish support for every terminal or extension combination.
 
 The GitHub README is the project's main landing page. Optional standalone showcase source remains in `site/` and has not been published as a separate website.
 

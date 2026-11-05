@@ -3,13 +3,16 @@ import { readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { compactNativePrompt, compactNativePromptSections, addPersonaSection, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, DEFAULT_EN_PREAMBLE, SUPPORTED_PROMPT_PI_VERSIONS } from "../lib/native-prompt.mjs";
+import { compactNativePrompt, compactNativePromptSections, addPersonaSection, DEFAULT_PI_PREAMBLE, DEFAULT_ZH_PREAMBLE, DEFAULT_EN_PREAMBLE, SUPPORTED_PROMPT_PI_VERSIONS, PROMPT_PI_LAYOUTS } from "../lib/native-prompt.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { agentDir, version, modules } from "./pi-runtime.mjs";
 const { buildSystemPrompt, buildSystemPromptSections } = await import(pathToFileURL(join(modules, "@earendil-works/pi-coding-agent/dist/core/system-prompt.js")).href);
 const checks = [];
-const contextText = "Keep AGENTS exactly.\n<rules>\n- Be concise in your responses\n</rules>\n" + DEFAULT_PI_PREAMBLE;
+// The reviewed native wording differs between release lines; the fixture always
+// uses the layout of the installed runtime under test.
+const layout = PROMPT_PI_LAYOUTS[version];
+const contextText = "Keep AGENTS exactly.\n<rules>\n- Be concise in your responses\n</rules>\n" + layout.preamble;
 const baseOptions = {
   cwd: "C:\\项目\\with spaces", selectedTools: ["read", "bash"], hiddenTools: [],
   toolSnippets: { read: "DYNAMIC read snippet\n<rules>\nINNER TOOL TEXT\n</rules>", bash: "DYNAMIC bash snippet" },
@@ -108,7 +111,7 @@ for (const name of ["tools", "rules", "docs"]) {
 }
 checks.push("Per-section custom tools/rules/docs content is preserved without blocking safe localization of independent defaults");
 
-for (const customPrompt of ["My SYSTEM.md prompt", DEFAULT_PI_PREAMBLE + "\n\n<tools>custom override</tools>"]) {
+for (const customPrompt of ["My SYSTEM.md prompt", layout.preamble + "\n\n<tools>custom override</tools>"]) {
   const options = { ...baseOptions, customPrompt };
   assert.equal(apply(options).systemPrompt, buildSystemPrompt(options));
   assert.equal(apply(options).reason, "custom-system-prompt");
@@ -120,7 +123,7 @@ for (const forceSystemPrompt of ["", original]) {
 }
 checks.push("User/project SYSTEM.md and forced prompts remain opaque and exact, even if they happen to begin with the native sentence");
 
-for (const piVersion of ["1.2.1", "2.0.0", undefined, ""]) {
+for (const piVersion of ["1.2.1", "1.3.1", "1.5.1", "2.0.0", undefined, ""]) {
   const result = apply(baseOptions, { piVersion });
   assert.equal(result.systemPrompt, original); assert.equal(result.reason, "unsupported-version");
 }
@@ -137,8 +140,8 @@ checks.push("The independent switch returns each fresh original prompt unchanged
 
 const alteredTools = original.replace("DYNAMIC bash snippet", "ANOTHER UNKNOWN TOOL SNIPPET");
 const partial = apply(baseOptions, { systemPrompt: alteredTools });
-assert.equal(partial.systemPrompt, DEFAULT_ZH_PREAMBLE + alteredTools.slice(DEFAULT_PI_PREAMBLE.length));
-const alteredDocs = original.replace("- Always read pi .md files completely", "- SOME UPDATED VENDOR DOC RULE");
+assert.equal(partial.systemPrompt, DEFAULT_ZH_PREAMBLE + alteredTools.slice(layout.preamble.length));
+const alteredDocs = original.replace(layout.docsTail.split("\n").at(-1), "- SOME UPDATED VENDOR DOC RULE");
 const keepDocs = apply(baseOptions, { systemPrompt: alteredDocs });
 assert.ok(keepDocs.systemPrompt.endsWith(alteredDocs.slice(alteredDocs.indexOf("\n\n<docs>"))));
 checks.push("An unknown section skeleton stops matching at its boundary; all following text stays byte-for-byte unchanged");

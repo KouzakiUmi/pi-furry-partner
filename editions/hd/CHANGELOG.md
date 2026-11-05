@@ -1,6 +1,22 @@
 # 更新记录
 
-本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.6，已随 `hd-v2.5.1-preview.6` 发布且 latest=false；同一 main 的根目录原资源版另行发布 v2.5.2（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.7，已随 `hd-v2.5.1-preview.7` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.4（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+
+## 2.5.1-preview.7 · 2026-11-06
+
+### 简体中文
+
+- 原生中文界面、Pi 文档提示精简与内置命令补全翻译扩展到 Pi 1.5.0，白名单与 CI 同步为 1.2.0／1.3.0／1.4.0／1.5.0。
+- 提示词适配改为按发布线区分已核对的原生布局：1.2.0–1.4.0 共用原有 preamble、工具说明与 docs 段，1.5.0 使用其改写后的措辞；未知版本或结构变化继续回退原生行为。
+- 内置命令补全补上 Pi 1.5.0 改写的 `/import` 与 `/resume` 说明，命令名、参数提示与补全结果保持原样。
+- 29 段已批准动作、原生时序、索引载荷、调色板、素材哈希与戳一戳两段式行为不变；本版本不含素材或运行时改动。
+
+### English
+
+- Extend the native Chinese UI, concise Pi documentation prompt and built-in command descriptions to Pi 1.5.0, with the reviewed version list and CI updated to 1.2.0/1.3.0/1.4.0/1.5.0.
+- Prompt adaptation now selects the reviewed native layout per release line: 1.2.0–1.4.0 keep the previous preamble, tools introduction and docs section, while 1.5.0 uses its rewritten wording; unknown versions or altered shapes keep falling back to native behavior.
+- Built-in command completion gains the Pi 1.5.0 `/import` and `/resume` wording; command names, argument hints and completion results stay intact.
+- The 29 approved clips, their native timing, indexed payloads, palette, asset hashes and the two-stage poke behavior are unchanged; this release changes no artwork or runtime playback.
 
 ## 2.5.1-preview.6 · 2026-10-31
 

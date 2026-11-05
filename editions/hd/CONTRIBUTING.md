@@ -6,7 +6,7 @@
 
 ## 本地检查
 
-使用满足 package 要求的 Node.js（CI 为 Node 24），以及 tools/requirements-validation.txt 中的 Python 验证依赖。Pi 模块分别验证 1.2.0、1.3.0 与 1.4.0；不要依赖个人机器上的特定启动器布局。
+使用满足 package 要求的 Node.js（CI 为 Node 24），以及 tools/requirements-validation.txt 中的 Python 验证依赖。Pi 模块分别验证 1.2.0、1.3.0、1.4.0 与 1.5.0；不要依赖个人机器上的特定启动器布局。
 
 ```powershell
 python -m pip install -r tools/requirements-validation.txt
@@ -35,7 +35,7 @@ npm run build:site
 npm run test:site
 ```
 
-构建与审计均使用本目录源码和冻结素材，不读取相邻工作树或本机旧 work。产物在本目录 dist/releases，前缀 pi-furry-partner-hd；源码版本为 2.5.1-preview.6，尚未创建新的独立 HD Release。构建不会安装或发布。未来从 main 打 hd-v<HD package版本>，只触发 HD 发布，始终 latest=false。
+构建与审计均使用本目录源码和冻结素材，不读取相邻工作树或本机旧 work。产物在本目录 dist/releases，前缀 pi-furry-partner-hd；源码版本为 2.5.1-preview.7，随 `hd-v2.5.1-preview.7` 发布（latest=false）。构建不会安装或发布。未来从 main 打 hd-v<HD package版本>，只触发 HD 发布，始终 latest=false。
 
 ## 素材与来源
 

@@ -1,14 +1,42 @@
 // Pure, per-run localization of verified Pi defaults. Never edits vendor files,
 // user SYSTEM.md, project instructions, tool guidelines, skills or addenda.
-// Pi 1.2.0, 1.3.0 and 1.4.0 render byte-identical default preamble, rules and
-// docs sections, so one reviewed fixture covers all three releases.
-export const SUPPORTED_PROMPT_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0"]);
+// Pi 1.2.0–1.4.0 share one reviewed native layout; 1.5.0 rewrote the preamble,
+// the tools introduction and the docs section. The section skeleton, the rules
+// and the ordered suffix stay identical, so each reviewed layout is one fixture.
+export const SUPPORTED_PROMPT_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0", "1.5.0"]);
 export const NATIVE_PROMPT_PI_VERSION = SUPPORTED_PROMPT_PI_VERSIONS[0];
-export const DEFAULT_PI_PREAMBLE = "You are an expert coding assistant operating inside pi, a coding agent harness. You help users by reading files, executing commands, editing code, and writing new files.";
+// Each reviewed native layout is keyed by the Pi release that renders it. The
+// preamble, tools introduction and docs section wording are version-specific;
+// nothing else in the verified skeleton changed between them.
+const EARLY_LAYOUT = Object.freeze({
+  preamble: "You are an expert coding assistant operating inside pi, a coding agent harness. You help users by reading files, executing commands, editing code, and writing new files.",
+  toolsIntro: "In addition to the tools above, you may have access to other custom tools depending on the project.",
+  docsHeader: "Pi documentation (read only when the user asks about pi itself, its SDK, extensions, themes, skills, or TUI):",
+  docsTail: [
+    "- When reading pi docs or examples, resolve docs/... under Additional docs and examples/... under Examples, not the current working directory",
+    "- When asked about: extensions (docs/extensions.md, examples/extensions/), themes (docs/themes.md), skills (docs/skills.md), prompt templates (docs/prompt-templates.md), TUI components (docs/tui.md), keybindings (docs/keybindings.md), SDK integrations (docs/sdk.md), custom providers (docs/custom-provider.md), adding models (docs/models.md), pi packages (docs/packages.md), environment variables (docs/environment-variables.md), MCP servers (docs/mcp.md), codemode scripts and non-LLM models such as classifiers and image models (docs/codemode.md)",
+    "- When working on pi topics, read the docs and examples, and follow .md cross-references before implementing",
+    "- Always read pi .md files completely and follow links to related docs (e.g., tui.md for TUI API details)",
+  ].join("\n"),
+});
+const LATE_LAYOUT = Object.freeze({
+  preamble: "You are a coding assistant running inside pi, a coding agent harness. Help users inspect files, run commands, and modify code.",
+  toolsIntro: "Additional tools may be available.",
+  docsHeader: "Pi documentation (read only when the user asks about the harness itself, its SDK, extensions, themes, skills, or TUI):",
+  docsTail: [
+    "- When reading pi docs or examples, resolve docs/... under Additional docs and examples/... under Examples, not the current working directory",
+    "- When asked about: extensions (docs/extensions.md, examples/extensions/), themes (docs/themes.md), skills (docs/skills.md), prompt templates (docs/prompt-templates.md), TUI components (docs/tui.md), keybindings (docs/keybindings.md), SDK integrations (docs/sdk.md), custom providers (docs/custom-provider.md), adding models (docs/models.md), packages (docs/packages.md), environment variables (docs/environment-variables.md), MCP servers (docs/mcp.md), codemode scripts and non-LLM models such as classifiers and image models (docs/codemode.md)",
+    "- Before implementing harness changes, read the relevant docs and examples in full, following related cross-references.",
+  ].join("\n"),
+});
+export const PROMPT_PI_LAYOUTS = Object.freeze({
+  "1.2.0": EARLY_LAYOUT, "1.3.0": EARLY_LAYOUT, "1.4.0": EARLY_LAYOUT, "1.5.0": LATE_LAYOUT,
+});
+// Kept for callers that reference the first reviewed release's preamble directly.
+export const DEFAULT_PI_PREAMBLE = EARLY_LAYOUT.preamble;
 export const DEFAULT_ZH_PREAMBLE = "你是运行在 Pi 编程代理环境中的专业助手。通过读取文件、执行命令、编辑代码和创建文件帮助用户完成任务。必须使用中文思考和回复。";
 export const DEFAULT_EN_PREAMBLE = "You are an expert coding assistant in Pi. Help users by reading files, running commands, editing code, and creating files.";
 
-const TOOLS_INTRO = "In addition to the tools above, you may have access to other custom tools depending on the project.";
 const ZH_TOOLS_INTRO = "此外，项目可能还提供其他自定义工具。";
 const EN_TOOLS_INTRO = "The project may provide additional custom tools.";
 const EN_RULES = new Map([
@@ -25,17 +53,11 @@ const RULE_TRANSLATIONS = new Map([
   ["Be concise in your responses", "回答简洁。"],
   ["Show file paths clearly when working with files", "涉及文件时清楚展示路径。"],
 ]);
-const DOCS_HEADER = "Pi documentation (read only when the user asks about pi itself, its SDK, extensions, themes, skills, or TUI):";
-const DOCS_TAIL = [
-  "- When reading pi docs or examples, resolve docs/... under Additional docs and examples/... under Examples, not the current working directory",
-  "- When asked about: extensions (docs/extensions.md, examples/extensions/), themes (docs/themes.md), skills (docs/skills.md), prompt templates (docs/prompt-templates.md), TUI components (docs/tui.md), keybindings (docs/keybindings.md), SDK integrations (docs/sdk.md), custom providers (docs/custom-provider.md), adding models (docs/models.md), pi packages (docs/packages.md), environment variables (docs/environment-variables.md), MCP servers (docs/mcp.md), codemode scripts and non-LLM models such as classifiers and image models (docs/codemode.md)",
-  "- When working on pi topics, read the docs and examples, and follow .md cross-references before implementing",
-  "- Always read pi .md files completely and follow links to related docs (e.g., tui.md for TUI API details)",
-].join("\n");
 const escape = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const docsPattern = new RegExp("^<docs>\\n" + escape(DOCS_HEADER) +
+const docsPatternFor = ({ docsHeader, docsTail }) => new RegExp("^<docs>\\n" + escape(docsHeader) +
   "\\n- Main documentation: ([^\\n]+)\\n- Additional docs: ([^\\n]+)\\n- Examples: ([^\\n]+)" +
-  escape(" (extensions, custom tools, SDK)\n" + DOCS_TAIL + "\n</docs>"));
+  escape(" (extensions, custom tools, SDK)\n" + docsTail + "\n</docs>"));
+const docsPatterns = new Map(Object.entries(PROMPT_PI_LAYOUTS).map(([release, layout]) => [release, docsPatternFor(layout)]));
 const wrap = (name, content) => `<${name}>\n${content}\n</${name}>`;
 const measure = (text) => ({ characters: [...text].length, whitespaceWords: text.trim() ? text.trim().split(/\s+/u).length : 0 });
 
@@ -84,7 +106,7 @@ function englishDocs(readme, docs, examples) {
 }
 
 /**
- * Localize only the verified Pi 1.2.0/1.3.0/1.4.0 defaults proven by the current
+ * Localize only the verified Pi 1.2.0/1.3.0/1.4.0/1.5.0 defaults proven by the current
  * event options and exact prefix content. The untouched suffix is copied
  * byte-for-byte and in order.
  * Unknown/custom/forced prompts fail closed. This function is independent of
@@ -99,17 +121,18 @@ export function compactNativePrompt({ systemPrompt, piVersion, systemPromptOptio
   const unchanged = (reason) => ({ systemPrompt: original, changed: false, matched: false, reason, parts, sectionReplacements });
   if (!enabled) return unchanged("disabled");
   if (!["zh-CN", "en"].includes(language)) return unchanged("unsupported-language");
-  if (!SUPPORTED_PROMPT_PI_VERSIONS.includes(piVersion)) return unchanged("unsupported-version");
+  const layout = PROMPT_PI_LAYOUTS[piVersion];
+  if (!layout) return unchanged("unsupported-version");
   if (!systemPromptOptions || typeof systemPromptOptions !== "object") return unchanged("missing-options");
   if (systemPromptOptions.customPrompt) return unchanged("custom-system-prompt");
   if (systemPromptOptions.forceSystemPrompt !== undefined) return unchanged("forced-system-prompt");
   if (typeof basePrompt !== "string" || !basePrompt.trim()) return unchanged("empty-base");
   basePrompt = basePrompt.trim();
   if (original === basePrompt || original.startsWith(basePrompt + "\n\n")) return unchanged("already-localized");
-  if (!original.startsWith(DEFAULT_PI_PREAMBLE) || (original.length > DEFAULT_PI_PREAMBLE.length && !original.startsWith("\n\n<", DEFAULT_PI_PREAMBLE.length))) return unchanged("unrecognized-preamble");
-  let cursor = DEFAULT_PI_PREAMBLE.length, output = basePrompt;
+  if (!original.startsWith(layout.preamble) || (original.length > layout.preamble.length && !original.startsWith("\n\n<", layout.preamble.length))) return unchanged("unrecognized-preamble");
+  let cursor = layout.preamble.length, output = basePrompt;
   const note = (name, before, after, reason = "matched-default") => parts.push({ name, changed: before !== after, reason, before: measure(before), after: measure(after) });
-  note("preamble", DEFAULT_PI_PREAMBLE, basePrompt);
+  note("preamble", layout.preamble, basePrompt);
   const take = (name, before, after, reason) => {
     const exact = "\n\n" + wrap(name, before);
     if (!original.startsWith(exact, cursor)) {
@@ -127,7 +150,7 @@ export function compactNativePrompt({ systemPrompt, piVersion, systemPromptOptio
   const declared = selected.filter((name) => !(systemPromptOptions.hiddenTools || []).includes(name));
   const visible = declared.filter((name) => !!systemPromptOptions.toolSnippets?.[name]);
   const toolList = visible.length ? visible.map((name) => `- ${name}: ${systemPromptOptions.toolSnippets[name]}`).join("\n") : "(none)";
-  const tools = `${toolList}\n\n${TOOLS_INTRO}`;
+  const tools = `${toolList}\n\n${layout.toolsIntro}`;
   const english = language === "en";
   if (!take("tools", custom.tools || tools, custom.tools || `${visible.length ? toolList : english ? "(none)" : "（无）"}\n\n${english ? EN_TOOLS_INTRO : ZH_TOOLS_INTRO}`, custom.tools ? "custom-section-preserved" : undefined)) return finish();
   const entries = defaultRules(systemPromptOptions, declared);
@@ -138,7 +161,7 @@ export function compactNativePrompt({ systemPrompt, piVersion, systemPromptOptio
     take("docs", custom.docs, custom.docs, "custom-section-preserved");
     return finish();
   }
-  const docsMatch = original.slice(cursor).startsWith("\n\n") && docsPattern.exec(original.slice(cursor + 2));
+  const docsMatch = original.slice(cursor).startsWith("\n\n") && docsPatterns.get(piVersion).exec(original.slice(cursor + 2));
   if (docsMatch) {
     const localizedDocs = (english ? englishDocs : chineseDocs)(docsMatch[1], docsMatch[2], docsMatch[3]);
     output += "\n\n" + wrap("docs", localizedDocs);

@@ -117,7 +117,7 @@ GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运
 
 ### Nix 安装
 
-Nix 用户可构建经双 Pi 运行时测试、归档审计和解包读取器验证的 HD Pi 包，再让 Pi 从稳定的 GC root 加载它：
+Nix 用户可构建经固定 Pi 1.2.0、1.3.0、1.4.0 与 1.5.0 运行时测试、归档审计和解包读取器验证的 HD Pi 包，再让 Pi 从稳定的 GC root 加载它：
 
 ```sh
 extension_link="${XDG_DATA_HOME:-$HOME/.local/share}/pi-furry-partner/hd-extension"

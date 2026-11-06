@@ -13,6 +13,8 @@
         "aarch64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
+      originalVersion = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+      hdVersion = (builtins.fromJSON (builtins.readFile ./editions/hd/package.json)).version;
       # One filtered input per consumer. Both the packages and the checks need
       # these trees, so they live outside forAllSystems: a source path does not
       # depend on the target system.
@@ -86,14 +88,13 @@
             pythonPackages.numpy
             pythonPackages.pillow
           ]);
-          # Bind these to the HD tree, not to the whole flake source. Deriving
-          # them from `self` made any unrelated edit rehash the Pi test runtimes,
-          # which in turn invalidated the HD derivation and re-ran its full test
-          # suite locally, while a clean CI checkout never saw the churn.
+          # Bind each runtime to its own directory, not to the whole flake
+          # source. Deriving it from `self` made unrelated edits rehash the Pi
+          # test runtimes and re-run the full HD suite locally.
           testRuntimeSource =
             runtimeName:
             builtins.path {
-              path = hdSource + "/editions/hd/test-runtimes/${runtimeName}";
+              path = ./editions/hd/test-runtimes + "/${runtimeName}";
               name = "pi-test-runtime-${runtimeName}";
             };
           mkPiTestRuntime =
@@ -122,6 +123,16 @@
             runtimeName = "pi-1.3";
             version = "1.3.0";
             npmDepsHash = "sha256-BSJT7Vj4ag8EJ+qnV49pM+SOV3iIeTjyXk/ykTcPDE0=";
+          };
+          piTestRuntime14 = mkPiTestRuntime {
+            runtimeName = "pi-1.4";
+            version = "1.4.0";
+            npmDepsHash = "sha256-5ueRyXcWkmYyaB75mfQSHbwIh8MZn5xSHy67AKMZE+E=";
+          };
+          piTestRuntime15 = mkPiTestRuntime {
+            runtimeName = "pi-1.5";
+            version = "1.5.0";
+            npmDepsHash = "sha256-sdGC7Bpjual3rhCXZ6eeeV25PZ7N3dDaUyHGwRRyI/s=";
           };
           mkSitePackage =
             {
@@ -159,10 +170,10 @@
           # Both public HD outputs share one verified build. Its default output
           # is the unpacked Pi package tree; `bundle` is the release archive
           # and reports. Do not split this into two derivations: either output
-          # must run the same dual-runtime suite, audit and package smoke test.
+          # must run the same fixed-runtime suite, audit and package smoke test.
           piHdBuild = pkgs.stdenvNoCC.mkDerivation {
             pname = "pi-furry-partner-hd";
-            version = "2.5.1-preview.6";
+            version = hdVersion;
             outputs = [
               "out"
               "bundle"
@@ -173,6 +184,8 @@
               pythonWithValidation
               piTestRuntime12
               piTestRuntime13
+              piTestRuntime14
+              piTestRuntime15
             ];
             dontConfigure = true;
 
@@ -185,7 +198,9 @@
               cd "$sourceDir"
               python tools/build-editions.py --edition full-animation --platform pi --test \
                 --test-modules "${piTestRuntime12}/node_modules" \
-                --test-modules "${piTestRuntime13}/node_modules"
+                --test-modules "${piTestRuntime13}/node_modules" \
+                --test-modules "${piTestRuntime14}/node_modules" \
+                --test-modules "${piTestRuntime15}/node_modules"
               python tools/audit-edition-bundles.py
               python tools/write-edition-release.py
               runHook postBuild
@@ -208,7 +223,7 @@
         {
           pi-original-extension =
             let
-              extensionVersion = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+              extensionVersion = originalVersion;
             in
             pkgs.stdenvNoCC.mkDerivation {
               pname = "pi-furry-partner-original";
@@ -242,7 +257,7 @@
 
           pi-original-zip =
             let
-              releaseVersion = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+              releaseVersion = originalVersion;
             in
             pkgs.stdenvNoCC.mkDerivation {
               pname = "pi-furry-partner-release-zip";
@@ -276,6 +291,8 @@
 
           pi-test-runtime-1_2 = piTestRuntime12;
           pi-test-runtime-1_3 = piTestRuntime13;
+          pi-test-runtime-1_4 = piTestRuntime14;
+          pi-test-runtime-1_5 = piTestRuntime15;
 
           pi-hd-bundle = piHdBuild.bundle;
           pi-hd-extension = piHdBuild;
@@ -363,7 +380,7 @@
           # and the preserved v2.4.0 resource hashes.
           original-line = mkVerifiedCheck {
             pname = "pi-furry-partner-check-original-line";
-            version = "2.5.1";
+            version = originalVersion;
             src = originalArchiveSource;
             nativeBuildInputs = [ node ];
             run = ''
@@ -377,7 +394,7 @@
           # is where tools/release-edition.py and its fixtures live.
           hd-release-lines = mkVerifiedCheck {
             pname = "pi-furry-partner-check-hd-release-lines";
-            version = "2.5.1-preview.6";
+            version = hdVersion;
             src = hdSource;
             nativeBuildInputs = [ pkgs.python3 ];
             run = ''
@@ -470,6 +487,16 @@
           pi-1_3 = mkPiShell {
             version = "1.3.0";
             testRuntime = self.packages.${system}.pi-test-runtime-1_3;
+          };
+
+          pi-1_4 = mkPiShell {
+            version = "1.4.0";
+            testRuntime = self.packages.${system}.pi-test-runtime-1_4;
+          };
+
+          pi-1_5 = mkPiShell {
+            version = "1.5.0";
+            testRuntime = self.packages.${system}.pi-test-runtime-1_5;
           };
 
           media = pkgs.mkShell {

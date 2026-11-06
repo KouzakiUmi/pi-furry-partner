@@ -16,58 +16,40 @@ jobs:
     uses: ./.github/workflows/ci-hd.yml
   release:
     needs: verify
-    runs-on: windows-latest
-    env:
-      PYTHONUTF8: '1'
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     defaults:
       run:
-        shell: pwsh
         working-directory: editions/hd
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: '24'
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
       - name: Verify main branch ancestry
         run: |
           git fetch origin main:refs/remotes/origin/main
-          git merge-base --is-ancestor $env:GITHUB_SHA refs/remotes/origin/main
-          if ($LASTEXITCODE -ne 0) { throw 'HD tags must belong to main' }
-      - name: Resolve tag to edition and release notes
-        id: target
+          git merge-base --is-ancestor "$GITHUB_SHA" refs/remotes/origin/main
+      - name: Resolve tag and release notes
         env:
           RELEASE_TAG: ${{ github.ref_name }}
+        run: python tools/release-edition.py resolve --tag "$RELEASE_TAG"
+      - name: Build the selected Pi package with Nix
         run: |
-          python tools/release-edition.py resolve --tag $env:RELEASE_TAG --github-output $env:GITHUB_OUTPUT
-          if ($LASTEXITCODE -ne 0) { throw 'Release tag or notes validation failed' }
-      - name: Build Pi package for the selected edition
-        env:
-          EDITION: ${{ steps.target.outputs.edition }}
-        run: |
-          python tools/build-editions.py --edition $env:EDITION --platform all
-          if ($LASTEXITCODE -ne 0) { throw 'Edition build failed' }
-      - name: Reverify archives and packaged runtime
-        env:
-          EDITION: ${{ steps.target.outputs.edition }}
-        run: |
-          python tools/audit-edition-bundles.py --edition $env:EDITION
-          if ($LASTEXITCODE -ne 0) { throw 'Archive or runtime audit failed' }
-          python tools/release-edition.py assets --plan dist/release/release-plan.json
-          if ($LASTEXITCODE -ne 0) { throw 'Release asset validation failed' }
+          bundle="$(nix build --no-link --print-build-logs --json ../..#pi-hd-bundle | python -c 'import json, sys; print(json.load(sys.stdin)[0]["outputs"]["bundle"])')"
+          rm -rf dist/releases
+          mkdir -p dist/releases
+          cp -R "$bundle"/. dist/releases/
+      - name: Reverify Nix bundle and select release assets
+        run: python tools/release-edition.py assets --plan dist/release/release-plan.json
       - name: Publish only the selected edition
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          $plan = Get-Content -LiteralPath dist/release/release-plan.json -Raw | ConvertFrom-Json
-          $assets = @(Get-Content -LiteralPath dist/release/release-assets.json -Raw | ConvertFrom-Json)
-          $ghArgs = @('release', 'create', $plan.tag, '--verify-tag', '--title', $plan.title,
-            '--notes-file', $plan.notesFile, "--latest=$($plan.latest)")
-          if ($plan.prerelease) { $ghArgs += '--prerelease' }
-          $ghArgs += $assets
-          & gh @ghArgs
-          if ($LASTEXITCODE -ne 0) { throw 'GitHub release creation/upload failed; existing releases are not overwritten' }
+          mapfile -t plan < <(python -c 'import json; p=json.load(open("dist/release/release-plan.json")); print(p["tag"]); print(p["title"]); print(p["notesFile"]); print(p["latest"]); print(str(p["prerelease"]).lower())')
+          mapfile -t assets < <(python -c 'import json; print("\\n".join(json.load(open("dist/release/release-assets.json"))))')
+          args=(release create "${plan[0]}" --verify-tag --title "${plan[1]}" --notes-file "${plan[2]}" "--latest=${plan[3]}")
+          if [[ "${plan[4]}" == true ]]; then args+=(--prerelease); fi
+          gh "${args[@]}" "${assets[@]}"

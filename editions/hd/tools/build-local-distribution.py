@@ -4,11 +4,23 @@ import gzip
 import hashlib
 import io
 import json
+import os
 import re
+import shutil
 import subprocess
 import tarfile
-from datetime import datetime, timezone
 from pathlib import Path
+
+from reproducibility import source_date_utc
+
+
+def npm_executable():
+    candidates = ('npm.cmd', 'npm') if os.name == 'nt' else ('npm', 'npm.cmd')
+    for candidate in candidates:
+        executable = shutil.which(candidate)
+        if executable:
+            return executable
+    raise RuntimeError('npm executable not found on PATH')
 
 
 def digest(path):
@@ -36,7 +48,7 @@ def main():
     prefix = configuration['platforms'][platform].get('artifactPrefix', f'{platform}-furry-partner')
     assert re.fullmatch(r'[a-z0-9][a-z0-9.-]*', prefix) and prefix.startswith(platform + '-'), 'Platform-specific safe artifact prefix required'
     filename = f'{prefix}-{args.track}-{args.version}' + ('-pi-core' if args.profile == 'pi-core' else '') + '.tgz'
-    listing = subprocess.run(['npm.cmd', 'pack', '--dry-run', '--json', '--ignore-scripts'], cwd=source,
+    listing = subprocess.run([npm_executable(), 'pack', '--dry-run', '--json', '--ignore-scripts'], cwd=source,
                              capture_output=True, text=True, encoding='utf-8', check=True)
     candidates = json.loads(listing.stdout)[0]['files']
     files = {}
@@ -124,8 +136,8 @@ Legacy分支保留原版资源与简单帧；本main全动态包不混装为另�
         files['LICENSE'] = source / 'LICENSE'
     output = args.out / filename
     assert not output.exists(), 'Preserve earlier bundles; choose a new output directory/version.'
-    report = {'createdUtc': datetime.now(timezone.utc).isoformat(), 'source': str(source), 'capabilities': capability,
-              'archive': str(output), 'excluded': excluded, 'files': [], 'installed': False, 'published': False}
+    report = {'createdUtc': source_date_utc(), 'source': 'source', 'capabilities': capability,
+              'archive': output.name, 'excluded': excluded, 'files': [], 'installed': False, 'published': False}
     with output.open('wb') as raw, gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=6, mtime=0) as zipped, tarfile.open(fileobj=zipped, mode='w|', format=tarfile.USTAR_FORMAT) as archive:
         for name in sorted(set(files) | set(overrides)):
             data = overrides.get(name)

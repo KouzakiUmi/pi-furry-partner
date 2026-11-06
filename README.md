@@ -122,6 +122,19 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.4
 
 已有脚本安装的用户，继续使用脚本路线更新；需要改用包管理器时，先按指南卸载脚本安装，避免双份扩展。
 
+### Nix 安装（原资源版）
+
+Nix 用户可构建完整的 Pi 包目录，再让 Pi 从一个稳定的 GC root 加载它：
+
+```sh
+extension_link="${XDG_DATA_HOME:-$HOME/.local/share}/pi-furry-partner/original-extension"
+mkdir -p "$(dirname "$extension_link")"
+nix build --out-link "$extension_link" github:KouzakiUmi/pi-furry-partner#pi-original-extension
+pi install "$extension_link"
+```
+
+`--out-link` 保留 store 输出的 GC root；不要只把 `nix build --print-out-paths` 的临时 store 路径写进 Pi 设置。升级时以同一路径重新运行 `nix build`，再重启 Pi。Nix、Git 包管理器和 PowerShell 安装三者只选一种，避免重复加载。
+
 ## 开始相处
 
 ```text
@@ -169,6 +182,8 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.4
 ```
 
 语言偏好会保存到 `config.json`，默认是 `auto`：检测系统语言，中文环境显示简体中文，其他语言环境使用 English。已有配置未设置语言时也使用自动检测；已经明确选择的 `en` 或 `zh-CN` 会继续保留。执行 `/mascot language auto` 可随时恢复跟随系统，`status` 会显示偏好与实际使用的语言。切换后，角色状态短句、气泡、输入框控件、快捷菜单和信息面板立即更新，当前任务、输入草稿与动作节奏继续保留。角色的默认显示名会随语言显示为“呜咪”或 **Umi**，你自定义的名字和副标题保持原样。
+
+可写安装目录会继续使用包内 `config.json`；只读安装（包括 Nix store）会把偏好保存到 `$XDG_CONFIG_HOME/pi-furry-partner/config.json`（Windows 使用 `%APPDATA%`）。也可以用 `PI_FURRY_PARTNER_CONFIG` 指定完整路径；包内 `config.json` 始终只是默认配置。
 
 英文模式沿用 Pi 原生英文界面；`locale` 的中文补丁偏好会保留，切回中文时再按原设置应用。`prompt` 开启时，仅把已确认的 Pi 文档提示章节精简为对应语言，关闭时恢复这段文档提示原文；身份说明、工具和规则始终沿用 Pi 原生内容；`persona` 独立控制角色口吻，也随实际语言选择模板。提示词与口吻的变化从下一轮请求生效。代码、工具输出、模型名、路径和项目指令不会因为切换语言被翻译。
 

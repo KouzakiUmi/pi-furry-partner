@@ -3,6 +3,9 @@ from pathlib import Path
 import hashlib,importlib.util,json,tempfile,unittest
 R=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('release',R/'tools/release-edition.py');release=importlib.util.module_from_spec(s);s.loader.exec_module(release)
+import sys
+sys.path.insert(0,str(R/'tools'))
+s=importlib.util.spec_from_file_location('release_doc',R/'tools/write-edition-release.py');doc=importlib.util.module_from_spec(s);s.loader.exec_module(doc)
 def write(p,v):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(v),encoding='utf-8')
 class ReleaseLines(unittest.TestCase):
  def test_hd_is_independent_and_never_latest(self):
@@ -37,4 +40,20 @@ class ReleaseLines(unittest.TestCase):
  def test_old_pi_prefix_cannot_publish_as_dsh(self):
   plan,out=self.fixture_archives(wrong_dsh=True)
   with self.assertRaises(AssertionError):release.release_assets(self.root,plan,out)
+ def test_flat_nix_bundle_paths_are_accepted(self):
+  plan,out=self.fixture_archives()
+  builds=json.loads((out/'built-editions.json').read_text())
+  for build in builds['builds']:
+   build['archive']=Path(build['archive']).name;build['report']=Path(build['report']).name
+   report=out/build['report'];data=json.loads(report.read_text());data['archive']=Path(data['archive']).name;write(report,data)
+  write(out/'built-editions.json',builds)
+  audit=json.loads((out/'edition-audit-full-animation.json').read_text())
+  for row in audit:row['archive']=Path(row['archive']).name
+  write(out/'edition-audit-full-animation.json',audit)
+  paths=release.release_assets(self.root,plan,out);self.assertEqual(len(paths),6)
+  self.assertTrue(all(Path(path).parent.resolve()==out.resolve() for path in paths))
+ def test_readme_describes_only_built_hosts(self):
+  def summary(*hosts):return {'packages':[{'label':host.upper(),'platform':host,'profile':'pi-core' if host=='pi' else 'full','version':'2.5.1','archiveBytes':1048576} for host in hosts]}
+  only_pi=doc.release_readme(summary('pi'));self.assertIn('提供 Pi 包',only_pi);self.assertNotIn('DSH',only_pi)
+  both=doc.release_readme(summary('pi','dsh'));self.assertIn('Pi 与 DSH',both);self.assertIn('DSH 使用 full 包。',both);self.assertIn('完整包也保留 Pi 入口。',both)
 if __name__=='__main__':unittest.main()

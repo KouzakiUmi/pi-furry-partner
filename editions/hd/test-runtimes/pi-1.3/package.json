@@ -1,0 +1,15 @@
+{
+  "name": "pi-furry-partner-test-runtime-1.3",
+  "private": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "@earendil-works/pi-agent-core": "1.3.0",
+    "@earendil-works/pi-ai": "1.3.0",
+    "@earendil-works/pi-codemode": "1.3.0",
+    "@earendil-works/pi-coding-agent": "1.3.0",
+    "@earendil-works/pi-mcp": "1.3.0",
+    "@earendil-works/pi-tui": "1.3.0"
+  }
+}

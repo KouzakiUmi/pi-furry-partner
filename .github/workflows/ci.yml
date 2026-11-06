@@ -60,6 +60,31 @@ jobs:
             npm run build:site
             npm run test:site
           fi
+  nix-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+      - name: Build the installable original-resource package
+        run: |
+          if [[ -f flake.nix ]]; then
+            nix build --print-build-logs .#pi-original-extension
+          else
+            # Historical refs requested by the release workflow predate the
+            # flake; they ship their own archive and have no package output.
+            echo 'Skipped: this ref has no flake.nix.'
+          fi
+      # Covers the --source path of scripts/package-pi-release.py, which the
+      # release workflow never exercises because it packs by tag instead.
+      - name: Build the deterministic source archive
+        run: |
+          if [[ -f flake.nix ]]; then
+            nix build --print-build-logs .#pi-original-zip
+          else
+            echo 'Skipped: this ref has no flake.nix.'
+          fi
   windows:
     runs-on: windows-latest
     strategy:

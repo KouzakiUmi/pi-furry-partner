@@ -1,6 +1,6 @@
 """Release line isolation and host-specific archive names; never creates a real release."""
 from pathlib import Path
-import hashlib,importlib.util,json,tempfile,unittest
+import hashlib,importlib.util,json,subprocess,sys,tempfile,unittest
 R=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('release',R/'tools/release-edition.py');release=importlib.util.module_from_spec(s);s.loader.exec_module(release)
 import sys
@@ -56,4 +56,30 @@ class ReleaseLines(unittest.TestCase):
   def summary(*hosts):return {'packages':[{'label':host.upper(),'platform':host,'profile':'pi-core' if host=='pi' else 'full','version':'2.5.1','archiveBytes':1048576} for host in hosts]}
   only_pi=doc.release_readme(summary('pi'));self.assertIn('提供 Pi 包',only_pi);self.assertNotIn('DSH',only_pi)
   both=doc.release_readme(summary('pi','dsh'));self.assertIn('Pi 与 DSH',both);self.assertIn('DSH 使用 full 包。',both);self.assertIn('完整包也保留 Pi 入口。',both)
+ def test_repository_relative_release_paths_stay_in_the_bundle(self):
+  plan,out=self.fixture_archives()
+  builds=json.loads((out/'built-editions.json').read_text())
+  for build in builds['builds']:
+   archive_name,report_name=Path(build['archive']).name,Path(build['report']).name
+   build['archive']=f'dist/releases/{archive_name}';build['report']=f'dist/releases/{report_name}'
+   report=out/report_name;data=json.loads(report.read_text());data['archive']=archive_name;write(report,data)
+  write(out/'built-editions.json',builds)
+  audit=json.loads((out/'edition-audit-full-animation.json').read_text())
+  for row in audit:row['archive']=f"dist/releases/{Path(row['archive']).name}"
+  write(out/'edition-audit-full-animation.json',audit)
+  paths=release.release_assets(self.root,plan,out);self.assertEqual(len(paths),6)
+  self.assertTrue(all(Path(path).resolve().parent==out.resolve() for path in paths))
+ def test_release_workflow_prints_each_asset_on_its_own_line(self):
+  import re
+  workflow=(Path(__file__).resolve().parents[3]/'.github/workflows/release-hd.yml').read_text(encoding='utf-8')
+  match=re.search(r"python -c '([^']*release-assets\.json[^']*)'",workflow)
+  self.assertIsNotNone(match)
+  code=match.group(1)
+  self.assertIn(r'print("\n".join',code)
+  self.assertNotIn(r'print("\\n".join',code)
+  with tempfile.TemporaryDirectory() as directory:
+   release_dir=Path(directory)/'dist/release';release_dir.mkdir(parents=True)
+   (release_dir/'release-assets.json').write_text(json.dumps(['a.tgz','a.tgz.sha256','a.report.json']),encoding='utf-8')
+   completed=subprocess.run([sys.executable,'-c',code],cwd=directory,text=True,capture_output=True,check=True)
+  self.assertEqual(completed.stdout.splitlines(),['a.tgz','a.tgz.sha256','a.report.json'])
 if __name__=='__main__':unittest.main()

@@ -49,7 +49,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           mapfile -t plan < <(python -c 'import json; p=json.load(open("dist/release/release-plan.json")); print(p["tag"]); print(p["title"]); print(p["notesFile"]); print(p["latest"]); print(str(p["prerelease"]).lower())')
-          mapfile -t assets < <(python -c 'import json; print("\\n".join(json.load(open("dist/release/release-assets.json"))))')
+          mapfile -t assets < <(python -c 'import json; print("\n".join(json.load(open("dist/release/release-assets.json"))))')
           args=(release create "${plan[0]}" --verify-tag --title "${plan[1]}" --notes-file "${plan[2]}" "--latest=${plan[3]}")
           if [[ "${plan[4]}" == true ]]; then args+=(--prerelease); fi
           gh "${args[@]}" "${assets[@]}"

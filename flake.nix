@@ -117,17 +117,17 @@
           piTestRuntime12 = mkPiTestRuntime {
             runtimeName = "pi-1.2";
             version = "1.2.0";
-            npmDepsHash = "sha256-7cN1q36ijhAxwiUcQzb7+WPWKJU3Al6tpkPV6pz6pI4=";
+            npmDepsHash = "sha256-ekvuj0ET7Ppze0NYOXHiMlJBRAz03DhdZ0h2nnYk7dA=";
           };
           piTestRuntime13 = mkPiTestRuntime {
             runtimeName = "pi-1.3";
             version = "1.3.0";
-            npmDepsHash = "sha256-BSJT7Vj4ag8EJ+qnV49pM+SOV3iIeTjyXk/ykTcPDE0=";
+            npmDepsHash = "sha256-4Ji/yjhDhOAU+tZKQ5EF+DkczowJgzxWlnwzF5la4gU=";
           };
           piTestRuntime14 = mkPiTestRuntime {
             runtimeName = "pi-1.4";
             version = "1.4.0";
-            npmDepsHash = "sha256-5ueRyXcWkmYyaB75mfQSHbwIh8MZn5xSHy67AKMZE+E=";
+            npmDepsHash = "sha256-KkB5B+ZbsOn1ZXVjZ1hbrVRX4qKEpV5jPqsZL3aV9Cw=";
           };
           piTestRuntime15 = mkPiTestRuntime {
             runtimeName = "pi-1.5";

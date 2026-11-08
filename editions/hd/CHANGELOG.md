@@ -1,6 +1,20 @@
 # 更新记录
 
-本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.7，已随 `hd-v2.5.1-preview.7` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.4（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.8，已随 `hd-v2.5.1-preview.8` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.5（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+
+## 2.5.1-preview.8 · 2026-11-08
+
+### 简体中文
+
+- 纳入 [@srcres258](https://github.com/srcres258) 的可复现 HD 包（[PR #17](https://github.com/KouzakiUmi/pi-furry-partner/pull/17)）：锁定 Pi 1.2.0／1.3.0／1.4.0／1.5.0 测试运行时，`pi-hd-extension` 与 `pi-hd-bundle` 共用一次套件、归档审计和解包冒烟。
+- 发布改为上传该 Nix bundle 的资产（[PR #18](https://github.com/KouzakiUmi/pi-furry-partner/pull/18)）。每个归档、校验和报告分别作为 Release 附件。只读安装的偏好位置与原资源版相同。
+- 29 段已批准动作、原生时序、索引载荷、调色板、素材哈希与戳一戳两段式行为不变；本版本不含素材改动。
+
+### English
+
+- Add [@srcres258](https://github.com/srcres258)'s reproducible HD package ([PR #17](https://github.com/KouzakiUmi/pi-furry-partner/pull/17)): Pi 1.2.0/1.3.0/1.4.0/1.5.0 test runtimes are locked, and `pi-hd-extension` with `pi-hd-bundle` share one suite, archive audit and unpacked smoke test.
+- Publishing uploads that Nix bundle ([PR #18](https://github.com/KouzakiUmi/pi-furry-partner/pull/18)). The archive, checksum and report are separate release assets. Read-only installs use the same preference location as the original-resource edition.
+- The 29 approved clips, their native timing, indexed payloads, palette, asset hashes and the two-stage poke behavior are unchanged; this release changes no artwork.
 
 ## 2.5.1-preview.7 · 2026-11-06
 

@@ -10,14 +10,14 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Pi 2.5.4](https://img.shields.io/badge/Pi-2.5.4-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4)
+[![Pi 2.5.5](https://img.shields.io/badge/Pi-2.5.5-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0%20%7C%201.5.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 Pi 2.5.4**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
+[**下载 Pi 2.5.5**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
 
-本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.4**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
+本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.5**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -101,7 +101,7 @@
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4) 下载 `pi-furry-partner-2.5.4.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5) 下载 `pi-furry-partner-2.5.5.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -115,7 +115,7 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.4
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.5
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。

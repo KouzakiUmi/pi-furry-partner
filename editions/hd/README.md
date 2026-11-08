@@ -1,5 +1,5 @@
-> **Pi HD 独立代码线 · 2.5.1-preview.7**：29 个完整动作，仅提供高清插画。Pi 事件适配、状态机与播放器在 `lib/hd/` 独立维护，不调用 Legacy 运行时。
-> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。已发布 `hd-v2.5.1-preview.7`（latest=false），安装包附在该 Release；源码安装也可先进入 `editions/hd/` 运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
+> **Pi HD 独立代码线 · 2.5.1-preview.8**：29 个完整动作，仅提供高清插画。Pi 事件适配、状态机与播放器在 `lib/hd/` 独立维护，不调用 Legacy 运行时。
+> `main` 的 `editions/hd/` 目录使用 `hd-v<版本>` 发布，始终不设为 Latest；原资源版由同一 main 的根目录维护。DSH 在 [独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)维护。已发布 `hd-v2.5.1-preview.8`（latest=false），安装包附在该 Release；源码安装也可先进入 `editions/hd/` 运行安装脚本。详见[构建说明](docs/plugin-lines.md)。
 > [全部文档](../../docs/README.md) · [HD 使用指南](docs/guide.zh-CN.md) · [统一发布规则](../../docs/release-line.md)。29 个完整片段不等于 17 个可点选小动作；原资源版的 action 列表独立。直接安装远程仓库 Git URL 会读取根目录清单，HD 请使用本地子目录或专用包。
 
 
@@ -15,12 +15,12 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Release 2.5.1-preview.7](https://img.shields.io/badge/HD-2.5.1-preview.7-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7)
+[![Release 2.5.1-preview.8](https://img.shields.io/badge/HD-2.5.1-preview.8-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载全动态 2.5.1-preview.7**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7) · [原资源 原资源版 v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载全动态 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [原资源 原资源版 v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -58,7 +58,7 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
 
-`editions/hd/` 的**全动态重做版 2.5.1-preview.7** 为插画风提供 29 段完整动作，由 Pi 独立调度。根目录 **原资源版 v2.5.4** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
+`editions/hd/` 的**全动态重做版 2.5.1-preview.8** 为插画风提供 29 段完整动作，由 Pi 独立调度。根目录 **原资源版 v2.5.5** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
 主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
@@ -107,13 +107,26 @@
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关渲染修复和回归测试保留在 HD 独立源码中。
 
-已发布 `hd-v2.5.1-preview.7`（latest=false），安装包见 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7)；也可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)自行构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
+已发布 `hd-v2.5.1-preview.8`（latest=false），安装包见 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8)；也可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)自行构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
 
-| 平台 | 全动态 2.5.1-preview.7 |
+| 平台 | 全动态 2.5.1-preview.8 |
 | --- | --- |
-| Pi 终端 | `pi-furry-partner-hd-full-animation-2.5.1-preview.7-pi-core.tgz` |
+| Pi 终端 | `pi-furry-partner-hd-full-animation-2.5.1-preview.8-pi-core.tgz` |
 
 GitHub 自动提供的 **Source code** 是所选 tag 的源码。开发者先运行 `npm run build:animated`，再安装生成的对应平台包；HD 独立构建，不调用 Legacy 源码。
+
+### Nix 安装
+
+Nix 用户可构建经固定 Pi 1.2.0、1.3.0、1.4.0 与 1.5.0 运行时测试、归档审计和解包读取器验证的 HD Pi 包，再让 Pi 从稳定的 GC root 加载它：
+
+```sh
+extension_link="${XDG_DATA_HOME:-$HOME/.local/share}/pi-furry-partner/hd-extension"
+mkdir -p "$(dirname "$extension_link")"
+nix build --out-link "$extension_link" github:KouzakiUmi/pi-furry-partner#pi-hd-extension
+pi install "$extension_link"
+```
+
+`--out-link` 保留 store 输出的 GC root；不要只把 `nix build --print-out-paths` 的临时 store 路径写进 Pi 设置。升级时以同一路径重新运行 `nix build`，再重启 Pi。同一宿主只安装 HD、原资源版、Git 包或 PowerShell 脚本中的一种来源，避免重复加载。
 
 ### Pi 终端安装
 
@@ -175,6 +188,8 @@ pi
 ```
 
 语言偏好会保存到 `config.json`，默认是 `auto`：检测系统语言，中文环境显示简体中文，其他语言环境使用 English。已有配置未设置语言时也使用自动检测；已经明确选择的 `en` 或 `zh-CN` 会继续保留。执行 `/mascot language auto` 可随时恢复跟随系统，`status` 会显示偏好与实际使用的语言。切换后，角色状态短句、气泡、输入框控件、快捷菜单和信息面板立即更新，当前任务、输入草稿与动作节奏继续保留。角色的默认显示名会随语言显示为“呜咪”或 **Umi**，你自定义的名字和副标题保持原样。
+
+可写安装目录会继续使用包内 `config.json`；只读安装（包括 Nix store）会把偏好保存到 `$XDG_CONFIG_HOME/pi-furry-partner/config.json`（Windows 使用 `%APPDATA%`）。也可以用 `PI_FURRY_PARTNER_CONFIG` 指定完整路径；包内 `config.json` 始终只是默认配置。
 
 英文模式沿用 Pi 原生英文界面；`locale` 的中文补丁偏好会保留，切回中文时再按原设置应用。`prompt` 开启时，仅把已确认的 Pi 文档提示章节精简为对应语言，关闭时恢复这段文档提示原文；身份说明、工具和规则始终沿用 Pi 原生内容；`persona` 独立控制角色口吻，也随实际语言选择模板。提示词与口吻的变化从下一轮请求生效。代码、工具输出、模型名、路径和项目指令不会因为切换语言被翻译。
 

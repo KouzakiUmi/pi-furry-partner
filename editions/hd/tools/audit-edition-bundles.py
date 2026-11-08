@@ -3,9 +3,11 @@ from pathlib import Path, PurePosixPath
 import argparse
 import hashlib
 import json
+import shutil
 import subprocess
 import tarfile
-import tempfile
+
+from reproducibility import logical_path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'dist/releases'
@@ -52,13 +54,21 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
     for build in builds:
         edition, platform = build['edition'], build['platform']
         profile = configuration['platforms'][platform]['resourceProfile']
-        report = read(Path(build['report']))
+        report_path = Path(build['report'])
+        if not report_path.is_absolute():
+            report_path = root / report_path
+        report = read(report_path)
         assert build['profile'] == profile
         assert report['capabilities']['track'] == edition
         assert report['capabilities']['targetPlatform'] == platform
         assert report['capabilities']['resourceProfile'] == profile
-        assert Path(report['archive']).resolve() == Path(build['archive']).resolve()
         archive_path = Path(build['archive'])
+        if not archive_path.is_absolute():
+            archive_path = root / archive_path
+        report_archive = Path(report['archive'])
+        if not report_archive.is_absolute():
+            report_archive = report_path.parent / report_archive
+        assert report_archive.resolve() == archive_path.resolve()
         assert archive_path.stat().st_size == report['archiveBytes'] == build['archiveBytes']
         archive_sha = digest_file(archive_path)
         assert archive_sha == report['archiveSha256'] == build['archiveSha256']
@@ -76,8 +86,11 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
         assert report['capabilities']['pixelPolicy'] == 'legacy-only'
         # A fresh directory prevents stale files from an earlier platform/version
         # from making a missing package dependency appear to pass.
-        target = Path(tempfile.mkdtemp(prefix=f'{edition}-{platform}-', dir=verified))
-        assert target.resolve().is_relative_to(verified.resolve())
+        target = verified / f'{edition}-{platform}'
+        assert target.resolve().parent == verified.resolve()
+        if target.exists():
+            shutil.rmtree(target)
+        target.mkdir()
         seen = set()
         with tarfile.open(archive_path, mode='r|gz') as archive:
             for member in archive:
@@ -106,17 +119,19 @@ def audit_builds(root=ROOT, out=OUT, verifier=verify_runtime, edition=None):
                 assert digest.hexdigest() == names[relative]['sha256']
                 seen.add(relative)
         assert seen == set(names)
-        evidence = verifier(root, target / 'package')
+        evidence = dict(verifier(root, target / 'package'))
+        if 'root' in evidence:
+            evidence['root'] = logical_path(target / 'package', root)
         assert evidence.get('passed') is True
         assert evidence.get('version') == build['version']
         assert evidence.get('profile') == profile
         results.append({'edition': edition, 'platform': platform, 'profile': profile,
-                        'version': build['version'], 'archive': str(archive_path),
+                        'version': build['version'], 'archive': logical_path(archive_path, root),
                         'archiveBytes': build['archiveBytes'], 'archiveSha256': archive_sha,
                         'allEntriesReverified': len(seen), 'exactOriginalPixelRuntimeFiles': checked,
                         'newPixelResourcesAbsent': True, 'runtimeSmokePassed': True,
-                        'runtimeEvidence': evidence, 'verifiedRuntimeRoot': str(target / 'package'),
-                        'sourceRepository': str(root), 'installed': False, 'published': False})
+                        'runtimeEvidence': evidence, 'verifiedRuntimeRoot': logical_path(target / 'package', root),
+                        'sourceRepository': 'source', 'installed': False, 'published': False})
     return results
 
 

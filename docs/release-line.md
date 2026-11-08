@@ -9,7 +9,7 @@
 
 两套 CI 按目录触发；标签发布总会调用对应产品的完整 CI。标签版本须匹配对应 package 与 CHANGELOG，标签提交须属于 main。原资源 ZIP、npm 文件清单和安装器排除 HD 目录；HD 从 editions/hd/ 独立构建。一次只安装一种 Pi 版本。
 
-当前原资源版为 2.5.4（Latest），在保持 Pi 1.5.0 原生中文界面与提示词适配、action 有限播放、all/off、任务抢占和按实际动作集生成的分层补全的基础上，加入锁定的 Nix 可复现构建（`default`／`hd`／`media` 开发外壳与 `site-original`／`site-hd` 站点包，Linux CI 与 Pages 经 Nix 构建）。HD 为 2.5.1-preview.7，以 `hd-v2.5.1-preview.7` 发布且不设 Latest，含戳一戳两段式与已批准高清帧的有损 q90 重编码。原资源版仍校验全部 507 个 v2.4.0 原资源文件。
+当前原资源版为 2.5.5（Latest）。在 2.5.4 的 Pi 1.5.0 适配和 Nix 开发外壳之上，提供可安装的 `pi-original-extension` 与确定性源码包 `pi-original-zip`。HD 为 2.5.1-preview.8，以 `hd-v2.5.1-preview.8` 发布且不设 Latest，安装包来自已验证的 `pi-hd-bundle`。原资源版仍校验全部 507 个 v2.4.0 原资源文件。
 
 历史 legacy-v2.4.x 发布保留。旧高清 Release 与 v2.4.5 标签已按用户要求清理，其余历史标签不移动或重写。
 

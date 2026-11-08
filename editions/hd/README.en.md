@@ -1,5 +1,5 @@
-> **Independent Pi HD line · 2.5.1-preview.7**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
-> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. `hd-v2.5.1-preview.7` (latest=false) is published with the package attached; installation from the `editions/hd/` directory still works. See the [build guide](docs/plugin-lines.md).
+> **Independent Pi HD line · 2.5.1-preview.8**: 29 complete illustration clips. Pi event integration, state and playback live in `lib/hd/`, independently of the Legacy runtime.
+> HD uses `editions/hd/` on `main` and `hd-v<version>` releases with `latest=false`. The root of main maintains the original-resource edition; [DSH](https://github.com/KouzakiUmi/dsh-furry-partner) is separate. `hd-v2.5.1-preview.8` (latest=false) is published with the package attached; installation from the `editions/hd/` directory still works. See the [build guide](docs/plugin-lines.md).
 > [All documentation](../../docs/README.md) · [HD guide](docs/guide.en.md) · [Release rules](../../docs/release-line.md). The 29 complete clips are distinct from 17 selectable gestures. A remote Git install reads the root manifest; select HD through its local subdirectory or a dedicated package.
 
 
@@ -15,12 +15,12 @@
 
 <sub>Thinking paws · Typing paws · A swishing tail · A friend who waits for you</sub>
 
-[![Release 2.5.1-preview.7](https://img.shields.io/badge/HD-2.5.1-preview.7-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7)
+[![Release 2.5.1-preview.8](https://img.shields.io/badge/HD-2.5.1-preview.8-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download full-animation 2.5.1-preview.7**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7) · [Original-art original-resource v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download full-animation 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [Original-art original-resource v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -58,7 +58,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **HD full-animation remake 2.5.1-preview.7** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.4** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **HD full-animation remake 2.5.1-preview.8** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.5** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
@@ -107,11 +107,11 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, 1.3.0, 
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-`hd-v2.5.1-preview.7` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.7); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.4](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
+`hd-v2.5.1-preview.8` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
 
-| Platform | Full-animation 2.5.1-preview.7 |
+| Platform | Full-animation 2.5.1-preview.8 |
 | --- | --- |
-| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.7-pi-core.tgz` |
+| Pi terminal | `pi-furry-partner-hd-full-animation-2.5.1-preview.8-pi-core.tgz` |
 
 GitHub's automatic **Source code** downloads contain the tagged source. Run `npm run build:animated`, then install the generated platform package. HD builds independently of Legacy source.
 

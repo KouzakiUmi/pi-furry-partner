@@ -2,6 +2,20 @@
 
 main 根目录维护原资源版，editions/hd/ 维护独立 HD 源码。v 标签发布原版 Latest，hd-v 标签发布 HD 且 latest=false。DSH 独立维护；下方旧版本记录保留历史说明。
 
+## 2.5.5 · 2026-11-08
+
+### 简体中文
+
+- 纳入 [@srcres258](https://github.com/srcres258) 的原资源 Nix 打包（[PR #16](https://github.com/KouzakiUmi/pi-furry-partner/pull/16)）：`pi-original-extension` 是可安装的扩展目录，`pi-original-zip` 是确定性源码归档；源过滤不会把 `editions/hd/` 打进原资源产物。
+- 只读安装（包括 Nix store）把偏好写到 `$XDG_CONFIG_HOME/pi-furry-partner/config.json`、Windows 的 `%APPDATA%`，或 `PI_FURRY_PARTNER_CONFIG`；可写安装仍使用包内 `config.json`。
+- 保留全部 507 个 v2.4.0 原资源文件、四种外观与原有动作路由。HD 打包与从 Nix 产物发布的流水线来自同一贡献者的 [PR #17](https://github.com/KouzakiUmi/pi-furry-partner/pull/17) 与 [PR #18](https://github.com/KouzakiUmi/pi-furry-partner/pull/18)，另行以 `hd-v2.5.1-preview.8` 发布且 latest=false；本版本不含 HD 素材或运行时。
+
+### English
+
+- Add [@srcres258](https://github.com/srcres258)'s original-resource Nix packages ([PR #16](https://github.com/KouzakiUmi/pi-furry-partner/pull/16)): `pi-original-extension` is the installable extension tree and `pi-original-zip` is the deterministic source archive. Source filters keep `editions/hd/` out of the original-resource outputs.
+- Read-only installs, including a Nix store, save preferences to `$XDG_CONFIG_HOME/pi-furry-partner/config.json`, `%APPDATA%` on Windows, or `PI_FURRY_PARTNER_CONFIG`. Writable installs keep the adjacent `config.json`.
+- Preserve all 507 original v2.4.0 files, the four styles and the original action routing. The HD package and Nix release pipeline from the same contributor's [PR #17](https://github.com/KouzakiUmi/pi-furry-partner/pull/17) and [PR #18](https://github.com/KouzakiUmi/pi-furry-partner/pull/18) ship separately as `hd-v2.5.1-preview.8` with latest=false; this release contains no HD artwork or runtime.
+
 ## 2.5.4 · 2026-11-06
 
 ### 简体中文

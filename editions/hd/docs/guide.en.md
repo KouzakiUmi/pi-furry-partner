@@ -2,7 +2,7 @@
 
 [简体中文](guide.zh-CN.md) · [HD home](../README.en.md) · [Documentation index](../../../docs/README.md) · [Release rules](../../../docs/release-line.md)
 
-This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.7**, illustration only; `hd-v2.5.1-preview.7` (latest=false) is published with the package attached. Repository Latest is the original-resource v2.5.4. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
+This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.8**, illustration only; `hd-v2.5.1-preview.8` (latest=false) is published with the package attached. Repository Latest is the original-resource v2.5.5. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
 
 ## Installation and updates
 
@@ -30,7 +30,7 @@ npm run build:animated
 python tools/audit-edition-bundles.py --edition full-animation
 ```
 
-The artifact is `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.7-pi-core.tgz`, with checksum and audit files. Builds do not install or publish. Download the dedicated HD tgz, extract it, enter the inner `package/` and use that installer's script, or load the local package through Pi.
+The artifact is `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.8-pi-core.tgz`, with checksum and audit files. Builds do not install or publish. Download the dedicated HD tgz, extract it, enter the inner `package/` and use that installer's script, or load the local package through Pi.
 
 ## Supported runtime and display
 

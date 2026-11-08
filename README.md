@@ -10,14 +10,14 @@
 
 <sub>会思考 · 会敲键盘 · 会摇尾巴 · 也会等你回来</sub>
 
-[![Pi 2.5.4](https://img.shields.io/badge/Pi-2.5.4-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4)
+[![Pi 2.5.5](https://img.shields.io/badge/Pi-2.5.5-8fb9ea?style=flat-square)](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5)
 [![Pi](https://img.shields.io/badge/Pi-1.2.0%20%7C%201.3.0%20%7C%201.4.0%20%7C%201.5.0-c4b5e6?style=flat-square)](https://github.com/earendil-works/pi)
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载 Pi 2.5.4**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
+[**下载 Pi 2.5.5**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md) · [全部文档](docs/README.md)
 
-本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.4**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
+本目录维护 **Pi 原资源版**：保留 v2.4.0 的原始素材、提示词、四种外观和动作逻辑，保留兼容与渲染修复。当前正式版为 **v2.5.5**，作为仓库 Latest 发布。DSH 独立项目见 [dsh-furry-partner](https://github.com/KouzakiUmi/dsh-furry-partner)。HD 在同一 main 的 [editions/hd](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd) 独立维护；两套 CI 由 v / hd-v 标签分别发布。详见[发布规则](docs/release-line.md)。
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -101,7 +101,7 @@
 
 ### Windows 完整安装
 
-从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.4) 下载 `pi-furry-partner-2.5.4.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
+从 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/v2.5.5) 下载 `pi-furry-partner-2.5.5.zip` 并解压，关闭 Pi，在解压目录打开 PowerShell：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
@@ -115,12 +115,25 @@ pi
 ### 使用 Pi 包管理器
 
 ```sh
-pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.4
+pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.5
 ```
 
 这条命令通过包清单加载扩展和主题，**不会执行 PowerShell 安装脚本，也不会替你设置 Pi 的四个 UI 选项**。重启 Pi 后可在 `/theme` 选择 `pi-furry-night`，在 `/settings` 选择界面模式。Git tag 用于固定版本；后续更新可选择新的发布 tag。[Pi 官方包文档](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md)说明了包来源与版本管理。
 
 已有脚本安装的用户，继续使用脚本路线更新；需要改用包管理器时，先按指南卸载脚本安装，避免双份扩展。
+
+### Nix 安装（原资源版）
+
+Nix 用户可构建完整的 Pi 包目录，再让 Pi 从一个稳定的 GC root 加载它：
+
+```sh
+extension_link="${XDG_DATA_HOME:-$HOME/.local/share}/pi-furry-partner/original-extension"
+mkdir -p "$(dirname "$extension_link")"
+nix build --out-link "$extension_link" github:KouzakiUmi/pi-furry-partner#pi-original-extension
+pi install "$extension_link"
+```
+
+`--out-link` 保留 store 输出的 GC root；不要只把 `nix build --print-out-paths` 的临时 store 路径写进 Pi 设置。升级时以同一路径重新运行 `nix build`，再重启 Pi。Nix、Git 包管理器和 PowerShell 安装三者只选一种，避免重复加载。
 
 ## 开始相处
 
@@ -169,6 +182,8 @@ pi install git:github.com/KouzakiUmi/pi-furry-partner@v2.5.4
 ```
 
 语言偏好会保存到 `config.json`，默认是 `auto`：检测系统语言，中文环境显示简体中文，其他语言环境使用 English。已有配置未设置语言时也使用自动检测；已经明确选择的 `en` 或 `zh-CN` 会继续保留。执行 `/mascot language auto` 可随时恢复跟随系统，`status` 会显示偏好与实际使用的语言。切换后，角色状态短句、气泡、输入框控件、快捷菜单和信息面板立即更新，当前任务、输入草稿与动作节奏继续保留。角色的默认显示名会随语言显示为“呜咪”或 **Umi**，你自定义的名字和副标题保持原样。
+
+可写安装目录会继续使用包内 `config.json`；只读安装（包括 Nix store）会把偏好保存到 `$XDG_CONFIG_HOME/pi-furry-partner/config.json`（Windows 使用 `%APPDATA%`）。也可以用 `PI_FURRY_PARTNER_CONFIG` 指定完整路径；包内 `config.json` 始终只是默认配置。
 
 英文模式沿用 Pi 原生英文界面；`locale` 的中文补丁偏好会保留，切回中文时再按原设置应用。`prompt` 开启时，仅把已确认的 Pi 文档提示章节精简为对应语言，关闭时恢复这段文档提示原文；身份说明、工具和规则始终沿用 Pi 原生内容；`persona` 独立控制角色口吻，也随实际语言选择模板。提示词与口吻的变化从下一轮请求生效。代码、工具输出、模型名、路径和项目指令不会因为切换语言被翻译。
 

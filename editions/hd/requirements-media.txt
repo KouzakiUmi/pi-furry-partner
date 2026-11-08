@@ -1,4 +1,4 @@
 # Exact versions used to verify reviewed image bytes on 2026-10-22.
-Pillow==11.3.0
+Pillow==13.0.0
 numpy==2.4.1
 scipy==1.17.0

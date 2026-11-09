@@ -22,7 +22,7 @@ const render = (snapshot, { style = 'umi', animate = true } = {}) => {
 };
 for (const style of ['umi', 'illustration']) {
   clock = 0;
-  render({ phase: 'running', face: 'work', bubble: 'real tool' }, { style });
+  render({ phase: 'editing', face: 'work', bubble: 'real tool' }, { style });
   assert.equal(captured.sheet.clipId, 'work-enter');
   const entryIdentity = captured.sheet.frames[captured.frameIndex].cacheKey;
   assert.equal(captured.sheet.width, 2); assert.equal(captured.columns, 16); assert.equal(captured.rows, 8);
@@ -47,7 +47,7 @@ assert.equal(captured.sheet, base); assert.equal(ordinaryCalls, 1, 'Independent 
 render({ phase: 'reading', face: 'watch', bubble: 'reading' }, { animate: false });
 assert.equal(captured.sheet.frames[captured.frameIndex].id, 'watch', 'Pause ignores a video alias and chooses the actual approved static frame');
 render({ phase: 'running', face: 'watch', bubble: 'executing' }, { animate: false });
-assert.equal(captured.sheet.frames[captured.frameIndex].id, 'work', 'Paused execution uses keyboard artwork even with a stale watch face');
+assert.equal(captured.sheet.frames[captured.frameIndex].id, 'watch', 'Paused execution keeps the magnifier artwork used while the command runs');
 render({ phase: 'idle', face: 'idle-blink', bubble: 'idle' }, { animate: false });
 assert.equal(captured.sheet.frames[captured.frameIndex].id, 'idle-open', 'Pause cannot select a filmed or blink frame');
 for (const style of ['umi-pixel', 'pixel']) {
@@ -57,8 +57,7 @@ for (const style of ['umi-pixel', 'pixel']) {
   render({ phase: 'running', face: 'watch', bubble: 'running' }, { style, animate: false });
   assert.equal(captured.sheet, base, 'Pixel pause keeps the ordinary static source');
   assert.equal(ordinaryCalls, callsBefore + 2);
-  assert.equal(player.stats().keyboardStage, null);
-}
+  assert.equal(player.stats().keyboardStage, null);}
 render({ phase: 'idle', face: 'idle-open' }, { style: 'umi' });
 assert.equal(captured.sheet.clipId, 'idle', 'Switching back to illustration restores complete motion');
 player.dispose();

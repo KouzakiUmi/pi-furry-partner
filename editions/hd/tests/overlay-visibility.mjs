@@ -9,10 +9,16 @@ const checks = [], sharedPrototypeResults = [];
 function host(initial = false) {
   const active = new Set(); let initialVisible = initial;
   const tui = {
-    hasOverlay: () => initialVisible || active.size > 0,
+    hasOverlay: () => initialVisible || [...active].some((handle) => !handle.hidden),
     showOverlay(bounds) {
       assert.equal(this,tui);
-      const handle = { getBounds: () => active.has(handle) ? bounds : undefined, hide: () => active.delete(handle) };
+      const handle = {
+        hidden: false,
+        getBounds: () => active.has(handle) && !handle.hidden ? bounds : undefined,
+        hide: () => active.delete(handle),
+        setHidden: (hidden) => { handle.hidden = hidden; },
+        isHidden: () => handle.hidden,
+      };
       active.add(handle); return handle;
     },
   };
@@ -52,6 +58,21 @@ function sharedHosts() {
   assert.ok(guard.version() > activeVersion, "Hiding the final overlay changes the Kitty retransmission key");
   guard.dispose();guard.dispose();assert.equal(tui.showOverlay,original);assert.equal(guard.allows({row:0,column:0,width:1,height:1}),false);
   checks.push("Tracked public overlay bounds suppress only intersecting stripe footprints including their final-band overshoot; overlay transitions advance a stable Kitty retransmission key, hide restores visibility and disposal restores the original method");
+}
+{
+  const { tui } = host(), guard = createOverlayVisibility(tui);
+  const overlay = tui.showOverlay({ row: 20, col: 0, width: 12, height: 2 });
+  const rect = { row: 20, column: 0, width: 12, height: 2 };
+  assert.equal(guard.allows(rect), false);
+  const hiddenVersion = guard.version();
+  overlay.setHidden(true);
+  assert.equal(guard.allows(rect), true, "A temporarily hidden overlay must not discard the handle or block the dock");
+  overlay.setHidden(false);
+  assert.ok(guard.version() > hiddenVersion, "Re-showing the same handle must invalidate image transport caches");
+  assert.equal(guard.allows(rect), false, "The re-shown overlay must regain its occlusion bounds");
+  overlay.hide(); assert.equal(guard.allows(rect), true);
+  guard.dispose();
+  checks.push("HD keeps a temporarily hidden overlay's public handle across setHidden(false), invalidates Kitty/Sixel caches on re-show and restores row masking");
 }
 {
   const { tui, clearInitial }=host(true), guard=createOverlayVisibility(tui);

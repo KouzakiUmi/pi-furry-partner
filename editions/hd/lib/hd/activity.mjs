@@ -57,6 +57,43 @@ function toolObject(args) {
   return clean(compact).slice(0, 80);
 }
 
+// A streamed tool call is preparation, not execution: the model is still
+// emitting the arguments, so nothing has run yet. This hint is display-only,
+// bounded, and never changes the real phase or tool count.
+const PREPARING_WINDOW_MS = 15000;
+const PREPARATION_BUBBLES = {
+  // Editing and writing reuse the ordinary tool copy so a streamed write never
+  // falls through to the generic keyboard phrase.
+  editing: "我改改呀", writing: "我写写呀",
+  preparing_code: "我写代码", preparing_command: "敲命令呀", preparing_question: "我问问呀",
+  preparing_read: "我读读呀", preparing_search: "我找找呀", preparing_web: "我搜网页",
+  preparing_tools: "我找工具", preparing_tool: "我准备呀",
+};
+function preparationBubbleKey(name) {
+  const words = new Set(String(name).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean));
+  const has = (...values) => values.some((value) => words.has(value));
+  if (has("question", "prompt") || (words.has("ask") && words.has("user"))) return "preparing_question";
+  if (words.has("codemode") || (words.has("code") && words.has("mode")) || (words.has("tool") && words.has("parallel"))) return "preparing_code";
+  if ((words.has("tool") && words.has("search")) || (words.has("web") && words.has("enable"))) return "preparing_tools";
+  if ((words.has("web") && words.has("search")) || (words.has("source") && words.has("check"))) return "preparing_web";
+  if (has("edit", "patch")) return "editing";
+  if (words.has("write") || (words.has("file") && has("create", "save"))) return "writing";
+  if (has("bash", "powershell", "shell", "command", "execute", "exec", "run")) return "preparing_command";
+  if (has("read", "open", "fetch", "view") || (words.has("get") && words.has("content"))) return "preparing_read";
+  if (has("search", "find", "grep", "glob", "list", "ls")) return "preparing_search";
+  return "preparing_tool";
+}
+function streamedTool(event) {
+  const update = event.assistantMessageEvent;
+  if (!update || !update.type?.startsWith("toolcall_")) return undefined;
+  const call = update.type === "toolcall_end" ? update.toolCall : update.partial?.content?.[update.contentIndex];
+  return call?.type === "toolCall" ? call : undefined;
+}
+function streamedToolIndex(event) {
+  const index = event.assistantMessageEvent?.contentIndex;
+  return Number.isInteger(index) ? index : -1;
+}
+
 // Normalize only authoritative result facts. DSH's shell renderer deliberately
 // reports process exits separately from tool infrastructure failures; its
 // persisted result drops the original value, leaving this exact final marker.
@@ -83,7 +120,9 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
   let wakeAt = -Infinity, promptDepth = 0, compacting = false, demo, toolWarningUntil = 0;
   let waitingAt = -Infinity, lastCurrent, startleAt = -Infinity;
   let visualWorkUntil = -Infinity, visualWorkPhase = "running", stateGap = null;
+  let preparing = null;
   let toolErrorUntil = -Infinity, toolErrorAt = -Infinity;
+  const clearPreparing = () => { preparing = null; };
   const clearToolError = () => { toolErrorUntil = toolErrorAt = -Infinity; };
   const gapDuration = Math.max(0, Math.min(10000, Number(gapTimeoutMs) || 0));
   const clearGap = () => { stateGap = null; visualWorkUntil = -Infinity; };
@@ -139,7 +178,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
     const clipMs = Number.isFinite(authored) && authored >= 80 ? authored : DEMO_CLIP_MS;
     return clipMs + (step.padMs || 0);
   });
-  const reset = () => { clearGap(); clearToolError(); clearInteraction(); gestureMode = undefined; tools.clear(); promptDepth = 0; compacting = false; streamOpen = false; outcome = undefined; terminalUntil = 0; toolWarningUntil = 0; lastTextAt = -Infinity; demo = undefined; wakeAt = -Infinity; effectiveKey = ""; waitingAt = -Infinity; lastCurrent = undefined; startleAt = -Infinity; visualWorkUntil = -Infinity; typingUntil = -Infinity; listeningActive = false; };
+  const reset = () => { clearGap(); clearToolError(); clearInteraction(); clearPreparing(); gestureMode = undefined; tools.clear(); promptDepth = 0; compacting = false; streamOpen = false; outcome = undefined; terminalUntil = 0; toolWarningUntil = 0; lastTextAt = -Infinity; demo = undefined; wakeAt = -Infinity; effectiveKey = ""; waitingAt = -Infinity; lastCurrent = undefined; startleAt = -Infinity; visualWorkUntil = -Infinity; typingUntil = -Infinity; listeningActive = false; };
   const demoView = (time) => {
     if (!demo) return undefined;
     const age = Math.max(0, time - demoStartedAt);
@@ -236,12 +275,12 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         busy = true; seed = Math.floor(random() * 0x7fffffff); started = now(); phaseSince = now(); phase = "thinking"; return;
       }
       if (type === "session_shutdown") { reset(); pokeAt = -Infinity; busy = false; phase = "idle"; return; }
-      if (type === "ui_prompt_start") { clearInteraction(); clearGap(); clearToolError(); promptDepth++; return; }
+      if (type === "ui_prompt_start") { clearInteraction(); clearGap(); clearToolError(); clearPreparing(); promptDepth++; return; }
       if (type === "ui_prompt_end") {
         if (promptDepth === 1 && wasDozing()) startleAt = now();
         promptDepth = Math.max(0, promptDepth - 1); return;
       }
-      if (type === "session_before_compact") { clearInteraction(); clearGap(); clearToolError(); compacting = true; setPhase("compacting"); return; }
+      if (type === "session_before_compact") { clearInteraction(); clearGap(); clearToolError(); clearPreparing(); compacting = true; setPhase("compacting"); return; }
       if (type === "session_compact" || type === "session_compact_failed") {
         clearInteraction(); clearGap(); clearToolError(); compacting = false;
         if (type === "session_compact_failed") {
@@ -249,7 +288,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         } else setPhase(busy ? "thinking" : "idle");
         return;
       }
-      if (type === "message_start" && event.message?.role === "assistant") { clearInteraction(); streamOpen = false; setPhase("thinking"); return; }
+      if (type === "message_start" && event.message?.role === "assistant") { clearInteraction(); clearPreparing(); streamOpen = false; setPhase("thinking"); return; }
       if (type === "message_update") {
         const part = event.assistantMessageEvent?.type || "";
         const delta = event.assistantMessageEvent?.delta;
@@ -258,14 +297,38 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         // particular text_start is not proof that the assistant has spoken.
         if ((part === "text_delta" || part === "thinking_delta") && hasContent) clearGap();
         if (part === "text_delta" && hasContent) {
-          clearInteraction(); clearToolError();
+          clearInteraction(); clearToolError(); clearPreparing();
           streamOpen = true; lastTextAt = now(); setPhase("speaking");
-        } else if (part === "text_end") { streamOpen = false; setPhase("thinking"); }
-        else if ((part.startsWith("thinking_") && (part !== "thinking_delta" || hasContent)) || part.startsWith("toolcall_")) { clearInteraction(); streamOpen = false; setPhase("thinking"); }
+        } else if (part === "text_end") {
+          // Keep the last output phase: settlement decides whether this was a
+          // final answer. Switching to thinking here made the finishing pose
+          // pass through an unrelated thinking frame first.
+          streamOpen = false;
+        } else if (part.startsWith("toolcall_")) {
+          // Arguments are still streaming: show the preparation pose while the
+          // real phase stays thinking and no tool is counted yet.
+          clearInteraction(); streamOpen = false;
+          // Providers may emit toolcall_start/delta before the partial content
+          // carries a usable id or name. Keep an index-keyed placeholder so
+          // argument generation still uses the preparation pose; the entry is
+          // upgraded in place once the name arrives.
+          const call = streamedTool(event), contentIndex = streamedToolIndex(event);
+          const callId = typeof call?.id === "string" && call.id.length ? call.id : undefined;
+          const callName = typeof call?.name === "string" && call.name.length ? call.name : undefined;
+          const carried = preparing && (preparing.contentIndex === contentIndex || callId && preparing.id === callId) ? preparing : undefined;
+          preparing = {
+            id: callId || carried?.id,
+            name: clean(callName || carried?.name || ""),
+            bubbleKey: callName ? preparationBubbleKey(callName) : carried?.bubbleKey || "preparing_tool",
+            contentIndex, until: now() + PREPARING_WINDOW_MS,
+          };
+          setPhase("thinking");
+        }
+        else if (part.startsWith("thinking_") && (part !== "thinking_delta" || hasContent)) { clearInteraction(); clearPreparing(); streamOpen = false; setPhase("thinking"); }
         return;
       }
       if (type === "tool_execution_start") {
-        clearGap();
+        clearGap(); clearPreparing();
         const nextPhase = toolPhase(event.toolName || "");
         // A real tool run owns the display: it ends a welcome or either poke
         // stage instead of letting the local reaction mask progress.
@@ -300,14 +363,20 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       }
       if (type === "message_end" && event.message?.role === "assistant") {
         streamOpen = false;
+        // A toolUse turn is still preparing: the command is formed but has not
+        // started, so the preparation pose holds until tool_execution_start.
+        if (!["toolUse", "deferred"].includes(event.message.stopReason)) clearPreparing();
         if (event.message.stopReason === "error") { clearInteraction(); clearGap(); clearToolError(); setPhase("waiting"); toolWarningUntil = now() + 1800; }
         else if (event.message.stopReason === "aborted") { clearInteraction(); clearGap(); clearToolError(); setPhase("cancelled"); }
-        else setPhase("thinking");
+        // Keep the speaking phase through a normal end-of-message. The final
+        // agent_settled event then transitions straight to success instead of
+        // flashing a thinking pose in between.
+        else if (phase !== "speaking") setPhase("thinking");
         return;
       }
-      if (type === "agent_before_settle") { clearInteraction(); clearGap(); clearToolError(); outcome = event.outcome; return; }
+      if (type === "agent_before_settle") { clearInteraction(); clearGap(); clearToolError(); clearPreparing(); outcome = event.outcome; return; }
       if (type === "agent_settled") {
-        clearInteraction(); clearGap(); clearToolError(); busy = false; tools.clear(); streamOpen = false; compacting = false; promptDepth = 0;
+        clearInteraction(); clearGap(); clearToolError(); clearPreparing(); busy = false; tools.clear(); streamOpen = false; compacting = false; promptDepth = 0;
         setPhase(event.aborted || outcome === "aborted" ? "cancelled" : outcome === "error" ? "error" : "success");
         terminalUntil = now() + (phase === "error" ? 6000 : 2600);
       }
@@ -315,6 +384,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
     snapshot() {
       const time = now();
       const gapTime = gapNow();
+      if (preparing && gapTime >= preparing.until) clearPreparing();
       // The pose beat rolls into its action segment exactly once. The segment
       // keeps the real clock so a late render cannot stretch the answer.
       if (pokeFaceAt !== -Infinity) {
@@ -349,6 +419,9 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       const current = view?.phase || actual;
       const pendingNextState = !view && stateGap && gapTime >= toolErrorUntil && actual === "thinking" && busy && !tools.size
         ? { visualPhase: stateGap.visualPhase, remainingMs: Math.max(0, stateGap.until - gapTime) } : null;
+      // Preparation is only true while nothing has actually started: a real tool
+      // run, a pending next state, a reaction or the tour always win over it.
+      const preparingActive = !view && !pendingNextState && Boolean(preparing) && actual === "thinking" && busy && !tools.size;
       const awaitingUser = current === "waiting" && (view ? true : actualAwaitingUser);
       const copyKey = awaitingUser ? "waiting_user" : current;
       const label = labels[copyKey] || labelFor(current);
@@ -374,7 +447,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         face = activeSpeech ? speechFace(elapsed) : "talk-closed";
         bubble = activeSpeech ? ["·", "··", "···"][pulse % 3] : "·";
       } else if (current === "thinking") { face = blink ? "idle-blink" : "think"; bubble = "·".repeat(pulse % 3 + 1); }
-      else if (["reading", "editing", "running", "searching"].includes(current)) { face = current === "searching" ? "search" : current === "reading" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[current]; }
+      else if (["reading", "editing", "running", "searching"].includes(current)) { face = current === "searching" ? "search" : current === "reading" || current === "running" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[current]; }
       else if (current === "compacting") { face = "search"; bubble = ["▱", "▰", "▱"][pulse % 3]; }
       else if (current === "success") { face = "happy"; bubble = "✓"; }
       else if (current === "error") { face = "error"; bubble = "!"; }
@@ -384,10 +457,14 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       if (!["waking", "thinking", "speaking"].includes(current) && (bubbles[copyKey] || bubbles[current])) bubble = bubbles[copyKey] || bubbles[current];
       if (awaitingUser && !bubbles.waiting_user) bubble = "我等你呀";
       const holdingWork = !demo && current === "thinking" && time < visualWorkUntil;
-      if (holdingWork) { face = blink ? "work-blink" : "work"; bubble = bubbles[visualWorkPhase] || "我来敲两下"; }
+      if (holdingWork) { face = visualWorkPhase === "running" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = bubbles[visualWorkPhase] || "我来敲两下"; }
+      if (preparingActive) {
+        face = blink ? "work-blink" : "work";
+        bubble = bubbles[preparing.bubbleKey] || PREPARATION_BUBBLES[preparing.bubbleKey] || "我来敲两下";
+      }
       if (pendingNextState) {
         const held = pendingNextState.visualPhase;
-        face = held === "reading" ? blink ? "watch-blink" : "watch" : held === "searching" ? "search" : blink ? "work-blink" : "work";
+        face = held === "reading" || held === "running" ? blink ? "watch-blink" : "watch" : held === "searching" ? "search" : blink ? "work-blink" : "work";
         bubble = bubbles[held] || { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[held];
       }
       if (drowsy) { face = "rest"; bubble = ["z", "z · z", "z · z · z"][Math.floor((waitingElapsed - 10000) / 900) % 3]; phrase = awaitingUser ? "你慢慢想，我眯一小会儿陪着你" : "我先眯一小会儿，有回音再接着来"; }
@@ -443,7 +520,8 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       return {
         gesture, gestureMode, interaction: view ? null : nativeInteraction,
         phase: current, label: toolError ? labelFor("error") : label, phrase, face, bubble, color, glyph, awaitingUser, blink: toolError || startled || poked ? false : blink,
-        drowsy: drowsy && !listening, reaction: poked ? "poked" : listening ? "listening" : toolError ? "error" : startled ? "startled" : undefined, visualPhase: toolError ? "error" : pendingNextState?.visualPhase || (holdingWork ? visualWorkPhase : current),
+        drowsy: drowsy && !listening, reaction: poked ? "poked" : listening ? "listening" : toolError ? "error" : startled ? "startled" : undefined, visualPhase: toolError ? "error" : pendingNextState?.visualPhase || (preparingActive ? "editing" : holdingWork ? visualWorkPhase : current),
+        preparing: preparingActive,
         pendingNextState,
         pokeContext: poked ? reactionContext : undefined, reactionElapsedMs: poked ? demo === "all" ? elapsed : nativeInteraction?.kind === "poke" ? nativeInteraction.elapsedMs : pokePose ? pokeFaceAge : time - pokeAt : undefined, reactionStrength: poked ? reactionContext === "busy" ? .55 : reactionContext === "waiting" ? .8 : 1 : undefined,
         busy, demo: Boolean(demo), toolCount: tools.size, toolName: active?.name || "", toolObject: active?.object || "",

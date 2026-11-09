@@ -56,7 +56,10 @@ export function createOverlayVisibility(tui) {
   }) : undefined;
   const version = () => {
     const active = Boolean(tui.hasOverlay?.());
-    if (!active) { handles.clear(); unknown = false; }
+    // setHidden(false) reuses the same OverlayHandle; it does not call
+    // showOverlay again. Keep handles while the overlay is temporarily hidden
+    // so a later re-show can be observed and invalidate image caches.
+    if (!active) unknown = false;
     const bounds = active ? [...handles].map((handle) => {
       const value = handle.getBounds?.();
       return value ? `${value.row},${value.col},${value.width},${value.height}` : "?";
@@ -69,7 +72,7 @@ export function createOverlayVisibility(tui) {
     version,
     allows(rect) {
       if (disposed) return false;
-      if (!tui.hasOverlay()) { handles.clear(); unknown = false; version(); return true; }
+      if (!tui.hasOverlay()) { unknown = false; version(); return true; }
       // At marker collection time the final terminal-relative row is unknown.
       if (!rect) return true;
       if (unknown || !unsubscribe) return false;

@@ -122,11 +122,11 @@ for(const id of catalog.idleVariants){const c=catalog.clips[id],original=authore
   async function fresh(){await emit('session_shutdown');currentFactory=undefined;currentEditor=nativeEditor();currentHeader=undefined;currentFooter=undefined;busy=false;time+=10000;await emit('session_start',{reason:'startup'});hook();time+=6000;paint();await emit('agent_start');}
   const start=(name,id=name)=>emit('tool_execution_start',{toolCallId:id,toolName:name,args:{}});
   const end=async id=>{await emit('tool_execution_end',{toolCallId:id,isError:false});await emit('message_update',{assistantMessageEvent:{type:'thinking_delta',delta:'x'}});};
-  for(const name of ['edit','bash'])for(const duration of [0,20]){
+  for(const name of ['edit','write'])for(const duration of [0,20]){
     await fresh();const at=time;await start(name);time+=duration;await end(name);await emit('message_start',{message:{role:'assistant'}});
     const shown=time;clip(paint(shown),'work-enter');facts('thinking');clip(paint(shown+399),'work-enter');clip(paint(shown+400),'work');clip(paint(shown+1199),'work');facts('thinking');clip(paint(shown+1200),'work-exit');clip(paint(shown+1600),'think');
   }
-  checks.push('Actual Pi event handlers retain same-tick/20ms edit/bash without an intervening paint;400enter+800loop+400exit; real thinking/toolCount0');
+  checks.push('Actual Pi event handlers retain same-tick/20ms edit/write without an intervening paint;400enter+800loop+400exit; real thinking/toolCount0');
   for(const[name,id]of[['read','watch'],['grep','search']]){await fresh();await start(name);await end(name);const at=time;clip(paint(at),id);facts('thinking');clip(paint(at+1199),id);clip(paint(at+1200),'think');}
   await fresh();await emit('session_before_compact');await emit('session_compact');const compactAt=time;clip(paint(),'search');clip(paint(compactAt+1199),'search');clip(paint(compactAt+1200),'think');
   checks.push('Short read/search/compaction display at least1200ms through actual editor and image transport');

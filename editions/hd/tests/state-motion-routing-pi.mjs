@@ -168,15 +168,15 @@ try {
   assert.equal(painted.sheet.frames[painted.frameIndex].id, "watch", "Pi paused reading keeps preserved static magnifier");
   await emit("tool_execution_end", { toolCallId: "read-route", isError: false });
   await emit("message_update", { assistantMessageEvent: { type: "thinking_delta", delta: "x" } });
-  // Finish paused reading before resuming the independent execution fixture.
+  // Finish paused reading before resuming the independent editing fixture.
   await command("play");
-  await emit("tool_execution_start", { toolCallId: "run-route", toolName: "bash", args: {} });
+  await emit("tool_execution_start", { toolCallId: "run-route", toolName: "apply_patch", args: {} });
   paint(); const entered = time;
-  assert.equal(currentEditor.displaySheet.clipId, "work-enter", "Actual Pi execution starts keyboard entry");
+  assert.equal(currentEditor.displaySheet.clipId, "work-enter", "Actual Pi editing starts keyboard entry");
   time = entered + 399; paint(); assert.equal(currentEditor.displaySheet.clipId, "work-enter");
   time = entered + 400; paint(); assert.equal(currentEditor.displaySheet.clipId, "work");
   await command("pause"); paint();
-  assert.equal(painted.sheet.frames[painted.frameIndex].id, "work", "Pi paused execution keeps keyboard static artwork");
+  assert.equal(painted.sheet.frames[painted.frameIndex].id, "work", "Pi paused editing keeps keyboard static artwork");
   await command("play"); paint();
   time += 400; paint(); assert.equal(currentEditor.displaySheet.clipId, "work");
   await emit("tool_execution_start", { toolCallId: "read-preempt", toolName: "read", args: {} });
@@ -185,7 +185,7 @@ try {
   time += 400; paint(); assert.equal(currentEditor.displaySheet.clipId, "watch", "Reading follows finite keyboard cleanup with its own magnifier pixels");
   assert.equal(currentEditor.approvedMotion.stats().keyboardStage, null);
   await emit("tool_execution_end", { toolCallId: "read-preempt", isError: false });
-  paint(); assert.equal(currentEditor.displaySheet.clipId, "watch", "Reading gets its visible1200ms before returning to the still-active command");
+  paint(); assert.equal(currentEditor.displaySheet.clipId, "watch", "Reading gets its visible1200ms before returning to the still-active edit");
   time += 1200; paint(); assert.equal(currentEditor.displaySheet.clipId, "work-enter");
   time += 400; paint(); assert.equal(currentEditor.displaySheet.clipId, "work");
   await emit("tool_execution_end", { toolCallId: "run-route", isError: false });
@@ -195,6 +195,14 @@ try {
   assert.equal(currentEditor.displaySheet.clipId, "work-exit");
   time = exited + 399; paint(); assert.equal(currentEditor.displaySheet.clipId, "work-exit");
   time = exited + 400; paint(); assert.equal(currentEditor.displaySheet.clipId, "think");
+  // A started command is execution, so it watches through the magnifier and
+  // never borrows the keyboard that preparation used.
+  await emit("tool_execution_start", { toolCallId: "run-watch", toolName: "bash", args: {} });
+  paint(); assert.equal(currentEditor.displaySheet.clipId, "watch", "A real command run watches through the magnifier");
+  await command("pause"); paint();
+  assert.equal(painted.sheet.frames[painted.frameIndex].id, "watch", "Pi paused command keeps the magnifier static artwork");
+  await command("play"); paint();
+  await emit("tool_execution_end", { toolCallId: "run-watch", isError: false });
   // Actual command -> activity -> indexed pixels -> image transport uses the
   // real approved nod payload (only its fixture container revision is replaced).
   await emit("agent_before_settle",{outcome:"completed"});await emit("agent_settled",{aborted:false});

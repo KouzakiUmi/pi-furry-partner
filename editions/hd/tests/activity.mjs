@@ -103,10 +103,57 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("message_update", update("text_delta", { delta: "hello" }));
   assert.equal(activity.snapshot().phase, "speaking");
   activity.handle("message_update", update("text_end"));
-  assert.equal(activity.snapshot().phase, "thinking");
-  assert.ok(!activity.snapshot().face.startsWith("talk-"));
+  assert.equal(activity.snapshot().phase, "speaking", "text_end only closes the block; settlement decides the next phase");
+  assert.ok(!activity.snapshot().face.startsWith("talk-") || activity.snapshot().face === "talk-closed");
   assert.equal(test.randomCalls, 2);
-  checks.push("Thinking bubbles cycle through middle dots; real speech has at least three mouth shapes, 900ms silence closes mouth and text_end stops speech immediately");
+  checks.push("Thinking bubbles cycle through middle dots; real speech has at least three mouth shapes, 900ms silence closes mouth and text_end closes the mouth without leaving speech");
+}
+
+{
+  const { activity } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  const partial = (type, content = []) => activity.handle("message_update", {
+    assistantMessageEvent: { type, contentIndex: 0, partial: { role: "assistant", content } },
+  });
+  partial("toolcall_start");
+  let state = activity.snapshot();
+  assert.equal(state.phase, "thinking", "HD keeps the real phase thinking while preparing");
+  assert.equal(state.preparing, true, "An incomplete toolcall_start must still show preparation");
+  assert.match(state.face, /^work/, "Preparation uses the keyboard pose");
+  assert.equal(state.bubble, "我准备呀", "A nameless call keeps the generic preparation bubble");
+  assert.equal(state.toolCount, 0, "Preparation is not an executed tool");
+  partial("toolcall_delta");
+  assert.equal(activity.snapshot().preparing, true, "Argument deltas keep the placeholder alive");
+  const call = { type: "toolCall", id: "streamed-write", name: "write", arguments: { content: "NEVER_ECHO_STREAMED_CONTENT" } };
+  activity.handle("message_update", { assistantMessageEvent: {
+    type: "toolcall_end", contentIndex: 0, toolCall: call, partial: { role: "assistant", content: [call] },
+  } });
+  state = activity.snapshot();
+  assert.equal(state.preparing, true, "The completed call upgrades the same preparation entry");
+  assert.equal(state.visualPhase, "editing");
+  assert.equal(state.bubble, "我写写呀");
+  assert.ok(!JSON.stringify(state).includes("NEVER_ECHO_STREAMED_CONTENT"));
+  activity.handle("tool_execution_start", { toolCallId: call.id, toolName: call.name, args: {} });
+  state = activity.snapshot();
+  assert.equal(state.preparing, false, "A real run ends the preparation pose");
+  assert.equal(state.phase, "editing"); assert.equal(state.toolCount, 1);
+  activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
+  checks.push("Incomplete toolcall start/delta events keep a private-safe HD preparation pose and upgrade to the named write bubble when the call completes");
+}
+
+{
+  const { activity } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  activity.handle("message_update", update("text_delta", { delta: "final answer" }));
+  assert.equal(activity.snapshot().phase, "speaking");
+  activity.handle("message_update", update("text_end"));
+  assert.equal(activity.snapshot().phase, "speaking");
+  activity.handle("message_end", { message: { role: "assistant", stopReason: "stop" } });
+  assert.equal(activity.snapshot().phase, "speaking", "A normal message end must not insert thinking before settlement");
+  activity.handle("agent_before_settle", { outcome: "completed" });
+  activity.handle("agent_settled", { aborted: false });
+  assert.equal(activity.snapshot().phase, "success", "Settlement moves straight from the final answer to success");
+  checks.push("HD keeps the speaking pose across text_end and normal message completion, then transitions directly to success on settlement");
 }
 
 {
@@ -370,7 +417,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
     const length = (step.clip ? span(step.phase) : step.durationMs) + (step.padMs || 0);
     if (step.clip) {
       let time = 0;
-      const mapping = { reading: 'watch', editing: 'work', running: 'work', searching: 'search', compacting: 'search', cancelled: 'rest' };
+      const mapping = { reading: 'watch', editing: 'work', running: 'watch', searching: 'search', compacting: 'search', cancelled: 'rest' };
       const activity = createActivity({ now: () => time, random: () => 0.25, interactionClips: () => clips,
         demoClipId: (step) => step.reaction === 'listening' ? 'listen' : (mapping[step.phase] || step.phase) });
       activity.setDemo("all");

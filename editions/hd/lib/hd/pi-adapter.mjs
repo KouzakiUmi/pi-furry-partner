@@ -18,9 +18,11 @@ export function createPiHdActivity(options = {}) {
     ...activity,
     handle(type, event = {}) {
       if (!allowed.has(type)) return false;
-      // Partial tool arguments are composition, not execution. Do not start
-      // Legacy preparation poses, retain arguments, or extend the tool gap.
-      if (type === 'message_update' && event.assistantMessageEvent?.type?.startsWith('toolcall_')) return false;
+      // Partial tool arguments are composition, not execution: HD's own
+      // activity renders them as a display-only preparation pose with an
+      // approved HD clip. It never counts a tool, keeps the real phase
+      // thinking, and stores no argument text. Legacy simple-frame
+      // preparation stays out of this runtime.
       activity.handle(type, event);
       return true;
     },

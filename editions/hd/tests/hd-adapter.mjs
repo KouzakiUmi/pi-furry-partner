@@ -22,13 +22,32 @@ clock = 1800; paint();
 activity.handle('tool_execution_end', { toolCallId: 'read' });
 const ended = paint();
 clock = 2100;
-assert.equal(activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_delta', partial: { content: [{ type: 'toolCall', id: 'private', name: 'bash', arguments: { command: 'SECRET' } }] } } }), false);
+// Streaming arguments are HD's own display-only preparation pose: handled,
+// counted as nothing, and never retaining the argument text. A readable gap
+// still wins over preparation.
+assert.equal(activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_delta', contentIndex: 0, partial: { content: [{ type: 'toolCall', id: 'private', name: 'bash', arguments: { command: 'SECRET' } }] } } }), true);
 assert.equal(paint().selection.playbackEpoch, ended.selection.playbackEpoch);
 assert.equal(activity.snapshot().toolCount, 0);
+assert.equal(activity.snapshot().phase, 'thinking', 'Preparation never fakes an executing tool');
+assert.equal(activity.snapshot().preparing, false, 'The readable gap keeps priority over preparation');
 assert.ok(!JSON.stringify(activity.snapshot()).includes('SECRET'));
-clock = 3800; assert.equal(paint().selection.clipId, 'think');
+clock = 3800;
+// The gap is over, so the still-streaming call now renders HD's authored
+// keyboard instead of the thinking pose.
+const preparing = paint();
+assert.equal(preparing.snapshot.preparing, true, 'Pi HD renders streamed arguments as preparation');
+assert.equal(preparing.snapshot.phase, 'thinking');
+assert.equal(preparing.snapshot.toolCount, 0);
+assert.equal(preparing.selection.clipId, 'work-enter', 'Preparation keeps the keyboard while arguments are still being written');
+assert.ok(!JSON.stringify(preparing.snapshot).includes('SECRET'));
+// Providers may emit the index before any name is available; the placeholder
+// still prepares and is upgraded in place.
+assert.equal(activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_start', contentIndex: 0, partial: { content: [] } } }), true);
+assert.equal(paint().snapshot.preparing, true, 'A nameless partial still prepares');
 activity.handle('tool_execution_start', { toolCallId: 'work', toolName: 'bash' });
-assert.equal(paint().selection.clipId, 'work-enter');
+assert.equal(paint().selection.clipId, 'work-exit', 'Leaving preparation keeps the authored keyboard exit');
+clock += 500;
+assert.equal(paint().selection.clipId, 'watch', 'A started command watches through the magnifier');
 activity.handle('ui_prompt_start');
 assert.equal(paint().snapshot.awaitingUser, true);
 assert.ok(!['work', 'work-enter', 'work-exit'].includes(paint().selection?.clipId), 'User prompt interrupts keyboard cleanup immediately');

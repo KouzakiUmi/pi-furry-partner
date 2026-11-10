@@ -5,7 +5,7 @@ import { decodeApprovedMotionBinary } from '../approved-motion-codec.mjs';
 import { approvedMotionStyle } from '../build-profile.mjs';
 
 export const APPROVED_MOTION_STATES = Object.freeze({ idle: 'idle', thinking: 'think', reading: 'watch', editing: 'work',
-  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search' });
+  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search' });
 const approvedMotionEmotionIds = new Set(['joy', 'grumpy', 'sad', 'cry', 'shy', 'flustered', 'surprise', 'proud', 'affection']);
 export const APPROVED_AUXILIARY_IDS = Object.freeze(['wave', 'nod', 'peek', 'stretch', 'ear-flick', 'nuzzle', 'bounce', 'head-shake']);
 export const APPROVED_IDLE_VARIANT_IDS = Object.freeze(['idle', 'idle-center', 'idle-right', 'idle-settle']);
@@ -112,7 +112,7 @@ export function approvedMotionStaticFrame(sheet, targetIndex, { phase = 'idle' }
   const selected = sheet.frames[targetIndex];
   const emotion = /^emotion-[a-z]+$/.test(selected?.id || '') ? selected.id : null;
   const faces = { idle: 'idle-open', waking: 'idle-open', thinking: 'think', reading: 'watch', editing: 'work',
-    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search',
+    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search',
     speaking: 'talk-closed', success: 'happy', error: 'error' };
   const face = ['speaking', 'error'].includes(phase) ? faces[phase] : emotion || faces[phase] || selected?.id;
   // Sequence aliases can point at video frames. Find the preserved static
@@ -260,6 +260,10 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
       const urgent = Boolean(gesture || snapshot.reaction || snapshot.awaitingUser ||
         ['waiting', 'cancelled', 'listening'].includes(phase));
       let displayPhase = phase, held = false;
+      // A streamed keyboard preview is not the execution pose. Drop it when the
+      // real clip is different so read/search appear at once. Editing and
+      // command runs stay on work and keep the same chain.
+      const leavingPreparation = Boolean(action?.prep) && id !== 'work';
       if (minimum) {
         const toolPhase = ['reading', 'editing', 'running', 'searching', 'compacting'].includes(phase);
         const canEnterImmediately = action?.id === 'idle' || action?.id === 'think' && toolPhase ||
@@ -278,11 +282,17 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
         if (!held && (action?.id !== id || replay)) action = { id, phase, since: time, presentedAt: null,
           prep: Boolean(snapshot.preparing),
           single: Boolean(gesture || stateEmotion), externalClock: Boolean(gesture), externalAge: gesture?.elapsedMs ?? snapshot.expressionElapsedMs ?? snapshot.reactionElapsedMs ?? snapshot.phaseElapsedMs };
+        else if (!held && action) {
+          // Preparation, editing and command execution share the work clip.
+          // Keep the visible clock, but do not leave the preview flag stale.
+          action.prep = Boolean(snapshot.preparing);
+          action.phase = phase;
+        }
       }
       // Urgent interaction bypasses visual cleanup. Ordinary short work still
       // gets its full visible entry, readable loop, and complete exit.
       const selectedEmotion = held ? null : stateEmotion;
-      if (listen || gesture || selectedEmotion && (!minimum || phase !== 'success') || urgent && minimum || displayPhase === 'reading' && !minimum) keyboard = null;
+      if (listen || gesture || selectedEmotion && (!minimum || phase !== 'success') || urgent && minimum || displayPhase === 'reading' && !minimum || leavingPreparation && !held) keyboard = null;
       else if (catalog.chain) {
         const stageAge = () => minimum ? visibleAge(keyboard, time) : time - keyboard.since;
         if (id === 'work') {

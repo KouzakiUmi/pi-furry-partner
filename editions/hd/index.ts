@@ -175,7 +175,7 @@ export default function (pi: ExtensionAPI) {
   function pausedSnapshot(next: ReturnType<typeof activity.snapshot>) {
     activity.cancelInteraction("welcome");
     if (next.reaction === "error" || next.reaction === "poked" && next.demoMode !== "all") return next;
-    const faces: Record<string, string> = { idle: "idle-open", thinking: "think", speaking: "talk-closed", reading: "watch", editing: "work", running: "watch", searching: "search", compacting: "search", waiting: "wait", success: "happy", error: "error", cancelled: "rest" };
+    const faces: Record<string, string> = { idle: "idle-open", thinking: "think", speaking: "talk-closed", reading: "watch", editing: "work", running: "work", searching: "search", compacting: "search", waiting: "wait", success: "happy", error: "error", cancelled: "rest" };
     const bubbles: Record<string, string> = voice.bubbles;
     // A paused visual hold must never latch a previous work/blink pose after
     // its real tool has ended. Keep the state readable without running motion.

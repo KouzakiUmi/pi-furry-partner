@@ -34,12 +34,11 @@ for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening'
   }
 }
 player.reset(); clock = 0;
-// Preparation and editing share the keyboard; a started command shows the magnifier.
+// Preparation and editing share the keyboard; a started command uses that same chain.
 const prepareSnapshot = { phase: 'thinking', preparing: true, tool: 'bash', blink: false };
 assert.equal(player.sample(prepareSnapshot).clipId, 'work-enter', 'Streamed preparation keeps the keyboard');
 player.reset(); clock = 0;
-assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'watch', 'Executive commands watch through the magnifier');
-assert.equal(player.stats().keyboardStage, null, 'Execution never builds the preparation keyboard chain');
+assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'work-enter', 'Executive commands open the keyboard');
 player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter', 'Editing opens the same keyboard chain preparation used');
 clock = 399; assert.equal(sample('editing', { blink: true }).clipId, 'work-enter');
@@ -64,8 +63,7 @@ player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter');
 clock = 150; assert.equal(sample('reading').clipId, 'watch', 'Reading immediately replaces the keyboard, including a partial entry');
 assert.equal(player.stats().keyboardStage, null);
-assert.equal(sample('running').clipId, 'watch', 'Execution stays on the magnifier after reading, never restarting the keyboard');
-assert.equal(player.stats().keyboardStage, null);
+assert.equal(sample('running').clipId, 'work-enter', 'Execution starts a new keyboard chain after reading');
 assert.equal(sample('idle', {}, { animate: false }), null);
 assert.equal(player.stats().keyboardStage, null);
 assert.equal(sample('idle', {}, { enabled: false }), null);
@@ -134,4 +132,57 @@ assert.equal(coldPlayer.indexedFrame(looping).approvedMotion.clipId, 'work');
 assert.ok(coldPending.has('indexed/umi/work-exit.json'), 'Working primes its 400ms exit');
 assert.ok(coldPlayer.stats().clips <= 2); assert.ok(coldPlayer.stats().downloads <= 2);
 coldPlayer.dispose();
+{
+  let clock = 0;
+  const timed = createApprovedMotionPlayer({ catalog, now: () => clock, minimumActionMs: 1200, loadIndexed: path => data[path] });
+  const prep = { phase: 'thinking', preparing: true, busy: true, toolCount: 0 };
+  const show = (snapshot, at) => {
+    clock = at;
+    const selected = timed.sample(snapshot, { time: at });
+    timed.indexedFrame(selected);
+    return selected;
+  };
+  const handoff = (phase, at100, at499) => {
+    timed.reset();
+    assert.equal(show(prep, 0).clipId, 'work-enter', `${phase}: preparation opens the keyboard`);
+    const next = { phase, preparing: false, busy: true, toolCount: 1 };
+    assert.equal(show(next, 100).clipId, at100, `${phase}: execution at 100ms`);
+    assert.equal(show(next, 499).clipId, at499, `${phase}: pose at 499ms`);
+    assert.equal(timed.stats().keyboardStage, phase === 'reading' || phase === 'searching' ? null : 'loop');
+  };
+  handoff('reading', 'watch', 'watch');
+  handoff('searching', 'search', 'search');
+  handoff('editing', 'work-enter', 'work');
+  handoff('running', 'work-enter', 'work');
+  timed.reset();
+  assert.equal(show(prep, 0).clipId, 'work-enter');
+  assert.equal(show({ phase: 'running', preparing: false, busy: true, toolCount: 1 }, 400).clipId, 'work', 'Command execution continues the keyboard loop');
+  assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 800).clipId, 'work', 'Editing keeps that same keyboard loop');
+  // A real command is not still a preview, so leaving it for reading keeps the
+  // keyboard dwell and the 400ms exit. A later preview is, so reading or
+  // search after that preview does not replay work-exit.
+  const running = { phase: 'running', preparing: false, busy: true, toolCount: 1 };
+  const preview = { phase: 'thinking', preparing: true, busy: true, toolCount: 0 };
+  const reading = { phase: 'reading', preparing: false, busy: true, toolCount: 1 };
+  const searching = { phase: 'searching', preparing: false, busy: true, toolCount: 1 };
+  timed.reset();
+  assert.equal(show(preview, 0).clipId, 'work-enter');
+  assert.equal(show(running, 100).clipId, 'work-enter');
+  assert.equal(show(reading, 200).clipId, 'work-enter', 'Real execution still owes the keyboard dwell');
+  assert.equal(show(reading, 400).clipId, 'work');
+  assert.equal(show(reading, 1199).clipId, 'work');
+  assert.equal(show(reading, 1200).clipId, 'work-exit', 'The keyboard exit still plays after the dwell');
+  assert.equal(show(reading, 1599).clipId, 'work-exit');
+  assert.equal(show(reading, 1600).clipId, 'watch', 'Reading starts once the exit finishes');
+  for (const [phase, clipId] of [['reading', 'watch'], ['searching', 'search']]) {
+    timed.reset();
+    assert.equal(show(running, 0).clipId, 'work-enter');
+    assert.equal(show(preview, 100).clipId, 'work-enter');
+    const next = { phase, preparing: false, busy: true, toolCount: 1 };
+    assert.equal(show(next, 200).clipId, clipId, `${phase}: a preview does not keep work-exit`);
+    assert.equal(timed.stats().keyboardStage, null);
+    assert.equal(show(next, 499).clipId, clipId);
+  }
+  timed.dispose();
+}
 console.log('Approved motion: all families/emotions, complete-frame pixels, 400ms keyboard lifecycle, real-state priority, QA/path gates and bounded async/style/disposal cache passed.');

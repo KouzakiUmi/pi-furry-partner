@@ -101,10 +101,50 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
   activity.handle("message_update", update("text_delta", { delta: "hello" }));
   assert.equal(activity.snapshot().phase, "speaking");
   activity.handle("message_update", update("text_end"));
-  assert.equal(activity.snapshot().phase, "thinking");
-  assert.ok(!activity.snapshot().face.startsWith("talk-"));
+  assert.equal(activity.snapshot().phase, "speaking", "text_end alone may only close a block; final settlement decides the next phase");
+  assert.equal(activity.snapshot().face, "talk-closed", "text_end closes the mouth without inserting thinking");
   assert.equal(test.randomCalls, 2);
   checks.push("Thinking bubbles cycle through middle dots; real speech has at least three mouth shapes, 900ms silence closes mouth and text_end stops speech immediately");
+}
+
+{
+  const { activity } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  const partial = (type, content = []) => activity.handle("message_update", {
+    assistantMessageEvent: { type, contentIndex: 0, partial: { role: "assistant", content } },
+  });
+  partial("toolcall_start");
+  let state = activity.snapshot();
+  assert.equal(state.phase, "editing", "An incomplete toolcall_start must leave thinking immediately");
+  assert.match(state.face, /^work/, "An incomplete toolcall_start must use the keyboard pose");
+  assert.equal(state.toolCount, 1);
+  partial("toolcall_delta");
+  assert.equal(activity.snapshot().phase, "editing");
+  const call = { type: "toolCall", id: "streamed-write", name: "write", arguments: {} };
+  partial("toolcall_end", [call]);
+  // toolcall_end uses the authoritative event field rather than partial content.
+  activity.handle("message_update", { assistantMessageEvent: {
+    type: "toolcall_end", contentIndex: 0, toolCall: call, partial: { role: "assistant", content: [call] },
+  } });
+  state = activity.snapshot();
+  assert.equal(state.toolName, "write"); assert.equal(state.bubble, "我写写呀"); assert.equal(state.toolCount, 1);
+  activity.handle("tool_execution_start", { toolCallId: call.id, toolName: call.name, args: {} });
+  assert.equal(activity.snapshot().toolCount, 1);
+  activity.handle("tool_execution_end", { toolCallId: call.id, isError: false });
+  checks.push("Incomplete toolcall start/delta events create a private-safe keyboard placeholder and upgrade to the named write pose without a thinking gap or tool-count gap");
+}
+
+{
+  const { activity } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  activity.handle("message_update", update("text_delta", { delta: "final answer" }));
+  assert.equal(activity.snapshot().phase, "speaking");
+  activity.handle("message_end", { message: { role: "assistant", stopReason: "stop" } });
+  assert.equal(activity.snapshot().phase, "speaking", "Normal message end must not insert thinking before settlement");
+  activity.handle("agent_before_settle", { outcome: "completed" });
+  activity.handle("agent_settled", { aborted: false });
+  assert.equal(activity.snapshot().phase, "success");
+  checks.push("Normal assistant message completion stays in the speaking pose until agent_settled, which transitions directly to success");
 }
 
 {

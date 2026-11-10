@@ -75,6 +75,52 @@ function sharedHosts() {
   checks.push("HD keeps a temporarily hidden overlay's public handle across setHidden(false), invalidates Kitty/Sixel caches on re-show and restores row masking");
 }
 {
+  const active = new Set();
+  const prior = { present: true, hidden: false };
+  const tui = {
+    hasOverlay: () => (prior.present && !prior.hidden) || [...active].some((handle) => !handle.hidden),
+    showOverlay(bounds) {
+      const handle = {
+        hidden: false,
+        getBounds: () => active.has(handle) && !handle.hidden ? bounds : undefined,
+        hide: () => active.delete(handle),
+        setHidden: (hidden) => { handle.hidden = hidden; },
+        isHidden: () => handle.hidden,
+      };
+      active.add(handle);
+      return handle;
+    },
+  };
+  const guard = createOverlayVisibility(tui);
+  const rect = { row: 30, column: 0, width: 16, height: 2 };
+  assert.equal(guard.allows(rect), false, "An overlay that predates the guard fail-closes");
+  const tracked = tui.showOverlay({ row: 1, col: 40, width: 4, height: 1 });
+  assert.equal(guard.allows(rect), false, "A tracked disjoint overlay does not reveal the untracked one");
+  prior.hidden = true;
+  tracked.setHidden(true);
+  assert.equal(tui.hasOverlay(), false);
+  assert.equal(guard.allows(rect), true, "A fully hidden screen can show the dock");
+  guard.version();
+  prior.hidden = false;
+  tracked.setHidden(false);
+  assert.equal(guard.allows(rect), false, "Re-showing an untracked overlay beside a retained handle must still fail closed");
+  prior.hidden = true;
+  tracked.setHidden(true);
+  guard.version();
+  const duringHide = tui.showOverlay({ row: 2, col: 2, width: 2, height: 1 });
+  prior.hidden = false;
+  tracked.setHidden(false);
+  assert.equal(guard.allows(rect), false, "showOverlay during the hide must not forget the untracked overlay");
+  duringHide.hide();
+  tracked.hide();
+  prior.present = false;
+  const later = tui.showOverlay({ row: 1, col: 40, width: 4, height: 1 });
+  assert.equal(guard.allows(rect), true, "Once the untracked overlay is gone, a new disjoint overlay can show images");
+  later.hide();
+  guard.dispose();
+  checks.push("Temporary hiding keeps fail-closed uncertainty for an untracked overlay that returns with a retained disjoint handle");
+}
+{
   const { tui, clearInitial }=host(true), guard=createOverlayVisibility(tui);
   assert.equal(guard.allows(),true,"Anchor collection may proceed before final terminal-relative placement is known");
   assert.equal(guard.allows({row:30,column:0,width:16,height:2}),false);

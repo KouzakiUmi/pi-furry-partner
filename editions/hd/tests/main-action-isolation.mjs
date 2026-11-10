@@ -39,9 +39,17 @@ activity.handle('message_start', { message: { role: 'assistant' } });
 assert.equal(paint(3800).selection.clipId, 'think', 'Discarded composition cannot revive completed reading');
 clock = 4000;
 stream('toolcall_start');
-assert.equal(paint(4000).selection.clipId, 'think');
+const preparing = paint(4000);
+assert.equal(preparing.snapshot.phase, 'thinking', 'Preparation never fakes an executing tool');
+assert.equal(preparing.snapshot.toolCount, 0);
+assert.equal(preparing.snapshot.preparing, true, 'Streaming arguments is a preparation pose, not execution');
+assert.equal(preparing.selection.clipId, 'work-enter', 'Preparation keeps the keyboard while the command is still being written');
 activity.handle('tool_execution_start', { toolCallId: 'next', toolName: 'bash' });
 assert.equal(paint(4000).snapshot.phase, 'running');
-assert.equal(paint(4000).selection.clipId, 'work-enter');
+// The preparation keyboard still plays its authored 400ms exit, but the old
+// 1200ms readable dwell no longer applies: execution is on screen by 4400.
+assert.equal(paint(4000).selection.clipId, 'work-exit', 'Leaving preparation keeps the authored keyboard exit');
+assert.equal(paint(4399).selection.clipId, 'work-exit');
+assert.equal(paint(4400).selection.clipId, 'watch', 'Eexecution reaches the magnifier well before the old 1200ms dwell');
 player.dispose();
-console.log('Main action isolation: streamed partials preserve the original gap/clock, never start the legacy preparation pose, and real execution retains the full keyboard chain.');
+console.log('Main action isolation: streamed partials preserve the original gap/clock and hold the preparation keyboard, while a started command switches to the magnifier without waiting out the preview dwell.');

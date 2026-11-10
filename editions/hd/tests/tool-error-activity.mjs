@@ -74,8 +74,9 @@ for (const [type, event] of [
   const { catalog, data } = approvedMotionFixture();
   const player = createApprovedMotionPlayer({ catalog, minimumActionMs: 1200, loadIndexed: path => data[path], now: () => 100 });
   start(); const enter = player.sample(snapshot(), { time: 100 }); player.indexedFrame(enter, 'umi');
-  assert.equal(enter.clipId, 'work-enter'); end('bash', { isError: true });
-  assert.equal(player.sample(snapshot(), { time: 110 }), null, 'Error immediately bypasses keyboard entry/minimum display/gap');
+  assert.equal(enter.clipId, 'watch', 'A started command watches through the magnifier');
+  end('bash', { isError: true });
+  assert.equal(player.sample(snapshot(), { time: 110 }), null, 'Error immediately bypasses the execution pose, minimum display and gap');
   player.dispose();
 }
 console.log('Tool errors: native result contracts, strict shell exit markers, 1800ms truthful reaction, priorities, parallel tools, dedupe, wall expiry and display preemption passed.');

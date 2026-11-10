@@ -152,3 +152,32 @@ for (const method of ['clearGap', 'notifyNextState']) {
   assert.equal(activity.snapshot().pendingNextState, null, 'Resuming animation cannot revive an expired gap');
 }
 console.log('Activity next-state gap: truthful facts, safe metadata, 2s completion timeout, parallel tools, dedupe and real-state clears passed.');
+// Streamed preparation copy: every tool category must resolve to its own
+// phrase instead of the generic keyboard fallback, in both languages.
+{
+  const { localizeSnapshot } = await import('../lib/language.mjs');
+  let time = 0;
+  const copyFor = (name) => {
+    const activity = createActivity({ now: () => time, gapNow: () => time, random: () => .25 });
+    activity.start({ isBusy: true, wake: false });
+    activity.handle('message_start', { message: { role: 'assistant' } });
+    activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_start', contentIndex: 0,
+      partial: { role: 'assistant', content: [{ type: 'toolCall', id: name, name, arguments: {} }] } } });
+    const snapshot = activity.snapshot();
+    return { zh: snapshot.bubble, en: localizeSnapshot(snapshot, 'en').bubble, preparing: snapshot.preparing };
+  };
+  const expected = {
+    bash: ['敲命令呀', 'Command'], write: ['我写写呀', 'Writing it'], edit: ['我改改呀', 'Paws busy'],
+    read: ['我读读呀', 'Reading'], grep: ['我找找呀', 'Searching'], web_search: ['我搜网页', 'Web search'],
+    tool_search: ['我找工具', 'Find tools'], codemode: ['我写代码', 'Coding'],
+    ask_user: ['我问问呀', 'Asking you'], some_custom_tool: ['我准备呀', 'Preparing'],
+  };
+  for (const [name, [zh, en]] of Object.entries(expected)) {
+    const copy = copyFor(name);
+    assert.equal(copy.preparing, true, `${name}: streaming arguments is preparation`);
+    assert.equal(copy.zh, zh, `${name}: preparation copy is specific, not the generic keyboard fallback`);
+    assert.equal(copy.en, en, `${name}: preparation copy is localized`);
+  }
+  assert.notEqual(copyFor('some_custom_tool').zh, '我来敲两下', 'Unknown tools keep a distinct preparation phrase');
+}
+console.log('Streamed preparation copy: bash/write/edit/read/search/web/discovery/code/question/custom each keep a specific localized phrase.');

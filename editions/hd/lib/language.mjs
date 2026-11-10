@@ -86,6 +86,11 @@ const FALLBACK_LABELS = new Map([
 const REACTION_BUBBLES = new Map([
   ["唔？", "Hm?"], ["我醒啦", "I'm up!"], ["你来啦", "Hi!"], ["唔！", "Oh!"],
   ["z · z", "z z"], ["z · z · z", "z z z"],
+  // Streamed tool arguments reuse the ordinary tool copy, so these must stay
+  // localized here; the shipped status-copy assets carry no preparing_* keys.
+  ["我写写呀", "Writing it"], ["我写代码", "Coding"], ["敲命令呀", "Command"],
+  ["我问问呀", "Asking you"], ["我读读呀", "Reading"], ["我找找呀", "Searching"],
+  ["我搜网页", "Web search"], ["我找工具", "Find tools"], ["我准备呀", "Preparing"],
   ["我瞧瞧", "Let me see"], ["我改改呀", "Paws busy"], ["我看着呢", "I'm on it"],
   ["我翻翻看", "Digging"], ["我停下啦", "Paused"], ["我等你呀", "I'm here"],
   ["我等一会", "One moment"], ["我来敲两下", "Paws busy"], ["我听着呢", "All ears"],

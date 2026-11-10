@@ -5,7 +5,7 @@ import { decodeApprovedMotionBinary } from '../approved-motion-codec.mjs';
 import { approvedMotionStyle } from '../build-profile.mjs';
 
 export const APPROVED_MOTION_STATES = Object.freeze({ idle: 'idle', thinking: 'think', reading: 'watch', editing: 'work',
-  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search' });
+  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search' });
 const approvedMotionEmotionIds = new Set(['joy', 'grumpy', 'sad', 'cry', 'shy', 'flustered', 'surprise', 'proud', 'affection']);
 export const APPROVED_AUXILIARY_IDS = Object.freeze(['wave', 'nod', 'peek', 'stretch', 'ear-flick', 'nuzzle', 'bounce', 'head-shake']);
 export const APPROVED_IDLE_VARIANT_IDS = Object.freeze(['idle', 'idle-center', 'idle-right', 'idle-settle']);
@@ -112,7 +112,7 @@ export function approvedMotionStaticFrame(sheet, targetIndex, { phase = 'idle' }
   const selected = sheet.frames[targetIndex];
   const emotion = /^emotion-[a-z]+$/.test(selected?.id || '') ? selected.id : null;
   const faces = { idle: 'idle-open', waking: 'idle-open', thinking: 'think', reading: 'watch', editing: 'work',
-    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search',
+    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search',
     speaking: 'talk-closed', success: 'happy', error: 'error' };
   const face = ['speaking', 'error'].includes(phase) ? faces[phase] : emotion || faces[phase] || selected?.id;
   // Sequence aliases can point at video frames. Find the preserved static
@@ -249,7 +249,7 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
       const gapPhase = snapshot.phase === 'thinking' && snapshot.busy && snapshot.toolCount === 0 &&
         !snapshot.awaitingUser && gap?.remainingMs > 0 &&
         ['reading', 'editing', 'running', 'searching'].includes(gap.visualPhase) ? gap.visualPhase : null;
-      const phase = snapshot.reaction || (snapshot.drowsy ? 'dozing' : gapPhase || snapshot.phase || snapshot.visualPhase);
+      const phase = snapshot.reaction || (snapshot.drowsy ? 'dozing' : gapPhase || (snapshot.preparing ? 'editing' : snapshot.phase) || snapshot.visualPhase);
       const hardStop = ['speaking', 'error'].includes(phase) || phase === 'poked' && !interaction || ['speaking', 'error'].includes(snapshot.phase);
       if (hardStop) { resetClock(); return null; }
       const listen = phase === 'listening';
@@ -263,6 +263,9 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
       if (minimum) {
         const toolPhase = ['reading', 'editing', 'running', 'searching', 'compacting'].includes(phase);
         const canEnterImmediately = action?.id === 'idle' || action?.id === 'think' && toolPhase ||
+          // Streamed preparation is only a preview: a real tool run takes the
+          // display without waiting out the readable dwell of that preview.
+          action?.prep && toolPhase ||
           keyboard?.stage === 'exit' && action?.id !== 'work' && action?.presentedAt == null;
         if (action && action.id !== id && !urgent && !canEnterImmediately) {
           const keyboardNeedsLoop = action.id === 'work' && keyboard &&
@@ -273,6 +276,7 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
         }
         const replay = gesture && current?.clipId === id && Number.isFinite(gesture.elapsedMs) && gesture.elapsedMs < current.playbackMs;
         if (!held && (action?.id !== id || replay)) action = { id, phase, since: time, presentedAt: null,
+          prep: Boolean(snapshot.preparing),
           single: Boolean(gesture || stateEmotion), externalClock: Boolean(gesture), externalAge: gesture?.elapsedMs ?? snapshot.expressionElapsedMs ?? snapshot.reactionElapsedMs ?? snapshot.phaseElapsedMs };
       }
       // Urgent interaction bypasses visual cleanup. Ordinary short work still

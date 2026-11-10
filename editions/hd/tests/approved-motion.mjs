@@ -132,4 +132,32 @@ assert.equal(coldPlayer.indexedFrame(looping).approvedMotion.clipId, 'work');
 assert.ok(coldPending.has('indexed/umi/work-exit.json'), 'Working primes its 400ms exit');
 assert.ok(coldPlayer.stats().clips <= 2); assert.ok(coldPlayer.stats().downloads <= 2);
 coldPlayer.dispose();
+{
+  let clock = 0;
+  const timed = createApprovedMotionPlayer({ catalog, now: () => clock, minimumActionMs: 1200, loadIndexed: path => data[path] });
+  const prep = { phase: 'thinking', preparing: true, busy: true, toolCount: 0 };
+  const show = (snapshot, at) => {
+    clock = at;
+    const selected = timed.sample(snapshot, { time: at });
+    timed.indexedFrame(selected);
+    return selected;
+  };
+  const handoff = (phase, at100, at499) => {
+    timed.reset();
+    assert.equal(show(prep, 0).clipId, 'work-enter', `${phase}: preparation opens the keyboard`);
+    const next = { phase, preparing: false, busy: true, toolCount: 1 };
+    assert.equal(show(next, 100).clipId, at100, `${phase}: execution at 100ms`);
+    assert.equal(show(next, 499).clipId, at499, `${phase}: pose at 499ms`);
+    assert.equal(timed.stats().keyboardStage, phase === 'reading' || phase === 'searching' ? null : 'loop');
+  };
+  handoff('reading', 'watch', 'watch');
+  handoff('searching', 'search', 'search');
+  handoff('editing', 'work-enter', 'work');
+  handoff('running', 'work-enter', 'work');
+  timed.reset();
+  assert.equal(show(prep, 0).clipId, 'work-enter');
+  assert.equal(show({ phase: 'running', preparing: false, busy: true, toolCount: 1 }, 400).clipId, 'work', 'Command execution continues the keyboard loop');
+  assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 800).clipId, 'work', 'Editing keeps that same keyboard loop');
+  timed.dispose();
+}
 console.log('Approved motion: all families/emotions, complete-frame pixels, 400ms keyboard lifecycle, real-state priority, QA/path gates and bounded async/style/disposal cache passed.');

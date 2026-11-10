@@ -260,6 +260,10 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
       const urgent = Boolean(gesture || snapshot.reaction || snapshot.awaitingUser ||
         ['waiting', 'cancelled', 'listening'].includes(phase));
       let displayPhase = phase, held = false;
+      // A streamed keyboard preview is not the execution pose. Drop it when the
+      // real clip is different so read/search appear at once. Editing and
+      // command runs stay on work and keep the same chain.
+      const leavingPreparation = Boolean(action?.prep) && id !== 'work';
       if (minimum) {
         const toolPhase = ['reading', 'editing', 'running', 'searching', 'compacting'].includes(phase);
         const canEnterImmediately = action?.id === 'idle' || action?.id === 'think' && toolPhase ||
@@ -282,7 +286,7 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
       // Urgent interaction bypasses visual cleanup. Ordinary short work still
       // gets its full visible entry, readable loop, and complete exit.
       const selectedEmotion = held ? null : stateEmotion;
-      if (listen || gesture || selectedEmotion && (!minimum || phase !== 'success') || urgent && minimum || displayPhase === 'reading' && !minimum) keyboard = null;
+      if (listen || gesture || selectedEmotion && (!minimum || phase !== 'success') || urgent && minimum || displayPhase === 'reading' && !minimum || leavingPreparation && !held) keyboard = null;
       else if (catalog.chain) {
         const stageAge = () => minimum ? visibleAge(keyboard, time) : time - keyboard.since;
         if (id === 'work') {

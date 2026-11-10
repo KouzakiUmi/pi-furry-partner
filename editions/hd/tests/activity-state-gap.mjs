@@ -179,5 +179,14 @@ console.log('Activity next-state gap: truthful facts, safe metadata, 2s completi
     assert.equal(copy.en, en, `${name}: preparation copy is localized`);
   }
   assert.notEqual(copyFor('some_custom_tool').zh, '我来敲两下', 'Unknown tools keep a distinct preparation phrase');
+  const activity = createActivity({ now: () => time, gapNow: () => time, random: () => .25 });
+  activity.start({ isBusy: true, wake: false });
+  activity.handle('tool_execution_start', { toolCallId: 'live', toolName: 'bash' });
+  activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_start', contentIndex: 0,
+    partial: { role: 'assistant', content: [{ type: 'toolCall', id: 'next', name: 'edit', arguments: {} }] } } });
+  assert.equal(activity.snapshot().preparing, false, 'A live tool hides the single preparation slot');
+  activity.handle('tool_execution_end', { toolCallId: 'live', isError: false });
+  assert.equal(activity.snapshot().preparing, false, 'tool_execution_end clears the preparation slot');
+  assert.equal(activity.snapshot().toolObject, '', 'Execution end still stores no argument text');
 }
 console.log('Streamed preparation copy: bash/write/edit/read/search/web/discovery/code/question/custom each keep a specific localized phrase.');

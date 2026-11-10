@@ -417,7 +417,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
     const length = (step.clip ? span(step.phase) : step.durationMs) + (step.padMs || 0);
     if (step.clip) {
       let time = 0;
-      const mapping = { reading: 'watch', editing: 'work', running: 'watch', searching: 'search', compacting: 'search', cancelled: 'rest' };
+      const mapping = { reading: 'watch', editing: 'work', running: 'work', searching: 'search', compacting: 'search', cancelled: 'rest' };
       const activity = createActivity({ now: () => time, random: () => 0.25, interactionClips: () => clips,
         demoClipId: (step) => step.reaction === 'listening' ? 'listen' : (mapping[step.phase] || step.phase) });
       activity.setDemo("all");

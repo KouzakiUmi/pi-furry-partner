@@ -34,12 +34,11 @@ for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening'
   }
 }
 player.reset(); clock = 0;
-// Preparation and editing share the keyboard; a started command shows the magnifier.
+// Preparation and editing share the keyboard; a started command uses that same chain.
 const prepareSnapshot = { phase: 'thinking', preparing: true, tool: 'bash', blink: false };
 assert.equal(player.sample(prepareSnapshot).clipId, 'work-enter', 'Streamed preparation keeps the keyboard');
 player.reset(); clock = 0;
-assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'watch', 'Executive commands watch through the magnifier');
-assert.equal(player.stats().keyboardStage, null, 'Execution never builds the preparation keyboard chain');
+assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'work-enter', 'Executive commands open the keyboard');
 player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter', 'Editing opens the same keyboard chain preparation used');
 clock = 399; assert.equal(sample('editing', { blink: true }).clipId, 'work-enter');
@@ -64,8 +63,7 @@ player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter');
 clock = 150; assert.equal(sample('reading').clipId, 'watch', 'Reading immediately replaces the keyboard, including a partial entry');
 assert.equal(player.stats().keyboardStage, null);
-assert.equal(sample('running').clipId, 'watch', 'Execution stays on the magnifier after reading, never restarting the keyboard');
-assert.equal(player.stats().keyboardStage, null);
+assert.equal(sample('running').clipId, 'work-enter', 'Execution starts a new keyboard chain after reading');
 assert.equal(sample('idle', {}, { animate: false }), null);
 assert.equal(player.stats().keyboardStage, null);
 assert.equal(sample('idle', {}, { enabled: false }), null);

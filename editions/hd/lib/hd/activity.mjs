@@ -339,6 +339,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         streamOpen = false; return;
       }
       if (type === "tool_execution_end") {
+        clearPreparing();
         const ended = tools.get(event.toolCallId);
         if (!ended) return; // Duplicate/unknown results cannot refresh a gap.
         tools.delete(event.toolCallId);
@@ -447,7 +448,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
         face = activeSpeech ? speechFace(elapsed) : "talk-closed";
         bubble = activeSpeech ? ["·", "··", "···"][pulse % 3] : "·";
       } else if (current === "thinking") { face = blink ? "idle-blink" : "think"; bubble = "·".repeat(pulse % 3 + 1); }
-      else if (["reading", "editing", "running", "searching"].includes(current)) { face = current === "searching" ? "search" : current === "reading" || current === "running" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[current]; }
+      else if (["reading", "editing", "running", "searching"].includes(current)) { face = current === "searching" ? "search" : current === "reading" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[current]; }
       else if (current === "compacting") { face = "search"; bubble = ["▱", "▰", "▱"][pulse % 3]; }
       else if (current === "success") { face = "happy"; bubble = "✓"; }
       else if (current === "error") { face = "error"; bubble = "!"; }
@@ -457,14 +458,14 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
       if (!["waking", "thinking", "speaking"].includes(current) && (bubbles[copyKey] || bubbles[current])) bubble = bubbles[copyKey] || bubbles[current];
       if (awaitingUser && !bubbles.waiting_user) bubble = "我等你呀";
       const holdingWork = !demo && current === "thinking" && time < visualWorkUntil;
-      if (holdingWork) { face = visualWorkPhase === "running" ? blink ? "watch-blink" : "watch" : blink ? "work-blink" : "work"; bubble = bubbles[visualWorkPhase] || "我来敲两下"; }
+      if (holdingWork) { face = blink ? "work-blink" : "work"; bubble = bubbles[visualWorkPhase] || "我来敲两下"; }
       if (preparingActive) {
         face = blink ? "work-blink" : "work";
         bubble = bubbles[preparing.bubbleKey] || PREPARATION_BUBBLES[preparing.bubbleKey] || "我来敲两下";
       }
       if (pendingNextState) {
         const held = pendingNextState.visualPhase;
-        face = held === "reading" || held === "running" ? blink ? "watch-blink" : "watch" : held === "searching" ? "search" : blink ? "work-blink" : "work";
+        face = held === "reading" ? blink ? "watch-blink" : "watch" : held === "searching" ? "search" : blink ? "work-blink" : "work";
         bubble = bubbles[held] || { reading: "我瞧瞧", editing: "我改改呀", running: "我看着呢", searching: "我翻翻看" }[held];
       }
       if (drowsy) { face = "rest"; bubble = ["z", "z · z", "z · z · z"][Math.floor((waitingElapsed - 10000) / 900) % 3]; phrase = awaitingUser ? "你慢慢想，我眯一小会儿陪着你" : "我先眯一小会儿，有回音再接着来"; }

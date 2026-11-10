@@ -5,7 +5,7 @@ import { decodeApprovedMotionBinary } from '../approved-motion-codec.mjs';
 import { approvedMotionStyle } from '../build-profile.mjs';
 
 export const APPROVED_MOTION_STATES = Object.freeze({ idle: 'idle', thinking: 'think', reading: 'watch', editing: 'work',
-  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search' });
+  listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search' });
 const approvedMotionEmotionIds = new Set(['joy', 'grumpy', 'sad', 'cry', 'shy', 'flustered', 'surprise', 'proud', 'affection']);
 export const APPROVED_AUXILIARY_IDS = Object.freeze(['wave', 'nod', 'peek', 'stretch', 'ear-flick', 'nuzzle', 'bounce', 'head-shake']);
 export const APPROVED_IDLE_VARIANT_IDS = Object.freeze(['idle', 'idle-center', 'idle-right', 'idle-settle']);
@@ -112,7 +112,7 @@ export function approvedMotionStaticFrame(sheet, targetIndex, { phase = 'idle' }
   const selected = sheet.frames[targetIndex];
   const emotion = /^emotion-[a-z]+$/.test(selected?.id || '') ? selected.id : null;
   const faces = { idle: 'idle-open', waking: 'idle-open', thinking: 'think', reading: 'watch', editing: 'work',
-    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'watch', searching: 'search', compacting: 'search',
+    listening: 'listen', waiting: 'wait', dozing: 'rest', cancelled: 'rest', running: 'work', searching: 'search', compacting: 'search',
     speaking: 'talk-closed', success: 'happy', error: 'error' };
   const face = ['speaking', 'error'].includes(phase) ? faces[phase] : emotion || faces[phase] || selected?.id;
   // Sequence aliases can point at video frames. Find the preserved static

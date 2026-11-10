@@ -158,6 +158,31 @@ coldPlayer.dispose();
   assert.equal(show(prep, 0).clipId, 'work-enter');
   assert.equal(show({ phase: 'running', preparing: false, busy: true, toolCount: 1 }, 400).clipId, 'work', 'Command execution continues the keyboard loop');
   assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 800).clipId, 'work', 'Editing keeps that same keyboard loop');
+  // A real command is not still a preview, so leaving it for reading keeps the
+  // keyboard dwell and the 400ms exit. A later preview is, so reading or
+  // search after that preview does not replay work-exit.
+  const running = { phase: 'running', preparing: false, busy: true, toolCount: 1 };
+  const preview = { phase: 'thinking', preparing: true, busy: true, toolCount: 0 };
+  const reading = { phase: 'reading', preparing: false, busy: true, toolCount: 1 };
+  const searching = { phase: 'searching', preparing: false, busy: true, toolCount: 1 };
+  timed.reset();
+  assert.equal(show(preview, 0).clipId, 'work-enter');
+  assert.equal(show(running, 100).clipId, 'work-enter');
+  assert.equal(show(reading, 200).clipId, 'work-enter', 'Real execution still owes the keyboard dwell');
+  assert.equal(show(reading, 400).clipId, 'work');
+  assert.equal(show(reading, 1199).clipId, 'work');
+  assert.equal(show(reading, 1200).clipId, 'work-exit', 'The keyboard exit still plays after the dwell');
+  assert.equal(show(reading, 1599).clipId, 'work-exit');
+  assert.equal(show(reading, 1600).clipId, 'watch', 'Reading starts once the exit finishes');
+  for (const [phase, clipId] of [['reading', 'watch'], ['searching', 'search']]) {
+    timed.reset();
+    assert.equal(show(running, 0).clipId, 'work-enter');
+    assert.equal(show(preview, 100).clipId, 'work-enter');
+    const next = { phase, preparing: false, busy: true, toolCount: 1 };
+    assert.equal(show(next, 200).clipId, clipId, `${phase}: a preview does not keep work-exit`);
+    assert.equal(timed.stats().keyboardStage, null);
+    assert.equal(show(next, 499).clipId, clipId);
+  }
   timed.dispose();
 }
 console.log('Approved motion: all families/emotions, complete-frame pixels, 400ms keyboard lifecycle, real-state priority, QA/path gates and bounded async/style/disposal cache passed.');

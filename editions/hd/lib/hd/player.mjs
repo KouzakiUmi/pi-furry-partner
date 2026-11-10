@@ -282,6 +282,12 @@ export function createApprovedMotionPlayer({ catalog: initialCatalog, loadIndexe
         if (!held && (action?.id !== id || replay)) action = { id, phase, since: time, presentedAt: null,
           prep: Boolean(snapshot.preparing),
           single: Boolean(gesture || stateEmotion), externalClock: Boolean(gesture), externalAge: gesture?.elapsedMs ?? snapshot.expressionElapsedMs ?? snapshot.reactionElapsedMs ?? snapshot.phaseElapsedMs };
+        else if (!held && action) {
+          // Preparation, editing and command execution share the work clip.
+          // Keep the visible clock, but do not leave the preview flag stale.
+          action.prep = Boolean(snapshot.preparing);
+          action.phase = phase;
+        }
       }
       // Urgent interaction bypasses visual cleanup. Ordinary short work still
       // gets its full visible entry, readable loop, and complete exit.

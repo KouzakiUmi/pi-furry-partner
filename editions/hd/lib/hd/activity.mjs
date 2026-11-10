@@ -320,7 +320,7 @@ export function createActivity({ phrases = {}, labels = {}, bubbles = {}, rotati
             id: callId || carried?.id,
             name: clean(callName || carried?.name || ""),
             bubbleKey: callName ? preparationBubbleKey(callName) : carried?.bubbleKey || "preparing_tool",
-            contentIndex, until: now() + PREPARING_WINDOW_MS,
+            contentIndex, until: gapNow() + PREPARING_WINDOW_MS,
           };
           setPhase("thinking");
         }

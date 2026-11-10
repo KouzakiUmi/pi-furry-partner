@@ -152,6 +152,21 @@ for (const method of ['clearGap', 'notifyNextState']) {
   assert.equal(activity.snapshot().pendingNextState, null, 'Resuming animation cannot revive an expired gap');
 }
 console.log('Activity next-state gap: truthful facts, safe metadata, 2s completion timeout, parallel tools, dedupe and real-state clears passed.');
+{
+  let logicalTime = 50, wallTime = 1000;
+  const activity = createActivity({ now: () => logicalTime, gapNow: () => wallTime, random: () => .25 });
+  activity.start({ isBusy: true, wake: false });
+  activity.handle('message_start', { message: { role: 'assistant' } });
+  activity.handle('message_update', { assistantMessageEvent: { type: 'toolcall_start', contentIndex: 0,
+    partial: { role: 'assistant', content: [{ type: 'toolCall', id: 'bash', name: 'bash', arguments: {} }] } } });
+  assert.equal(activity.snapshot().preparing, true, 'A fresh preparation survives the first snapshot when the clocks differ');
+  wallTime = 1000 + 14999;
+  assert.equal(activity.snapshot().preparing, true, 'Preparation stays up until 15s on the gap clock');
+  assert.equal(logicalTime, 50, 'The animation clock does not have to advance for preparation to remain');
+  wallTime = 1000 + 15000;
+  assert.equal(activity.snapshot().preparing, false, 'Preparation expires on the gap clock, not the paused animation clock');
+}
+console.log('Streamed preparation expiry follows the gap clock for the full 15s window.');
 // Streamed preparation copy: every tool category must resolve to its own
 // phrase instead of the generic keyboard fallback, in both languages.
 {

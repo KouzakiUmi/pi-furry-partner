@@ -430,6 +430,10 @@
                 node
                 pkgs.git
                 testRuntime
+                # The HD suite shells out to tools/verify-approved-color-consistency.py,
+                # which imports numpy and Pillow. Keep the pinned runtime shell
+                # able to run the whole suite instead of only the Node portion.
+                pythonWithValidation
               ];
 
               shellHook = ''

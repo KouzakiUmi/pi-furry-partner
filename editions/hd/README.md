@@ -20,7 +20,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**下载全动态 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [原资源 原资源版 v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
+[**下载全动态 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [原资源 原资源版 v2.5.6](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**快速安装**](#安装) · [完整指南](docs/guide.zh-CN.md)
 
 [动画与风格](#先看看呜咪) · [快捷操作](#开始相处) · [中英切换](#用你习惯的语言) · [独立开关](#三个独立开关)
 
@@ -58,7 +58,7 @@
 
 新增[九种定稿表情与互动](docs/authored-expressions.md)：笑脸、叉腰鼓脸、委屈、揉眼睛、害羞、慌张、惊讶、小得意、开心举爪。Pi 提供 17 项动作目录；`/mascot action all` 可循环观看，`/mascot action shy` 单独看害羞。工作、输入与提问始终优先。
 
-`editions/hd/` 的**全动态重做版 2.5.1-preview.8** 为插画风提供 29 段完整动作，由 Pi 独立调度。根目录 **原资源版 v2.5.5** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
+`editions/hd/` 的**全动态重做版 2.5.1-preview.8** 为插画风提供 29 段完整动作，由 Pi 独立调度。根目录 **原资源版 v2.5.6** 独立维护，只优化代码，保留 v2.4.0 原素材与原简单帧。
 
 主线全动态版仅提供高清插画；原始 **100 × 100** 像素画与旧简单帧仅在 Legacy 提供。[H3 撤回记录](docs/h3-expression-videos.md)仅说明早期失败素材；当前采用的批准素材与来源见[构建说明](docs/plugin-lines.md)。
 
@@ -107,7 +107,7 @@
 
 感谢 [@srcres258](https://github.com/srcres258) 在 [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1) 中贡献 Kitty 渲染支持及 Pi 1.3 / NixOS 验证。相关渲染修复和回归测试保留在 HD 独立源码中。
 
-已发布 `hd-v2.5.1-preview.8`（latest=false），安装包见 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8)；也可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)自行构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
+已发布 `hd-v2.5.1-preview.8`（latest=false），安装包见 [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8)；也可以从 [HD 源码目录](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd)自行构建下列平台包，或使用后面的源码安装命令。需要 v2.4.0 原素材与原简单帧时，使用 [原资源版 v2.5.6](https://github.com/KouzakiUmi/pi-furry-partner/tree/main)的独立发行说明。同一宿主只安装一版。
 
 | 平台 | 全动态 2.5.1-preview.8 |
 | --- | --- |

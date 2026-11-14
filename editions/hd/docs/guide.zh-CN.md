@@ -2,7 +2,7 @@
 
 [English](guide.en.md) · [HD 首页](../README.md) · [全部文档](../../../docs/README.md) · [发布规则](../../../docs/release-line.md)
 
-本指南只适用于 main 的 `editions/hd/`。当前 HD 源码版本为 **2.5.1-preview.8**，仅提供高清插画；已发布 `hd-v2.5.1-preview.8`（latest=false），安装包附在该 Release。仓库 Latest 是根目录原资源版 v2.5.5，不是 HD 下载入口。DSH 的安装与设置请查 [DSH 独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)。
+本指南只适用于 main 的 `editions/hd/`。当前 HD 源码版本为 **2.5.1-preview.8**，仅提供高清插画；已发布 `hd-v2.5.1-preview.8`（latest=false），安装包附在该 Release。仓库 Latest 是根目录原资源版 v2.5.6，不是 HD 下载入口。DSH 的安装与设置请查 [DSH 独立仓库](https://github.com/KouzakiUmi/dsh-furry-partner)。
 
 ## 安装与更新
 

@@ -20,7 +20,7 @@
 [![Code license](https://img.shields.io/badge/code%20%26%20docs-Apache--2.0-a9dbc9?style=flat-square)](LICENSE)
 [![Character assets](https://img.shields.io/badge/character%20assets-All%20Rights%20Reserved-e8bac5?style=flat-square)](ASSET_LICENSE.md)
 
-[**Download full-animation 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [Original-art original-resource v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
+[**Download full-animation 2.5.1-preview.8**](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8) · [Original-art original-resource v2.5.6](https://github.com/KouzakiUmi/pi-furry-partner/tree/main) · [**Quick installation**](#installation) · [User guide](docs/guide.en.md)
 
 [Meet Umi](#meet-umi) · [Quick actions](#getting-comfortable) · [Language](#your-preferred-language) · [Independent switches](#three-independent-switches)
 
@@ -58,7 +58,7 @@ The extension also tidies up the editor, footer and everyday actions. Companion 
 
 [Nine authored expressions](docs/authored-expressions.md) add smiles, pouts, teary eyes, shy paws, surprise and happy raised paws to the Pi catalogue of 17 gestures. Use `/mascot action all` to loop the catalogue or `/mascot action shy` for one expression. Real tasks, typing and questions take priority.
 
-The **HD full-animation remake 2.5.1-preview.8** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.5** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
+The **HD full-animation remake 2.5.1-preview.8** under `editions/hd/` on main provides 29 complete illustration clips, maintained for Pi. **Original-resource v2.5.6** is maintained separately with code improvements and the original v2.4.0 artwork and simple frames.
 
 HD full-animation packages provide HD illustration only. Original **100 × 100** pixel artwork and simple frames are available only in Legacy. The [H3 withdrawal record](docs/h3-expression-videos.md) documents earlier rejected material, not the current playback state. See the [build guide](docs/plugin-lines.md) for the branch policy and approved sources.
 
@@ -107,7 +107,7 @@ Install and configure Pi first. Fully tested on **Windows with Pi 1.2.0, 1.3.0, 
 
 Thanks to [@srcres258](https://github.com/srcres258) for Kitty rendering support and Pi 1.3 / NixOS validation in [PR #1](https://github.com/KouzakiUmi/pi-furry-partner/pull/1). The shared source retains that implementation and its regression tests.
 
-`hd-v2.5.1-preview.8` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.5](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
+`hd-v2.5.1-preview.8` (latest=false) is published and its package is attached to [Releases](https://github.com/KouzakiUmi/pi-furry-partner/releases/tag/hd-v2.5.1-preview.8); you can also build the package below from the [HD source directory](https://github.com/KouzakiUmi/pi-furry-partner/tree/main/editions/hd), or use the source installation command below. For the original v2.4.0 artwork and simple frames, follow the separate [original-resource v2.5.6](https://github.com/KouzakiUmi/pi-furry-partner/tree/main). Install one edition per host.
 
 | Platform | Full-animation 2.5.1-preview.8 |
 | --- | --- |

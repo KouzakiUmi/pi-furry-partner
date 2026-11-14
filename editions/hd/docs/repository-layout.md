@@ -17,7 +17,7 @@ main
     └── docs / CONTRIBUTING.md              HD 文档
 ```
 
-原资源版版本 2.5.5，14 个原版手动动作，四种原外观，507 个原资源文件；HD 源码 2.5.1-preview.8，单一插画风，17 个手动小动作／表情，29 个完整片段和 58 个索引入口。HD 以 `hd-v2.5.1-preview.8` 发布且 latest=false。
+原资源版版本 2.5.6，14 个原版手动动作，四种原外观，507 个原资源文件；HD 源码 2.5.1-preview.8，单一插画风，17 个手动小动作／表情，29 个完整片段和 58 个索引入口。HD 以 `hd-v2.5.1-preview.8` 发布且 latest=false。
 
 根目录的 npm 命令与 Git 包安装默认选择原资源版。HD 命令先进入 editions/hd/；从仓库根安装本地 HD 时用 pi install ./editions/hd。仅给远程 Git URL 换 hd-v 标签并不会改根清单。
 

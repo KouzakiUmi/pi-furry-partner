@@ -1,6 +1,6 @@
 # 更新记录
 
-本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.8，已随 `hd-v2.5.1-preview.8` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.5（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
+本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.8，已随 `hd-v2.5.1-preview.8` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.6（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
 
 ## 2.5.1-preview.8 · 2026-11-08
 

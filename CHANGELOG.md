@@ -2,6 +2,24 @@
 
 main 根目录维护原资源版，editions/hd/ 维护独立 HD 源码。v 标签发布原版 Latest，hd-v 标签发布 HD 且 latest=false。DSH 独立维护；下方旧版本记录保留历史说明。
 
+## 2.5.6 · 2026-11-14
+
+### 简体中文
+
+- 修复临时隐藏弹层后重新显示时缓存不失效的问题（[PR #23](https://github.com/KouzakiUmi/pi-furry-partner/pull/23)）：保留已登记的 OverlayHandle，重新显示后 `version()` 继续推进，Kitty／Sixel 图像缓存、行级遮挡与停靠位置恢复正常；`hide()` 与 `dispose()` 行为不变。
+- 修复回答结束瞬间闪出思考姿态的问题（[PR #24](https://github.com/KouzakiUmi/pi-furry-partner/pull/24)）：`text_end` 只结束当前输出段并保持说话姿态，正常 `message_end` 直接进入收尾，不再插入无关姿态；错误与中止分支保持原样。
+- 流式工具占位更稳健：`toolcall_*` 事件不再回退到思考姿态；partial 缺少可用 id／name 时先按内容索引建立占位，名字到达后就地升级，只保留工具名、不留参数文本；执行开始会认领遗留占位，不会污染工具计数。
+- 构建与 CI：Pi 1.2.0／1.3.0／1.4.0 测试运行时的 undici 覆盖到 8.12.3（[PR #21](https://github.com/KouzakiUmi/pi-furry-partner/pull/21)，源自 Dependabot #20）；Nix 的 Pi 测试外壳补入带 NumPy 与 Pillow 的 Python（[PR #27](https://github.com/KouzakiUmi/pi-furry-partner/pull/27)）；HD 校验依赖升到 Pillow 13.0.0。不影响原资源版运行时。
+- 保留全部 507 个 v2.4.0 原资源文件、四种外观与原有动作路由；本版本不含 HD 素材或运行时，HD 仍为 2.5.1-preview.8，以 `hd-v2.5.1-preview.8` 发布且 latest=false。
+
+### English
+
+- Fix stale caches after a temporary overlay hide ([PR #23](https://github.com/KouzakiUmi/pi-furry-partner/pull/23)): the registered overlay handles are retained, so `version()` advances again once the overlay is re-shown and Kitty/Sixel image caches, row masking and dock placement recover. `hide()` and `dispose()` are unchanged.
+- Stop a thinking pose from flashing when an answer finishes ([PR #24](https://github.com/KouzakiUmi/pi-furry-partner/pull/24)): `text_end` only closes the current output block and stays in speaking, and a normal `message_end` settles straight into success. The error and aborted branches are unchanged.
+- Harden the streamed tool placeholder: `toolcall_*` events no longer fall back to thinking, an index-keyed placeholder is created while the partial carries no usable id or name and upgraded in place once the name arrives, and only tool names are kept. Execution start claims a stale placeholder so it cannot leak into the tool count.
+- Build and CI: the Pi 1.2.0/1.3.0/1.4.0 test runtimes override undici to 8.12.3 ([PR #21](https://github.com/KouzakiUmi/pi-furry-partner/pull/21), from Dependabot #20), the pinned Nix Pi shells gain a Python with NumPy and Pillow ([PR #27](https://github.com/KouzakiUmi/pi-furry-partner/pull/27)), and HD validation moves to Pillow 13.0.0. The original-resource runtime is unaffected.
+- Preserve all 507 original v2.4.0 files, the four styles and the original action routing. This release contains no HD artwork or runtime; HD stays at 2.5.1-preview.8 and ships separately as `hd-v2.5.1-preview.8` with latest=false.
+
 ## 2.5.5 · 2026-11-08
 
 ### 简体中文

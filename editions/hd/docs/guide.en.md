@@ -2,7 +2,7 @@
 
 [简体中文](guide.zh-CN.md) · [HD home](../README.en.md) · [Documentation index](../../../docs/README.md) · [Release rules](../../../docs/release-line.md)
 
-This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.8**, illustration only; `hd-v2.5.1-preview.8` (latest=false) is published with the package attached. Repository Latest is the original-resource v2.5.5. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
+This guide applies only to `editions/hd/` on main. HD source is **2.5.1-preview.8**, illustration only; `hd-v2.5.1-preview.8` (latest=false) is published with the package attached. Repository Latest is the original-resource v2.5.6. DSH installation belongs to the [separate DSH repository](https://github.com/KouzakiUmi/dsh-furry-partner).
 
 ## Installation and updates
 

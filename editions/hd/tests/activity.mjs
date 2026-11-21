@@ -270,6 +270,24 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
 }
 
 {
+  // Command execution shares the magnifier with reading; the keyboard stays with
+  // editing and with the streamed preparation preview.
+  const { activity, advance } = make();
+  activity.start({ wake: false }); activity.handle("agent_start");
+  activity.handle("tool_execution_start", { toolCallId: "run-pose", toolName: "bash", args: {} });
+  let pose = activity.snapshot();
+  assert.equal(pose.phase, "running"); assert.match(pose.face, /^watch/, "Command execution uses the magnifier");
+  activity.handle("tool_execution_end", { toolCallId: "run-pose", isError: false });
+  pose = advance(100);
+  assert.equal(pose.visualPhase, "running"); assert.match(pose.face, /^watch/, "The next-state gap keeps the magnifier");
+  activity.handle("tool_execution_start", { toolCallId: "edit-pose", toolName: "apply_patch", args: {} });
+  pose = advance(1300);
+  assert.equal(pose.phase, "editing"); assert.match(pose.face, /^work/, "Editing keeps the keyboard");
+  activity.handle("tool_execution_end", { toolCallId: "edit-pose", isError: false });
+  checks.push("Command execution and its next-state gap hold the magnifier face while editing keeps the keyboard");
+}
+
+{
   const { activity, advance } = make();
   activity.start({ wake: false }); activity.handle("agent_start");
   activity.handle("message_start", { message: { role: "assistant" } });
@@ -417,7 +435,7 @@ const update = (type, extra = {}) => ({ message: { role: "assistant" }, assistan
     const length = (step.clip ? span(step.phase) : step.durationMs) + (step.padMs || 0);
     if (step.clip) {
       let time = 0;
-      const mapping = { reading: 'watch', editing: 'work', running: 'work', searching: 'search', compacting: 'search', cancelled: 'rest' };
+      const mapping = { reading: 'watch', editing: 'work', running: 'watch', searching: 'search', compacting: 'search', cancelled: 'rest' };
       const activity = createActivity({ now: () => time, random: () => 0.25, interactionClips: () => clips,
         demoClipId: (step) => step.reaction === 'listening' ? 'listen' : (mapping[step.phase] || step.phase) });
       activity.setDemo("all");

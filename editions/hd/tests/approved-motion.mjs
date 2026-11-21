@@ -34,11 +34,11 @@ for (const [phase, id] of [['idle', 'idle'], ['thinking', 'think'], ['listening'
   }
 }
 player.reset(); clock = 0;
-// Preparation and editing share the keyboard; a started command uses that same chain.
+// Preparation and editing share the keyboard; a started command uses the magnifier.
 const prepareSnapshot = { phase: 'thinking', preparing: true, tool: 'bash', blink: false };
 assert.equal(player.sample(prepareSnapshot).clipId, 'work-enter', 'Streamed preparation keeps the keyboard');
 player.reset(); clock = 0;
-assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'work-enter', 'Executive commands open the keyboard');
+assert.equal(player.sample({ phase: 'running', tool: 'bash' }).clipId, 'watch', 'Executive commands use the magnifier');
 player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter', 'Editing opens the same keyboard chain preparation used');
 clock = 399; assert.equal(sample('editing', { blink: true }).clipId, 'work-enter');
@@ -63,7 +63,7 @@ player.reset(); clock = 0;
 assert.equal(sample('editing').clipId, 'work-enter');
 clock = 150; assert.equal(sample('reading').clipId, 'watch', 'Reading immediately replaces the keyboard, including a partial entry');
 assert.equal(player.stats().keyboardStage, null);
-assert.equal(sample('running').clipId, 'work-enter', 'Execution starts a new keyboard chain after reading');
+assert.equal(sample('running').clipId, 'watch', 'Execution keeps the magnifier instead of opening a keyboard chain');
 assert.equal(sample('idle', {}, { animate: false }), null);
 assert.equal(player.stats().keyboardStage, null);
 assert.equal(sample('idle', {}, { enabled: false }), null);
@@ -148,35 +148,38 @@ coldPlayer.dispose();
     const next = { phase, preparing: false, busy: true, toolCount: 1 };
     assert.equal(show(next, 100).clipId, at100, `${phase}: execution at 100ms`);
     assert.equal(show(next, 499).clipId, at499, `${phase}: pose at 499ms`);
-    assert.equal(timed.stats().keyboardStage, phase === 'reading' || phase === 'searching' ? null : 'loop');
+    assert.equal(timed.stats().keyboardStage, ['editing'].includes(phase) ? 'loop' : null);
   };
   handoff('reading', 'watch', 'watch');
   handoff('searching', 'search', 'search');
   handoff('editing', 'work-enter', 'work');
-  handoff('running', 'work-enter', 'work');
+  handoff('running', 'watch', 'watch');
   timed.reset();
   assert.equal(show(prep, 0).clipId, 'work-enter');
-  assert.equal(show({ phase: 'running', preparing: false, busy: true, toolCount: 1 }, 400).clipId, 'work', 'Command execution continues the keyboard loop');
-  assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 800).clipId, 'work', 'Editing keeps that same keyboard loop');
-  // A real command is not still a preview, so leaving it for reading keeps the
-  // keyboard dwell and the 400ms exit. A later preview is, so reading or
-  // search after that preview does not replay work-exit.
+  assert.equal(show({ phase: 'running', preparing: false, busy: true, toolCount: 1 }, 400).clipId, 'watch', 'Command execution leaves the preview keyboard for the magnifier');
+  assert.equal(timed.stats().keyboardStage, null);
+  assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 800).clipId, 'watch', 'Editing waits for the magnifier readable minimum');
+  assert.equal(show({ phase: 'editing', preparing: false, busy: true, toolCount: 1 }, 1600).clipId, 'work-enter', 'Editing opens its keyboard chain after that dwell');
+  // A real keyboard run is not a preview, so handing it to execution keeps the
+  // keyboard dwell and the 400ms exit. A later preview is, so reading or search
+  // after that preview does not replay work-exit.
   const running = { phase: 'running', preparing: false, busy: true, toolCount: 1 };
+  const editing = { phase: 'editing', preparing: false, busy: true, toolCount: 1 };
   const preview = { phase: 'thinking', preparing: true, busy: true, toolCount: 0 };
   const reading = { phase: 'reading', preparing: false, busy: true, toolCount: 1 };
   const searching = { phase: 'searching', preparing: false, busy: true, toolCount: 1 };
   timed.reset();
   assert.equal(show(preview, 0).clipId, 'work-enter');
-  assert.equal(show(running, 100).clipId, 'work-enter');
-  assert.equal(show(reading, 200).clipId, 'work-enter', 'Real execution still owes the keyboard dwell');
-  assert.equal(show(reading, 400).clipId, 'work');
-  assert.equal(show(reading, 1199).clipId, 'work');
-  assert.equal(show(reading, 1200).clipId, 'work-exit', 'The keyboard exit still plays after the dwell');
-  assert.equal(show(reading, 1599).clipId, 'work-exit');
-  assert.equal(show(reading, 1600).clipId, 'watch', 'Reading starts once the exit finishes');
+  assert.equal(show(editing, 100).clipId, 'work-enter');
+  assert.equal(show(running, 200).clipId, 'work-enter', 'Real editing still owes the keyboard dwell');
+  assert.equal(show(running, 400).clipId, 'work');
+  assert.equal(show(running, 1199).clipId, 'work');
+  assert.equal(show(running, 1200).clipId, 'work-exit', 'The keyboard exit still plays after the dwell');
+  assert.equal(show(running, 1599).clipId, 'work-exit');
+  assert.equal(show(running, 1600).clipId, 'watch', 'Execution starts the magnifier once the exit finishes');
   for (const [phase, clipId] of [['reading', 'watch'], ['searching', 'search']]) {
     timed.reset();
-    assert.equal(show(running, 0).clipId, 'work-enter');
+    assert.equal(show(editing, 0).clipId, 'work-enter');
     assert.equal(show(preview, 100).clipId, 'work-enter');
     const next = { phase, preparing: false, busy: true, toolCount: 1 };
     assert.equal(show(next, 200).clipId, clipId, `${phase}: a preview does not keep work-exit`);
@@ -185,4 +188,4 @@ coldPlayer.dispose();
   }
   timed.dispose();
 }
-console.log('Approved motion: all families/emotions, complete-frame pixels, 400ms keyboard lifecycle, real-state priority, QA/path gates and bounded async/style/disposal cache passed.');
+console.log('Approved motion: all families/emotions, complete-frame pixels, 400ms keyboard lifecycle, magnifier execution, real-state priority, QA/path gates and bounded async/style/disposal cache passed.');

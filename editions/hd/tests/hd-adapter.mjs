@@ -47,9 +47,9 @@ assert.equal(paint().snapshot.preparing, true, 'A nameless partial still prepare
 activity.handle('tool_execution_start', { toolCallId: 'work', toolName: 'bash' });
 assert.equal(paint().snapshot.phase, 'running');
 assert.equal(paint().snapshot.toolCount, 1);
-assert.equal(paint().selection.clipId, 'work-enter', 'Execution keeps the keyboard preparation already opened');
+assert.equal(paint().selection.clipId, 'watch', 'Execution takes the magnifier from the preparation keyboard');
 clock += 500;
-assert.equal(paint().selection.clipId, 'work', 'A started command stays on the keyboard');
+assert.equal(paint().selection.clipId, 'watch', 'A started command keeps the magnifier');
 activity.handle('ui_prompt_start');
 assert.equal(paint().snapshot.awaitingUser, true);
 assert.ok(!['work', 'work-enter', 'work-exit'].includes(paint().selection?.clipId), 'User prompt interrupts keyboard cleanup immediately');

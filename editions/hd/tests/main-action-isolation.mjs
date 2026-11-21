@@ -46,10 +46,10 @@ assert.equal(preparing.snapshot.preparing, true, 'Streaming arguments is a prepa
 assert.equal(preparing.selection.clipId, 'work-enter', 'Preparation keeps the keyboard while the command is still being written');
 activity.handle('tool_execution_start', { toolCallId: 'next', toolName: 'bash' });
 assert.equal(paint(4000).snapshot.phase, 'running');
-// The preparation keyboard still plays its authored 400ms exit, but the old
-// 1200ms readable dwell no longer applies: execution is on screen by 4400.
-assert.equal(paint(4000).selection.clipId, 'work-enter', 'Execution keeps the keyboard and does not wait out a separate preview dwell');
-assert.equal(paint(4399).selection.clipId, 'work-enter');
-assert.equal(paint(4400).selection.clipId, 'work', 'A started command is on the keyboard once entry finishes');
+// The preparation keyboard is only a preview, so execution preempts it at once
+// and the command runs on the magnifier without waiting out a separate dwell.
+assert.equal(paint(4000).selection.clipId, 'watch', 'Execution replaces the preview keyboard with the magnifier');
+assert.equal(paint(4399).selection.clipId, 'watch');
+assert.equal(paint(4400).selection.clipId, 'watch', 'A started command stays on the magnifier');
 player.dispose();
-console.log('Main action isolation: streamed partials preserve the original gap/clock and hold the preparation keyboard, and a started command stays on that keyboard without waiting out the preview dwell.');
+console.log('Main action isolation: streamed partials preserve the original gap/clock and hold the preparation keyboard, and a started command replaces that preview with the magnifier without waiting out the preview dwell.');

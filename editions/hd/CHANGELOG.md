@@ -2,6 +2,18 @@
 
 本文件记录 HD 源码历史，不代表每节都有可下载 Release。当前源码为 2.5.1-preview.8，已随 `hd-v2.5.1-preview.8` 发布且 latest=false。同一 main 的根目录原资源版另行发布 v2.5.6（Latest）。当前安装见 [HD 指南](docs/guide.zh-CN.md)。旧版章节中的分支与双平台包描述属于历史。
 
+## 未发布（源码）
+
+### 简体中文
+
+- 命令执行（`running`，含 bash）改用放大镜 `watch`：阅读与执行共用同一段连续镜片动画，靠气泡文案区分；流式参数期间仍显示有界准备键盘，命令一开始执行就立即抢占并切到放大镜，不再多播键盘退出。真实编辑之后并行开始的执行仍先走完 1200ms 可读驻留与 400ms 键盘退出，片段缓存上限保持 2。
+- 编辑继续使用 `work-enter → work → work-exit`；暂停与缺片段时的静态回退同样按新语义选放大镜原画。29 个已批准片段、原生时序、索引载荷、调色板与来源哈希不变，本段不改版本号也未发布。
+
+### English
+
+- Command execution (`running`, including bash) now uses the magnifier `watch` clip: reading and execution share one continuous lens animation and differ only in bubble copy. A bounded preparation keyboard still covers streamed arguments, and the first real execution preempts it at once without replaying a keyboard exit. An execution starting in parallel right after a real edit still finishes the 1200ms readable dwell and the 400ms keyboard exit, and the clip cache stays at two entries.
+- Editing keeps `work-enter → work → work-exit`, and paused or missing-clip fallbacks pick the magnifier pose under the same rule. The 29 approved clips, native timing, indexed payloads, palette and provenance hashes are unchanged; this section changes no version and publishes nothing.
+
 ## 2.5.1-preview.8 · 2026-11-08
 
 ### 简体中文

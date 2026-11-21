@@ -25,9 +25,11 @@ function harness() {
 }
 
 // A real tool boundary does not reset the same motion clock, even when its
-// current loop has already repeated. Work aliases share the same keyboard.
+// current loop has already repeated. Work aliases share the same keyboard, and
+// reading with command execution share the magnifier.
 for (const [first, second, id] of [['read', 'read', 'watch'], ['read', 'open', 'watch'],
-  ['edit', 'edit', 'work'], ['bash', 'edit', 'work'], ['grep', 'find', 'search']]) {
+  ['read', 'view_file', 'watch'], ['read', 'bash', 'watch'], ['bash', 'bash', 'watch'],
+  ['edit', 'edit', 'work'], ['grep', 'find', 'search']]) {
   const h = harness();
   h.start(0, first, 'a');
   h.paint(400);

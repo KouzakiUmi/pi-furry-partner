@@ -32,7 +32,7 @@
 
 > 🐾 “I'm right here. Tell me what you've got in mind.”
 
-Umi stays beside the [Pi Coding Agent](https://github.com/earendil-works/pi) editor. He rests a paw under his chin while thinking, types while executing or editing and reads content with a magnifying glass, and dives into a pile of papers to find things, leaving his tail swishing above the stack. When you need to decide, he tilts his head and waits; stay away a little longer and he dozes off, ready to wake when you return.
+Umi stays beside the [Pi Coding Agent](https://github.com/earendil-works/pi) editor. He rests a paw under his chin while thinking, types while editing and uses a magnifying glass to read content or run commands, and dives into a pile of papers to find things, leaving his tail swishing above the stack. When you need to decide, he tilts his head and waits; stay away a little longer and he dozes off, ready to wake when you return.
 
 The extension also tidies up the editor, footer and everyday actions. Companion text, controls and information panels follow your system language by default and support **English and Simplified Chinese**. The **native Chinese UI patch, concise bilingual Pi documentation hints and optional character voice** each have their own switch, so you can keep your existing models and workflow.
 

@@ -102,8 +102,8 @@ for(const style of ["wumi","wumi-pixel"]){
 }
 {
   let time=1000;const activity=createActivity({now:()=>time,random:()=>.25});activity.start({wake:false});activity.handle("agent_start");
-  activity.handle("tool_execution_start",{toolCallId:"run",toolName:"bash"});assert.equal(activity.snapshot().face,"work");
-  activity.handle("tool_execution_end",{toolCallId:"run"});assert.equal(activity.snapshot().face,"work");
+  activity.handle("tool_execution_start",{toolCallId:"run",toolName:"bash"});assert.equal(activity.snapshot().face,"watch");
+  activity.handle("tool_execution_end",{toolCallId:"run"});assert.equal(activity.snapshot().face,"watch");
   time+=1999;assert.equal(activity.snapshot().visualPhase,"running");time++;assert.equal(activity.snapshot().visualPhase,"thinking");
   activity.handle("tool_execution_start",{toolCallId:"edit",toolName:"apply_patch"});assert.match(activity.snapshot().face,/work|idle-blink/);
   for (const [path, expected] of [["assets/reactions/umi/reaction-sheet.json", "watch"],
@@ -115,6 +115,6 @@ for(const style of ["wumi","wumi-pixel"]){
       renderAvatar:({frameIndex})=>{chosen=base.frames[frameIndex].id;return Array(8).fill("");}});
     assert.equal(chosen,expected, `${path}: use the authored watch pose when present, otherwise work`);
   }
-  checks.push("Execution retains the work pose through its 2000ms next-state gap; explicit watch still uses magnifier and legacy sheets safely fall back to work");
+  checks.push("Execution keeps the magnifier face through its 2000ms next-state gap; explicit watch still uses magnifier and legacy sheets safely fall back to work");
 }
 process.stdout.write(JSON.stringify({passed:true,checks},null,2)+"\n");

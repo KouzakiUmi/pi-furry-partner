@@ -34,7 +34,7 @@ The artifact is `dist/releases/pi-furry-partner-hd-full-animation-2.5.1-preview.
 
 ## Supported runtime and display
 
-Automated coverage includes Windows, Pi **1.2.0 / 1.3.0 / 1.4.0 / 1.5.0**, Windows PowerShell **5.1 / 7**. Native Chinese UI and compact documentation prompts are guarded by reviewed versions and structures; unknown versions keep native behavior. Configure Pi and its model provider first.
+Automated coverage includes Windows, Pi **1.2.0 / 1.3.0 / 1.4.0 / 1.5.0 / 1.6.1**, Windows PowerShell **5.1 / 7**. Native Chinese UI and compact documentation prompts are guarded by reviewed versions and structures; unknown versions keep native behavior. Configure Pi and its model provider first.
 
 Use `/mascot render auto|kitty|sixel|blocks`; the terminal must support the selected protocol. Full reactions use `/mascot layout editor`; header layout has its own title portrait. Narrow windows may collapse the dock. Fullscreen uses Pi's native mouse routing; regular mode retains terminal mouse behavior and shows key hints. Automated rendering checks do not establish visual acceptance in every terminal.
 

@@ -3,10 +3,10 @@ name: CI · Pi original resources
 on:
   push:
     branches: [main]
-    paths-ignore: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+    paths: ['**', '!editions/hd/**', 'editions/hd/test-runtimes/**', '!.github/workflows/ci-hd.yml', '!.github/workflows/release-hd.yml']
   pull_request:
     branches: [main]
-    paths-ignore: ['editions/hd/**', '.github/workflows/ci-hd.yml', '.github/workflows/release-hd.yml']
+    paths: ['**', '!editions/hd/**', 'editions/hd/test-runtimes/**', '!.github/workflows/ci-hd.yml', '!.github/workflows/release-hd.yml']
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -90,7 +90,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        pi-version: ['1.2.0', '1.3.0', '1.4.0', '1.5.0']
+        pi-version: ['1.2.0', '1.3.0', '1.4.0', '1.5.0', '1.6.1']
+    env:
+      PI_TEST_VERSION: ${{ matrix.pi-version }}
+      PI_SOURCE_REF: ${{ inputs.ref }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -98,13 +101,25 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: '24'
-      - name: Install the verified Pi runtime for tests
-        run: npm install --prefix work/pi-runtime --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@${{ matrix.pi-version }} @earendil-works/pi-tui@${{ matrix.pi-version }}
-      - name: Run runtime and integration suites
+      - name: Install the locked Pi runtime and run the integration suite
         shell: pwsh
         run: |
-          $env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime/node_modules'
-          $env:PI_TEST_VERSION = '${{ matrix.pi-version }}'
+          $runtime = 'editions/hd/test-runtimes/pi-' + ($env:PI_TEST_VERSION -replace '\.[0-9]+$', '')
+          if (Test-Path "$runtime/package-lock.json") {
+            npm ci --prefix $runtime --ignore-scripts --no-audit --no-fund
+          } elseif ($env:PI_SOURCE_REF -match '^(refs/tags/)?v[0-9]') {
+            # Manual release reruns may check out a tag older than this workflow.
+            if ($env:PI_TEST_VERSION -eq '1.6.1') {
+              Write-Host "Pi 1.6.1 has no reviewed runtime at $env:PI_SOURCE_REF"
+              return
+            }
+            $runtime = 'work/pi-runtime'
+            npm install --prefix $runtime --no-save --ignore-scripts --no-audit --no-fund "@earendil-works/pi-coding-agent@$env:PI_TEST_VERSION" "@earendil-works/pi-tui@$env:PI_TEST_VERSION"
+          } else {
+            throw "Missing Pi test lockfile: $runtime/package-lock.json"
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:PI_TEST_MODULES = Join-Path $PWD "$runtime/node_modules"
           npm test
       - name: Verify PowerShell 7 install, upgrade and recovery
         shell: pwsh

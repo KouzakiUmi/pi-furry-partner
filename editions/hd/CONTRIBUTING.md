@@ -6,19 +6,19 @@
 
 ## 本地检查
 
-使用满足 package 要求的 Node.js（CI 为 Node 24），以及 tools/requirements-validation.txt 中的 Python 验证依赖。Pi 模块分别验证 1.2.0、1.3.0、1.4.0 与 1.5.0；不要依赖个人机器上的特定启动器布局。
+使用满足 package 要求的 Node.js（CI 为 Node 24），以及 tools/requirements-validation.txt 中的 Python 验证依赖。Pi 模块分别验证 1.2.0、1.3.0、1.4.0、1.5.0 与 1.6.1；不要依赖个人机器上的特定启动器布局。
 
 ```powershell
 python -m pip install -r tools/requirements-validation.txt
-npm install --prefix work/pi-runtime --no-save --no-audit --no-fund @earendil-works/pi-coding-agent@1.3.0 @earendil-works/pi-tui@1.3.0
-$env:PI_TEST_MODULES = Join-Path $PWD 'work/pi-runtime/node_modules'
-$env:PI_TEST_VERSION = '1.3.0'
+npm ci --prefix test-runtimes/pi-1.6 --ignore-scripts
+$env:PI_TEST_MODULES = Join-Path $PWD 'test-runtimes/pi-1.6/node_modules'
+$env:PI_TEST_VERSION = '1.6.1'
 npm test
 pwsh -NoProfile -File tests/installer.ps1 -WorkDir work/installer-core
 powershell.exe -NoProfile -File tests/installer.ps1 -WorkDir work/installer-desktop
 ```
 
-替换两个包版本与 PI_TEST_VERSION 后分别验证 1.2.0 与 1.4.0。安装测试只使用隔离目录，不向用户真实配置安装。完整套件包含实际 Pi 编辑器、鼠标、协议与动作路径；不得把模拟传输或检查报告写成所有终端目视验收通过。
+切换到对应的 test-runtimes 目录并设置 PI_TEST_VERSION，即可验证其他已审阅版本。安装测试只使用隔离目录，不向用户真实配置安装。完整套件包含实际 Pi 编辑器、鼠标、协议与动作路径；不得把模拟传输或检查报告写成所有终端目视验收通过。
 
 ## 代码与动作
 

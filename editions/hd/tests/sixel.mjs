@@ -214,9 +214,11 @@ function terminalSink(columns = 80, rows = 24) {
   const screen = new TuiAltScreen(terminal, true, undefined, { mouse: true, copyOnSelect: false });
   screen.selectionAnchor = { row: 0, col: 24 }; screen.selectionFocus = { row: 0, col: 26 };
   const lines = screen.applySelection([`  ${stripe}${" ".repeat(12)}${cursorMarker}input text here`]);
-  assert.equal(lines[0].split(cursorMarker).length - 1, 3, "The caret must precede the selection so the real Pi transform duplicates its internal APC");
+  // Pi 1.6.1 avoids copying its internal cursor APC when slicing a selection.
+  const markerCount = version === "1.6.1" ? 1 : 3;
+  assert.equal(lines[0].split(cursorMarker).length - 1, markerCount, "Caret before the highlighted selection");
   assert.deepEqual(screen.extractCursorPosition(lines, terminal.rows), { row: 0, col: 20 });
-  assert.equal(lines[0].split(cursorMarker).length - 1, 2, "Pi removes only the first copied cursor marker");
+  assert.equal(lines[0].split(cursorMarker).length - 1, markerCount - 1, "Cursor extraction consumes the leading marker");
   terminal.write(`\x1b[?2026h\x1b[4;1H\x1b[2K${lines[0]}\x1b[?2026l`);
   assert.ok(writes.join("").endsWith("\x1b[?2026l"), "Residual Pi APC-BEL markers must not buffer the END_SYNC or lock the terminal writer");
   assert.equal(dcStrings(writes).length, 1);
@@ -246,7 +248,7 @@ function terminalSink(columns = 80, rows = 24) {
   sink.terminal.write(ordinaryPiNamedApc + "unrelated terminal output");
   assert.equal(sink.writes.join(""), standard + ordinaryPiNamedApc + "unrelated terminal output", "Standard APC-ST strings, including BEL inside payload or Pi-like names, must remain byte-for-byte intact");
   adapter.dispose();
-  checks.push("Real Pi caret-before-selection duplicates APC-BEL markers and leaves two after cursor extraction; transport strips only the three private markers across every byte split, closes synchronization, draws the avatar and keeps later typing live while preserving ordinary APC-ST payloads");
+  checks.push("Real Pi cursor extraction places the caret before the selection with or without copied APC-BEL markers; transport strips the private markers across every byte split, draws the avatar, and preserves synchronization, subsequent input and ordinary APC-ST payloads");
 }
 
 {

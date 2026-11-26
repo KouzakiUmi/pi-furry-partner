@@ -24,7 +24,7 @@ const baseOptions = {
   sections: { date: "Current date: 2026-10-16", extra_extension: "EXTRA EXTENSION EXACT\n<docs>Do not match me</docs>" },
 };
 const apply = (options = baseOptions, extra = {}) => compactNativePrompt({ systemPrompt: buildSystemPrompt(options), piVersion: version, systemPromptOptions: options, ...extra });
-assert.deepEqual(SUPPORTED_PROMPT_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0", "1.5.0"]);
+assert.deepEqual(SUPPORTED_PROMPT_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.1"]);
 assert.ok(SUPPORTED_PROMPT_PI_VERSIONS.includes(version), "This offline fixture requires an explicitly reviewed Pi runtime");
 
 const original = buildSystemPrompt(baseOptions), localized = apply();

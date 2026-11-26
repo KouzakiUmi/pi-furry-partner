@@ -1,11 +1,28 @@
 import { readFileSync } from "node:fs";
 
 // Pi does not currently expose locale hooks. This deliberately narrow adapter
-// for the reviewed 1.2.0, 1.3.0, 1.4.0 and 1.5.0 releases translates native UI
+// for explicitly reviewed releases translates native UI
 // display views, before their normal width/layout calculations. It never
 // changes terminal bytes, native input or saved values.
-export const SUPPORTED_UI_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0", "1.5.0"]);
+export const SUPPORTED_UI_PI_VERSIONS = Object.freeze(["1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.1"]);
 const catalogue = JSON.parse(readFileSync(new URL("../assets/ui-zh-CN.json", import.meta.url), "utf8"));
+Object.assign(catalogue.settings, {
+  "notices": ["Notices", "通知"],
+  "cacheMisses": ["Cache misses", "缓存未命中"],
+  "cacheWarming": ["Cache warming", "缓存预热"],
+  "compactionCosts": ["Compaction costs", "上下文压缩费用"],
+  "reasoningDrops": ["Reasoning drops", "推理内容被丢弃"],
+});
+Object.assign(catalogue.texts, {
+  "Notices about cache misses, cache warming, compaction costs and dropped reasoning":
+    "缓存未命中、缓存预热、上下文压缩费用和推理内容丢弃的通知",
+  "Show a notice when a response re-bills a significant part of the prompt cache":
+    "当回复对提示缓存中的大量内容重新计费时显示通知",
+  "Show the cost of cache warming requests": "显示缓存预热请求的费用",
+  "Show the cost of compactions and branch summaries": "显示上下文压缩和分支摘要的费用",
+  "Show a notice when a provider drops reasoning items from a request": "提供方丢弃请求中的推理内容时显示通知",
+});
+catalogue.settings.anthropicExtraUsage = catalogue.settings["anthropic-extra-usage"];
 const routers = new WeakMap();
 const CSI = /\x1b\[[0-?]*[ -/]*[@-~]/g;
 const plain = (text) => String(text).replace(CSI, "");

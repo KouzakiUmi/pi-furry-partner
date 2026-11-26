@@ -23,3 +23,11 @@ for (const candidate of candidates) {
   } catch { /* Try the next explicit/local/managed module location. */ }
 }
 if (!modules) throw new Error("Pi test runtime not found. Install @earendil-works/pi-coding-agent@1.2.0 locally or set PI_TEST_MODULES to its node_modules directory.");
+
+if (process.env.PI_TEST_VERSION) {
+  const expected = process.env.PI_TEST_VERSION;
+  const tui = JSON.parse(await readFile(join(modules, "@earendil-works/pi-tui/package.json"), "utf8"));
+  if (version !== expected || tui.version !== expected) {
+    throw new Error(`Expected Pi ${expected}, found coding agent ${version} and TUI ${tui.version} in ${modules}`);
+  }
+}

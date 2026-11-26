@@ -10,7 +10,7 @@ Umi is an animated companion for the interactive Pi Coding Agent terminal. This 
 
 ## Installation and updates
 
-Full automated coverage includes **Windows, Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0, Windows PowerShell 5.1 and PowerShell 7**, including native Chinese UI and concise documentation prompts. Unknown Pi versions retain native behavior. The earlier supplementary manual check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`) remains applicable and does not replace Windows installer checks. Configure Pi and your model provider before installation.
+Full automated coverage includes **Windows, Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0 / 1.6.1, Windows PowerShell 5.1 and PowerShell 7**, including native Chinese UI and concise documentation prompts. Unknown Pi versions retain native behavior. The earlier supplementary manual check on **NixOS 26.05 (Yarara), Pi 1.3.0 and Kitty 0.49.1** (`TERM=xterm-kitty`) remains applicable and does not replace Windows installer checks. Configure Pi and your model provider before installation.
 
 Choose one route:
 
@@ -133,7 +133,7 @@ Single-state demos also include `idle`, `reading`, `editing`, `running`, `search
 
 `locale` and `prompt` default to enabled; `persona` defaults to disabled. `/mascot off` hides the companion and restores native visual elements, while the three text preferences keep their own settings.
 
-The native Chinese compatibility layer strictly targets known **Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0** structures and fixed labels, including 24 built-in command descriptions. Dynamic text, tool output, identifiers and stored values remain intact. Unknown versions or structures retain the original behavior. Pi's installed files are not rewritten.
+The native Chinese compatibility layer strictly targets known **Pi 1.2.0 / 1.3.0 / 1.4.0 / 1.5.0 / 1.6.1** structures and fixed labels, including 24 built-in command descriptions. Dynamic text, tool output, identifiers and stored values remain intact. Unknown versions or structures retain the original behavior. Pi's installed files are not rewritten.
 
 The prompt option condenses only the precisely recognized native Pi documentation-hint section, using Chinese or English according to the resolved language. Documentation paths, complete-file reading and cross-reference requirements remain. Pi's identity preamble, tool list and rules stay native, so later extensions can still add tools, snippets and guidelines dynamically. Custom `SYSTEM.md`, forced prompts, custom documentation sections, project `AGENTS.md`, skills and other dynamic context remain unchanged. Disabling the option removes the documentation-section replacement from the next request. It never forces a whole rendered system prompt. Concise wording does not guarantee a fixed token reduction.
 
@@ -159,7 +159,7 @@ Local animation, language processing, read-only panels and demos make no additio
 
 The preview PNGs/GIFs are offline compositions exported from production state and animation code. They are not captures of a native terminal window. `preview.html` is a local demonstration; it does not change the real Pi session. Optional showcase source in `site/` is retained and has not been published as a separate website.
 
-Run `npm test` from the project directory with actual Pi 1.2.0, 1.3.0, 1.4.0 or 1.5.0 modules; CI uses all four releases. The complete suite covers native Chinese UI, prompt boundaries, extension integration, rendering, mouse routing and command completion. Run `node tests/legacy-resources.mjs` to compare original resources and prompts with SHA-256 baselines generated from v2.4.0 Git objects, including in extracted release archives. The earlier NixOS / Kitty session supplements these checks. See [Contributing](../CONTRIBUTING.md) for setup; the tested scope does not cover every terminal, font, window size or extension combination.
+Run `npm test` from the project directory with actual Pi 1.2.0, 1.3.0, 1.4.0, 1.5.0 or 1.6.1 modules; CI uses all five releases. The complete suite covers native Chinese UI, prompt boundaries, extension integration, rendering, mouse routing and command completion. Run `node tests/legacy-resources.mjs` to compare original resources and prompts with SHA-256 baselines generated from v2.4.0 Git objects, including in extracted release archives. The earlier NixOS / Kitty session supplements these checks. See [Contributing](../CONTRIBUTING.md) for setup; the tested scope does not cover every terminal, font, window size or extension combination.
 
 Code and documentation are [Apache-2.0](../LICENSE). **Umi's character design, photographs, illustrations, pixel art, animation frames and character-containing previews are All Rights Reserved.** The code license does not grant reuse rights to those assets. See [ASSET_LICENSE.md](../ASSET_LICENSE.md).
 

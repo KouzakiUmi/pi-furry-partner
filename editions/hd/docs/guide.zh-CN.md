@@ -34,7 +34,7 @@ python tools/audit-edition-bundles.py --edition full-animation
 
 ## 版本、终端与布局
 
-自动化覆盖 Windows、Pi **1.2.0 / 1.3.0 / 1.4.0 / 1.5.0**、Windows PowerShell **5.1 / 7**。中文界面与文档提示精简只启用已审阅版本和结构，未知版本保留 Pi 原行为。先安装并配置 Pi 和模型服务。
+自动化覆盖 Windows、Pi **1.2.0 / 1.3.0 / 1.4.0 / 1.5.0 / 1.6.1**、Windows PowerShell **5.1 / 7**。中文界面与文档提示精简只启用已审阅版本和结构，未知版本保留 Pi 原行为。先安装并配置 Pi 和模型服务。
 
 `/mascot render auto|kitty|sixel|blocks` 选择图像后端；协议支持由实际终端决定。`/mascot layout editor` 显示完整侧边动作，`layout header` 使用独立标题头像。窄窗口可能收起侧边图像以保留输入空间。`fullscreen` 使用 Pi 原生鼠标路由，`regular` 保留终端鼠标并显示快捷键提示。自动化绘制检查不等同于所有终端的目视验收。
 

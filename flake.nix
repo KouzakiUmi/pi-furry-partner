@@ -117,22 +117,27 @@
           piTestRuntime12 = mkPiTestRuntime {
             runtimeName = "pi-1.2";
             version = "1.2.0";
-            npmDepsHash = "sha256-ekvuj0ET7Ppze0NYOXHiMlJBRAz03DhdZ0h2nnYk7dA=";
+            npmDepsHash = "sha256-1LI0u9alYerPEmtB6pishRAW+c+67BZryR5Jx7ib3ns=";
           };
           piTestRuntime13 = mkPiTestRuntime {
             runtimeName = "pi-1.3";
             version = "1.3.0";
-            npmDepsHash = "sha256-4Ji/yjhDhOAU+tZKQ5EF+DkczowJgzxWlnwzF5la4gU=";
+            npmDepsHash = "sha256-k3s+pWxacIxLWuWcGPYVcUThjksqnx8mpMCngPazrd4=";
           };
           piTestRuntime14 = mkPiTestRuntime {
             runtimeName = "pi-1.4";
             version = "1.4.0";
-            npmDepsHash = "sha256-KkB5B+ZbsOn1ZXVjZ1hbrVRX4qKEpV5jPqsZL3aV9Cw=";
+            npmDepsHash = "sha256-SQv7BZ4HiqgTtX4QDdRDYdGYRIVTjd0ljJmOaVtKT9w=";
           };
           piTestRuntime15 = mkPiTestRuntime {
             runtimeName = "pi-1.5";
             version = "1.5.0";
             npmDepsHash = "sha256-sdGC7Bpjual3rhCXZ6eeeV25PZ7N3dDaUyHGwRRyI/s=";
+          };
+          piTestRuntime16 = mkPiTestRuntime {
+            runtimeName = "pi-1.6";
+            version = "1.6.1";
+            npmDepsHash = "sha256-8Nyj8Z9hgS6IQ551OThKyBDtQH1XdnLd9cg6T0ZGDU8=";
           };
           mkSitePackage =
             {
@@ -186,6 +191,7 @@
               piTestRuntime13
               piTestRuntime14
               piTestRuntime15
+              piTestRuntime16
             ];
             dontConfigure = true;
 
@@ -200,7 +206,8 @@
                 --test-modules "${piTestRuntime12}/node_modules" \
                 --test-modules "${piTestRuntime13}/node_modules" \
                 --test-modules "${piTestRuntime14}/node_modules" \
-                --test-modules "${piTestRuntime15}/node_modules"
+                --test-modules "${piTestRuntime15}/node_modules" \
+                --test-modules "${piTestRuntime16}/node_modules"
               python tools/audit-edition-bundles.py
               python tools/write-edition-release.py
               runHook postBuild
@@ -298,6 +305,7 @@
           pi-test-runtime-1_3 = piTestRuntime13;
           pi-test-runtime-1_4 = piTestRuntime14;
           pi-test-runtime-1_5 = piTestRuntime15;
+          pi-test-runtime-1_6 = piTestRuntime16;
 
           pi-hd-bundle = piHdBuild.bundle;
           pi-hd-extension = piHdBuild;
@@ -506,6 +514,11 @@
           pi-1_5 = mkPiShell {
             version = "1.5.0";
             testRuntime = self.packages.${system}.pi-test-runtime-1_5;
+          };
+
+          pi-1_6 = mkPiShell {
+            version = "1.6.1";
+            testRuntime = self.packages.${system}.pi-test-runtime-1_6;
           };
 
           media = pkgs.mkShell {

@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { createHash } from "node:crypto";
 import { installChineseUi, SUPPORTED_UI_PI_VERSIONS } from "../lib/ui-chinese.mjs";
 
-assert.deepEqual(SUPPORTED_UI_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0", "1.5.0"],
+assert.deepEqual(SUPPORTED_UI_PI_VERSIONS, ["1.2.0", "1.3.0", "1.4.0", "1.5.0", "1.6.1"],
   "Only the explicitly reviewed releases are enabled");
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -64,7 +64,11 @@ try {
   // this new component has even rendered once.
   const searchNative = new agentUI.SettingsSelectorComponent(config, callbacks), searchable = searchNative.getSettingsList();
   const searchItems = searchable.items, searchSnapshot = JSON.stringify(searchItems);
-  const query = (value) => { searchable.searchInput.setValue(value); searchable.handleInput(""); return searchable.filteredItems; };
+  const query = (value) => {
+    searchable.handleInput("\x15"); // Ctrl+U clears the previous query.
+    searchable.handleInput(value);
+    return searchable.filteredItems;
+  };
   assert.deepEqual(query("界面模式").map((item) => item.id), ["tui-mode"]);
   assert.equal(searchable.searchInput.getValue(), "界面模式"); assert.ok(searchable.filteredItems.every((item) => searchItems.includes(item)));
   searchable.handleInput("\x1b[B"); searchable.handleInput("\x1b[A"); searchable.handleInput("\r");
@@ -92,6 +96,32 @@ try {
   list.selectItem("warnings"); list.handleInput("\r"); assert.ok(text(native).includes("Anthropic 额外用量警告"));
   list.handleInput("\r"); assert.equal(events.at(-1).key, "onWarningsChange"); assert.equal(typeof events.at(-1).args[0].anthropicExtraUsage, "boolean");
   list.handleInput("\x1b");
+  if (version === "1.6.1") {
+    assert.deepEqual(query("通知").map((item) => item.id), ["notices"]);
+    assert.ok(text(searchNative).includes("推理内容丢弃的通知"));
+    list.selectItem("notices"); list.handleInput("\r");
+    const notices = list.submenuComponent.settingsList;
+    const originalNotices = notices.items;
+    const originalValues = originalNotices.map((item) => item.currentValue);
+    for (const [id, label, description] of [
+      ["cacheMisses", "缓存未命中", "重新计费"],
+      ["cacheWarming", "缓存预热", "缓存预热请求的费用"],
+      ["compactionCosts", "上下文压缩费用", "分支摘要的费用"],
+      ["reasoningDrops", "推理内容被丢弃", "丢弃请求中的推理内容"],
+    ]) {
+      notices.selectItem(id);
+      const rendered = text(native);
+      assert.ok(rendered.includes(label) && rendered.includes(description), id);
+    }
+    assertWidths(native);
+    assert.equal(notices.items, originalNotices);
+    assert.deepEqual(notices.items.map((item) => item.currentValue), originalValues);
+    const reasoningWasEnabled = notices.items.find((item) => item.id === "reasoningDrops").currentValue === "true";
+    list.handleInput("\r");
+    assert.deepEqual(events.at(-1), { key: "onNoticeChange", args: ["reasoningDrops", !reasoningWasEnabled] });
+    list.handleInput("\x1b");
+    checks.push("Pi 1.6.1 notice settings render in Chinese and keep the native boolean toggle callback");
+  }
   list.selectItem("model-thinking"); list.handleInput("\r"); assert.ok(text(native).includes("各模型思考档位") && text(native).includes(model.id));
   list.handleInput("\r"); assert.ok(text(native).includes("思考档位：") && text(native).includes(model.id));
   list.handleInput("\r"); assert.equal(events.at(-1).key, "onModelThinkingLevelChange"); assert.deepEqual(events.at(-1).args.slice(0, 2), [model.provider, model.id]);
